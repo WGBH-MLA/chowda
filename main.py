@@ -5,4 +5,4 @@ app = FastAPI()
 
 @app.get('/')
 async def root():
-    return {'CLAMS': 'Chowdah!'}
+    return {'CLAMS': 'Chowda!'}

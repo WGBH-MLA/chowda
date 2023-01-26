@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "chowdah"
+name = "chowda"
 version = "0.0.1"
 description = "A CLAMS processing application"
 authors = ["WGBH-MLA"]
