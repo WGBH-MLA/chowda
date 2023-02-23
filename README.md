@@ -46,9 +46,9 @@ sequenceDiagram
     participant CLAM1
     participant CLAM2
 
-    activate User
 
     %% User starts job
+    activate User
     note left of User: Hey, Chowda! Start batch 123 on pipeline 456
     User ->> + Chowda: Start batch 123 with files [] through pipeline 456
     Chowda ->> + DB: INSERT (batch, pipeline, Initial mmif) to TABLE pipeline_runs
@@ -72,7 +72,8 @@ sequenceDiagram
         CLAM1 ->> Runner: XX %
         Runner ->> DB: UPDATE pipeline_run_id SET status CLAM1 XX %
     end
-    CLAM1 ->> - Runner: Finished! -> MMIF
+    note right of CLAM1: Done!
+    CLAM1 ->> - Runner: intermediate MMIF
     activate Runner
     Runner ->> DB: UPDATE pipeline_run_id SET status 'done' + MMIF
 
@@ -96,7 +97,8 @@ sequenceDiagram
     note left of User: Not quite, but it should be done soon.
 
     %% CLAMS finished
-    CLAM2 -->> - Runner: Finished! -> MMIF
+    note right of CLAM2: Done!
+    CLAM2 -->> - Runner: finished MMIF
     activate Runner
     Runner ->> - DB: UPDATE pipeline_run_id SET status MMIF
     DB ->> Chowda: Batch 123 update
