@@ -28,7 +28,7 @@ app = FastAPI(
 )
 
 # Create admin
-admin = Admin(engine, title="Example: SQLModel")
+admin = Admin(engine, title="Chowda")
 
 # Add views
 admin.add_view(ModelView(User, icon="fa fa-users"))
