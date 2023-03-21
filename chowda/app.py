@@ -1,5 +1,5 @@
+from fastapi import FastAPI
 from sqlalchemy import create_engine
-from starlette.applications import Starlette
 from starlette.responses import HTMLResponse
 from starlette.routing import Route
 from starlette_admin.contrib.sqlmodel import Admin, ModelView
@@ -17,7 +17,7 @@ def init_database() -> None:
     SQLModel.metadata.create_all(engine)
 
 
-app = Starlette(
+app = FastAPI(
     routes=[
         Route(
             "/",
