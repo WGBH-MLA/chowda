@@ -1,0 +1,22 @@
+{
+  "version": "0.0.2",
+  "configurations": [
+    {
+      "name": "Chowda: CLAMS processing app",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "module": "uvicorn",
+      "args": [
+        "chowda.app:app",
+        "--reload",
+        "--host",
+        "0.0.0.0",
+        "--log-level",
+        "debug"
+      ],
+      "jinja": false,
+      "justMyCode": false
+    }
+  ]
+}
