@@ -7,8 +7,17 @@ from starlette_admin.contrib.sqlmodel import Admin, ModelView
 from sqlmodel import SQLModel
 
 from .config import ENGINE_URI
-from .models import Comment, Dump, Post, User
-from .views import CommentView, DumpView, PostView
+from .models import(
+    Dump,
+    User,
+    MediaFile,
+    Collection,
+    ClamsApp,
+    Pipeline,
+    Batch,
+    ClamsEvent
+)
+from .views import DumpView
 
 engine = create_engine(ENGINE_URI, connect_args={"check_same_thread": False}, echo=True)
 
@@ -32,8 +41,12 @@ admin = Admin(engine, title="Chowda")
 
 # Add views
 admin.add_view(ModelView(User, icon="fa fa-users"))
-admin.add_view(PostView(Post, label="Blog Posts", icon="fa fa-blog"))
-admin.add_view(CommentView(Comment, icon="fa fa-comments"))
+admin.add_view(ModelView(MediaFile, icon="fa fa-file-video"))
+admin.add_view(ModelView(Collection, icon="fa fa-folder"))
+admin.add_view(ModelView(ClamsApp, icon="fa fa-box"))
+admin.add_view(ModelView(Pipeline, icon="fa fa-boxes-stacked"))
+admin.add_view(ModelView(Batch, icon="fa fa-folder"))
+admin.add_view(ModelView(ClamsEvent, icon="fa fa-file-lines"))
 admin.add_view(DumpView(Dump, icon="fa fa-dumpster"))
 
 # Mount to admin to app
