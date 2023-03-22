@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Chowda: CLAMS processing app",
+      "name": "Chowda: app",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceFolder}",
@@ -15,6 +15,16 @@
         "--log-level",
         "debug"
       ],
+      "jinja": false,
+      "justMyCode": false
+    },
+    {
+      "name": "Chowda: tests",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "module": "pytest",
+      "args": ["-v", "-n", "auto"],
       "jinja": false,
       "justMyCode": false
     }
