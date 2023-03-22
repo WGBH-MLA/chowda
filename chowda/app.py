@@ -8,6 +8,7 @@ from sqlmodel import SQLModel
 
 from .config import ENGINE_URI
 from .models import User, MediaFile, Collection, ClamsApp, Pipeline, Batch, ClamsEvent
+from ._version import __version__
 
 engine = create_engine(ENGINE_URI, connect_args={'check_same_thread': False}, echo=True)
 
@@ -18,6 +19,7 @@ def init_database() -> None:
 
 app = FastAPI(
     title='Chowda',
+    version=__version__,
     routes=[
         Route(
             '/',
