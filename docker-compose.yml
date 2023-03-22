@@ -8,9 +8,3 @@ services:
       - "./:/app"
     ports:
       - "8000:8000"
-  tests:
-    build:
-      context: .
-      target: tests
-    volumes:
-      - "./:/app"
