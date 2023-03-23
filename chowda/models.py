@@ -1,3 +1,8 @@
+"""Models
+
+SQLModels for DB and validation
+"""
+
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 from pydantic import AnyHttpUrl, BaseModel, EmailStr, stricturl
@@ -8,13 +13,22 @@ from sqlalchemy import JSON, Column, DateTime, Enum, String, Text
 from sqlmodel import Field, Relationship, SQLModel
 
 MediaUrl = stricturl(allowed_schemes=['video', 'audio', 'text'], tld_required=False)
-"""Media url type. Must have prefix of video, audio, or text. No TLD required.
+"""Media url validator. Must have prefix of video, audio, or text. No TLD required.
 Example:
     video://*
 """
 
 
 class User(SQLModel, table=True):
+    """User model
+
+    Attributes:
+        id: Primary key
+        email: User email
+        first_name: User first name
+        last_name: User last name
+    """
+
     __tablename__ = 'users'
     id: Optional[int] = Field(primary_key=True)
     email: EmailStr = Field(index=True)
