@@ -12,6 +12,7 @@ fastapi = "^0.92.0"
 starlette-admin = "^0.5.2"
 sqlmodel = "^0.0.8"
 pydantic = {extras = ["email"], version = "^1.10.5"}
+pydantic-factories = "^1.17.2"
 
 [tool.poetry.group.dev.dependencies]
 uvicorn = "^0.20.0"
