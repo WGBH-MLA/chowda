@@ -1,16 +1,13 @@
 from fastapi import FastAPI
-from sqlalchemy import create_engine
 from starlette.responses import HTMLResponse
 from starlette.routing import Route
 from starlette_admin.contrib.sqlmodel import Admin, ModelView
 
 from sqlmodel import SQLModel
 
-from .config import ENGINE_URI
 from .models import User, MediaFile, Collection, ClamsApp, Pipeline, Batch, ClamsEvent
 from ._version import __version__
-
-engine = create_engine(ENGINE_URI, connect_args={'check_same_thread': False}, echo=True)
+from .db import engine
 
 
 def init_database() -> None:
