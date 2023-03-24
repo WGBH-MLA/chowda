@@ -6,7 +6,7 @@ from chowda.models import (
     User,
     Pipeline,
     ClamsEvent,
-    Batch
+    Batch,
 )
 from pydantic_factories import (
     ModelFactory,
