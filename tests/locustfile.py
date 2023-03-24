@@ -1,5 +1,6 @@
 from locust import HttpUser, task
 from random import shuffle
+from factories import UserFactory
 
 models = [
     'user',
@@ -18,7 +19,7 @@ class HomePageUser(HttpUser):
         self.client.get('/')
 
 
-class AdminPageUser(HttpUser):
+class AdminUser(HttpUser):
     @task
     def get_admin(self):
         self.client.get('/admin/')
@@ -34,3 +35,9 @@ class AdminPageUser(HttpUser):
         with self.client.rename_request('admin/[app]/list'):
             for app in model_list:
                 self.client.get(f'/admin/{app}/list')
+
+    @task
+    def create_user(self):
+        uf = UserFactory()
+        user = uf.build(id=None)
+        self.client.post('/admin/user/create', data=user.dict(exclude_none=True))
