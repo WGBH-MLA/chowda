@@ -18,4 +18,4 @@ COPY chowda chowda
 
 RUN pip install .
 
-CMD uvicorn chowda:app --host 0.0.0.0
+CMD uvicorn chowda:app --host 0.0.0.0 --reload

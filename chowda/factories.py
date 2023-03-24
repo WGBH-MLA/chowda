@@ -4,10 +4,9 @@ from chowda.models import (
     Collection,
     ClamsApp,
     User,
-    MediaFileCollectionLink,
-    MediaFileBatchLink,
     Pipeline,
     ClamsEvent,
+    Batch
 )
 from pydantic_factories import (
     ModelFactory,
@@ -70,17 +69,13 @@ class UserFactory(ChowdaFactory):
     __model__ = User
 
 
-class MediaFileCollectionLinkFactory(ChowdaFactory):
-    __model__ = MediaFileCollectionLink
-
-
-class MediaFileBatchLinkFactory(ChowdaFactory):
-    __model__ = MediaFileBatchLink
-
-
 class PipelineFactory(ChowdaFactory):
     __model__ = Pipeline
 
 
 class ClamsEventFactory(ChowdaFactory):
     __model__ = ClamsEvent
+
+
+class BatchFactory(ChowdaFactory):
+    __model__ = Batch
