@@ -1,6 +1,14 @@
-from chowda.app import engine
-from chowda.config import ENGINE_URI
-from chowda.models import MediaFile, Collection, ClamsApp
+from chowda.db import engine
+from chowda.models import (
+    MediaFile,
+    Collection,
+    ClamsApp,
+    User,
+    MediaFileCollectionLink,
+    MediaFileBatchLink,
+    Pipeline,
+    ClamsEvent,
+)
 from pydantic_factories import (
     ModelFactory,
     SyncPersistenceProtocol,
@@ -9,7 +17,7 @@ from pydantic_factories import (
 from typing import TypeVar, List
 from pydantic import BaseModel
 from sqlmodel import Session
-from sqlmodel.ext.asyncio.session import AsyncSession, AsyncEngine
+from sqlmodel.ext.asyncio.session import AsyncSession
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -41,6 +49,7 @@ class AsyncPersistenceHandler(AsyncPersistenceProtocol[T]):
 
 
 class ChowdaFactory(ModelFactory):
+    __allow_none_optionals__ = False
     __sync_persistence__ = SyncPersistenceHandler
     __async_persistence__ = AsyncPersistenceHandler
 
@@ -55,3 +64,23 @@ class CollectionFactory(ChowdaFactory):
 
 class ClamsAppFactory(ChowdaFactory):
     __model__ = ClamsApp
+
+
+class UserFactory(ChowdaFactory):
+    __model__ = User
+
+
+class MediaFileCollectionLinkFactory(ChowdaFactory):
+    __model__ = MediaFileCollectionLink
+
+
+class MediaFileBatchLinkFactory(ChowdaFactory):
+    __model__ = MediaFileBatchLink
+
+
+class PipelineFactory(ChowdaFactory):
+    __model__ = Pipeline
+
+
+class ClamsEventFactory(ChowdaFactory):
+    __model__ = ClamsEvent
