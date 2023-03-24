@@ -17,6 +17,7 @@ pydantic = {extras = ["email"], version = "^1.10.5"}
 uvicorn = "^0.20.0"
 black = "^23.1.0"
 flake8 = "^6.0.0"
+pydantic-factories = "^1.17.2"
 
 [tool.poetry.group.test]
 optional = true
