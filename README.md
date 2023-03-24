@@ -1,3 +1,7 @@
+![deploy](https://github.com/WGBH-MLA/chowda/actions/workflows/CI.yml/badge.svg)
+![deploy](https://github.com/WGBH-MLA/chowda/actions/workflows/CD.yml/badge.svg)
+[![codecov](https://codecov.io/gh/WGBH-MLA/chowda/branch/main/graph/badge.svg?token=0MKFUJD8UE)](https://codecov.io/gh/WGBH-MLA/chowda)
+
 # Chowda
 
 CLAMS processing app

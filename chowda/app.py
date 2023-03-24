@@ -1,3 +1,7 @@
+"""App
+
+Main Chowda application"""
+
 from fastapi import FastAPI
 from starlette.responses import HTMLResponse
 from starlette.routing import Route
