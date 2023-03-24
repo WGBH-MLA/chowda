@@ -1,3 +1,7 @@
+"""App
+
+Main Chowda application"""
+
 from fastapi import FastAPI
 from sqlalchemy import create_engine
 from starlette.responses import HTMLResponse
