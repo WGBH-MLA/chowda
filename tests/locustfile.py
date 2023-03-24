@@ -1,16 +1,24 @@
 from locust import HttpUser, task
 from random import shuffle
-from factories import UserFactory
+from factories import (
+    UserFactory,
+    MediaFileFactory,
+    CollectionFactory,
+    ClamsAppFactory,
+    PipelineFactory,
+    BatchFactory,
+    ClamsEventFactory,
+)
 
-models = [
-    'user',
-    'media-file',
-    'collection',
-    'clams-app',
-    'pipeline',
-    'batch',
-    'clams-event',
-]
+models = {
+    'user': UserFactory,
+    'media-file': MediaFileFactory,
+    'collection': CollectionFactory,
+    'clams-app': ClamsAppFactory,
+    'pipeline': PipelineFactory,
+    'batch': BatchFactory,
+    'clams-event': ClamsEventFactory,
+}
 
 
 class HomePageUser(HttpUser):
@@ -30,14 +38,16 @@ class AdminUser(HttpUser):
 
     @task
     def list_models(self):
-        model_list = models.copy()
-        shuffle(model_list)
-        with self.client.rename_request('admin/[app]/list'):
-            for app in model_list:
+        with self.client.rename_request('/admin/[app]/list'):
+            for app in list(models):
                 self.client.get(f'/admin/{app}/list')
 
+    def create_from_factory(self, name, factory):
+        factory = factory()
+        widget = factory.build(id=None)
+        self.client.post(f'/admin/{name}/create', widget.dict(exclude_none=True))
+
     @task
-    def create_user(self):
-        uf = UserFactory()
-        user = uf.build(id=None)
-        self.client.post('/admin/user/create', data=user.dict(exclude_none=True))
+    def run_factories(self):
+        for name in models:
+            self.create_from_factory(name, models[name])
