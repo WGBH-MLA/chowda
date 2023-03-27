@@ -1,5 +1,5 @@
 from locust import HttpUser, task
-from random import choice
+from random import choice, randint
 from factories import (
     UserFactory,
     MediaFileFactory,
@@ -17,7 +17,7 @@ models = {
     'clams-app': ClamsAppFactory,
     'pipeline': PipelineFactory,
     'batch': BatchFactory,
-    'clams-event': ClamsEventFactory,
+    # 'clams-event': ClamsEventFactory,
 }
 
 
@@ -44,7 +44,33 @@ class AdminUser(HttpUser):
     def list_models(self):
         self.client.get(f'/admin/{random_model()}/list')
 
+    def get_total(self, model: str) -> int:
+        """Use the API to get the total number of records in this model"""
+        response = self.client.get(f'/admin/api/{model}')
+        results = response.json()
+        return results['total']
+
+    @task
+    def get_model_detail(self):
+        model = random_model()
+        with self.client.rename_request(f'/admin/{model}/detail/[id]'):
+            self.client.get(
+                f'/admin/{random_model()}/detail/{randint(1, self.get_total(model))}'
+            )
+
+    @task
+    def edit_model(self):
+        """Update the model through the admin route"""
+        model = random_model()
+        factory = models[model]()
+        with self.client.rename_request(f'/admin/{model}/edit/[id]'):
+            self.client.post(
+                f'/admin/{model}/edit/{randint(1, self.get_total(model))}',
+                factory.build(id=None).dict(exclude_none=True),
+            )
+
     def create_from_factory(self, name, factory):
+        """Create a new record using a factory"""
         factory = factory()
         widget = factory.build(id=None)
         self.client.post(f'/admin/{name}/create', widget.dict(exclude_none=True))
