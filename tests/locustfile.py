@@ -1,5 +1,5 @@
 from locust import HttpUser, task
-from random import shuffle
+from random import choice
 from factories import (
     UserFactory,
     MediaFileFactory,
@@ -21,6 +21,10 @@ models = {
 }
 
 
+def random_model():
+    return choice(list(models.keys()))
+
+
 class HomePageUser(HttpUser):
     @task
     def get_home(self):
@@ -38,9 +42,7 @@ class AdminUser(HttpUser):
 
     @task
     def list_models(self):
-        with self.client.rename_request('/admin/[app]/list'):
-            for app in list(models):
-                self.client.get(f'/admin/{app}/list')
+        self.client.get(f'/admin/{random_model()}/list')
 
     def create_from_factory(self, name, factory):
         factory = factory()
@@ -49,5 +51,5 @@ class AdminUser(HttpUser):
 
     @task
     def run_factories(self):
-        for name in models:
-            self.create_from_factory(name, models[name])
+        model = random_model()
+        self.create_from_factory(model, models[model])
