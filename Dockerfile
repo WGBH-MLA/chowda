@@ -19,3 +19,18 @@ COPY chowda chowda
 RUN pip install .
 
 CMD uvicorn chowda:app --host 0.0.0.0 --reload
+
+
+FROM dev as test
+# Test stage
+# Steps:
+#    Copy test requirements
+#    Copy tests
+#    Run tests
+
+COPY requirements-test.txt .
+RUN pip install -r requirements-test.txt
+
+COPY tests tests
+
+CMD pytest -v -n auto
