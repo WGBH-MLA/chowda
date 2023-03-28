@@ -53,20 +53,21 @@ class AdminUser(HttpUser):
     @task
     def get_model_detail(self):
         model = random_model()
+        total = self.get_total(model)
         with self.client.rename_request(f'/admin/{model}/detail/[id]'):
-            self.client.get(
-                f'/admin/{random_model()}/detail/{randint(1, self.get_total(model))}'
-            )
+            self.client.get(f'/admin/{random_model()}/detail/{randint(1, total)}')
 
     @task
     def edit_model(self):
         """Update the model through the admin route"""
         model = random_model()
         factory = models[model]()
+        widget = factory.build(id=None)
+        total = self.get_total(model)
         with self.client.rename_request(f'/admin/{model}/edit/[id]'):
             self.client.post(
-                f'/admin/{model}/edit/{randint(1, self.get_total(model))}',
-                factory.build(id=None).dict(exclude_none=True),
+                f'/admin/{model}/edit/{randint(1, total)}',
+                widget.dict(exclude_none=True),
             )
 
     def create_from_factory(self, name, factory):
