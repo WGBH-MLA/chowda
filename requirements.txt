@@ -1,5 +1,0 @@
-starlette-admin
-uvicorn
-sqlmodel
-pydantic[email]
-pydantic-factories
