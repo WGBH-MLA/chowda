@@ -16,7 +16,7 @@ COPY chowda chowda
 ###########################
 FROM base as dev
 # Install dev dependencies with poetry
-RUN poetry install --with=dev
+RUN poetry install --with dev
 # Start dev server.
 CMD poetry run uvicorn chowda:app --host 0.0.0.0 --reload
 
@@ -25,7 +25,7 @@ CMD poetry run uvicorn chowda:app --host 0.0.0.0 --reload
 ###########################
 FROM dev as test
 # Install test requiremens with poetry
-RUN poetry install -n --with=test
+RUN poetry install -n --with test
 # Copy the test code
 COPY tests tests
 # Run the tests
