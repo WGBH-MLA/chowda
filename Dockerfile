@@ -45,5 +45,6 @@ CMD poetry run locust
 # 'production' build stage
 ############################
 FROM base as production
-RUN poetry install --without dev,test
+COPY chowda chowda
+RUN poetry install --with production
 CMD poetry run uvicorn chowda:app --host 0.0.0.0

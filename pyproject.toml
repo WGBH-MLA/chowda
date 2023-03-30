@@ -12,6 +12,11 @@ fastapi = "^0.92.0"
 starlette-admin = "^0.5.2"
 sqlmodel = "^0.0.8"
 pydantic = {extras = ["email"], version = "^1.10.5"}
+
+[tool.poetry.group.production]
+optional = true
+
+[tool.poetry.group.production.dependencies]
 psycopg2 = {version = "^2.9.5"}
 
 [tool.poetry.group.dev.dependencies]
