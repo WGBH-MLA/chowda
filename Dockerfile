@@ -4,40 +4,48 @@
 FROM python as base
 # Set working dir to /app, where all Chowda code lives.
 WORKDIR /app
-# Install uvicorn (ASGI web server) and poetry (dependency manager) using pip.
-RUN pip install -U pip uvicorn poetry
+RUN pip install -U pip
 # Copy app code to container
-COPY pyproject.toml poetry.lock README.md ./
+COPY pyproject.toml pdm.lock README.md ./
+COPY chowda chowda
 
 ###########################
 # 'dev' build stage
 ###########################
 FROM base as dev
+# Install PDM dependency manager
+RUN pip install pdm
+# Configure pdm to instal dependencies into ./__pypyackages__/
+RUN pdm config python.use_venv false
+# Configure python to use pep582 with local __pypyackages__
+ENV PYTHONPATH=/usr/local/lib/python3.11/site-packages/pdm/pep582
+# Add local packages to $PATH
+ENV PATH=$PATH:/app/__pypackages__/3.11/bin/
 
-# Install dev dependencies with poetry
-RUN poetry install -n --with dev
+# Install dev dependencies with pdm
+RUN pdm install -G dev
 # Start dev server.
-CMD poetry run uvicorn chowda:app --host 0.0.0.0 --reload
+CMD uvicorn chowda:app --host 0.0.0.0 --reload --log-level debug
 
 
 ###########################
 # 'test' build stage
 ###########################
-FROM dev as test
+FROM base as test
 # Install test requiremens with poetry
-COPY chowda chowda
-RUN poetry install -n --with test
 # Copy the test code
 COPY tests tests
+# Install test dependencies
+RUN pip install .[test]
 # Run the tests
-CMD poetry run pytest -v -n auto
+CMD pytest -v -n auto
 
 
 ###########################
 # 'locust' build stage for load testing
 ############################
 FROM test as locust
-RUN pip install locust
+RUN pip install .[locust]
 CMD poetry run locust
 
 
@@ -45,6 +53,5 @@ CMD poetry run locust
 # 'production' build stage
 ############################
 FROM base as production
-COPY chowda chowda
-RUN poetry install --with production
-CMD poetry run uvicorn chowda:app --host 0.0.0.0
+RUN pip install .[production]
+CMD gunicorn chowda:app -b 0.0.0.0:8000 -w 2 --worker-class uvicorn.workers.UvicornWorker
