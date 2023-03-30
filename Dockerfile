@@ -25,6 +25,7 @@ CMD poetry run uvicorn chowda:app --host 0.0.0.0 --reload
 ###########################
 FROM dev as test
 # Install test requiremens with poetry
+COPY chowda chowda
 RUN poetry install -n --with test
 # Copy the test code
 COPY tests tests
