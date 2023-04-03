@@ -2,3 +2,12 @@ __pycache__
 
 # Development sqlite db
 *.sqlite
+
+# Local pdm config
+.pdm.toml
+
+# PEP 582 local files
+__pypackages__/
+
+# Docs site
+site/
