@@ -14,3 +14,6 @@ site/
 
 # PyTorch generated file
 *.pth
+
+# Ignore jupyter notebook session
+session.ipynb

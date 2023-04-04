@@ -4,11 +4,10 @@ from factories import (
     CollectionFactory,
     ClamsAppFactory,
     PipelineFactory,
-    engine,
+    ClamsEventFactory,
 )
-
-from chowda.models import MediaFile, Batch, ClamsApp, Collection, Pipeline
-
+from chowda.models import MediaFile, Batch, ClamsApp
+from chowda.db import engine
 from sqlmodel import SQLModel
 
 SQLModel.metadata.create_all(engine)
@@ -31,6 +30,11 @@ def test_media_file_with_collections():
     assert_related(media_file, collections=collections)
 
 
+def test_batch_factory():
+    batch = BatchFactory.create(media_files=MediaFileFactory.create_batch(2))
+    assert type(batch) is Batch
+
+
 def test_batch_factory_with_media_files():
     media_files = MediaFileFactory.create_batch(2)
     batch = BatchFactory.create(media_files=media_files)
@@ -49,13 +53,15 @@ def test_pipeline_factory_with_clams_apps():
 
 
 def test_clams_event_factory():
-    media_file = MediaFileFactory.create()
-    batch = BatchFactory.create(media_files=[media_file])
-    assert type(batch) is Batch
     clams_app = ClamsAppFactory.create()
-    assert type(clams_app) is ClamsApp
     pipeline = PipelineFactory.create(clams_apps=[clams_app])
-    assert type(pipeline) is Pipeline
+    media_file = MediaFileFactory.create()
+    batch = BatchFactory.create(media_files=[media_file], pipeline=pipeline)
+    clams_event = ClamsEventFactory.create(
+        media_file=media_file, batch=batch, clams_app=clams_app
+    )
+    assert type(clams_event) is clams_event
+    assert_related(clams_event, batch=batch, media_file=media_file, clams_app=clams_app)
 
 
 def assert_related(model_instance: SQLModel, **kwargs):
@@ -65,12 +71,3 @@ def assert_related(model_instance: SQLModel, **kwargs):
         else:
             for related_instance in related:
                 assert related_instance in getattr(model_instance, relation_field)
-
-
-def test_batch_factory():
-    batch = BatchFactory.create(media_files=MediaFileFactory.create_batch(2))
-    assert type(batch) is Batch
-    assert len(batch.media_files) == 2
-    for media_file in batch.media_files:
-        assert len(media_file.batches) == 1
-        assert media_file.batches[0] == batch

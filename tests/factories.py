@@ -1,20 +1,13 @@
 from chowda.models import MediaFile, Batch, Collection, ClamsApp, Pipeline, ClamsEvent
-from sqlmodel import create_engine
 import factory
 import secrets
 from sqlalchemy import orm
 from faker import Faker
-from sqlmodel.pool import StaticPool
+from chowda.db import engine
 
-engine = create_engine(
-    "sqlite:///:memory:",
-    echo=True,
-    connect_args={"check_same_thread": False},
-    poolclass=StaticPool,
-)
-
+# Create a factory-specific engine for factory data. This can be used to modify
+# factory-generated data (see seeds.py)
 factory_session = orm.scoped_session(orm.sessionmaker(engine))
-
 
 fake = Faker()
 
@@ -82,6 +75,15 @@ class ClamsAppFactory(ChowdaFactory):
     name = factory.Sequence(lambda n: 'Clams App %d' % n)
     description = factory.Sequence(lambda n: 'Clams App %d Description' % n)
     endpoint = fake.url()
+
+    @factory.post_generation
+    def pipelines(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            for pipeline in extracted:
+                self.pipelines.append(pipeline)
 
 
 class PipelineFactory(ChowdaFactory):
