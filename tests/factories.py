@@ -1,24 +1,23 @@
-from chowda.models import(
-    MediaFile,
-    Batch,
-    Collection,
-    ClamsApp,
-    Pipeline,
-    ClamsEvent
+from chowda.models import MediaFile, Batch, Collection, ClamsApp, Pipeline, ClamsEvent
+from sqlmodel import create_engine
+import factory
+import secrets
+from sqlalchemy import orm
+from faker import Faker
+from sqlmodel.pool import StaticPool
+
+engine = create_engine(
+    "sqlite:///:memory:",
+    echo=True,
+    connect_args={"check_same_thread": False},
+    poolclass=StaticPool,
 )
 
-from chowda.db import engine
-
-from sqlalchemy import orm
 factory_session = orm.scoped_session(orm.sessionmaker(engine))
 
 
-from sqlmodel import Session
-import factory
-import secrets
-
-from faker import Faker
 fake = Faker()
+
 
 class ChowdaFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
@@ -75,18 +74,20 @@ class BatchFactory(ChowdaFactory):
             for media_file in extracted:
                 self.media_files.append(media_file)
 
+
 class ClamsAppFactory(ChowdaFactory):
     class Meta:
         model = ClamsApp
-    
+
     name = factory.Sequence(lambda n: 'Clams App %d' % n)
     description = factory.Sequence(lambda n: 'Clams App %d Description' % n)
     endpoint = fake.url()
 
+
 class PipelineFactory(ChowdaFactory):
     class Meta:
         model = Pipeline
-    
+
     name = factory.Sequence(lambda n: 'Pipeline %d' % n)
     description = factory.Sequence(lambda n: 'Pipeline %d Description' % n)
 
@@ -99,9 +100,10 @@ class PipelineFactory(ChowdaFactory):
             for clams_app in extracted:
                 self.clams_apps.append(clams_app)
 
+
 class ClamsEventFactory(ChowdaFactory):
     class Meta:
         model = ClamsEvent
-    
-    status: "TODO: REPLACE WITH ENUM VAL"
-    response_json: {"TODO" : "REPLACE WITH EXPECTED RESPONSE"}
+
+    status: str = "TODO: REPLACE WITH ENUM VAL"
+    response_json: dict = {"TODO": "REPLACE WITH EXPECTED RESPONSE"}
