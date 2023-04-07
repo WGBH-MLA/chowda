@@ -1,3 +1,0 @@
-# App
-
-::: chowda.app
