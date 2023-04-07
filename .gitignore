@@ -11,3 +11,6 @@ __pypackages__/
 
 # Docs site
 site/
+
+# PyTorch generated file
+*.pth

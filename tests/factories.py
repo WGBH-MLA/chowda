@@ -1,81 +1,109 @@
-from chowda.db import engine
-from chowda.models import (
-    MediaFile,
-    Collection,
-    ClamsApp,
-    User,
-    Pipeline,
-    ClamsEvent,
-    Batch,
+from chowda.models import MediaFile, Batch, Collection, ClamsApp, Pipeline, ClamsEvent
+from sqlmodel import create_engine
+import factory
+import secrets
+from sqlalchemy import orm
+from faker import Faker
+from sqlmodel.pool import StaticPool
+
+engine = create_engine(
+    "sqlite:///:memory:",
+    echo=True,
+    connect_args={"check_same_thread": False},
+    poolclass=StaticPool,
 )
-from pydantic_factories import (
-    ModelFactory,
-    SyncPersistenceProtocol,
-    AsyncPersistenceProtocol,
-)
-from typing import TypeVar, List
-from pydantic import BaseModel
-from sqlmodel import Session
-from sqlmodel.ext.asyncio.session import AsyncSession
 
-T = TypeVar("T", bound=BaseModel)
+factory_session = orm.scoped_session(orm.sessionmaker(engine))
 
 
-class SyncPersistenceHandler(SyncPersistenceProtocol[T]):
-    def save(self, data: T) -> T:
-        with Session(engine) as session:
-            session.add(data)
-            session.commit()
-
-    def save_many(self, data: List[T]) -> List[T]:
-        with Session(engine) as session:
-            for d in data:
-                session.add(d)
-            session.commit()
+fake = Faker()
 
 
-class AsyncPersistenceHandler(AsyncPersistenceProtocol[T]):
-    async def save(self, data: T) -> T:
-        async with AsyncSession(engine) as session:
-            session.add(data)
-            await session.commit()
-
-    async def save_many(self, data: List[T]) -> List[T]:
-        async with AsyncSession(engine) as session:
-            for d in data:
-                session.add(d)
-            await session.commit()
-
-
-class ChowdaFactory(ModelFactory):
-    __allow_none_optionals__ = False
-    __sync_persistence__ = SyncPersistenceHandler
-    __async_persistence__ = AsyncPersistenceHandler
+class ChowdaFactory(factory.alchemy.SQLAlchemyModelFactory):
+    class Meta:
+        sqlalchemy_session = factory_session
+        sqlalchemy_session_persistence = 'commit'
 
 
 class MediaFileFactory(ChowdaFactory):
-    __model__ = MediaFile
+    class Meta:
+        model = MediaFile
+
+    guid = 'cpb-aacip-' + secrets.token_hex(6)[:-1]
+
+    @factory.post_generation
+    def batches(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            for batch in extracted:
+                self.batches.append(batch)
+
+    @factory.post_generation
+    def collections(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            for collection in extracted:
+                self.collections.append(collection)
 
 
 class CollectionFactory(ChowdaFactory):
-    __model__ = Collection
+    class Meta:
+        model = Collection
 
-
-class ClamsAppFactory(ChowdaFactory):
-    __model__ = ClamsApp
-
-
-class UserFactory(ChowdaFactory):
-    __model__ = User
-
-
-class PipelineFactory(ChowdaFactory):
-    __model__ = Pipeline
-
-
-class ClamsEventFactory(ChowdaFactory):
-    __model__ = ClamsEvent
+    name = factory.Sequence(lambda n: 'Batch %d' % n)
+    description = factory.Sequence(lambda n: 'Batch %d Description' % n)
 
 
 class BatchFactory(ChowdaFactory):
-    __model__ = Batch
+    class Meta:
+        model = Batch
+
+    name = factory.Sequence(lambda n: 'Batch %d' % n)
+    description = factory.Sequence(lambda n: 'Batch %d Description' % n)
+
+    @factory.post_generation
+    def media_files(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            for media_file in extracted:
+                self.media_files.append(media_file)
+
+
+class ClamsAppFactory(ChowdaFactory):
+    class Meta:
+        model = ClamsApp
+
+    name = factory.Sequence(lambda n: 'Clams App %d' % n)
+    description = factory.Sequence(lambda n: 'Clams App %d Description' % n)
+    endpoint = fake.url()
+
+
+class PipelineFactory(ChowdaFactory):
+    class Meta:
+        model = Pipeline
+
+    name = factory.Sequence(lambda n: 'Pipeline %d' % n)
+    description = factory.Sequence(lambda n: 'Pipeline %d Description' % n)
+
+    @factory.post_generation
+    def clams_apps(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            for clams_app in extracted:
+                self.clams_apps.append(clams_app)
+
+
+class ClamsEventFactory(ChowdaFactory):
+    class Meta:
+        model = ClamsEvent
+
+    status: str = "TODO: REPLACE WITH ENUM VAL"
+    response_json: dict = {"TODO": "REPLACE WITH EXPECTED RESPONSE"}

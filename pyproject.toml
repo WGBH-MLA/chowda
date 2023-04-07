@@ -29,7 +29,7 @@ production = [
     "gunicorn >= 20.1.0"
 ]
 test = [
-    "pydantic-factories >= 1.17.2",
+    "factory-boy >= 3.2.1",
     "pytest >= 7.2.1",
     "pytest-cov >= 4.0.0",
     "pytest-sugar >= 0.9.6",

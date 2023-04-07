@@ -5,7 +5,7 @@ SQLModels for DB and validation
 
 from datetime import datetime
 from typing import Any, Dict, List, Optional
-from pydantic import AnyHttpUrl, BaseModel, EmailStr, stricturl
+from pydantic import AnyHttpUrl, EmailStr, stricturl
 from pydantic import Field as PydField
 from pydantic.color import Color
 from sqlalchemy import JSON, Column, DateTime, Enum, String, Text
