@@ -46,4 +46,9 @@ def seed(
     factory_session.commit()
 
 
-seed()
+if __name__ == "__main__":
+    from chowda.db import engine
+    from sqlmodel import SQLModel
+
+    SQLModel.metadata.create_all(engine)
+    seed()
