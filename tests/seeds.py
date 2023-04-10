@@ -18,7 +18,6 @@ def seed(
     num_pipelines: int = 10,
     num_clams_events: int = 800,
 ):
-
     # Create some sample CLAMS Apps and Pipelines
     clams_apps = ClamsAppFactory.create_batch(num_clams_apps)
     pipelines = PipelineFactory.create_batch(num_pipelines)
