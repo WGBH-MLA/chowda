@@ -61,7 +61,7 @@ def test_clams_event_factory():
         media_file=media_file, batch=batch, clams_app=clams_app
     )
     assert type(clams_event) is ClamsEvent
-    # assert_related(clams_event, batch=batch, media_file=media_file, clams_app=clams_app)
+    assert_related(clams_event, batch=batch, media_file=media_file, clams_app=clams_app)
 
 
 def assert_related(model_instance: SQLModel, **kwargs):
@@ -69,5 +69,5 @@ def assert_related(model_instance: SQLModel, **kwargs):
         if type(related) is SQLModel:
             assert related == getattr(model_instance, relation_field)
         else:
-            for related_instance in related:
+            for related_instance in list(related):
                 assert related_instance in getattr(model_instance, relation_field)
