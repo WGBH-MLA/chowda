@@ -1,6 +1,8 @@
 from os import environ
 
-PRODUCTION = bool(environ.get('PRODUCTION', False))
+ENVIRONMENT = environ.get('ENVIRONMENT', 'dev')
 
-DATABASE_FILE = environ.get('DB_FILE', 'chowda.sqlite')
-ENGINE_URI = environ.get('DB_URL', 'sqlite:///' + DATABASE_FILE)
+DB_FILE = environ.get('DB_FILE', 'chowda.sqlite')
+DB_URL = environ.get('DB_URL', 'sqlite:///' + DB_FILE)
+
+ECHO = True
