@@ -4,28 +4,29 @@ from sqlmodel.pool import StaticPool
 from chowda import models
 from chowda.config import ENVIRONMENT, DB_URL
 
-# All engines for different environments
-engines = {
-    "test": create_engine(
-        'sqlite:///:memory:',
-        connect_args={'check_same_thread': False},
-        echo=True,
-        poolclass=StaticPool,
-    ),
-    "development": create_engine(
-        DB_URL,
-        connect_args={'check_same_thread': False},
-        echo=True,
-    ),
-    "production": create_engine(
-        DB_URL, connect_args={'check_same_thread': True}, echo=False
-    ),
-}
+
+def get_engine(env=ENVIRONMENT):
+    """Return a SQLAlchemy engine for the given environment"""
+    if env == 'test':
+        return create_engine(
+            'sqlite:///:memory:',
+            connect_args={'check_same_thread': False},
+            echo=True,
+            poolclass=StaticPool,
+        )
+    elif env == 'development':
+        return create_engine(
+            DB_URL,
+            connect_args={'check_same_thread': False},
+            echo=True,
+        )
+    elif env == 'production':
+        return create_engine(
+            DB_URL, connect_args={'check_same_thread': True}, echo=False
+        )
 
 
-# Set the db engine based on which environment we're in
-# default is 'develpment' unless we're running tests (see above)
-engine = engines.get(ENVIRONMENT)
+engine = get_engine()
 
 
 # Create database from SQLModel schema
