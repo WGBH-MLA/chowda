@@ -7,6 +7,10 @@ from typing import Any, Dict, List, Optional
 from pydantic import AnyHttpUrl, EmailStr, stricturl
 from sqlalchemy import JSON, Column
 
+from pydantic import Field as PydField
+from pydantic.color import Color
+from sqlalchemy import JSON, Column, DateTime, Enum, String, Text
+from starlette.requests import Request
 from sqlmodel import Field, Relationship, SQLModel
 
 MediaUrl = stricturl(allowed_schemes=['video', 'audio', 'text'], tld_required=False)
@@ -31,6 +35,9 @@ class User(SQLModel, table=True):
     email: EmailStr = Field(index=True)
     first_name: str = Field(min_length=3, index=True)
     last_name: str = Field(min_length=3, index=True)
+
+    async def __admin_repr__(self, request: Request):
+        return f'{self.first_name} {self.last_name}'
 
 
 class MediaFileCollectionLink(SQLModel, table=True):
@@ -64,6 +71,9 @@ class MediaFile(SQLModel, table=True):
     )
     clams_events: List['ClamsEvent'] = Relationship(back_populates='media_file')
 
+    async def __admin_repr__(self, request: Request):
+        return self.guid
+
 
 class Collection(SQLModel, table=True):
     __tablename__ = 'collections'
@@ -73,6 +83,9 @@ class Collection(SQLModel, table=True):
     media_files: List['MediaFile'] = Relationship(
         back_populates='collections', link_model=MediaFileCollectionLink
     )
+
+    async def __admin_repr__(self, request: Request):
+        return f'{self.name or self.id}'
 
 
 class Batch(SQLModel, table=True):
@@ -86,6 +99,9 @@ class Batch(SQLModel, table=True):
         back_populates='batches', link_model=MediaFileBatchLink
     )
     clams_events: List['ClamsEvent'] = Relationship(back_populates='batch')
+
+    async def __admin_repr__(self, request: Request):
+        return f'{self.name or self.id}'
 
 
 class ClamsAppPipelineLink(SQLModel, table=True):
@@ -108,6 +124,9 @@ class ClamsApp(SQLModel, table=True):
     )
     clams_events: List['ClamsEvent'] = Relationship(back_populates='clams_app')
 
+    async def __admin_repr__(self, request: Request):
+        return f'{self.name or self.id}'
+
 
 class Pipeline(SQLModel, table=True):
     __tablename__ = 'pipelines'
@@ -118,6 +137,9 @@ class Pipeline(SQLModel, table=True):
         back_populates='pipelines', link_model=ClamsAppPipelineLink
     )
     batches: List[Batch] = Relationship(back_populates='pipeline')
+
+    async def __admin_repr__(self, request: Request):
+        return f'{self.name or self.id}'
 
 
 class ClamsEvent(SQLModel, table=True):
@@ -131,3 +153,6 @@ class ClamsEvent(SQLModel, table=True):
     clams_app: Optional[ClamsApp] = Relationship(back_populates='clams_events')
     media_file_id: Optional[int] = Field(default=None, foreign_key='media_files.id')
     media_file: Optional[MediaFile] = Relationship(back_populates='clams_events')
+
+    async def __admin_repr__(self, request: Request):
+        return f'{self.batch.name}: {self.clams_app.name}: {self.status}'
