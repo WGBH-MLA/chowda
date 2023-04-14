@@ -126,6 +126,15 @@ class ClamsAppFactory(ChowdaFactory):
             for pipeline in extracted:
                 self.pipelines.append(pipeline)
 
+    @factory.post_generation
+    def pipelines(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            for pipeline in extracted:
+                self.pipelines.append(pipeline)
+
 
 class PipelineFactory(ChowdaFactory):
     class Meta:
