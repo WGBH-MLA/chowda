@@ -3,12 +3,9 @@
 SQLModels for DB and validation
 """
 
-from datetime import datetime
 from typing import Any, Dict, List, Optional
 from pydantic import AnyHttpUrl, EmailStr, stricturl
-from pydantic import Field as PydField
-from pydantic.color import Color
-from sqlalchemy import JSON, Column, DateTime, Enum, String, Text
+from sqlalchemy import JSON, Column
 
 from sqlmodel import Field, Relationship, SQLModel
 
@@ -83,9 +80,12 @@ class Batch(SQLModel, table=True):
     id: Optional[int] = Field(primary_key=True)
     name: str
     description: str
+    pipeline_id: Optional[int] = Field(default=None, foreign_key='pipelines.id')
+    pipeline: Optional['Pipeline'] = Relationship(back_populates='batches')
     media_files: List[MediaFile] = Relationship(
         back_populates='batches', link_model=MediaFileBatchLink
     )
+    clams_events: List['ClamsEvent'] = Relationship(back_populates='batch')
 
 
 class ClamsAppPipelineLink(SQLModel, table=True):
@@ -117,7 +117,7 @@ class Pipeline(SQLModel, table=True):
     clams_apps: List[ClamsApp] = Relationship(
         back_populates='pipelines', link_model=ClamsAppPipelineLink
     )
-    clams_events: List['ClamsEvent'] = Relationship(back_populates='pipeline')
+    batches: List[Batch] = Relationship(back_populates='pipeline')
 
 
 class ClamsEvent(SQLModel, table=True):
@@ -125,8 +125,8 @@ class ClamsEvent(SQLModel, table=True):
     id: Optional[int] = Field(primary_key=True)
     status: str
     response_json: Dict[str, Any] = Field(sa_column=Column(JSON))
-    pipeline_id: Optional[int] = Field(default=None, foreign_key='pipelines.id')
-    pipeline: Optional[Pipeline] = Relationship(back_populates='clams_events')
+    batch_id: Optional[int] = Field(default=None, foreign_key='batches.id')
+    batch: Optional[Batch] = Relationship(back_populates='clams_events')
     clams_app_id: Optional[int] = Field(default=None, foreign_key='clams_apps.id')
     clams_app: Optional[ClamsApp] = Relationship(back_populates='clams_events')
     media_file_id: Optional[int] = Field(default=None, foreign_key='media_files.id')
