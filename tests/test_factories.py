@@ -6,6 +6,7 @@ from chowda.models import (
     ClamsApp,
     Pipeline,
     ClamsEvent,
+    AppStatus,
 )
 from factories import (
     MediaFileFactory,
@@ -15,6 +16,7 @@ from factories import (
     PipelineFactory,
     ClamsEventFactory,
 )
+from random import choice
 
 
 def test_media_file_factory():
@@ -61,8 +63,9 @@ def test_clams_event_factory():
     pipeline = PipelineFactory.create(clams_apps=[clams_app])
     media_file = MediaFileFactory.create()
     batch = BatchFactory.create(media_files=[media_file], pipeline=pipeline)
+    status = choice(list(AppStatus)).value
     clams_event = ClamsEventFactory.create(
-        media_file=media_file, batch=batch, clams_app=clams_app
+        media_file=media_file, batch=batch, clams_app=clams_app, status=status
     )
     assert type(clams_event) is ClamsEvent
     assert_related(clams_event, batch=batch, media_file=media_file, clams_app=clams_app)
