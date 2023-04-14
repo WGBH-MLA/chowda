@@ -5,19 +5,24 @@ SQLModels for DB and validation
 
 from typing import Any, Dict, List, Optional
 from pydantic import AnyHttpUrl, EmailStr, stricturl
-from sqlalchemy import JSON, Column
-
-from pydantic import Field as PydField
-from pydantic.color import Color
-from sqlalchemy import JSON, Column, DateTime, Enum, String, Text
+from sqlalchemy import JSON, Column, DateTime, String, Text
 from starlette.requests import Request
 from sqlmodel import Field, Relationship, SQLModel
+
+from enum import Enum
 
 MediaUrl = stricturl(allowed_schemes=['video', 'audio', 'text'], tld_required=False)
 """Media url validator. Must have prefix of video, audio, or text. No TLD required.
 Example:
     video://*
 """
+
+
+class AppStatus(Enum):
+    PENDING = 'pending'
+    RUNNING = 'running'
+    COMPLETE = 'complete'
+    FAILED = 'failed'
 
 
 class User(SQLModel, table=True):

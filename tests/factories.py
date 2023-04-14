@@ -6,18 +6,42 @@ from chowda.models import (
     Pipeline,
     ClamsEvent,
     User,
+    AppStatus,
 )
 import factory
 from sqlalchemy import orm
-from faker import Faker
 from chowda.db import engine
+from faker.providers import BaseProvider
 
+
+class CLAMSProvider(BaseProvider):
+    '''A custom Faker provider for generating CLAMS data'''
+
+    def app_name(self):
+        return f'app-{self.generator.word(part_of_speech="noun")}'
+
+    def guid(self):
+        return f'cpb-aacip-{str(self.generator.random_int())}-{self.generator.hexify(8*"^")}'
+
+    def collection_name(self):
+        if self.generator.random.choice([True, False]):
+            return self.title() + ' Collection'
+        else:
+            return self.generator.name() + ' Collection'
+
+    def batch_name(self):
+        return f'Batch {self.random_int()}: {self.title()}'
+
+    def title(self):
+        num_words = self.generator.random.randint(1, 10)
+        return self.generator.sentence(nb_words=num_words).title()[:-1]
+
+
+factory.Faker.add_provider(CLAMSProvider)
 
 # Create a factory-specific engine for factory data. This can be used to modify
 # factory-generated data (see seeds.py)
 factory_session = orm.scoped_session(orm.sessionmaker(engine))
-
-fake = Faker()
 
 
 class ChowdaFactory(factory.alchemy.SQLAlchemyModelFactory):
@@ -39,7 +63,7 @@ class MediaFileFactory(ChowdaFactory):
     class Meta:
         model = MediaFile
 
-    guid = factory.Faker('hexify', text='cpb-aacip-^^^-^^^^^^^^')
+    guid = factory.Faker('guid')
 
     @factory.post_generation
     def batches(self, create, extracted, **kwargs):
@@ -64,7 +88,7 @@ class CollectionFactory(ChowdaFactory):
     class Meta:
         model = Collection
 
-    name = factory.Sequence(lambda n: 'Collection %d' % n)
+    name = factory.Faker('collection_name')
     description = factory.Faker('text')
 
 
@@ -72,7 +96,7 @@ class BatchFactory(ChowdaFactory):
     class Meta:
         model = Batch
 
-    name = factory.Sequence(lambda n: 'Batch %d' % n)
+    name = factory.Faker('batch_name')
     description = factory.Faker('text')
 
     @factory.post_generation
@@ -89,7 +113,7 @@ class ClamsAppFactory(ChowdaFactory):
     class Meta:
         model = ClamsApp
 
-    name = factory.Faker("last_name_nonbinary")
+    name = factory.Faker('app_name')
     description = factory.Faker('text')
     endpoint = factory.Faker('url')
 
@@ -124,5 +148,5 @@ class ClamsEventFactory(ChowdaFactory):
     class Meta:
         model = ClamsEvent
 
-    status: str = "TODO: REPLACE WITH ENUM VAL"
-    response_json: dict = {"TODO": "REPLACE WITH EXPECTED RESPONSE"}
+    status: str = factory.Faker('random_element', elements=AppStatus)
+    response_json: dict = factory.Faker('json')
