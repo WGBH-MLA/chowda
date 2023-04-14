@@ -47,7 +47,7 @@ locust = [
 dev = [
     "uvicorn >= 0.21.0, < 1.0",
     "black >= 23.1.0, < 24.0.0",
-    "flake8 >= 6.0.0, < 7.0.0"
+    "ruff >= 0.0.261, < 0.1.0"
 ]
 docs = [
     "mkdocs >= 1.4.2",
@@ -62,3 +62,11 @@ version = { source = "file", path = "chowda/_version.py" }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.ruff]
+ignore = [
+    # line too long
+    "E501",
+    # imported but not used
+    "F401"
+]
