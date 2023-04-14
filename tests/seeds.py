@@ -56,7 +56,7 @@ def seed(
             batch=batch,
             media_file=choice(batch.media_files),
             clams_app=choice(batch.pipeline.clams_apps),
-            status=str(choice(status)),
+            status=choice(status).value,
         )
 
     factory_session.commit()
