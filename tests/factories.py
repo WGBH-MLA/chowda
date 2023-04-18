@@ -17,7 +17,15 @@ from faker.providers import BaseProvider
 class CLAMSProvider(BaseProvider):
     '''A custom Faker provider for generating CLAMS data'''
 
-    app_names = ('Whisper', 'OCR', 'Slates', 'NER', 'Chyrons', 'Credits', 'NER')
+    app_names = (
+        'Whisper',
+        'OCR',
+        'Slates',
+        'NER',
+        'Chyrons',
+        'Credits',
+        'Bars',
+    )
 
     def app_name(self):
         return self.generator.random.choice(self.app_names)
