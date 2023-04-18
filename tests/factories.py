@@ -17,8 +17,18 @@ from faker.providers import BaseProvider
 class CLAMSProvider(BaseProvider):
     '''A custom Faker provider for generating CLAMS data'''
 
+    app_names = (
+        'Whisper',
+        'OCR',
+        'Slates',
+        'NER',
+        'Chyrons',
+        'Credits',
+        'Bars',
+    )
+
     def app_name(self):
-        return f'app-{self.generator.word(part_of_speech="noun")}'
+        return self.generator.random.choice(self.app_names)
 
     def guid(self):
         return f'cpb-aacip-{str(self.generator.random_int())}-{self.generator.hexify(8*"^")}'
@@ -113,7 +123,11 @@ class ClamsAppFactory(ChowdaFactory):
     class Meta:
         model = ClamsApp
 
-    name = factory.Faker('app_name')
+    @factory.sequence
+    def name(n):
+        index = n % len(CLAMSProvider.app_names)
+        return CLAMSProvider.app_names[index]
+
     description = factory.Faker('text')
     endpoint = factory.Faker('url')
 

@@ -79,6 +79,9 @@ class MediaFile(SQLModel, table=True):
     async def __admin_repr__(self, request: Request):
         return self.guid
 
+    async def __admin_select2_repr__(self, request: Request) -> str:
+        return f'<span><strong>{self.guid}</strong></span>'
+
 
 class Collection(SQLModel, table=True):
     __tablename__ = 'collections'
@@ -91,6 +94,9 @@ class Collection(SQLModel, table=True):
 
     async def __admin_repr__(self, request: Request):
         return f'{self.name or self.id}'
+
+    async def __admin_select2_repr__(self, request: Request):
+        return f'<span><strong>{self.name or self.id}</span>'
 
 
 class Batch(SQLModel, table=True):
@@ -107,6 +113,9 @@ class Batch(SQLModel, table=True):
 
     async def __admin_repr__(self, request: Request):
         return f'{self.name or self.id}'
+
+    async def __admin_select2_repr__(self, request: Request):
+        return f'<span><strong>{self.name or self.id}</span>'
 
 
 class ClamsAppPipelineLink(SQLModel, table=True):
@@ -146,6 +155,9 @@ class Pipeline(SQLModel, table=True):
     async def __admin_repr__(self, request: Request):
         return f'{self.name or self.id}'
 
+    async def __admin_select2_repr__(self, request: Request) -> str:
+        return f'<span><strong>{self.name or self.id}</span>'
+
 
 class ClamsEvent(SQLModel, table=True):
     __tablename__ = 'clams_events'
@@ -160,4 +172,7 @@ class ClamsEvent(SQLModel, table=True):
     media_file: Optional[MediaFile] = Relationship(back_populates='clams_events')
 
     async def __admin_repr__(self, request: Request):
-        return f'{self.batch.name}: {self.clams_app.name}: {self.status}'
+        return f'{self.clams_app.name}: {self.status}'
+
+    async def __admin_select2_repr__(self, request: Request) -> str:
+        return f'<span><strong>{self.clams_app.name}:</strong> {self.status}</span>'
