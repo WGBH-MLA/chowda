@@ -3,13 +3,14 @@
 Main Chowda application"""
 
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from starlette.responses import HTMLResponse
 from starlette.routing import Route
-from starlette_admin.contrib.sqlmodel import Admin, ModelView
-
+from starlette_admin.contrib.sqlmodel import ModelView
 from sqlmodel import SQLModel
-
+from .admin import Admin
 from .models import User, MediaFile, Collection, ClamsApp, Pipeline, Batch, ClamsEvent
+from .views import CollectionView
 from ._version import __version__
 from .db import engine
 
@@ -29,6 +30,7 @@ app = FastAPI(
     ],
     on_startup=[init_database],
 )
+app.mount("/static", StaticFiles(directory="chowda/static"), name="static")
 
 # Create admin
 admin = Admin(engine, title='Chowda')
@@ -36,11 +38,11 @@ admin = Admin(engine, title='Chowda')
 # Add views
 admin.add_view(ModelView(User, icon='fa fa-users'))
 admin.add_view(ModelView(MediaFile, icon='fa fa-file-video'))
-admin.add_view(ModelView(Collection, icon='fa fa-folder'))
+admin.add_view(CollectionView(Collection, icon='fa fa-folder'))
 admin.add_view(ModelView(ClamsApp, icon='fa fa-box'))
 admin.add_view(ModelView(Pipeline, icon='fa fa-boxes-stacked'))
 admin.add_view(ModelView(Batch, icon='fa fa-folder'))
 admin.add_view(ModelView(ClamsEvent, icon='fa fa-file-lines'))
 
-# Mount to admin to app
+# Mount admin to app
 admin.mount_to(app)
