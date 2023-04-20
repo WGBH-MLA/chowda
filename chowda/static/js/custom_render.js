@@ -8,4 +8,8 @@ Object.assign(render, {
         }"> ${media_file.guid.replace(/^cpb-aacip-/, '')} </a>`
     )
   },
+  media_file_count: function render(data, type, full, meta, fieldOptions) {
+    // Render a count of media files
+    return data.length
+  },
 })
