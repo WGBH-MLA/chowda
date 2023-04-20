@@ -13,6 +13,7 @@ from .models import User, MediaFile, Collection, ClamsApp, Pipeline, Batch, Clam
 from .views import CollectionView
 from ._version import __version__
 from .db import engine
+from .config import STATIC_DIR, TEMPLATES_DIR
 
 
 def init_database() -> None:
@@ -30,10 +31,10 @@ app = FastAPI(
     ],
     on_startup=[init_database],
 )
-app.mount("/static", StaticFiles(directory="chowda/static"), name="static")
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 # Create admin
-admin = Admin(engine, title='Chowda')
+admin = Admin(engine, title='Chowda', templates_dir=TEMPLATES_DIR)
 
 # Add views
 admin.add_view(ModelView(User, icon='fa fa-users'))
