@@ -1,4 +1,3 @@
-from starlette_admin.contrib.sqla import ModelView
 from starlette_admin import (
     BaseField,
     IntegerField,
@@ -6,6 +5,7 @@ from starlette_admin import (
     JSONField,
     CollectionField,
 )
+from starlette_admin.contrib.sqlmodel import ModelView
 from dataclasses import dataclass
 from json import loads
 from requests import Request
