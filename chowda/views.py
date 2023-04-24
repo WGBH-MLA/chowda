@@ -6,6 +6,7 @@ from starlette_admin import (
     CollectionField,
 )
 from starlette_admin.contrib.sqlmodel import ModelView
+from starlette_admin._types import RequestAction
 from dataclasses import dataclass
 from json import loads
 from requests import Request
@@ -13,34 +14,47 @@ from typing import Any
 
 
 @dataclass
-class MediaFilesGuidLinkField(CollectionField):
-    # pass
-    render_function_key: str = 'media_file_guid_links'
-    # display_template = 'displays/media_file_guid_links.html'
+class MediaFilesGuidLinkField(BaseField):
+    """A field that displays a list of MediaFile GUIDs as html links"""
 
-    async def serialize_value(self, request: Request, value: Any, action) -> Any:
-        # pass
-        return [loads(m.json()) for m in value]
+    render_function_key: str = 'media_file_guid_links'
+
+    async def serialize_value(
+        self, request: Request, value: Any, action: RequestAction
+    ) -> Any:
+        if action == RequestAction.LIST:
+            return [loads(m.json()) for m in value]
+        return await super().serialize_value(request, value, action)
 
 
 @dataclass
 class MediaFileCount(IntegerField):
-    """A field that displays the number of media files in a collection"""
+    """A field that displays the number of MediaFiles in a collection or batch"""
 
     render_function_key: str = 'media_file_count'
 
-    async def serialize_value(self, request: Request, value: Any, action) -> Any:
-        # This function needs to exist, but it doeesn't do anyting...
-        # return len(value)
-        pass
+    async def serialize_value(
+        self, request: Request, value: Any, action: RequestAction
+    ) -> Any:
+        return len(value)
 
 
 class CollectionView(ModelView):
-    fields: list = [
+    fields = [
         'id',
         'name',
         'description',
-        MediaFileCount('media_files', label='MediaFiles Count'),
-        # 'media_files', # default view
-        MediaFilesGuidLinkField('media_files', label='GUID Links'),
+        MediaFileCount(
+            'media_files',
+            label='MediaFiles Count',
+            read_only=True,
+            exclude_from_edit=True,
+            exclude_from_create=True,
+        ),
+        # 'media_files',  # default view
+        MediaFilesGuidLinkField(
+            'media_files',
+            label='GUID Links',
+            display_template='displays/media_file_guid_links.html',
+        ),
     ]
