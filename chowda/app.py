@@ -8,12 +8,20 @@ from starlette.responses import HTMLResponse
 from starlette.routing import Route
 from starlette_admin.contrib.sqlmodel import ModelView
 from sqlmodel import SQLModel
-from .admin import Admin
-from .models import User, MediaFile, Collection, ClamsApp, Pipeline, Batch, ClamsEvent
-from .views import CollectionView
-from ._version import __version__
-from .db import engine
-from .config import STATIC_DIR, TEMPLATES_DIR
+from chowda.admin import Admin
+from chowda.models import (
+    User,
+    MediaFile,
+    Collection,
+    ClamsApp,
+    Pipeline,
+    Batch,
+    ClamsEvent,
+)
+from chowda.views import CollectionView
+from chowda._version import __version__
+from chowda.db import engine
+from chowda.config import STATIC_DIR, TEMPLATES_DIR
 
 
 def init_database() -> None:
@@ -31,10 +39,15 @@ app = FastAPI(
     ],
     on_startup=[init_database],
 )
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+app.mount('/static', StaticFiles(directory=STATIC_DIR), name='static')
 
 # Create admin
-admin = Admin(engine, title='Chowda', templates_dir=TEMPLATES_DIR)
+admin = Admin(
+    engine,
+    title='Chowda',
+    templates_dir=TEMPLATES_DIR,
+    statics_dir=STATIC_DIR,
+)
 
 # Add views
 admin.add_view(ModelView(User, icon='fa fa-users'))
