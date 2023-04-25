@@ -15,7 +15,7 @@ from faker.providers import BaseProvider
 
 
 class CLAMSProvider(BaseProvider):
-    '''A custom Faker provider for generating CLAMS data'''
+    """A custom Faker provider for generating CLAMS data"""
 
     app_names = (
         'Whisper',
@@ -36,8 +36,7 @@ class CLAMSProvider(BaseProvider):
     def collection_name(self):
         if self.generator.random.choice([True, False]):
             return self.title() + ' Collection'
-        else:
-            return self.generator.name() + ' Collection'
+        return self.generator.name() + ' Collection'
 
     def batch_name(self):
         return f'Batch {self.random_int()}: {self.title()}'
