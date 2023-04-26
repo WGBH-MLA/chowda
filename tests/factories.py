@@ -123,7 +123,7 @@ class ClamsAppFactory(ChowdaFactory):
         model = ClamsApp
 
     @factory.sequence
-    def name(n):
+    def name(n):  # noqa N805
         index = n % len(CLAMSProvider.app_names)
         return CLAMSProvider.app_names[index]
 
