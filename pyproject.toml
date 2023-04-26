@@ -38,6 +38,7 @@ test = [
 ]
 locust = ["locust~=2.15", "pydantic-factories~=1.17"]
 
+
 [tool.pdm.dev-dependencies]
 dev = ["uvicorn~=0.21", "black~=23.3", "ruff~=0.0"]
 docs = [
