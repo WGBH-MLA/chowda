@@ -918,7 +918,7 @@ dependencies = [
 [metadata]
 lock_version = "4.2"
 groups = ["default", "dev", "docs", "locust", "production", "test"]
-content_hash = "sha256:8607d1cd93049dc31dbdf74783b2b931dfdbeee73f5c347b4c962bffe79b19eb"
+content_hash = "sha256:402eb97679a4f0490814f361f45d2ab5b1d8ea363de7000635c581ed62e9fd23"
 
 [metadata.files]
 "anyio 3.6.2" = [

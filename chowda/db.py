@@ -14,16 +14,17 @@ def get_engine(env=ENVIRONMENT):
             echo=True,
             poolclass=StaticPool,
         )
-    elif env == 'development':
+    if env == 'development':
         return create_engine(
             DB_URL,
             connect_args={'check_same_thread': False},
             echo=True,
         )
-    elif env == 'production':
+    if env == 'production':
         return create_engine(
             DB_URL, connect_args={'check_same_thread': True}, echo=False
         )
+    raise Exception(f'Unknown environment: {env}')
 
 
 engine = get_engine()

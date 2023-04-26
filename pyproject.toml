@@ -1,26 +1,25 @@
 [tool.pdm.build]
 includes = []
+
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
-
 
 [project]
 name = "chowda"
 dynamic = ["version"]
 description = "A CLAMS processing application"
-authors = [
-    {name = "WGBH-MLA", email = "ryan_harbert@wgbh.org"},
-]
+authors = [{ name = "WGBH-MLA", email = "ryan_harbert@wgbh.org" }]
 dependencies = [
     "fastapi~=0.95",
     "starlette-admin~=0.8",
     "sqlmodel~=0.0",
     "pydantic[email]~=1.10",
+    "requests>=2.28.2",
 ]
 requires-python = ">=3.8.1,<4.0"
 readme = "README.md"
-license = {text = "MIT"}
+license = { text = "MIT" }
 
 [project.urls]
 homepage = "https://github.com/WGBH-MLA/chowda"
@@ -28,11 +27,7 @@ documentation = "https://WGBH-MLA.github.io/chowda/"
 repository = "https://github.com/WGBH-MLA/chowda"
 
 [project.optional-dependencies]
-production = [
-    "psycopg2~=2.9",
-    "uvicorn[standard]~=0.21",
-    "gunicorn~=20.1",
-]
+production = ["psycopg2~=2.9", "uvicorn[standard]~=0.21", "gunicorn~=20.1"]
 test = [
     "factory-boy~=3.2",
     "pytest~=7.3",
@@ -41,21 +36,11 @@ test = [
     "pytest-xdist~=3.2",
     "httpx~=0.24",
 ]
-locust = [
-    "locust~=2.15",
-    "pydantic-factories~=1.17",
-]
-
-
-
+locust = ["locust~=2.15", "pydantic-factories~=1.17"]
 
 
 [tool.pdm.dev-dependencies]
-dev = [
-    "uvicorn~=0.21",
-    "black~=23.3",
-    "ruff~=0.0",
-]
+dev = ["uvicorn~=0.21", "black~=23.3", "ruff~=0.0"]
 docs = [
     "mkdocs~=1.4",
     "mkdocs-material~=9.1",
