@@ -38,7 +38,6 @@ test = [
 ]
 locust = ["locust~=2.15", "pydantic-factories~=1.17"]
 
-
 [tool.pdm.dev-dependencies]
 dev = ["uvicorn~=0.21", "black~=23.3", "ruff~=0.0"]
 docs = [
@@ -47,6 +46,7 @@ docs = [
     "mkdocs-git-revision-date-localized-plugin~=1.2",
     "mike @ git+https://github.com/jimporter/mike.git@063c93e9cce7c82939c7d47e6d33f99b24bba372",
     "mkdocstrings[python]~=0.21",
+    "mkdocs-jupyter~=0.24",
 ]
 
 [tool.pdm]

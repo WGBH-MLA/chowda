@@ -44,10 +44,12 @@ theme:
     - toc.integrate
     - navigation.top
     - content.code.annotate
+  custom_dir: overrides
 
 plugins:
   - search
   - mkdocstrings
+  - mkdocs-jupyter
 
 watch:
   - chowda
