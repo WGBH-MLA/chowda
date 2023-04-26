@@ -82,12 +82,9 @@ select = [
 
 ]
 ignore = [
-    # line too long
-    "E501",
-    # imported but not used
-    "F401",
-    # Commented out code
-    "ERA001",
-    # Missing explicit `return`
-    "RET503",
+    "E501", # line too long
+    "F401", # imported but not used
+    "ERA001", # Commented out code
+    "RET503", # Missing explicit `return`
+
 ]
