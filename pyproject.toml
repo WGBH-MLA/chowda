@@ -55,10 +55,36 @@ version = { source = "file", path = "chowda/_version.py" }
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
+[tool.ruff.flake8-quotes]
+inline-quotes = "single"
+
 [tool.ruff]
+select = [
+    "B", # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "C90", # mccabe
+    "E", # pycodestyle errors
+    "ERA", # eradicate
+    "F", # pyflakes
+    # "I", # isort
+    "INT", # flake8-gettext
+    "N", # pep8-naming
+    "PIE", # flake8-pie,
+    "PLC", # pylint - convention
+    "PLE", # pylint - error
+    "PLW", # pylint - warning
+    "Q", # flake8-quotes
+    "RET", # flake8-return,
+    "RUF", # Ruff-specific rules
+    "SIM", # flake8-simplify
+    "UP", # pyupgrade
+    "W", # pycodestyle warnings
+
+]
 ignore = [
-    # line too long
-    "E501",
-    # imported but not used
-    "F401"
+    "E501", # line too long
+    "F401", # imported but not used
+    "ERA001", # Commented out code
+    "RET503", # Missing explicit `return`
+
 ]
