@@ -7,7 +7,6 @@ from factories import (
     ClamsAppFactory,
     PipelineFactory,
     BatchFactory,
-    ClamsEventFactory,
 )
 
 models = {

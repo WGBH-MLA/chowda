@@ -5,7 +5,7 @@ SQLModels for DB and validation
 
 from typing import Any, Dict, List, Optional
 from pydantic import AnyHttpUrl, EmailStr, stricturl
-from sqlalchemy import JSON, Column, DateTime, String, Text
+from sqlalchemy import JSON, Column
 from starlette.requests import Request
 from sqlmodel import Field, Relationship, SQLModel
 

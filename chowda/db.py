@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlmodel import SQLModel
 from sqlmodel.pool import StaticPool
-from chowda import models
+from chowda import models  # noqa F401
 from chowda.config import ENVIRONMENT, DB_URL
 
 
