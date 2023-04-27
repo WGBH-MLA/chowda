@@ -4,7 +4,6 @@ __pycache__
 *.sqlite
 
 # Local pdm config
-pdm.toml
 .pdm-python
 
 # PEP 582 local files

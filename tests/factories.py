@@ -31,7 +31,10 @@ class CLAMSProvider(BaseProvider):
         return self.generator.random.choice(self.app_names)
 
     def guid(self):
-        return f'cpb-aacip-{str(self.generator.random_int())}-{self.generator.hexify(8*"^")}'
+        return (
+            'cpb-aacip-'
+            + f'{str(self.generator.random_int())}-{self.generator.hexify(8*"^")}'
+        )
 
     def collection_name(self):
         if self.generator.random.choice([True, False]):

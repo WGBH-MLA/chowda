@@ -50,7 +50,8 @@ def seed(
         media_file.batches = sample(batches, randint(0, 3))
         media_file.collections = [choice(collections)]
 
-    # Create some sample ClamsEvents on random batches, media files, and clams apps from the pipeline
+    # Create some sample ClamsEvents
+    # on random batches, media files, and clams apps from the pipeline
     for _ in range(num_clams_events):
         batch = choice(batches)
         ClamsEventFactory.create(

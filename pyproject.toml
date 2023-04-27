@@ -38,7 +38,6 @@ test = [
 ]
 locust = ["locust~=2.15", "pydantic-factories~=1.17"]
 
-
 [tool.pdm.dev-dependencies]
 dev = ["uvicorn~=0.21", "black~=23.3", "ruff~=0.0"]
 docs = [
@@ -79,12 +78,5 @@ select = [
     "SIM", # flake8-simplify
     "UP", # pyupgrade
     "W", # pycodestyle warnings
-
-]
-ignore = [
-    "E501", # line too long
-    "F401", # imported but not used
-    "ERA001", # Commented out code
-    "RET503", # Missing explicit `return`
 
 ]
