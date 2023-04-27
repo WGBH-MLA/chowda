@@ -6,7 +6,9 @@
 
 CLAMS processing app
 
-## Overview
+## Documentation
+
+Visit the [documentation](https://wgbh-mla.github.io/chowda/) for install and usage instructions.
 
 ### Basic Pipeline with 2 CLAMS Apps
 
