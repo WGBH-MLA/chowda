@@ -17,5 +17,5 @@ def vcr_cassette_dir(request):
 def vcr_config(request):
     return {
         # Replace the Authorization request header with "DUMMY" in cassettes
-        'filter_headers': [('authorization', 'DUMMY')],
+        'filter_headers': [('authorization', 'Bearer DUMMY')],
     }

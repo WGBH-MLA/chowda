@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from requests import get, post
+from requests import post
 from requests_oauth2client import ApiClient, OAuth2Client
 from requests_oauth2client.auth import OAuth2AccessTokenAuth
 from requests_oauth2client.tokens import BearerToken
