@@ -50,10 +50,10 @@ Visit: [localhost:8000](http://localhost:8000/)
 
 ## Seed the database
 
-To seed the database with fake data, run the `seed.py` script:
+To seed the database with fake data, run the `seeds.py` script:
 
 ```shell
-python tests/seed.py
+python tests/seeds.py
 ```
 
 **Optional:** Customize the number of records created by changing the `num_*` variables in the `seed` function.
