@@ -6,6 +6,7 @@ jobs:
   tests:
     name: ⚗️ Application Tests
     uses: WGBH-MLA/.github/.github/workflows/pytest.yml@main
+    secrets: inherit
     with:
       pytest_args: -q -n auto
 
