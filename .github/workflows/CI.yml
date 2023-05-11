@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   tests:
     name: ⚗️ Application Tests
-    uses: WGBH-MLA/.github/.github/workflows/pytest.yml@token
+    uses: WGBH-MLA/.github/.github/workflows/pytest.yml@main
     secrets: inherit
     with:
       pytest_args: -n auto
