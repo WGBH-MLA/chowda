@@ -4,24 +4,25 @@ Main Chowda application"""
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from sqlmodel import SQLModel
 from starlette.responses import HTMLResponse
 from starlette.routing import Route
 from starlette_admin.contrib.sqlmodel import ModelView
-from sqlmodel import SQLModel
+
+from chowda._version import __version__
 from chowda.admin import Admin
+from chowda.config import STATIC_DIR, TEMPLATES_DIR
+from chowda.db import engine
 from chowda.models import (
-    User,
-    MediaFile,
-    Collection,
-    ClamsApp,
-    Pipeline,
     Batch,
+    ClamsApp,
     ClamsEvent,
+    Collection,
+    MediaFile,
+    Pipeline,
+    User,
 )
 from chowda.views import CollectionView
-from chowda._version import __version__
-from chowda.db import engine
-from chowda.config import STATIC_DIR, TEMPLATES_DIR
 
 
 def init_database() -> None:
