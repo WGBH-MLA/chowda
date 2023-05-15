@@ -1,17 +1,18 @@
-from chowda.models import (
-    MediaFile,
-    Batch,
-    Collection,
-    ClamsApp,
-    Pipeline,
-    ClamsEvent,
-    User,
-    AppStatus,
-)
 import factory
-from sqlalchemy import orm
-from chowda.db import engine
 from faker.providers import BaseProvider
+from sqlalchemy import orm
+
+from chowda.db import engine
+from chowda.models import (
+    AppStatus,
+    Batch,
+    ClamsApp,
+    ClamsEvent,
+    Collection,
+    MediaFile,
+    Pipeline,
+    User,
+)
 
 
 class CLAMSProvider(BaseProvider):
@@ -33,7 +34,9 @@ class CLAMSProvider(BaseProvider):
     def guid(self):
         return (
             'cpb-aacip-'
-            + f'{str(self.generator.random_int())}-{self.generator.hexify(8*"^")}'
+            + str(self.generator.random_int())
+            + '-'
+            + self.generator.hexify(8 * '^')
         )
 
     def collection_name(self):
