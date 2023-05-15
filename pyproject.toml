@@ -2,93 +2,82 @@
 includes = []
 
 [build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
+requires = ['pdm-backend']
+build-backend = 'pdm.backend'
 
 [project]
-name = "chowda"
-dynamic = ["version"]
-description = "A CLAMS processing application"
-authors = [{ name = "WGBH-MLA", email = "ryan_harbert@wgbh.org" }]
+name = 'chowda'
+dynamic = ['version']
+description = 'A CLAMS processing application'
+authors = [{ name = 'WGBH-MLA', email = 'ryan_harbert@wgbh.org' }]
 dependencies = [
-    "fastapi~=0.95",
-    "starlette-admin~=0.8",
-    "sqlmodel~=0.0",
-    "pydantic[email]~=1.10",
-    "requests~=2.30",
+    'fastapi~=0.95',
+    'starlette-admin~=0.8',
+    'sqlmodel~=0.0',
+    'pydantic[email]~=1.10',
+    'sonyci~=0.1',
 ]
-requires-python = ">=3.8.1,<4.0"
-readme = "README.md"
-license = { text = "MIT" }
+requires-python = '>=3.8.1,<4.0'
+readme = 'README.md'
+license = { text = 'MIT' }
 
 [project.urls]
-homepage = "https://github.com/WGBH-MLA/chowda"
-documentation = "https://WGBH-MLA.github.io/chowda/"
-repository = "https://github.com/WGBH-MLA/chowda"
+homepage = 'https://github.com/WGBH-MLA/chowda'
+documentation = 'https://WGBH-MLA.github.io/chowda/'
+repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project.optional-dependencies]
-production = [
-    "psycopg2~=2.9",
-    "uvicorn[standard]~=0.22",
-    "gunicorn~=20.1",
-]
+production = ['psycopg2~=2.9', 'uvicorn[standard]~=0.21', 'gunicorn~=20.1']
 test = [
-    "factory-boy~=3.2",
-    "pytest~=7.3",
-    "pytest-cov~=4.0",
-    "pytest-sugar~=0.9",
-    "pytest-xdist~=3.2",
-    "httpx~=0.24",
+    'factory-boy~=3.2',
+    'pytest~=7.3',
+    'pytest-cov~=4.0',
+    'pytest-sugar~=0.9',
+    'pytest-xdist~=3.2',
+    'httpx~=0.24',
 ]
-locust = [
-    "locust~=2.15",
-    "pydantic-factories~=1.17",
-]
+locust = ['locust~=2.15', 'pydantic-factories~=1.17']
 
 [tool.pdm.dev-dependencies]
-dev = [
-    "uvicorn~=0.22",
-    "black~=23.3",
-    "ruff~=0.0",
-]
+dev = ['uvicorn~=0.21', 'black~=23.3', 'ruff~=0.0']
 docs = [
-    "mkdocs~=1.4",
-    "mkdocs-material~=9.1",
-    "mkdocs-git-revision-date-localized-plugin~=1.2",
-    "mike @ git+https://github.com/jimporter/mike.git@063c93e9cce7c82939c7d47e6d33f99b24bba372",
-    "mkdocstrings[python]~=0.21",
-    "mkdocs-jupyter~=0.24",
+    'mkdocs~=1.4',
+    'mkdocs-material~=9.1',
+    'mkdocs-git-revision-date-localized-plugin~=1.2',
+    'mike @ git+https://github.com/jimporter/mike.git@063c93e9cce7c82939c7d47e6d33f99b24bba372',
+    'mkdocstrings[python]~=0.21',
+    'mkdocs-jupyter~=0.24',
 ]
 
 [tool.pdm]
-version = { source = "file", path = "chowda/_version.py" }
+version = { source = 'file', path = 'chowda/_version.py' }
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ['tests']
 
 [tool.ruff.flake8-quotes]
-inline-quotes = "single"
+inline-quotes = 'single'
 
 [tool.ruff]
 select = [
-    "B", # flake8-bugbear
-    "C4", # flake8-comprehensions
-    "C90", # mccabe
-    "E", # pycodestyle errors
-    "ERA", # eradicate
-    "F", # pyflakes
+    'B', # flake8-bugbear
+    'C4', # flake8-comprehensions
+    'C90', # mccabe
+    'E', # pycodestyle errors
+    'ERA', # eradicate
+    'F', # pyflakes
     # "I", # isort
-    "INT", # flake8-gettext
-    "N", # pep8-naming
-    "PIE", # flake8-pie,
-    "PLC", # pylint - convention
-    "PLE", # pylint - error
-    "PLW", # pylint - warning
-    "Q", # flake8-quotes
-    "RET", # flake8-return,
-    "RUF", # Ruff-specific rules
-    "SIM", # flake8-simplify
-    "UP", # pyupgrade
-    "W", # pycodestyle warnings
+    'INT', # flake8-gettext
+    'N', # pep8-naming
+    'PIE', # flake8-pie,
+    'PLC', # pylint - convention
+    'PLE', # pylint - error
+    'PLW', # pylint - warning
+    'Q', # flake8-quotes
+    'RET', # flake8-return,
+    'RUF', # Ruff-specific rules
+    'SIM', # flake8-simplify
+    'UP', # pyupgrade
+    'W', # pycodestyle warnings
 
 ]
