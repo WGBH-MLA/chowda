@@ -1,0 +1,151 @@
+interactions:
+- request:
+    body: grant_type=password&client_id=FAKE_CLIENT_ID&client_secret=FAKE_CLIENT_SECRET
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, br
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '109'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.30.0
+      authorization:
+      - Bearer DUMMY
+    method: POST
+    uri: https://api.cimediacloud.com/oauth2/token
+  response:
+    body:
+      string: '{"access_token": "DUMMY_ACCESS_TOKEN", "expires_in": 86400, "token_type":
+        "bearer", "refresh_token": "DUMMY_REFRESH_TOKEN"}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 16 May 2023 04:01:05 GMT
+      Expires:
+      - '-1'
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=86400; includeSubDomains
+      X-Frame-Options:
+      - deny
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, br
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.30.0
+      authorization:
+      - Bearer DUMMY
+    method: GET
+    uri: https://api.cimediacloud.com/workspaces/051303c1c1d24da7988128e6d2f56aa9/search?kind=asset&query=191-29b5mpvv
+  response:
+    body:
+      string: '{"limit": 50, "offset": 0, "count": 1, "kind": "Asset", "type": "All",
+        "query": "191-29b5mpvv", "items": [{"id": "26013d6bdcce47fc9812bb7dc3ed44ff",
+        "name": "cpb-aacip-191-29b5mpvv.mp4", "size": 232095244, "createdOn": "2021-11-30T15:14:13.156Z",
+        "thumbnails": [{"type": "small", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4MTY2NX19fV19&Signature=GixvcUjmHqsKsUlsK4tni-vJMmIHAoQ8gRYJj2ALtouJtF5v4m9EUowmOpfcK38BKtDcotK9ydmsFKbi--xCpnFKATdOIDwUAaGauipL3L3h3TfhWMzdJ5tdPMyol9BpN2JAYD9ah9ZCP30~DR4Qqq3u1M0gMyvVjdbahooOyoQ_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 8070, "width": 250, "height": 188, "isExternal": false}, {"type":
+        "large", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-large.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1sYXJnZS5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4MTY2NX19fV19&Signature=SaNO0iv5A3nL-iBnqJGEBGVPMvM46oNUnvgg1xYGeszIbSVK~0-lGaJ8b9wC3wTGxbN3uLxRibcSR-pJG8JJ8LTj3QE4tgIYmTFig-isxdMC~1Hy6od8w-THqIAs5hwNezOXWA5IWzhTZjec1ffHCyr-u2kKQWvUzL2Dc2tCGIU_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 67283, "width": 1000, "height": 750, "isExternal": false}, {"type":
+        "medium", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-medium.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1tZWRpdW0uanBnIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NDcyODE2NjV9fX1dfQ__&Signature=hUTd4-W26yvyy3umWiY8Vbf9EEwNaoytufDsnta6VywmKkSRz2NKsZKrZG~VMycUBF4rFD8hTP2EZX4H03xmLCyVbY1jzO8NhfGCPka05cFH4rVT9E2SysBOJNDtNMzoDFEwMlGqthk8HE5uHu8upxrrGgd1yddbXFmNvHFEaJM_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 32571, "width": 560, "height": 420, "isExternal": false}, {"type":
+        "standard", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4MTY2NX19fV19&Signature=GixvcUjmHqsKsUlsK4tni-vJMmIHAoQ8gRYJj2ALtouJtF5v4m9EUowmOpfcK38BKtDcotK9ydmsFKbi--xCpnFKATdOIDwUAaGauipL3L3h3TfhWMzdJ5tdPMyol9BpN2JAYD9ah9ZCP30~DR4Qqq3u1M0gMyvVjdbahooOyoQ_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 8070, "width": 250, "height": 188}], "proxies": [{"type": "video-3g",
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-3g.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLTNnLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTI4NjV9fX1dfQ__&Signature=CQv7mnFCgi5~drvA8A6PEiW-rm0WqDVhb5-U3zRLZ9eHuRhQVnXq0~AEN8HTeAtqsZhCcIfBGlmP95pKHpn9yyz6aoKtMUfmY1OpLSprCZD5EPuQaw0tT20IWKokUaJzvgVmdvPnWekbAHC9-wClc3Za4BMGm1iSuoX09qkTQEE_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "width": 360, "height": 270, "audioBitRate": 128455, "videoBitRate": 199373,
+        "size": 74070555, "isExternal": false}, {"type": "video-sd", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-sd.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXNkLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTI4NjV9fX1dfQ__&Signature=Q82uT33R94-Gu5gYXEaYJCcTUOTYPypICHep81egy~31WKp-m640vnnstpqmEUb8g6gJvbbilfJNKZHn~GmZejuE4~yr0Wo-SMEFdlNGQMcrfKzcbn5vP~rmqUFRmJlJpbd1n1Dri9X6G0wQDPX778HVlbMSK6lxjPE5i4f19sE_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "width": 480, "height": 360, "audioBitRate": 196492, "videoBitRate": 557649,
+        "size": 168403186, "isExternal": false}], "type": "Video", "format": "mp4",
+        "status": "Complete", "lastActivityOn": "2023-03-17T19:21:22.016Z", "modifiedOn":
+        "2021-11-30T15:28:52.567Z", "md5Checksum": "7a25955378f5b552c9bc140d6635f7e3",
+        "clipSource": {}, "technicalMetadata": {"type": "Video", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/cpb-aacip-191-29b5mpvv.mp4.xml?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9jcGItYWFjaXAtMTkxLTI5YjVtcHZ2Lm1wNC54bWwiLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDIyMDQ2NX19fV19&Signature=ESnRvLOXHAQdBX5qhKkHN7KecliiQOsGc5u3ff16Z3E~lBMrViNMKDp3IFxGYHaSBCJxu4K5JhkL2sfnYJ3F7kMp~sdWNNOsecbhqogHOmZDlkSAfa5M-mfqn33dKDcYOm-R-KWIYCQCjEI6~~~YdLBJOnZDlU6fKx4HUmO1pNg_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 6358, "avContainer": {"bitRate": 1048885, "derivedTimeCode": "00:00:00;00",
+        "duration": 1770.224, "format": "MPEG-4", "formatCommercialName": "MPEG-4",
+        "formatProfile": "Base Media", "start": 0.0, "streams": [{"bitDepth": 8, "bitRate":
+        844671, "codec": "h264", "codecLongName": "H.264 / AVC / MPEG-4 AVC / MPEG-4
+        part 10", "codecName": "AVC", "codecProfile": "Main@L3", "codecSettings":
+        "CABAC / 4 Ref Frames", "duration": 1770.201767, "fourCC": "avc1", "frameRateDenominator":
+        1001, "frameRateNumerator": 30000, "height": 360, "index": 0, "start": 0.0,
+        "timeCode": "00:00:00;00", "totalFrames": 53053, "type": "Video", "videoColorSpace":
+        "YUV", "videoDARHeight": 3, "videoDARWidth": 4, "videoPARHeight": 1, "videoPARWidth":
+        1, "videoScanType": "Progressive", "width": 480}, {"audioAnalysis": "Stereo",
+        "audioChannelCount": 2, "audioLayout": "Stereo", "audioSampleRate": 48000,
+        "bitRate": 195455, "bitRateMode": "CBR", "codec": "aac", "codecLongName":
+        "AAC (Advanced Audio Coding)", "codecName": "AAC", "codecProfile": "LC", "duration":
+        1770.202, "fourCC": "mp4a", "index": 1, "start": 0.0, "type": "Audio"}, {"fourCC":
+        "tmcd", "index": 2, "start": 0.0, "timeCode": "00:00:00;00", "type": "Data"}]},
+        "isExternal": false}, "archiveStatus": "Not archived", "restoreStatus": "Not
+        restored", "uploadCompleteDate": "2021-11-30T15:25:37.01Z", "isTrashed": false,
+        "isFavorite": false, "isExternal": false, "uploadTransferType": "MultipartHttp",
+        "folder": {"id": "a1459cf719eb4a7cb2686663018be161", "name": "Workspace"},
+        "runtime": 1770.224, "workspace": {"id": "051303c1c1d24da7988128e6d2f56aa9",
+        "name": "American Archive of Public Broadcasting", "class": "Team"}, "network":
+        {"id": "e573ff14defc4b4e9ea393c3150a396c", "name": "American Archive", "class":
+        "Company"}, "enterpriseNetwork": {"id": "2075d1389045443d97dfc24c9107f78f",
+        "name": "WGBH"}, "filmstrips": [{"frameHeight": 188, "frameWidth": 250, "frames":
+        14, "width": 3500, "height": 188, "type": "video-filmstrip-scrub", "location":
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-scrub.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zY3J1Yi5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1Mjg2NX19fV19&Signature=VrxwhnB4Rtjgsf~pGjg7UmaBIdcYRQsS-T5S2GjC9KCPOxhgW-82mBIY156UXT9i1UCVwWwJdXEoWgjXdgqvWUDCmRiG3OzjZSlVvGhUb97PX0erKjhYfHf6nGHut6ONfkVs3zbie~9mgrOrjgs1H2JvMgSnim5~tc1-DNU7lD4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "isExternal": false}, {"frameHeight": 34, "frameWidth": 46, "frames": 199,
+        "width": 9154, "height": 34, "type": "video-filmstrip-small", "location":
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-small.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zbWFsbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1Mjg2NX19fV19&Signature=j2-MKGz~QygKJ6J0GY9SqYY7Ey-WNwlgW2rF~ddkPDXkjNcq2usyisZc0kesqrNbyb15AhBfMr5o2dKOAWD6o9GvjXi-odEQnYmdjB2Cpg3UXLqedDoO62FOy8iRg1sKAUG-AycgoTA5LLJPDiXWogcXMT5WDwVXOrTK-nj9tRk_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "isExternal": false}], "waveforms": [{"type": "video-waveform", "size": 1031206,
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-waveform.txt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXdhdmVmb3JtLnR4dCIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjUyODY1fX19XX0_&Signature=GX7POBmKxtvfe7wspMbRpysXqTJ39G-uhlDimzcGpM07LaR7Nmxz~1XYzWXXm~FaJn9lKYLxcBgBtZGMsCW8atU-8vQ60zRKKWByonHx~jnWHIM4SK1R720iRkERR5ObSa9obaV6FUHC5ya4rDQUwuz7LrTmgfPTKTN7N5sQX0Q_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "sampleMethod": "SamplesCount", "maxAmplitude": 0, "isExternal": false}],
+        "mediaAnalyses": [{"type": "video-frame-level-loudness", "size": 212586, "location":
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-frame-level-loudness.wav?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZyYW1lLWxldmVsLWxvdWRuZXNzLndhdiIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjUyODY1fX19XX0_&Signature=L66KqkpLkF1KFthqKvklOX~qnVpZbzZ2qPx2uqGPKnb-YUsRe63bYNbFG8hul5bob-yYKZhBw4t5jukZJshn97joTi5WOTcXVP5FW-D38orUaq5HpD1fG7MdNLgePcuoE3DQSpKECAuaxKbUgpOqF~npoUz6eewc~3nB7gtssP8_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "isExternal": false}], "acquisitionSource": {"name": "Workspace"}, "hlsPlaylistUrl":
+        "https://io.cimediacloud.com/assets/26013d6bdcce47fc9812bb7dc3ed44ff/preview/hls/playlist.m3u8?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Expires=1684252865&Signature=EXRduJ26fuEXICcx6gRchR0Qc7sWlQ05LpWDZ%2BYrXwY%3D",
+        "totalFolderCount": 1, "isTimedTextMatch": false, "batchId": "331fecb4cd4e45a38cc01f7865d61cb3",
+        "kind": "Asset", "createdBy": {"id": "ac001ff970c14b358664d9ee4da0c39b", "name":
+        "Miranda Villesvik", "email": "miranda_villesvik@wgbh.org"}}], "order": {"by":
+        "Relevance", "direction": "Desc"}}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '11442'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 16 May 2023 04:01:05 GMT
+      Expires:
+      - '-1'
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=86400; includeSubDomains
+      X-Frame-Options:
+      - deny
+      X-RateLimit-Limit:
+      - '5000'
+      X-RateLimit-Remaining:
+      - '4992'
+      X-RateLimit-Reset:
+      - '1684209720'
+    status:
+      code: 200
+      message: OK
+version: 1
