@@ -1,0 +1,8 @@
+[sonyci]
+username = 'aapb_notifications@wgbh.org'
+password = 'DUMMY'
+client_id = 'DUMMY'
+client_secret = 'DUMMY'
+
+# My Workspace - sandbox workspace used for testing for this account.
+workspace_id = 'f44132c2393d470c88b9884f45877ebb'
