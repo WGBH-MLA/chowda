@@ -11,6 +11,11 @@ from sqlmodel import Field, Relationship, SQLModel
 
 from enum import Enum
 
+from sonyci import SonyCi
+
+# TODO: find a better place for this?
+ci = SonyCi.load(toml_filename='ci.toml')
+
 MediaUrl = stricturl(allowed_schemes=['video', 'audio', 'text'], tld_required=False)
 """Media url validator. Must have prefix of video, audio, or text. No TLD required.
 Example:
@@ -75,6 +80,10 @@ class MediaFile(SQLModel, table=True):
         back_populates='media_files', link_model=MediaFileBatchLink
     )
     clams_events: List['ClamsEvent'] = Relationship(back_populates='media_file')
+
+    @property
+    def sonyci_asset(self):
+        return ci.workspace_search(query=self.guid[10:], kind='asset')[0]
 
     async def __admin_repr__(self, request: Request):
         return self.guid
