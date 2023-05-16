@@ -11,10 +11,8 @@ from sqlmodel import Field, Relationship, SQLModel
 
 from enum import Enum
 
-from sonyci import SonyCi
+from chowda.sonyci import ci
 
-# TODO: find a better place for this?
-ci = SonyCi.load(toml_filename='ci.toml')
 
 MediaUrl = stricturl(allowed_schemes=['video', 'audio', 'text'], tld_required=False)
 """Media url validator. Must have prefix of video, audio, or text. No TLD required.
