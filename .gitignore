@@ -17,3 +17,6 @@ site/
 
 # Ignore jupyter notebook session
 session.ipynb
+
+# Common location for sony ci credentials
+ci.toml
