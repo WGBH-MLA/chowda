@@ -6,8 +6,9 @@ SQLModels for DB and validation
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
-from pydantic import AnyHttpUrl, BaseModel, EmailStr, stricturl
+from pydantic import AnyHttpUrl, BaseModel, EmailStr
 from pydantic import Field as pydantic_Field
+from pydantic import stricturl
 from sqlalchemy import JSON, Column
 from sqlmodel import Field, Relationship, SQLModel
 from starlette.requests import Request
@@ -74,8 +75,15 @@ class MediaFileBatchLink(SQLModel, table=True):
 
 
 class MediaFile(SQLModel, table=True):
+    """Media file model
+
+    Attributes:
+        id: SonyCi asset id
+        guid: asset guid
+    """
+
     __tablename__ = 'media_files'
-    id: Optional[int] = Field(primary_key=True)
+    id: Optional[str] = Field(primary_key=True)
     guid: str = Field(index=True)
     mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
     collections: List['Collection'] = Relationship(
