@@ -83,7 +83,17 @@ class MediaFile(SQLModel, table=True):
 
     @property
     def sonyci_asset(self):
-        return ci.workspace_search(query=self.guid[10:], kind='asset')[0]
+        if len(self.sonyci_assets_found) > 1:
+            raise f'Found {len(self.sonyci_assets_found)} Sony Ci files for GUID="{self.guid}".'  # noqa: E501
+
+        if len(self.sonyci_assets_found) == 0:
+            raise f'No Sony Ci Asset found for GUID="{self.guid}"'
+
+        return self.sonyci_assets_found[0]
+
+    @property
+    def sonyci_assets_found(self):
+        return ci.workspace_search(query=self.guid[10:], kind='asset')
 
     async def __admin_repr__(self, request: Request):
         return self.guid
