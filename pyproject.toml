@@ -52,6 +52,9 @@ docs = [
 [tool.pdm]
 version = { source = 'file', path = 'chowda/_version.py' }
 
+[tool.coverage.run]
+omit = ['tests/*']
+
 [tool.pytest.ini_options]
 testpaths = ['tests']
 
