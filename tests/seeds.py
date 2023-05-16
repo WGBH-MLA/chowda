@@ -1,16 +1,17 @@
-from factories import (
-    factory_session,
-    MediaFileFactory,
+from random import choice, randint, sample
+
+from chowda.models import AppStatus
+from tests.factories import (
     BatchFactory,
     ClamsAppFactory,
-    PipelineFactory,
     ClamsEventFactory,
-    CollectionFactory,
-    UserFactory,
     CLAMSProvider,
+    CollectionFactory,
+    MediaFileFactory,
+    PipelineFactory,
+    UserFactory,
+    factory_session,
 )
-from chowda.models import AppStatus
-from random import sample, randint, choice
 
 status = list(AppStatus)
 
@@ -65,4 +66,5 @@ def seed(
 
 
 if __name__ == '__main__':
+    seed()
     seed()
