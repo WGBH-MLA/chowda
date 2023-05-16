@@ -32,7 +32,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 May 2023 05:28:22 GMT
+      - Tue, 16 May 2023 06:32:40 GMT
       Expires:
       - '-1'
       Pragma:
@@ -64,22 +64,22 @@ interactions:
       string: '{"limit": 50, "offset": 0, "count": 1, "kind": "Asset", "type": "All",
         "query": "191-29b5mpvv", "items": [{"id": "26013d6bdcce47fc9812bb7dc3ed44ff",
         "name": "cpb-aacip-191-29b5mpvv.mp4", "size": 232095244, "createdOn": "2021-11-30T15:14:13.156Z",
-        "thumbnails": [{"type": "small", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwMn19fV19&Signature=Gd34iu0FroeFLhmqvSH87Ok8rFud4xImMAz9td38lgmVZP5qhesOHe3tJfySWmFzE9UhGnAJ1NbejCqHSKSldmUI6~XOrodY4SMbmwDdmFc0ecqi5HPHs9Z7Xt7ZMPUH7Eq0~cz463gXQ2Nd8NXOFPcQCrwHDQ8Amo8pEpQ4oPk_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "thumbnails": [{"type": "small", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2MX19fV19&Signature=I3J48A74TpSqVE-Et1ixmm40rJ9gw9k4ZVjhQjJY2Sx18X8Q7BVPdjdLt94UjFb4nOaXjBLVtTqUKDuoIsO5Lj2GH5g5eZA3nELoCfSlzbfrMPm-~WF6tjgm~cirLqF74a9pPZmoDinbNVsu88zzDpuIuG2wezKnCT1pMlJPZb4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 8070, "width": 250, "height": 188, "isExternal": false}, {"type":
-        "large", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-large.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1sYXJnZS5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwMn19fV19&Signature=TqPk6rPxbwWjTgr-iWY9kg9HLVlYYr-d7xT488YZ0I3kNgZwO8koK5hOgnH0Voq8kRK-C9rvzJpEPqwYitIbk-yqESbMx0Ggq1iOiJ5IXZ6NHSq-MQ0Nf-2SpxQrhW3IoG8URntZ9vqGk1EYr4u8SuQgETD3-S9y9uflcs9Tm7Y_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "large", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-large.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1sYXJnZS5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2MX19fV19&Signature=C7qP6eIC-V00gSkULhws41WHx2-K9LY7CKNyxCbW1Pn700NdBs61nZ8yrBfL4xWpQToTedxIOKkUZSyboq-QtAlNsXDWB9hKwQSvnRPlZvnRw8CCVA3KGSm0cgC9PjfIsWixV9BaST841xrJVevrvXpXae5AUlRfU0mlOa69I7M_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 67283, "width": 1000, "height": 750, "isExternal": false}, {"type":
-        "medium", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-medium.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1tZWRpdW0uanBnIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NDcyODY5MDJ9fX1dfQ__&Signature=XQwEl-SiRD7XsiTtX4GiTEE-AViML6lQgWDSCIHal00jzttIXoiUMn0MXRiMS5hfxW7CI44bBwDOCqwXMEB1lajhoBZF1VS90OgjkOI0JlapEVFTZKa2Wi3dz-n8~O6td3Pnxbr5Wwq2LC7WbEBHNAJKG2N0t2Q7FQX86XJh01I_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "medium", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-medium.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1tZWRpdW0uanBnIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NDcyOTA3NjF9fX1dfQ__&Signature=QVvbNb9wOD8MPSJIm8WS5ISf8I~QveE1xVfX8i6I9ruVOngU~fNlIsipVcSfd336cOS34ALIEvRbewykv4HSPgCeIODtFG3Xy-YMlhlfLLZXY3XBTLoj35UiGQaD0ePMse1KeRPcpt0stHjreYNPPg~3IqSS-ex0Sv~GpPqU6VM_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 32571, "width": 560, "height": 420, "isExternal": false}, {"type":
-        "standard", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwMn19fV19&Signature=Gd34iu0FroeFLhmqvSH87Ok8rFud4xImMAz9td38lgmVZP5qhesOHe3tJfySWmFzE9UhGnAJ1NbejCqHSKSldmUI6~XOrodY4SMbmwDdmFc0ecqi5HPHs9Z7Xt7ZMPUH7Eq0~cz463gXQ2Nd8NXOFPcQCrwHDQ8Amo8pEpQ4oPk_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "standard", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2MX19fV19&Signature=I3J48A74TpSqVE-Et1ixmm40rJ9gw9k4ZVjhQjJY2Sx18X8Q7BVPdjdLt94UjFb4nOaXjBLVtTqUKDuoIsO5Lj2GH5g5eZA3nELoCfSlzbfrMPm-~WF6tjgm~cirLqF74a9pPZmoDinbNVsu88zzDpuIuG2wezKnCT1pMlJPZb4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 8070, "width": 250, "height": 188}], "proxies": [{"type": "video-3g",
-        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-3g.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLTNnLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTgxMDJ9fX1dfQ__&Signature=P8sPfvSr-0aXWlJOGjCrdLwhFD8Vr5huT-2cYsDfYLvBTrbdw8ckVtjSuj5NaMVOsFhHun7Z39T-qW2SowPAXbl08JbV3H2KiD1raFJh4-i~43wsQRum-2aj42uUlLsA7y2e6ievugfVqz9i9SSdi1W11piu5wdJQYs0trhFo7o_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-3g.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLTNnLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNjE5NjF9fX1dfQ__&Signature=XwLmV9fLI8BxizbdMQ5Map38~sh~i~ZdAQt45hWQrv4Ha10e~I7HdaMocusS2JfPu4wbfjc~drfE6V-2la2r73tLZ17BVMfhecdVDxuXl09~ogeg4vT3Yzij1Uu7m3NzHV6WuHvRWM~kvfUmieaiJrU2Zs9mOqBxor-xSGDQyc4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "width": 360, "height": 270, "audioBitRate": 128455, "videoBitRate": 199373,
-        "size": 74070555, "isExternal": false}, {"type": "video-sd", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-sd.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXNkLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTgxMDJ9fX1dfQ__&Signature=ESkJxx4O8~xDwyzpVIv~V6OenDOIpOff~HIHSTlHwNumObXh3ogEs4LAsKQkFdtgMt2nRMB9kDaAFxZu~MnU9qxZnSAv7lizSHv-2f8qadcbddcx74gSy10Bzirdub2~vt0tUaQD2jTZecb6Lal5pK~C467WHb2GI0-Gf9u8q74_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 74070555, "isExternal": false}, {"type": "video-sd", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-sd.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXNkLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNjE5NjF9fX1dfQ__&Signature=OMizwBxIXOIJdfAwqswOnLb-vMkGOalK8aWVUH~kgx41V6jeO-sx9WlUyS9mR4MF4K8TaMRJFSDT058NG4Va4B7nTgcCZd9obG-Alqtlv3vswVojnbvjJ-olLoxBw~qzI9blluSAPXr3qpGeFD-B~GgFJvxJPsD-UpyK9oZ~5cc_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "width": 480, "height": 360, "audioBitRate": 196492, "videoBitRate": 557649,
         "size": 168403186, "isExternal": false}], "type": "Video", "format": "mp4",
         "status": "Complete", "lastActivityOn": "2023-03-17T19:21:22.016Z", "modifiedOn":
         "2021-11-30T15:28:52.567Z", "md5Checksum": "7a25955378f5b552c9bc140d6635f7e3",
-        "clipSource": {}, "technicalMetadata": {"type": "Video", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/cpb-aacip-191-29b5mpvv.mp4.xml?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9jcGItYWFjaXAtMTkxLTI5YjVtcHZ2Lm1wNC54bWwiLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDIyNTcwMn19fV19&Signature=csG~Ego-TJS6NP~5TyCWzN5uNzapqyiK5Qgto7mixY~UmT3y-lRiWj0Z70nJ-DkKTjJ5cxV5lBa8CVJnwYdZtSI4tGjXdlRubXLBGMZuh6tH47SnzH9Vt49JHmBeUJ5MbxC5Pmt1Q4neU5E~RULfKTUgRPhNV~T7nYy60O0nRDw_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "clipSource": {}, "technicalMetadata": {"type": "Video", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/cpb-aacip-191-29b5mpvv.mp4.xml?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9jcGItYWFjaXAtMTkxLTI5YjVtcHZ2Lm1wNC54bWwiLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDIyOTU2MX19fV19&Signature=eXDwfhwaZ31h5SGNHnVh0bviWIuWgAF~9uddnLUXRaK5y9XnmNgntFeCi5uGUF0MYcXDJyzotOEz-UEgARjyUajE5BejxARc0faLoy5zsys7Sdshz3uobm-phve-0VW9fZ86m4aqg1LAPbDNaZrqa4s74gAJhl5C6U8ofRkvuZY_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 6358, "avContainer": {"bitRate": 1048885, "derivedTimeCode": "00:00:00;00",
         "duration": 1770.224, "format": "MPEG-4", "formatCommercialName": "MPEG-4",
         "formatProfile": "Base Media", "start": 0.0, "streams": [{"bitDepth": 8, "bitRate":
@@ -105,17 +105,17 @@ interactions:
         "Company"}, "enterpriseNetwork": {"id": "2075d1389045443d97dfc24c9107f78f",
         "name": "WGBH"}, "filmstrips": [{"frameHeight": 188, "frameWidth": 250, "frames":
         14, "width": 3500, "height": 188, "type": "video-filmstrip-scrub", "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-scrub.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zY3J1Yi5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1ODEwMn19fV19&Signature=BBdsscPAi3dTIQuAnHJTS3tTn8rlInOEigmcWZN-SV5J~qZkGL-7cr2W3UWoIdCt8sMyPeQWOIWuDxEwngINguQ3MBwGNe4RQTzVK45XGfVrt0Wp4169MOGWzPd09r-wHOeRB2Po2EX07lhIsHdGzzZyL6FgiSBTqypmPkkrIhQ_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-scrub.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zY3J1Yi5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI2MTk2MX19fV19&Signature=fCYaUeeL1KrtZDLbLxH3PTtJTc~KTzj9-v-1vDfiyMeJ3RynnEXyQmLoJhN3utGTTAUxP-KEK79gROdSm7IJFEob7sagu7sVAmeW8~Pk8uFC3xysW0URXB1keXW6t5aozWjN7YquoyufgGEssqNgPhvbjuuWQZ-ccopOvq-Ad6E_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}, {"frameHeight": 34, "frameWidth": 46, "frames": 199,
         "width": 9154, "height": 34, "type": "video-filmstrip-small", "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-small.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zbWFsbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1ODEwMn19fV19&Signature=TTqOfsSNwrm2yS2MMT7uW7hau~k8ife2m585edSYeKvdSXWYbt8Y-Fp6RC~F1Pw~-Dst32orBRepCXVmkOgF~GlMEaY8Izlw1wS60Ia~2Y7cVhXMo-YFCJycuiIh9zdN1eF11ibRW-UQoKSkX3j8QTphIzQtnRghGfApKyn-pnc_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-small.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zbWFsbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI2MTk2MX19fV19&Signature=iS1wccDegZnZwoeTrYRBlPkzFx472NWXFQra2t7SUkG-DfPvR2oYMTrV85lOeVZKAtiW81OJPXZ9h51HlHIdShOvoDE9tjQPQTlKj1i20NCrwez4aFm4c1Y-2zCzXG2DwdFiXixgyznceh6se79h2LCzGbf4t~0Tm~meFNnNWSc_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}], "waveforms": [{"type": "video-waveform", "size": 1031206,
-        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-waveform.txt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXdhdmVmb3JtLnR4dCIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjU4MTAyfX19XX0_&Signature=OyErhA55Gw0BLaiE7iSReveKR9DEbrc~Nm5abMPVXRqVFj-DWoyeJVLnvTEANiSVQIXsVrecEaBzrYGJ9yH8YPfA3-K1m2SxKHJMmC1pld0QauUFP9aSsgt17mQ01gJaRtltLeppkBvhAYq9a2yoyhs6HYbblf3Hi17ZgMYDVqw_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-waveform.txt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXdhdmVmb3JtLnR4dCIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjYxOTYxfX19XX0_&Signature=Gi9lgwMDctKBP4UAQPf7m3VCoVz-Nkjj7Z9OrnQLbMKUQ-c3xlIWX-1uA07pWgU6RKm-1BEBty6gGQJrBjLLumdZXCF6xomZ93QZaq~4iKY7hvM~yX7PjXiA8HI8CD6MUJNZ~dNa90BGCa3wJjTRgcZA9qpByWEdXpdffr3T51Q_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "sampleMethod": "SamplesCount", "maxAmplitude": 0, "isExternal": false}],
         "mediaAnalyses": [{"type": "video-frame-level-loudness", "size": 212586, "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-frame-level-loudness.wav?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZyYW1lLWxldmVsLWxvdWRuZXNzLndhdiIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjU4MTAyfX19XX0_&Signature=PfUHn-SrDkDJNrsa-Yufyyz1v~8zdy752HN5fwZjqAS50qdYUNy7SagiFZ2w7D7qTiK04XtNkRIyjIrLPUfV8naXYo7DrUHmoFde65yvLWeicDUIDblgBla2-1ua2NnPe9rVE4GPpNMahLMYZDKPJ3cmlTcMVrvezkifSHT1IN0_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-frame-level-loudness.wav?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZyYW1lLWxldmVsLWxvdWRuZXNzLndhdiIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjYxOTYxfX19XX0_&Signature=O1RQ6xQTvnWXJwtNw~SkVCwdTWT~MVvJV9TqI7bSZRs8mJHHKq9IsDqi8~mrCDENtVdr4n8EBQm1mPHG1LBT2ciEFQB~twWHB8VSzUJNFVLlS53AfWwl~Tg5gO-avMOhVO8VWG6mXwNcuUqfliY9PyOsslAqemCXN1QGRd9lqJY_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}], "acquisitionSource": {"name": "Workspace"}, "hlsPlaylistUrl":
-        "https://io.cimediacloud.com/assets/26013d6bdcce47fc9812bb7dc3ed44ff/preview/hls/playlist.m3u8?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Expires=1684258102&Signature=9hmPdsqqdVW%2FnCTkt%2BssK2qgD0otNL0L96%2F7HPzxPo4%3D",
+        "https://io.cimediacloud.com/assets/26013d6bdcce47fc9812bb7dc3ed44ff/preview/hls/playlist.m3u8?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Expires=1684261961&Signature=FDIFN%2Bqw44%2BLE%2BoGaxdajSlAsjI0Mqlwz6fGMzQvMlI%3D",
         "totalFolderCount": 1, "isTimedTextMatch": false, "batchId": "331fecb4cd4e45a38cc01f7865d61cb3",
         "kind": "Asset", "createdBy": {"id": "ac001ff970c14b358664d9ee4da0c39b", "name":
         "Miranda Villesvik", "email": "miranda_villesvik@wgbh.org"}}], "order": {"by":
@@ -130,7 +130,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 May 2023 05:28:22 GMT
+      - Tue, 16 May 2023 06:32:41 GMT
       Expires:
       - '-1'
       Pragma:
@@ -142,9 +142,9 @@ interactions:
       X-RateLimit-Limit:
       - '5000'
       X-RateLimit-Remaining:
-      - '4979'
+      - '4995'
       X-RateLimit-Reset:
-      - '1684214940'
+      - '1684218780'
     status:
       code: 200
       message: OK
@@ -181,7 +181,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 May 2023 05:28:23 GMT
+      - Tue, 16 May 2023 06:32:41 GMT
       Expires:
       - '-1'
       Pragma:
@@ -213,22 +213,22 @@ interactions:
       string: '{"limit": 50, "offset": 0, "count": 1, "kind": "Asset", "type": "All",
         "query": "191-29b5mpvv", "items": [{"id": "26013d6bdcce47fc9812bb7dc3ed44ff",
         "name": "cpb-aacip-191-29b5mpvv.mp4", "size": 232095244, "createdOn": "2021-11-30T15:14:13.156Z",
-        "thumbnails": [{"type": "small", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwM319fV19&Signature=F8kVO8b0sRqtK74RTZWOdtY1t1-6YZlcxPnYSnFQucfP2ws7uk66rXxH06Or8ZmlCvuHM-eKLFqAgTP5mNfuQTT6XAJLH76gkVFF-nHuDIIMykYK-dZV3NAb3oUjU-yBUOdtsbX6Wf3penIpWQKl7ZLN4x0MTpk3CErmdFvIm7M_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "thumbnails": [{"type": "small", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2Mn19fV19&Signature=F6hTDoocakMu9Qe77iWEZYsW2jLEbGwVNt~Kh8P2hQSqqatnIpv-G06Uwmuvy-E5CfrBELXd8~R~2Y3F28nelf9Fa0eziP-oEILDG5NznIH1AODF8QWlM0j8DMPPU7YA6qUATL~AwYKsahACeoT1w2Qw3fnYZ8fFO4SaBy6SxhI_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 8070, "width": 250, "height": 188, "isExternal": false}, {"type":
-        "large", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-large.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1sYXJnZS5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwM319fV19&Signature=GPXKlXqHJmgQomTwwrIqWAGhSmgj~hzsgviRDmRjY5P3wJrQyczNnYq63OTUCubAxtLi1pCjReDUPHjQQwRfSJSq6EOxZT1tl0TSqyhw~vm1-7GnSt0gL0koFR8AkFSNsVT380KlWEZgl0xwG-QzBDzTOq2MIYdzBlQhmQdaAH4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "large", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-large.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1sYXJnZS5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2Mn19fV19&Signature=WqgtxnsGxI~ash5a77Zlw8OxG6s2ix6j-~0Hn0GmK9cu~Mmv8UBlFVt7UPIUE7U0hLE2lkw-VZFt32xGS49DdBX4xFPrap4zWXq0c1Rq3Mx52YF52C7TYlZ-1jvEXtX8HTyuZNWkkUxqpW1JQp1Xkj8WrIlns~YpXxDcp1LItOI_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 67283, "width": 1000, "height": 750, "isExternal": false}, {"type":
-        "medium", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-medium.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1tZWRpdW0uanBnIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NDcyODY5MDN9fX1dfQ__&Signature=CI0dTV-A1geZzaRWxQgnXYaRAQXAXrXoxYnQSG6ZUUj9JdMsQcfuJnE6Wj1UBK68cn7fqK81BELAze9npf9dLY0I73bQuv1BJZEKeWAwCzJK7Qi64FvBRDRYkBLOm7hxislphP6kTINUC0loDzForjHkKIQ89TWQrnyxwsstZf4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "medium", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-medium.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1tZWRpdW0uanBnIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NDcyOTA3NjJ9fX1dfQ__&Signature=WL4YM9c~s0RfBqxXgWPT9jn6q874ThVg2rfQJKE-23Ff0xeSv4PB8aODqJ1P3yHzFx3UCvI4hdaGcXInhjsLSEYQBnaxkoHSiD062yjHx4Ew8eghXtduwYXf3Tqb8p708tmPNcnlmA57yypGwrnmqkeV6J3nWctx0sOnp6KqJJ0_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 32571, "width": 560, "height": 420, "isExternal": false}, {"type":
-        "standard", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwM319fV19&Signature=F8kVO8b0sRqtK74RTZWOdtY1t1-6YZlcxPnYSnFQucfP2ws7uk66rXxH06Or8ZmlCvuHM-eKLFqAgTP5mNfuQTT6XAJLH76gkVFF-nHuDIIMykYK-dZV3NAb3oUjU-yBUOdtsbX6Wf3penIpWQKl7ZLN4x0MTpk3CErmdFvIm7M_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "standard", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2Mn19fV19&Signature=F6hTDoocakMu9Qe77iWEZYsW2jLEbGwVNt~Kh8P2hQSqqatnIpv-G06Uwmuvy-E5CfrBELXd8~R~2Y3F28nelf9Fa0eziP-oEILDG5NznIH1AODF8QWlM0j8DMPPU7YA6qUATL~AwYKsahACeoT1w2Qw3fnYZ8fFO4SaBy6SxhI_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 8070, "width": 250, "height": 188}], "proxies": [{"type": "video-3g",
-        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-3g.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLTNnLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTgxMDN9fX1dfQ__&Signature=Od-r~SqAwaLnaTMRb1E86h0W35TEc1IIV5Ve7C7WTIK0jgdpRf9QpWQ0j1lLM2PIep-WlnK07pBPqLlWTWIGIIHrwSgJlkx6m4uIxYDKVJ0vZUN8-ExcYal8VvF-N9VusWnS3L0fvn2x7e-TPrxfpRAmBIVy~AluXFsXFdRU9Xk_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-3g.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLTNnLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNjE5NjJ9fX1dfQ__&Signature=UjovhJOQJL7IM3ElTk8Y04yqfbx93MUg-0d9O3U2IWqGETibm~rO8lUiN1SUvv3iFBeDIZpWqnYsUFqw46D6FR-CJ03csJSLU86Th~Y68FDjOmGKdCFqYW7O8akVnbiRWYavOsrWxAscSyjZUua2VfTx~vckwNdJJFy0khSLO-c_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "width": 360, "height": 270, "audioBitRate": 128455, "videoBitRate": 199373,
-        "size": 74070555, "isExternal": false}, {"type": "video-sd", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-sd.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXNkLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTgxMDN9fX1dfQ__&Signature=G2bR6nfrpEK7DLF9EjiKL9I3R04JlZ7Zg9faYGXgsofnk45bGVw0vCVlCO1SEO18QdFnd6n01TMqRLugpZrREcsEZ5uB~-f3Z-XEyAkgfwRfsXww4KC34nahIev6KurxpVlXF06NrX2HsW9y5Ean7YIppZWiNQR5719VroZUEXA_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 74070555, "isExternal": false}, {"type": "video-sd", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-sd.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXNkLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNjE5NjJ9fX1dfQ__&Signature=MY0vFioMdo-tCebG1dg1UcQFpIlASWFUsWw~SczvN7Sl9j2jhmTYkTBJytDvDcLdjiBSdsWwQNYkBt~wPzxs78B8CfXRV3ynwAbPbG1XUj7QsX2HZmGKCb33eX1Gy~IOteeUUI7QY7U3tLcTKBcTvm8ihG8DQN93JIBkehxQu6Y_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "width": 480, "height": 360, "audioBitRate": 196492, "videoBitRate": 557649,
         "size": 168403186, "isExternal": false}], "type": "Video", "format": "mp4",
         "status": "Complete", "lastActivityOn": "2023-03-17T19:21:22.016Z", "modifiedOn":
         "2021-11-30T15:28:52.567Z", "md5Checksum": "7a25955378f5b552c9bc140d6635f7e3",
-        "clipSource": {}, "technicalMetadata": {"type": "Video", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/cpb-aacip-191-29b5mpvv.mp4.xml?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9jcGItYWFjaXAtMTkxLTI5YjVtcHZ2Lm1wNC54bWwiLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDIyNTcwM319fV19&Signature=O2HN1cT6Ex8d~fxfyTkQOIhSLILvFjVSOBDMCleOxXYtk1Zp6gMkUfcHCshEAeUChKm4imxQB2gMHv-6ijkuOnk4V6YvgFxbx2s~9eRKXQEWhGEk4BhMOTrInG71xMgz7-iQrwa7k4cS1x-dOdYTjseGhpVDUtGsIVIdDZRkp6A_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "clipSource": {}, "technicalMetadata": {"type": "Video", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/cpb-aacip-191-29b5mpvv.mp4.xml?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9jcGItYWFjaXAtMTkxLTI5YjVtcHZ2Lm1wNC54bWwiLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDIyOTU2Mn19fV19&Signature=ad0hUm9uEyh9L6YDWv5SrZVBN9r9wP~sDWN56U6XRUg3G8uc303YXCjpn0iaZZZgguPFYPtOAd9aw7RRD2J1Cd8TMXrj4YPUb~ZM4wa-nw8AwLguwHWx0PFltNx49TQGenbsWTMuyLcnj568FZqtWQPbha~aAsNttLsgTe66q8E_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 6358, "avContainer": {"bitRate": 1048885, "derivedTimeCode": "00:00:00;00",
         "duration": 1770.224, "format": "MPEG-4", "formatCommercialName": "MPEG-4",
         "formatProfile": "Base Media", "start": 0.0, "streams": [{"bitDepth": 8, "bitRate":
@@ -254,166 +254,17 @@ interactions:
         "Company"}, "enterpriseNetwork": {"id": "2075d1389045443d97dfc24c9107f78f",
         "name": "WGBH"}, "filmstrips": [{"frameHeight": 188, "frameWidth": 250, "frames":
         14, "width": 3500, "height": 188, "type": "video-filmstrip-scrub", "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-scrub.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zY3J1Yi5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1ODEwM319fV19&Signature=ByZAP0knqt5f0oeE~y6hfRkKPD4t9rXeXl5xQHHtidp-JbJTfjhfiWT~Lk4BGMibdDzbYSOVpvlp~O6d085kEWRS2qwxD96EdIqtFsZpzYJ-7LDPVxHKHlt~xZPOQs9jUUljYGMopF2n8yFKQ5HU~oAsVEnWCEfi1G5NAVB1W28_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-scrub.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zY3J1Yi5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI2MTk2Mn19fV19&Signature=ZxpPYZLtEq9MjsVG2kKqUu5axIhHzMmsxC6d5LL17NAYOqn5G8BloRGkE4Eev0cHWk~H5-wIYoZ~BG2~m6HpAkD6NtKbPhAkfyRvaH4Xu8ssPS7Z8bckwIs0QBpJzlRjkFumDgf8-oG2suj6LkBeutAe2h0ugoI1sHXo~UqOClQ_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}, {"frameHeight": 34, "frameWidth": 46, "frames": 199,
         "width": 9154, "height": 34, "type": "video-filmstrip-small", "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-small.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zbWFsbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1ODEwM319fV19&Signature=HGXtu9HIf6qxP728eWOSgx5w8ydBuFLhaf3ON8pqTn91adI0NE8YpbaC8iqd0fdr1f-NHPg0EuwFt38oxXu791j4E3DphjC~6weuuzQ-Exj4lhR~mc3Mg4-TXJHMtFYuBSkva43zHYyO5vcB~-JDnsZhPSShpH6SovrJ4A2eVkA_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-small.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zbWFsbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI2MTk2Mn19fV19&Signature=BbRsTL3G-DBtMZlANQvd1O2RLbOOkkd2AD75em~prGruE-pao3IlXVnOP3jieoEfShkwcouTIe~GtiMeqxnghNZbH~jBGQJy1PtkVWE--6tMNAELsGNUuxj4kB9ZhkeW6aCuA8DtcDPYYs1My475oVfN1uLH5onUEcdddzG7P78_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}], "waveforms": [{"type": "video-waveform", "size": 1031206,
-        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-waveform.txt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXdhdmVmb3JtLnR4dCIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjU4MTAzfX19XX0_&Signature=ImEJ7S1DRMZi8h49pjIVki-OgRpK-7nWAmc4bdzRv6eO5hu8BtCfOXpSBLBaWs71CcocEqC1BmrnneVuKIOdOvM8EX~Mh6a-f4gP1UAllejB7xfAAtBj0NwAn3EQ2mT8mbz05hC6EII2rE7BoiYZsT-dgtcnB96LiBbCynq7NTE_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-waveform.txt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXdhdmVmb3JtLnR4dCIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjYxOTYyfX19XX0_&Signature=TXIl-lTwbAoM7oEyl2OmZNZr4eaPoAktNV9zyhgiXY4uAo8GgS7-VpTLJqrMuhF-NCL4eJS9O2A4Mz9RiHFynw93pXiBnyr-KYQCj6qRdrcFLfZXerOGk9R5L7EyrmJffQEu3upUXG3XSh-OLg0US~DRRJkEhWA~OAzvzNUFNHI_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "sampleMethod": "SamplesCount", "maxAmplitude": 0, "isExternal": false}],
         "mediaAnalyses": [{"type": "video-frame-level-loudness", "size": 212586, "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-frame-level-loudness.wav?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZyYW1lLWxldmVsLWxvdWRuZXNzLndhdiIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjU4MTAzfX19XX0_&Signature=SUNAd3LgoXTHdSDmNOz1kO2Os~sjpqahq04IKNDWnRxtNE17aRIEWshfdyO9V85GwFtlMgD2Fzjzc6U1z-doJDBfHZhlMmm7ywoGzQp6LtkRsvCxwuDf9yb6fJl5DmWkx9HRlWqxg53zDjY0h84r1TC7Rh62AYkz3~uAmUxD08o_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-frame-level-loudness.wav?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZyYW1lLWxldmVsLWxvdWRuZXNzLndhdiIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjYxOTYyfX19XX0_&Signature=HsNgMSybyz2tpYe0mDpx9K2a6lnuCYoYa3qla~U1QVYsXSKg1RrM92BMw-K3l-Ni3zQKWHZWTJIm2Ji9QTfi2I4RELnbNQu9DFFo-zBkh-D7iNbhr5A~4eHp1~KClY~MhQ47VdOpT2uZi7tZHvng3N74ryKL5PlQdsmcAZ66wlw_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}], "acquisitionSource": {"name": "Workspace"}, "hlsPlaylistUrl":
-        "https://io.cimediacloud.com/assets/26013d6bdcce47fc9812bb7dc3ed44ff/preview/hls/playlist.m3u8?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Expires=1684258103&Signature=AzbCbKCTazCk6bRnos3v8FHrZX5AoT6pWKEBVEkr7Qs%3D",
-        "totalFolderCount": 1, "isTimedTextMatch": false, "batchId": "331fecb4cd4e45a38cc01f7865d61cb3",
-        "kind": "Asset", "createdBy": {"id": "ac001ff970c14b358664d9ee4da0c39b", "name":
-        "Miranda Villesvik", "email": "miranda_villesvik@wgbh.org"}}], "order": {"by":
-        "Relevance", "direction": "Desc"}}'
-    headers:
-      Cache-Control:
-      - no-cache
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '11440'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 16 May 2023 05:28:23 GMT
-      Expires:
-      - '-1'
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=86400; includeSubDomains
-      X-Frame-Options:
-      - deny
-      X-RateLimit-Limit:
-      - '5000'
-      X-RateLimit-Remaining:
-      - '4978'
-      X-RateLimit-Reset:
-      - '1684214940'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: grant_type=password&client_id=FAKE_CLIENT_ID&client_secret=FAKE_CLIENT_SECRET
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate, br
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '109'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - python-requests/2.30.0
-      authorization:
-      - Bearer DUMMY
-    method: POST
-    uri: https://api.cimediacloud.com/oauth2/token
-  response:
-    body:
-      string: '{"access_token": "DUMMY_ACCESS_TOKEN", "expires_in": 86400, "token_type":
-        "bearer", "refresh_token": "DUMMY_REFRESH_TOKEN"}'
-    headers:
-      Cache-Control:
-      - no-cache
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 16 May 2023 05:28:23 GMT
-      Expires:
-      - '-1'
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=86400; includeSubDomains
-      X-Frame-Options:
-      - deny
-    status:
-      code: 200
-      message: OK
-- request:
-    body: null
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate, br
-      Connection:
-      - keep-alive
-      User-Agent:
-      - python-requests/2.30.0
-      authorization:
-      - Bearer DUMMY
-    method: GET
-    uri: https://api.cimediacloud.com/workspaces/051303c1c1d24da7988128e6d2f56aa9/search?kind=asset&query=191-29b5mpvv
-  response:
-    body:
-      string: '{"limit": 50, "offset": 0, "count": 1, "kind": "Asset", "type": "All",
-        "query": "191-29b5mpvv", "items": [{"id": "26013d6bdcce47fc9812bb7dc3ed44ff",
-        "name": "cpb-aacip-191-29b5mpvv.mp4", "size": 232095244, "createdOn": "2021-11-30T15:14:13.156Z",
-        "thumbnails": [{"type": "small", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwNH19fV19&Signature=Ce3bbsMuxyJGF2PRIH1gwLv~L9yNm8S4m~8sk5oTIAh6dI-kJJ96OBNBjdBhTsFdk7ApLjYYNIA04ClmJg2CuR62khrAzXGT-hN4WNQ~DBfwyYQjTiws9VhyccQfo9F4SmSzCZRU~uuc4q~xpH-PcMbRQLFZNwzWoZzh9REcwJg_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
-        "size": 8070, "width": 250, "height": 188, "isExternal": false}, {"type":
-        "large", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-large.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1sYXJnZS5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwNH19fV19&Signature=X3zyHTUIh9a5xSMjBtcSUU3kihH-HPAuxttkeMLeFoe5ehgWBI-ZtSBSuNvecMATjdOfDZO9oiv2ekUaGVwOwT85RiiddkQG~6oidFlXzLG-GdcEMvB8KE7gOgwukAyZ~FXhyJusZBbrrXjUrwy2-VIPcZtgVzK680EadMFahW4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
-        "size": 67283, "width": 1000, "height": 750, "isExternal": false}, {"type":
-        "medium", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-medium.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1tZWRpdW0uanBnIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NDcyODY5MDR9fX1dfQ__&Signature=fPLzjTSoAQv9vpghYOUPH6Yr-EPpY-9G~16Gz6j-5XJtYIyOhlGb7JlUsisWieAB9-KhLmRVyS7Kj4GAA-VKVvSx-TKhdUxaFXsEc8tgoTEIYGeroEYkpXrKpNbFO7XMxxR7gvMJj1AzfCye~CiSheyKPTON~RkKtFd35NWW3ZQ_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
-        "size": 32571, "width": 560, "height": 420, "isExternal": false}, {"type":
-        "standard", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwNH19fV19&Signature=Ce3bbsMuxyJGF2PRIH1gwLv~L9yNm8S4m~8sk5oTIAh6dI-kJJ96OBNBjdBhTsFdk7ApLjYYNIA04ClmJg2CuR62khrAzXGT-hN4WNQ~DBfwyYQjTiws9VhyccQfo9F4SmSzCZRU~uuc4q~xpH-PcMbRQLFZNwzWoZzh9REcwJg_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
-        "size": 8070, "width": 250, "height": 188}], "proxies": [{"type": "video-3g",
-        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-3g.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLTNnLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTgxMDR9fX1dfQ__&Signature=fCqT1ze2H3PunrNoBBoGUvBJFqcsguM6E7z~zWYn6dE0SJHAIdKEoOfc9ixobTmkjgplNSuhfgUkCb9JeWgMZM-04aE8TsYTCmOAvaGGSm4oVxGsVH2nq81MtYOPSDn1HE4GnEXqYYF8ydd-XjKHZ2z0IyOVhPnG84q5Y7DWlnE_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
-        "width": 360, "height": 270, "audioBitRate": 128455, "videoBitRate": 199373,
-        "size": 74070555, "isExternal": false}, {"type": "video-sd", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-sd.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXNkLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTgxMDR9fX1dfQ__&Signature=dVllijFYlQust9g0YWMIE6neLaDzgpDfcyyNF8oEg4m6DpHsT~kW4P2PgVKQvNi5N24hX4-iwhRCwuRqu5yd62awt9VoWsktnb7PK9rkuaDCeDs-g1sdRJFcZEuIN3LFfSsjkL9oM7m4EoyMf6kje0zr4jW9FBYjHKxHdN32dho_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
-        "width": 480, "height": 360, "audioBitRate": 196492, "videoBitRate": 557649,
-        "size": 168403186, "isExternal": false}], "type": "Video", "format": "mp4",
-        "status": "Complete", "lastActivityOn": "2023-03-17T19:21:22.016Z", "modifiedOn":
-        "2021-11-30T15:28:52.567Z", "md5Checksum": "7a25955378f5b552c9bc140d6635f7e3",
-        "clipSource": {}, "technicalMetadata": {"type": "Video", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/cpb-aacip-191-29b5mpvv.mp4.xml?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9jcGItYWFjaXAtMTkxLTI5YjVtcHZ2Lm1wNC54bWwiLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDIyNTcwNH19fV19&Signature=JLeGfditA7WlNZH-HBYuxOR4q8RrpWE4gcz5UvTDYuroM7Xc-VHin60uuyjguN-8QI8zMR5F-Obw6nO9ZIgAwMNFIeosbJ9hJ7xKl9HebH31Ub3J41ho~yHiH5gD6YND6oDwlvKfZxAYnRBY55Y0KLzrvmT3f8QXVQwUgslGYy0_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
-        "size": 6358, "avContainer": {"bitRate": 1048885, "derivedTimeCode": "00:00:00;00",
-        "duration": 1770.224, "format": "MPEG-4", "formatCommercialName": "MPEG-4",
-        "formatProfile": "Base Media", "start": 0.0, "streams": [{"bitDepth": 8, "bitRate":
-        844671, "codec": "h264", "codecLongName": "H.264 / AVC / MPEG-4 AVC / MPEG-4
-        part 10", "codecName": "AVC", "codecProfile": "Main@L3", "codecSettings":
-        "CABAC / 4 Ref Frames", "duration": 1770.201767, "fourCC": "avc1", "frameRateDenominator":
-        1001, "frameRateNumerator": 30000, "height": 360, "index": 0, "start": 0.0,
-        "timeCode": "00:00:00;00", "totalFrames": 53053, "type": "Video", "videoColorSpace":
-        "YUV", "videoDARHeight": 3, "videoDARWidth": 4, "videoPARHeight": 1, "videoPARWidth":
-        1, "videoScanType": "Progressive", "width": 480}, {"audioAnalysis": "Stereo",
-        "audioChannelCount": 2, "audioLayout": "Stereo", "audioSampleRate": 48000,
-        "bitRate": 195455, "bitRateMode": "CBR", "codec": "aac", "codecLongName":
-        "AAC (Advanced Audio Coding)", "codecName": "AAC", "codecProfile": "LC", "duration":
-        1770.202, "fourCC": "mp4a", "index": 1, "start": 0.0, "type": "Audio"}, {"fourCC":
-        "tmcd", "index": 2, "start": 0.0, "timeCode": "00:00:00;00", "type": "Data"}]},
-        "isExternal": false}, "archiveStatus": "Not archived", "restoreStatus": "Not
-        restored", "uploadCompleteDate": "2021-11-30T15:25:37.01Z", "isTrashed": false,
-        "isFavorite": false, "isExternal": false, "uploadTransferType": "MultipartHttp",
-        "folder": {"id": "a1459cf719eb4a7cb2686663018be161", "name": "Workspace"},
-        "runtime": 1770.224, "workspace": {"id": "051303c1c1d24da7988128e6d2f56aa9",
-        "name": "American Archive of Public Broadcasting", "class": "Team"}, "network":
-        {"id": "e573ff14defc4b4e9ea393c3150a396c", "name": "American Archive", "class":
-        "Company"}, "enterpriseNetwork": {"id": "2075d1389045443d97dfc24c9107f78f",
-        "name": "WGBH"}, "filmstrips": [{"frameHeight": 188, "frameWidth": 250, "frames":
-        14, "width": 3500, "height": 188, "type": "video-filmstrip-scrub", "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-scrub.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zY3J1Yi5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1ODEwNH19fV19&Signature=U-UGgr7ads-z9JG17LRmTMbcyMAuYoiSBCo~nq8x9FMz1w-K5mVxSSyUY-So6o7YcjziMctH1J~szeRj-XczadjE7rYaI6DEg7DXVeOVHwYZ52n6oEhgk2Ygg2P9AZYS6zT4ZuMmKRNPRMO7COfO0eq4LfXbm25WK~9G~ghIAtg_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
-        "isExternal": false}, {"frameHeight": 34, "frameWidth": 46, "frames": 199,
-        "width": 9154, "height": 34, "type": "video-filmstrip-small", "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-small.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zbWFsbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1ODEwNH19fV19&Signature=j-~oMkHbt6iDK2aP159ExO-0-uhwmjhzGEPxfCUs~a4Tz9-qITxXEslvqZ41yUg9FVSS6rkkS61muhALpaDRiBZca4Drbnt~Xw-NKeUA9GPFJqG~jvP1xExjj8FyGx8osTVrXElq4w15hD82vTGtrtW2UqjNd-~o62jwfrpgHx4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
-        "isExternal": false}], "waveforms": [{"type": "video-waveform", "size": 1031206,
-        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-waveform.txt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXdhdmVmb3JtLnR4dCIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjU4MTA0fX19XX0_&Signature=SUNVzhyZvzkskn-9UlzjuXe~JjgB3UCjVl27qoZKc~3pc2WmgEZSPUTwHLm1q4OhpgCz3B3kw2j4iUX0NOoktSeB0MKkqbxDd1HTCGEJqngiDUwfs8ULF8xs6ROGXO4rZxE6v1iv4TtU2cnwqXLjCF59vqj9YlTvi9dkLYnZOS0_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
-        "sampleMethod": "SamplesCount", "maxAmplitude": 0, "isExternal": false}],
-        "mediaAnalyses": [{"type": "video-frame-level-loudness", "size": 212586, "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-frame-level-loudness.wav?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZyYW1lLWxldmVsLWxvdWRuZXNzLndhdiIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjU4MTA0fX19XX0_&Signature=GedIFI76z70fBoVEtgDrRsb8RH~8uEYBuITgCzRZYfVNdmVFhqfrupw89anXZ~dQXRnGEQMqSO8GI1frNuXXFlBbPSKq3rj7NwscaPdYpL-731jgREj3Fg3ZS~IkieL0wPS23XINlX9-BfVbNLzjqQTr4sBEZ07Hr~-w1N0Sw00_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
-        "isExternal": false}], "acquisitionSource": {"name": "Workspace"}, "hlsPlaylistUrl":
-        "https://io.cimediacloud.com/assets/26013d6bdcce47fc9812bb7dc3ed44ff/preview/hls/playlist.m3u8?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Expires=1684258104&Signature=wAXDORW%2FrfeSgtdx8CZUruao1%2FambgW8IggiPNJ8OmQ%3D",
+        "https://io.cimediacloud.com/assets/26013d6bdcce47fc9812bb7dc3ed44ff/preview/hls/playlist.m3u8?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Expires=1684261962&Signature=JvJTZR2%2BVuuoroIbG978l1TZZboSu11AlVla%2BpDfWfE%3D",
         "totalFolderCount": 1, "isTimedTextMatch": false, "batchId": "331fecb4cd4e45a38cc01f7865d61cb3",
         "kind": "Asset", "createdBy": {"id": "ac001ff970c14b358664d9ee4da0c39b", "name":
         "Miranda Villesvik", "email": "miranda_villesvik@wgbh.org"}}], "order": {"by":
@@ -428,7 +279,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 May 2023 05:28:24 GMT
+      - Tue, 16 May 2023 06:32:42 GMT
       Expires:
       - '-1'
       Pragma:
@@ -440,9 +291,9 @@ interactions:
       X-RateLimit-Limit:
       - '5000'
       X-RateLimit-Remaining:
-      - '4977'
+      - '4994'
       X-RateLimit-Reset:
-      - '1684214940'
+      - '1684218780'
     status:
       code: 200
       message: OK
@@ -479,7 +330,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 May 2023 05:28:24 GMT
+      - Tue, 16 May 2023 06:32:42 GMT
       Expires:
       - '-1'
       Pragma:
@@ -511,22 +362,22 @@ interactions:
       string: '{"limit": 50, "offset": 0, "count": 1, "kind": "Asset", "type": "All",
         "query": "191-29b5mpvv", "items": [{"id": "26013d6bdcce47fc9812bb7dc3ed44ff",
         "name": "cpb-aacip-191-29b5mpvv.mp4", "size": 232095244, "createdOn": "2021-11-30T15:14:13.156Z",
-        "thumbnails": [{"type": "small", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwNH19fV19&Signature=Ce3bbsMuxyJGF2PRIH1gwLv~L9yNm8S4m~8sk5oTIAh6dI-kJJ96OBNBjdBhTsFdk7ApLjYYNIA04ClmJg2CuR62khrAzXGT-hN4WNQ~DBfwyYQjTiws9VhyccQfo9F4SmSzCZRU~uuc4q~xpH-PcMbRQLFZNwzWoZzh9REcwJg_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "thumbnails": [{"type": "small", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2Mn19fV19&Signature=F6hTDoocakMu9Qe77iWEZYsW2jLEbGwVNt~Kh8P2hQSqqatnIpv-G06Uwmuvy-E5CfrBELXd8~R~2Y3F28nelf9Fa0eziP-oEILDG5NznIH1AODF8QWlM0j8DMPPU7YA6qUATL~AwYKsahACeoT1w2Qw3fnYZ8fFO4SaBy6SxhI_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 8070, "width": 250, "height": 188, "isExternal": false}, {"type":
-        "large", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-large.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1sYXJnZS5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwNH19fV19&Signature=X3zyHTUIh9a5xSMjBtcSUU3kihH-HPAuxttkeMLeFoe5ehgWBI-ZtSBSuNvecMATjdOfDZO9oiv2ekUaGVwOwT85RiiddkQG~6oidFlXzLG-GdcEMvB8KE7gOgwukAyZ~FXhyJusZBbrrXjUrwy2-VIPcZtgVzK680EadMFahW4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "large", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-large.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1sYXJnZS5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2Mn19fV19&Signature=WqgtxnsGxI~ash5a77Zlw8OxG6s2ix6j-~0Hn0GmK9cu~Mmv8UBlFVt7UPIUE7U0hLE2lkw-VZFt32xGS49DdBX4xFPrap4zWXq0c1Rq3Mx52YF52C7TYlZ-1jvEXtX8HTyuZNWkkUxqpW1JQp1Xkj8WrIlns~YpXxDcp1LItOI_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 67283, "width": 1000, "height": 750, "isExternal": false}, {"type":
-        "medium", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-medium.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1tZWRpdW0uanBnIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NDcyODY5MDR9fX1dfQ__&Signature=fPLzjTSoAQv9vpghYOUPH6Yr-EPpY-9G~16Gz6j-5XJtYIyOhlGb7JlUsisWieAB9-KhLmRVyS7Kj4GAA-VKVvSx-TKhdUxaFXsEc8tgoTEIYGeroEYkpXrKpNbFO7XMxxR7gvMJj1AzfCye~CiSheyKPTON~RkKtFd35NWW3ZQ_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "medium", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-medium.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1tZWRpdW0uanBnIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NDcyOTA3NjJ9fX1dfQ__&Signature=WL4YM9c~s0RfBqxXgWPT9jn6q874ThVg2rfQJKE-23Ff0xeSv4PB8aODqJ1P3yHzFx3UCvI4hdaGcXInhjsLSEYQBnaxkoHSiD062yjHx4Ew8eghXtduwYXf3Tqb8p708tmPNcnlmA57yypGwrnmqkeV6J3nWctx0sOnp6KqJJ0_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 32571, "width": 560, "height": 420, "isExternal": false}, {"type":
-        "standard", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwNH19fV19&Signature=Ce3bbsMuxyJGF2PRIH1gwLv~L9yNm8S4m~8sk5oTIAh6dI-kJJ96OBNBjdBhTsFdk7ApLjYYNIA04ClmJg2CuR62khrAzXGT-hN4WNQ~DBfwyYQjTiws9VhyccQfo9F4SmSzCZRU~uuc4q~xpH-PcMbRQLFZNwzWoZzh9REcwJg_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "standard", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2Mn19fV19&Signature=F6hTDoocakMu9Qe77iWEZYsW2jLEbGwVNt~Kh8P2hQSqqatnIpv-G06Uwmuvy-E5CfrBELXd8~R~2Y3F28nelf9Fa0eziP-oEILDG5NznIH1AODF8QWlM0j8DMPPU7YA6qUATL~AwYKsahACeoT1w2Qw3fnYZ8fFO4SaBy6SxhI_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 8070, "width": 250, "height": 188}], "proxies": [{"type": "video-3g",
-        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-3g.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLTNnLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTgxMDR9fX1dfQ__&Signature=fCqT1ze2H3PunrNoBBoGUvBJFqcsguM6E7z~zWYn6dE0SJHAIdKEoOfc9ixobTmkjgplNSuhfgUkCb9JeWgMZM-04aE8TsYTCmOAvaGGSm4oVxGsVH2nq81MtYOPSDn1HE4GnEXqYYF8ydd-XjKHZ2z0IyOVhPnG84q5Y7DWlnE_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-3g.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLTNnLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNjE5NjJ9fX1dfQ__&Signature=UjovhJOQJL7IM3ElTk8Y04yqfbx93MUg-0d9O3U2IWqGETibm~rO8lUiN1SUvv3iFBeDIZpWqnYsUFqw46D6FR-CJ03csJSLU86Th~Y68FDjOmGKdCFqYW7O8akVnbiRWYavOsrWxAscSyjZUua2VfTx~vckwNdJJFy0khSLO-c_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "width": 360, "height": 270, "audioBitRate": 128455, "videoBitRate": 199373,
-        "size": 74070555, "isExternal": false}, {"type": "video-sd", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-sd.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXNkLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTgxMDR9fX1dfQ__&Signature=dVllijFYlQust9g0YWMIE6neLaDzgpDfcyyNF8oEg4m6DpHsT~kW4P2PgVKQvNi5N24hX4-iwhRCwuRqu5yd62awt9VoWsktnb7PK9rkuaDCeDs-g1sdRJFcZEuIN3LFfSsjkL9oM7m4EoyMf6kje0zr4jW9FBYjHKxHdN32dho_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 74070555, "isExternal": false}, {"type": "video-sd", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-sd.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXNkLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNjE5NjJ9fX1dfQ__&Signature=MY0vFioMdo-tCebG1dg1UcQFpIlASWFUsWw~SczvN7Sl9j2jhmTYkTBJytDvDcLdjiBSdsWwQNYkBt~wPzxs78B8CfXRV3ynwAbPbG1XUj7QsX2HZmGKCb33eX1Gy~IOteeUUI7QY7U3tLcTKBcTvm8ihG8DQN93JIBkehxQu6Y_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "width": 480, "height": 360, "audioBitRate": 196492, "videoBitRate": 557649,
         "size": 168403186, "isExternal": false}], "type": "Video", "format": "mp4",
         "status": "Complete", "lastActivityOn": "2023-03-17T19:21:22.016Z", "modifiedOn":
         "2021-11-30T15:28:52.567Z", "md5Checksum": "7a25955378f5b552c9bc140d6635f7e3",
-        "clipSource": {}, "technicalMetadata": {"type": "Video", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/cpb-aacip-191-29b5mpvv.mp4.xml?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9jcGItYWFjaXAtMTkxLTI5YjVtcHZ2Lm1wNC54bWwiLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDIyNTcwNH19fV19&Signature=JLeGfditA7WlNZH-HBYuxOR4q8RrpWE4gcz5UvTDYuroM7Xc-VHin60uuyjguN-8QI8zMR5F-Obw6nO9ZIgAwMNFIeosbJ9hJ7xKl9HebH31Ub3J41ho~yHiH5gD6YND6oDwlvKfZxAYnRBY55Y0KLzrvmT3f8QXVQwUgslGYy0_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "clipSource": {}, "technicalMetadata": {"type": "Video", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/cpb-aacip-191-29b5mpvv.mp4.xml?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9jcGItYWFjaXAtMTkxLTI5YjVtcHZ2Lm1wNC54bWwiLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDIyOTU2Mn19fV19&Signature=ad0hUm9uEyh9L6YDWv5SrZVBN9r9wP~sDWN56U6XRUg3G8uc303YXCjpn0iaZZZgguPFYPtOAd9aw7RRD2J1Cd8TMXrj4YPUb~ZM4wa-nw8AwLguwHWx0PFltNx49TQGenbsWTMuyLcnj568FZqtWQPbha~aAsNttLsgTe66q8E_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 6358, "avContainer": {"bitRate": 1048885, "derivedTimeCode": "00:00:00;00",
         "duration": 1770.224, "format": "MPEG-4", "formatCommercialName": "MPEG-4",
         "formatProfile": "Base Media", "start": 0.0, "streams": [{"bitDepth": 8, "bitRate":
@@ -552,17 +403,17 @@ interactions:
         "Company"}, "enterpriseNetwork": {"id": "2075d1389045443d97dfc24c9107f78f",
         "name": "WGBH"}, "filmstrips": [{"frameHeight": 188, "frameWidth": 250, "frames":
         14, "width": 3500, "height": 188, "type": "video-filmstrip-scrub", "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-scrub.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zY3J1Yi5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1ODEwNH19fV19&Signature=U-UGgr7ads-z9JG17LRmTMbcyMAuYoiSBCo~nq8x9FMz1w-K5mVxSSyUY-So6o7YcjziMctH1J~szeRj-XczadjE7rYaI6DEg7DXVeOVHwYZ52n6oEhgk2Ygg2P9AZYS6zT4ZuMmKRNPRMO7COfO0eq4LfXbm25WK~9G~ghIAtg_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-scrub.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zY3J1Yi5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI2MTk2Mn19fV19&Signature=ZxpPYZLtEq9MjsVG2kKqUu5axIhHzMmsxC6d5LL17NAYOqn5G8BloRGkE4Eev0cHWk~H5-wIYoZ~BG2~m6HpAkD6NtKbPhAkfyRvaH4Xu8ssPS7Z8bckwIs0QBpJzlRjkFumDgf8-oG2suj6LkBeutAe2h0ugoI1sHXo~UqOClQ_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}, {"frameHeight": 34, "frameWidth": 46, "frames": 199,
         "width": 9154, "height": 34, "type": "video-filmstrip-small", "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-small.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zbWFsbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1ODEwNH19fV19&Signature=j-~oMkHbt6iDK2aP159ExO-0-uhwmjhzGEPxfCUs~a4Tz9-qITxXEslvqZ41yUg9FVSS6rkkS61muhALpaDRiBZca4Drbnt~Xw-NKeUA9GPFJqG~jvP1xExjj8FyGx8osTVrXElq4w15hD82vTGtrtW2UqjNd-~o62jwfrpgHx4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-small.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zbWFsbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI2MTk2Mn19fV19&Signature=BbRsTL3G-DBtMZlANQvd1O2RLbOOkkd2AD75em~prGruE-pao3IlXVnOP3jieoEfShkwcouTIe~GtiMeqxnghNZbH~jBGQJy1PtkVWE--6tMNAELsGNUuxj4kB9ZhkeW6aCuA8DtcDPYYs1My475oVfN1uLH5onUEcdddzG7P78_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}], "waveforms": [{"type": "video-waveform", "size": 1031206,
-        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-waveform.txt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXdhdmVmb3JtLnR4dCIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjU4MTA0fX19XX0_&Signature=SUNVzhyZvzkskn-9UlzjuXe~JjgB3UCjVl27qoZKc~3pc2WmgEZSPUTwHLm1q4OhpgCz3B3kw2j4iUX0NOoktSeB0MKkqbxDd1HTCGEJqngiDUwfs8ULF8xs6ROGXO4rZxE6v1iv4TtU2cnwqXLjCF59vqj9YlTvi9dkLYnZOS0_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-waveform.txt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXdhdmVmb3JtLnR4dCIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjYxOTYyfX19XX0_&Signature=TXIl-lTwbAoM7oEyl2OmZNZr4eaPoAktNV9zyhgiXY4uAo8GgS7-VpTLJqrMuhF-NCL4eJS9O2A4Mz9RiHFynw93pXiBnyr-KYQCj6qRdrcFLfZXerOGk9R5L7EyrmJffQEu3upUXG3XSh-OLg0US~DRRJkEhWA~OAzvzNUFNHI_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "sampleMethod": "SamplesCount", "maxAmplitude": 0, "isExternal": false}],
         "mediaAnalyses": [{"type": "video-frame-level-loudness", "size": 212586, "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-frame-level-loudness.wav?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZyYW1lLWxldmVsLWxvdWRuZXNzLndhdiIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjU4MTA0fX19XX0_&Signature=GedIFI76z70fBoVEtgDrRsb8RH~8uEYBuITgCzRZYfVNdmVFhqfrupw89anXZ~dQXRnGEQMqSO8GI1frNuXXFlBbPSKq3rj7NwscaPdYpL-731jgREj3Fg3ZS~IkieL0wPS23XINlX9-BfVbNLzjqQTr4sBEZ07Hr~-w1N0Sw00_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-frame-level-loudness.wav?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZyYW1lLWxldmVsLWxvdWRuZXNzLndhdiIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjYxOTYyfX19XX0_&Signature=HsNgMSybyz2tpYe0mDpx9K2a6lnuCYoYa3qla~U1QVYsXSKg1RrM92BMw-K3l-Ni3zQKWHZWTJIm2Ji9QTfi2I4RELnbNQu9DFFo-zBkh-D7iNbhr5A~4eHp1~KClY~MhQ47VdOpT2uZi7tZHvng3N74ryKL5PlQdsmcAZ66wlw_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}], "acquisitionSource": {"name": "Workspace"}, "hlsPlaylistUrl":
-        "https://io.cimediacloud.com/assets/26013d6bdcce47fc9812bb7dc3ed44ff/preview/hls/playlist.m3u8?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Expires=1684258104&Signature=wAXDORW%2FrfeSgtdx8CZUruao1%2FambgW8IggiPNJ8OmQ%3D",
+        "https://io.cimediacloud.com/assets/26013d6bdcce47fc9812bb7dc3ed44ff/preview/hls/playlist.m3u8?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Expires=1684261962&Signature=JvJTZR2%2BVuuoroIbG978l1TZZboSu11AlVla%2BpDfWfE%3D",
         "totalFolderCount": 1, "isTimedTextMatch": false, "batchId": "331fecb4cd4e45a38cc01f7865d61cb3",
         "kind": "Asset", "createdBy": {"id": "ac001ff970c14b358664d9ee4da0c39b", "name":
         "Miranda Villesvik", "email": "miranda_villesvik@wgbh.org"}}], "order": {"by":
@@ -577,7 +428,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 May 2023 05:28:24 GMT
+      - Tue, 16 May 2023 06:32:42 GMT
       Expires:
       - '-1'
       Pragma:
@@ -589,9 +440,9 @@ interactions:
       X-RateLimit-Limit:
       - '5000'
       X-RateLimit-Remaining:
-      - '4976'
+      - '4993'
       X-RateLimit-Reset:
-      - '1684214940'
+      - '1684218780'
     status:
       code: 200
       message: OK
@@ -628,7 +479,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 May 2023 05:28:24 GMT
+      - Tue, 16 May 2023 06:32:43 GMT
       Expires:
       - '-1'
       Pragma:
@@ -660,22 +511,22 @@ interactions:
       string: '{"limit": 50, "offset": 0, "count": 1, "kind": "Asset", "type": "All",
         "query": "191-29b5mpvv", "items": [{"id": "26013d6bdcce47fc9812bb7dc3ed44ff",
         "name": "cpb-aacip-191-29b5mpvv.mp4", "size": 232095244, "createdOn": "2021-11-30T15:14:13.156Z",
-        "thumbnails": [{"type": "small", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwNH19fV19&Signature=Ce3bbsMuxyJGF2PRIH1gwLv~L9yNm8S4m~8sk5oTIAh6dI-kJJ96OBNBjdBhTsFdk7ApLjYYNIA04ClmJg2CuR62khrAzXGT-hN4WNQ~DBfwyYQjTiws9VhyccQfo9F4SmSzCZRU~uuc4q~xpH-PcMbRQLFZNwzWoZzh9REcwJg_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "thumbnails": [{"type": "small", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2M319fV19&Signature=jgUB1EAlXDajZgFTzXlatkdiwsjnXXp9jKSHncFi7gFJN410Hgpi3G-mbmn5xhgvaFd~lauOQS67g~KgLhlGOVdFnlW56ZMXUwR3xxRT5YrXpYtclgCiNgHgA-ZV5MsQUD3IHSYU3IaRjwxeTTDLCq9jED6VFJx7wz4vKnpbFpA_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 8070, "width": 250, "height": 188, "isExternal": false}, {"type":
-        "large", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-large.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1sYXJnZS5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwNH19fV19&Signature=X3zyHTUIh9a5xSMjBtcSUU3kihH-HPAuxttkeMLeFoe5ehgWBI-ZtSBSuNvecMATjdOfDZO9oiv2ekUaGVwOwT85RiiddkQG~6oidFlXzLG-GdcEMvB8KE7gOgwukAyZ~FXhyJusZBbrrXjUrwy2-VIPcZtgVzK680EadMFahW4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "large", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-large.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1sYXJnZS5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2M319fV19&Signature=iq2aizFEe6k4KDNLmylILtNfQhDgCt8x-4prk7WObAjZdNThhveE2Lz7PPkHtN3eHiJZkilGucHvDts~XiNktd6bgRLITStvnwClAfR3GMRXTiw1GcdP0z-Wlvb256V5z3G1QPC2xL~Q4vBP~SDyq90lxEC96-s7nZBzmpcBWrk_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 67283, "width": 1000, "height": 750, "isExternal": false}, {"type":
-        "medium", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-medium.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1tZWRpdW0uanBnIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NDcyODY5MDR9fX1dfQ__&Signature=fPLzjTSoAQv9vpghYOUPH6Yr-EPpY-9G~16Gz6j-5XJtYIyOhlGb7JlUsisWieAB9-KhLmRVyS7Kj4GAA-VKVvSx-TKhdUxaFXsEc8tgoTEIYGeroEYkpXrKpNbFO7XMxxR7gvMJj1AzfCye~CiSheyKPTON~RkKtFd35NWW3ZQ_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "medium", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-medium.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1tZWRpdW0uanBnIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NDcyOTA3NjN9fX1dfQ__&Signature=TTLQeXOSg5cWa2GWvGxF5pL~Ki5pwch0gNGN30ymXQpp9PZMA8A7SZfe8j3d5sMrfz-iUyXrgv4LOzfdd9S48fOG0Tc1L~u~6B8hzWQvHHftk80SCTNDCeYMJ4TLjbVezWWMW6z2R4Psdtg7YONW78q98baSpPLnS-SGVtv0S~M_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 32571, "width": 560, "height": 420, "isExternal": false}, {"type":
-        "standard", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwNH19fV19&Signature=Ce3bbsMuxyJGF2PRIH1gwLv~L9yNm8S4m~8sk5oTIAh6dI-kJJ96OBNBjdBhTsFdk7ApLjYYNIA04ClmJg2CuR62khrAzXGT-hN4WNQ~DBfwyYQjTiws9VhyccQfo9F4SmSzCZRU~uuc4q~xpH-PcMbRQLFZNwzWoZzh9REcwJg_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "standard", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2M319fV19&Signature=jgUB1EAlXDajZgFTzXlatkdiwsjnXXp9jKSHncFi7gFJN410Hgpi3G-mbmn5xhgvaFd~lauOQS67g~KgLhlGOVdFnlW56ZMXUwR3xxRT5YrXpYtclgCiNgHgA-ZV5MsQUD3IHSYU3IaRjwxeTTDLCq9jED6VFJx7wz4vKnpbFpA_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 8070, "width": 250, "height": 188}], "proxies": [{"type": "video-3g",
-        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-3g.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLTNnLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTgxMDR9fX1dfQ__&Signature=fCqT1ze2H3PunrNoBBoGUvBJFqcsguM6E7z~zWYn6dE0SJHAIdKEoOfc9ixobTmkjgplNSuhfgUkCb9JeWgMZM-04aE8TsYTCmOAvaGGSm4oVxGsVH2nq81MtYOPSDn1HE4GnEXqYYF8ydd-XjKHZ2z0IyOVhPnG84q5Y7DWlnE_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-3g.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLTNnLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNjE5NjN9fX1dfQ__&Signature=W9G3WnR1VCI40f2-RPZhj8FgsQiaxG51LE5IpcfGPmXkvgto56kY32ZY3DmFU~E0lj5FKiauxdMb5NUzaXOIkoYLjbr8plJp4nnK4QlQtLBkEuAuvJzLHH3ugxGdwdOxYd-Sls1J-wdR~T2nAr~6LZVMN4T5TBAbAC1za88WvM4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "width": 360, "height": 270, "audioBitRate": 128455, "videoBitRate": 199373,
-        "size": 74070555, "isExternal": false}, {"type": "video-sd", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-sd.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXNkLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTgxMDR9fX1dfQ__&Signature=dVllijFYlQust9g0YWMIE6neLaDzgpDfcyyNF8oEg4m6DpHsT~kW4P2PgVKQvNi5N24hX4-iwhRCwuRqu5yd62awt9VoWsktnb7PK9rkuaDCeDs-g1sdRJFcZEuIN3LFfSsjkL9oM7m4EoyMf6kje0zr4jW9FBYjHKxHdN32dho_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 74070555, "isExternal": false}, {"type": "video-sd", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-sd.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXNkLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNjE5NjN9fX1dfQ__&Signature=VOCTVUvobgGZDHyINLFXO23tyWpsdUzijRyRabYhsw3jjp62qhK32DHSiGSwKobzPC~Yn6jc1-E~Y9oQBSFCBA5oiUsGkVBjnS4SZdnAGYM~u3jfanBogOOvQeqD9iWr37PaaiqzF1U~2Xlg61tff8l~lu2TtamU4NvbylD7NhA_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "width": 480, "height": 360, "audioBitRate": 196492, "videoBitRate": 557649,
         "size": 168403186, "isExternal": false}], "type": "Video", "format": "mp4",
         "status": "Complete", "lastActivityOn": "2023-03-17T19:21:22.016Z", "modifiedOn":
         "2021-11-30T15:28:52.567Z", "md5Checksum": "7a25955378f5b552c9bc140d6635f7e3",
-        "clipSource": {}, "technicalMetadata": {"type": "Video", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/cpb-aacip-191-29b5mpvv.mp4.xml?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9jcGItYWFjaXAtMTkxLTI5YjVtcHZ2Lm1wNC54bWwiLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDIyNTcwNH19fV19&Signature=JLeGfditA7WlNZH-HBYuxOR4q8RrpWE4gcz5UvTDYuroM7Xc-VHin60uuyjguN-8QI8zMR5F-Obw6nO9ZIgAwMNFIeosbJ9hJ7xKl9HebH31Ub3J41ho~yHiH5gD6YND6oDwlvKfZxAYnRBY55Y0KLzrvmT3f8QXVQwUgslGYy0_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "clipSource": {}, "technicalMetadata": {"type": "Video", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/cpb-aacip-191-29b5mpvv.mp4.xml?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9jcGItYWFjaXAtMTkxLTI5YjVtcHZ2Lm1wNC54bWwiLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDIyOTU2M319fV19&Signature=NZh30AP76MlNm~Wmsp1XCsHB6MoAoB67OMLl1dWiQh294k9fNd2t1Doe4UmhKd4KvdT~vWyHTVThcWa18j2Hx~fbZWDGtH9W-nb~RrB~t9uqesSyTvbiLOxudl4qDUpjGV46LK7W~dCmGwJ3nJgN-~559Mt8ap802lwI0rOLgOU_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 6358, "avContainer": {"bitRate": 1048885, "derivedTimeCode": "00:00:00;00",
         "duration": 1770.224, "format": "MPEG-4", "formatCommercialName": "MPEG-4",
         "formatProfile": "Base Media", "start": 0.0, "streams": [{"bitDepth": 8, "bitRate":
@@ -701,17 +552,17 @@ interactions:
         "Company"}, "enterpriseNetwork": {"id": "2075d1389045443d97dfc24c9107f78f",
         "name": "WGBH"}, "filmstrips": [{"frameHeight": 188, "frameWidth": 250, "frames":
         14, "width": 3500, "height": 188, "type": "video-filmstrip-scrub", "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-scrub.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zY3J1Yi5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1ODEwNH19fV19&Signature=U-UGgr7ads-z9JG17LRmTMbcyMAuYoiSBCo~nq8x9FMz1w-K5mVxSSyUY-So6o7YcjziMctH1J~szeRj-XczadjE7rYaI6DEg7DXVeOVHwYZ52n6oEhgk2Ygg2P9AZYS6zT4ZuMmKRNPRMO7COfO0eq4LfXbm25WK~9G~ghIAtg_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-scrub.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zY3J1Yi5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI2MTk2M319fV19&Signature=ggVL7W1o9LnBBgbUvum~~OZfGq6vJWE0JBmNTTon4U7wRy7IuyRkkTg1t0C9DVQM5YdDqUFnHtO2Vwm0zqLJNQH1z128-wTzzX1utPTKFJzdGk1VWDoMA-IRwq14cHp~DENlba~I9b7czbM1Lx16tyKWdEzvSQYWS7zvo8o0Hw8_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}, {"frameHeight": 34, "frameWidth": 46, "frames": 199,
         "width": 9154, "height": 34, "type": "video-filmstrip-small", "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-small.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zbWFsbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1ODEwNH19fV19&Signature=j-~oMkHbt6iDK2aP159ExO-0-uhwmjhzGEPxfCUs~a4Tz9-qITxXEslvqZ41yUg9FVSS6rkkS61muhALpaDRiBZca4Drbnt~Xw-NKeUA9GPFJqG~jvP1xExjj8FyGx8osTVrXElq4w15hD82vTGtrtW2UqjNd-~o62jwfrpgHx4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-small.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zbWFsbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI2MTk2M319fV19&Signature=QyICDKL8Gs6ZUmEIw7lO1TqXY8Bu-N4pRUh3MNS4ySaCoj22e5bzvumnCnPtAw23TzXytBMwfpU8QhI1bieE4EgSFoo-1n2nV0PjQrE8v7eBI~EYJKGjmHO7Gvtw5qJrgFqIUCVZbtAekj07ueaclOE4kfajzguOqQAojpid1PA_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}], "waveforms": [{"type": "video-waveform", "size": 1031206,
-        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-waveform.txt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXdhdmVmb3JtLnR4dCIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjU4MTA0fX19XX0_&Signature=SUNVzhyZvzkskn-9UlzjuXe~JjgB3UCjVl27qoZKc~3pc2WmgEZSPUTwHLm1q4OhpgCz3B3kw2j4iUX0NOoktSeB0MKkqbxDd1HTCGEJqngiDUwfs8ULF8xs6ROGXO4rZxE6v1iv4TtU2cnwqXLjCF59vqj9YlTvi9dkLYnZOS0_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-waveform.txt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXdhdmVmb3JtLnR4dCIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjYxOTYzfX19XX0_&Signature=i9hKt-rHnKPl9FhbOuwIW~FAFq4TffhAg8oFbYpicXvyoQh1Vr1289nRjov7LZwhBJaleDOR3kpNf8UWCxN~bn-ZyZgxCQvunFGHC-u01RUC7QyWOLR2do0tN0i~He6nn89-kKG8z5azVBhqw6DPDTmazxeVCF7lKWMtTYc5aVI_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "sampleMethod": "SamplesCount", "maxAmplitude": 0, "isExternal": false}],
         "mediaAnalyses": [{"type": "video-frame-level-loudness", "size": 212586, "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-frame-level-loudness.wav?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZyYW1lLWxldmVsLWxvdWRuZXNzLndhdiIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjU4MTA0fX19XX0_&Signature=GedIFI76z70fBoVEtgDrRsb8RH~8uEYBuITgCzRZYfVNdmVFhqfrupw89anXZ~dQXRnGEQMqSO8GI1frNuXXFlBbPSKq3rj7NwscaPdYpL-731jgREj3Fg3ZS~IkieL0wPS23XINlX9-BfVbNLzjqQTr4sBEZ07Hr~-w1N0Sw00_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-frame-level-loudness.wav?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZyYW1lLWxldmVsLWxvdWRuZXNzLndhdiIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjYxOTYzfX19XX0_&Signature=J9AI2yht6C3zRZ9XlKeXrqvK3p3JdhusTRXn0Kaod95sUoiyw99KsylK1WCm1-hWBUk0JwWHYnXX9O9yvJoRDD14h4ktvehh-q8hSWus8bv-rdZ1A~A6rFZDpSp7hKUiec79v3N~HKmRmHUXgW0ul~BN-bLvPk05LPDOGvGdPrc_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}], "acquisitionSource": {"name": "Workspace"}, "hlsPlaylistUrl":
-        "https://io.cimediacloud.com/assets/26013d6bdcce47fc9812bb7dc3ed44ff/preview/hls/playlist.m3u8?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Expires=1684258104&Signature=wAXDORW%2FrfeSgtdx8CZUruao1%2FambgW8IggiPNJ8OmQ%3D",
+        "https://io.cimediacloud.com/assets/26013d6bdcce47fc9812bb7dc3ed44ff/preview/hls/playlist.m3u8?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Expires=1684261963&Signature=USIjW59VwI8AjX%2FvEz3J7G%2FH3q6mfF6Ci7sOEZV1ub0%3D",
         "totalFolderCount": 1, "isTimedTextMatch": false, "batchId": "331fecb4cd4e45a38cc01f7865d61cb3",
         "kind": "Asset", "createdBy": {"id": "ac001ff970c14b358664d9ee4da0c39b", "name":
         "Miranda Villesvik", "email": "miranda_villesvik@wgbh.org"}}], "order": {"by":
@@ -726,7 +577,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 May 2023 05:28:24 GMT
+      - Tue, 16 May 2023 06:32:43 GMT
       Expires:
       - '-1'
       Pragma:
@@ -738,9 +589,9 @@ interactions:
       X-RateLimit-Limit:
       - '5000'
       X-RateLimit-Remaining:
-      - '4975'
+      - '4992'
       X-RateLimit-Reset:
-      - '1684214940'
+      - '1684218780'
     status:
       code: 200
       message: OK
@@ -777,7 +628,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 May 2023 05:28:25 GMT
+      - Tue, 16 May 2023 06:32:44 GMT
       Expires:
       - '-1'
       Pragma:
@@ -809,22 +660,22 @@ interactions:
       string: '{"limit": 50, "offset": 0, "count": 1, "kind": "Asset", "type": "All",
         "query": "191-29b5mpvv", "items": [{"id": "26013d6bdcce47fc9812bb7dc3ed44ff",
         "name": "cpb-aacip-191-29b5mpvv.mp4", "size": 232095244, "createdOn": "2021-11-30T15:14:13.156Z",
-        "thumbnails": [{"type": "small", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwNn19fV19&Signature=Nn6XBE-It-RhVDH8SeUxNL9FstQLD2ak804am-hMntDrlT2bv0dKyiGTUl1e0XgLPF2rvugNSkx694xrNZD2bl3Br2JiyUs25Ig4pOGQG5OpdD88aZDtPPuawvaaFmTZ0mXSBS~NBHURa0uJ1p5C258x6mjola7WOBEkp2cKdBE_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "thumbnails": [{"type": "small", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2NH19fV19&Signature=NL0L1Uc~qMldhw7Kh6FPoa4QxQlYjgJMGu24rua2dlt71zpEqPuMC-PAvhVTTSMuDXnqqB2RYKioGra4lwvhLnVLaVkzr~2C30UF1MyMCchmx9iOzAOz3fu7pc76vaVVs2Kuh12YvL7bjnnxu8du7hKzUc3STxfy1YKLnKXx0Gs_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 8070, "width": 250, "height": 188, "isExternal": false}, {"type":
-        "large", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-large.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1sYXJnZS5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwNn19fV19&Signature=JUHj7lhPqaCmlRQ4cVFdvQdcpubYcBzDj8v3TvLYEtKY33E2qeMw8j6z7c14gWNzL36EKkHu~OfiRt-AYjCnlC02sCubECtJYxG84gn09Z5O7vscUNVfVU3sSp9Yu9R5yRa~-y6YrIrX98J5AEnFee3j1NnR4rQzREPAlj8rcag_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "large", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-large.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1sYXJnZS5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2NH19fV19&Signature=VIFDNJN7zI-GHeelruO0~vwjIz1msDXKRSbQQW~pCKYgHIMy6vwp4dVYOYlyUvm0YHo27K-RZMf8t-Mt4L1ZDov0S9SSpL-NFM8FvF1LRwgsyqp3YE4rjsBc7XbxHpvYB3ZB0una5GhbHA~0uI7XTNo3Z7Zp-ZieYOVZxxokui4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 67283, "width": 1000, "height": 750, "isExternal": false}, {"type":
-        "medium", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-medium.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1tZWRpdW0uanBnIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NDcyODY5MDZ9fX1dfQ__&Signature=J2DO8FNUntzzjeOtNHHewZ2ujItZL2D1tssm1oVAlNeBKbB03iLt09FRPeGaiLoeIfKQMZ60MGJQxB-NXRr-Xo9aqCYwSQhaYauGr2pNlih30EgLFzbweRx9a91SySVW9B9xuqE5p8wKysOJY-QyfpxJFfsRQZghf28WZFq-bcE_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "medium", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-medium.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1tZWRpdW0uanBnIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NDcyOTA3NjR9fX1dfQ__&Signature=jeb3vEo6SB-vldZ7PUmUSitJpPC77TdYzDC06eURh7pN8zu1tQ9HwWpC5ZN1CkcgNd1kUzRxqAZvL1hfthFIEc9GcXHtIIR5cPM68aP-Dvi34iUVnVKU3RpbbVeHE7LyyIn4BAGukgMMy6BT5ppQTnVDVSB~nildKJ19uzvcBac_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 32571, "width": 560, "height": 420, "isExternal": false}, {"type":
-        "standard", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI4NjkwNn19fV19&Signature=Nn6XBE-It-RhVDH8SeUxNL9FstQLD2ak804am-hMntDrlT2bv0dKyiGTUl1e0XgLPF2rvugNSkx694xrNZD2bl3Br2JiyUs25Ig4pOGQG5OpdD88aZDtPPuawvaaFmTZ0mXSBS~NBHURa0uJ1p5C258x6mjola7WOBEkp2cKdBE_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "standard", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2NH19fV19&Signature=NL0L1Uc~qMldhw7Kh6FPoa4QxQlYjgJMGu24rua2dlt71zpEqPuMC-PAvhVTTSMuDXnqqB2RYKioGra4lwvhLnVLaVkzr~2C30UF1MyMCchmx9iOzAOz3fu7pc76vaVVs2Kuh12YvL7bjnnxu8du7hKzUc3STxfy1YKLnKXx0Gs_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 8070, "width": 250, "height": 188}], "proxies": [{"type": "video-3g",
-        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-3g.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLTNnLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTgxMDZ9fX1dfQ__&Signature=GRfCJpQOC~tywxtPEpPUnhasz7qaHagajzMe5BaxIbmp8zZrhsq8VesQ3a56f-6DtGeIIqGOsQmY4GbSvo7jA1SZQm3G9NfhVCrVsApoDvm5-kNkmngArOihbQYFiIFLJQm64NBO7mpO1cxcQoX8VO6SMIAjErf38Q3nLaZ4eYY_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-3g.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLTNnLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNjE5NjR9fX1dfQ__&Signature=fOg6uIyg7ZeT8oUEKznNR3JJRoN~sUArrBx04Mb00YX2lKaJyVqygf6Bnoyf44DtNlJWUpROFeZxMkRNa6VBWEyryVJFfD4lcAtbZgPIfmY5dlufkCNMxIxTLUjbxi8c0lQEGwxmwgesAIpuwldAEfLS7tnHQnl2GNoyN5lyApI_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "width": 360, "height": 270, "audioBitRate": 128455, "videoBitRate": 199373,
-        "size": 74070555, "isExternal": false}, {"type": "video-sd", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-sd.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXNkLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNTgxMDZ9fX1dfQ__&Signature=eYtAbWYUC-Jnsfcsqopqc30ZVldKJEf65BYt~8SFHjw7Ebw9bcX7jYkCeP9ojukxIkaPfYlF~OZ83jETPdKXssSQMzeSuSbk3Xs3LyMiv7g5soZCIoN8iN5pR3OG9bMUr~W8-Ny-qvugovjR~1Dw3eyREfcQ6cROxVPny2nU3FE_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 74070555, "isExternal": false}, {"type": "video-sd", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-sd.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXNkLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNjE5NjR9fX1dfQ__&Signature=dNDWqRwGmGkauCl1iWpaob3MWtMeJZR-3TnbP1DhmRjwLRRACZF~lelViuBEjwvSuFT46Jxdk63NGfdvA9K5USDgOzzLTx5UZQ9S5iaYVDiphT5dIkHJRMsmsegJoAS6~sPJ~~fwJ5NyZ0HOn99PGDCuyJMfd3ini9mGkdnYyVU_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "width": 480, "height": 360, "audioBitRate": 196492, "videoBitRate": 557649,
         "size": 168403186, "isExternal": false}], "type": "Video", "format": "mp4",
         "status": "Complete", "lastActivityOn": "2023-03-17T19:21:22.016Z", "modifiedOn":
         "2021-11-30T15:28:52.567Z", "md5Checksum": "7a25955378f5b552c9bc140d6635f7e3",
-        "clipSource": {}, "technicalMetadata": {"type": "Video", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/cpb-aacip-191-29b5mpvv.mp4.xml?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9jcGItYWFjaXAtMTkxLTI5YjVtcHZ2Lm1wNC54bWwiLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDIyNTcwNn19fV19&Signature=grE7eHfVkYxdQLUeZGwgSA2ZUozp064HQzld07bIObY10nC45oeC-Lc1Hcwu3QLuXnZ2jyseKbZkWgleJu8-llr2OjsqzM4WG-RNqh3IXc5WOsolctgz1QduxN4sGl0ZHx2cnY7rd~J~7ks90QaH2NSs4Dwf5V6uxOBLbcmrigs_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "clipSource": {}, "technicalMetadata": {"type": "Video", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/cpb-aacip-191-29b5mpvv.mp4.xml?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9jcGItYWFjaXAtMTkxLTI5YjVtcHZ2Lm1wNC54bWwiLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDIyOTU2NH19fV19&Signature=N~Rm9D7Fwb5MUmOO4QFTNyn0El4M3X4ee~IH9QOF20XuK8nEVxU1Yssf-EC3fM3JcrVZPnnHly2B-zUYxpSDN93xMW7yNCMGIWXeHLM6~mgUEUe56vQfT7tcvFN2yPxzZVToXIFLVGT6DMURGyfBWPGaEGjsTmGmdqSXqsu2gQ8_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "size": 6358, "avContainer": {"bitRate": 1048885, "derivedTimeCode": "00:00:00;00",
         "duration": 1770.224, "format": "MPEG-4", "formatCommercialName": "MPEG-4",
         "formatProfile": "Base Media", "start": 0.0, "streams": [{"bitDepth": 8, "bitRate":
@@ -850,17 +701,17 @@ interactions:
         "Company"}, "enterpriseNetwork": {"id": "2075d1389045443d97dfc24c9107f78f",
         "name": "WGBH"}, "filmstrips": [{"frameHeight": 188, "frameWidth": 250, "frames":
         14, "width": 3500, "height": 188, "type": "video-filmstrip-scrub", "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-scrub.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zY3J1Yi5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1ODEwNn19fV19&Signature=Sxh-pziCXa~HOh0CM7UAQH2OomCnYHDEFsPwyMEoShFpQBnSjBQhIXdZjR1sw~hI9aTiNCOAOsPDZqSXNRcr220KozLvB7JRx7WyC~7T4sTp-0dPC2XQ31we61Bjrr8nwTkgnUF31dk~Z090vbVYahGOMzX8iPH1eLHusKa51SE_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-scrub.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zY3J1Yi5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI2MTk2NH19fV19&Signature=cvAtZU9cOiPsJnYQcIVbLr3Zlmlvsyz87Cvwwf93e4~glhNfnezztUBOEOM5SbJTgdO7dUNJNGC7HdSuG0OPyDNLVPX~jXjS7wZECHJZe0ikCIIibzRGnqd~BKSxLXZECuMg1Yk4uyVDelhHWGVZRQL~on8S~AknvrmYRWXzr6g_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}, {"frameHeight": 34, "frameWidth": 46, "frames": 199,
         "width": 9154, "height": 34, "type": "video-filmstrip-small", "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-small.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zbWFsbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI1ODEwNn19fV19&Signature=h9lKZPomNNob05CFkVqP3Bgx2XQPLLqizBPCZ8EqY9PRux4CUfN902KtFsS6iGECt3tqW6mpS08OGJ-tbaDhC2nWWaWznEWSH0HeoOBIofQSXUJpDdGU08qEIqkdR8AWS8aBkTsMcuw7ZPjD5VJ2MC1lYGvlED1rjJ5s9oDxfhc_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-small.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zbWFsbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI2MTk2NH19fV19&Signature=L1YSUMcoXy9bp2Xu5vysv0bs6vA4zPZjFEzjj40Y~O0CDIbgFrctwTcM4oR8k6YpWRfelwVxrBmHNkueg1NHKP0llao~~y9GbmeXJIEgV~b8TVG6JqdpTOy8gE9rzm3UAESc3DfLo7N3KKp8TaJJoXwhYCOT9mfBAr7MgD5kfNM_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}], "waveforms": [{"type": "video-waveform", "size": 1031206,
-        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-waveform.txt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXdhdmVmb3JtLnR4dCIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjU4MTA2fX19XX0_&Signature=E9OjKInIs~WL4xyI3CIN~1IDLDtVf-SQ3cR9agkLv4zkEGAm4ldp4RUBcFV24rwVc6cYjuag1oAh8FrpZ~7jQuPCDqrTgnwu-NYF-SAnFgn2GEagkkdug5diSE5lfdDAz3TKNGatOXe2T8SmYOhGbVBMGTrbcq5Rtvx~xtEf8AY_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-waveform.txt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXdhdmVmb3JtLnR4dCIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjYxOTY0fX19XX0_&Signature=K9RULJeO3ic3CeUkj9VqWy1Ex12STzL2VthXgxF9JU5c42t44kqmyke0UK9g2eU4XHeuzalHeawB6ulFutG~-EJ-1wvPETTqgktA3ckZBRr1-p~vOiMlUsjTfaOk-wFhog8FnOR9bYxM34XFyUW1XIhia9YUM2w4775C06aGcUM_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "sampleMethod": "SamplesCount", "maxAmplitude": 0, "isExternal": false}],
         "mediaAnalyses": [{"type": "video-frame-level-loudness", "size": 212586, "location":
-        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-frame-level-loudness.wav?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZyYW1lLWxldmVsLWxvdWRuZXNzLndhdiIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjU4MTA2fX19XX0_&Signature=QrFXuYM1c-rUDO3DA3PW83VY2TLhyUUwTlTl4jromAHfGw4rav6zwlTGBdpjuDjiQmUkilZD6Eu5GIGMwsU0VgoKa1NbnBxoig0gRQW0lV3WHif7967fp2zeS5YqjbaLiifPAJk1yGYZYUgh32Rb08q1RSQp4q2sxUoNkptw4SE_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-frame-level-loudness.wav?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZyYW1lLWxldmVsLWxvdWRuZXNzLndhdiIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjYxOTY0fX19XX0_&Signature=AxuTTmLf6eVe85eGDLBJGYXJp8a8phxd0GKKZvvq2ffATz45au-ndFpebj6RYWpo8SivqrjabsyHUzOiokRqG487HGHhjXNwHzCuECU8dlwVO0viLg5ZtiCEzjO2SoyF3-Luf1mpUpp9A4otdy3vBxddTJTQiLYmN-FtuaDhkPw_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
         "isExternal": false}], "acquisitionSource": {"name": "Workspace"}, "hlsPlaylistUrl":
-        "https://io.cimediacloud.com/assets/26013d6bdcce47fc9812bb7dc3ed44ff/preview/hls/playlist.m3u8?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Expires=1684258106&Signature=UPGA4SISTCi2ragB9ozqp%2FC%2FXe4fDGs43doCEc19VsY%3D",
+        "https://io.cimediacloud.com/assets/26013d6bdcce47fc9812bb7dc3ed44ff/preview/hls/playlist.m3u8?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Expires=1684261964&Signature=pD2ILeNFA5mG81tiz8mh%2FatOgOccUXrxD6qmf4I%2FEvw%3D",
         "totalFolderCount": 1, "isTimedTextMatch": false, "batchId": "331fecb4cd4e45a38cc01f7865d61cb3",
         "kind": "Asset", "createdBy": {"id": "ac001ff970c14b358664d9ee4da0c39b", "name":
         "Miranda Villesvik", "email": "miranda_villesvik@wgbh.org"}}], "order": {"by":
@@ -875,7 +726,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 May 2023 05:28:26 GMT
+      - Tue, 16 May 2023 06:32:44 GMT
       Expires:
       - '-1'
       Pragma:
@@ -887,9 +738,158 @@ interactions:
       X-RateLimit-Limit:
       - '5000'
       X-RateLimit-Remaining:
-      - '4974'
+      - '4991'
       X-RateLimit-Reset:
-      - '1684214940'
+      - '1684218780'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: grant_type=password&client_id=FAKE_CLIENT_ID&client_secret=FAKE_CLIENT_SECRET
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, br
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '109'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.30.0
+      authorization:
+      - Bearer DUMMY
+    method: POST
+    uri: https://api.cimediacloud.com/oauth2/token
+  response:
+    body:
+      string: '{"access_token": "DUMMY_ACCESS_TOKEN", "expires_in": 86400, "token_type":
+        "bearer", "refresh_token": "DUMMY_REFRESH_TOKEN"}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 16 May 2023 06:32:44 GMT
+      Expires:
+      - '-1'
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=86400; includeSubDomains
+      X-Frame-Options:
+      - deny
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, br
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.30.0
+      authorization:
+      - Bearer DUMMY
+    method: GET
+    uri: https://api.cimediacloud.com/workspaces/051303c1c1d24da7988128e6d2f56aa9/search?kind=asset&query=191-29b5mpvv
+  response:
+    body:
+      string: '{"limit": 50, "offset": 0, "count": 1, "kind": "Asset", "type": "All",
+        "query": "191-29b5mpvv", "items": [{"id": "26013d6bdcce47fc9812bb7dc3ed44ff",
+        "name": "cpb-aacip-191-29b5mpvv.mp4", "size": 232095244, "createdOn": "2021-11-30T15:14:13.156Z",
+        "thumbnails": [{"type": "small", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2NX19fV19&Signature=ivlUaJTuB6mH2DF04HHQo231m5WzpziMEylseSItrvLzmB6y2cpCg4HLcPCgRKhl823yOf1ks0iHUNB7nzD8CRlOXRGTnmdvCBMTmmyUfbqIW9HXEh0a2N8YybC0vlD3CnrOU3Bb1lRfOuQSxjA2GT0R2XGXIMxS8Axz5vfWTmo_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 8070, "width": 250, "height": 188, "isExternal": false}, {"type":
+        "large", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-large.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1sYXJnZS5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2NX19fV19&Signature=IrgiBvrnEnM0-hOR0l6YHUFXij~2EuXjFtNJ9af4tSZsZTG8QbmQw~LELGdKUooGaKHNW9IANa16QR62-Y6yh-i7sRYk13qPlbaBX5L9cmsrDkrc8EQIDJbmkW7H63l7bvaqtSFTeuCDdBGXqTFXB4voT7WfI7KtjAJwRwqqevc_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 67283, "width": 1000, "height": 750, "isExternal": false}, {"type":
+        "medium", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail-medium.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC1tZWRpdW0uanBnIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NDcyOTA3NjV9fX1dfQ__&Signature=HkaGFwEFHma6bJY99SMz9eWtZ7dbozuB285-LHqrUhZh5Adq8jALPPYPWKqcvkikqxQTsCH-nsYJFNwY6311z5VPfaV6kValvQyYVY4ZmQD9OAfGSMb~nsedAG5IZjLCEuyEnhPlgItcHh6CUz7ZYE9GBqs504TMyeULr9BK4U8_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 32571, "width": 560, "height": 420, "isExternal": false}, {"type":
+        "standard", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/thumbnail.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3RodW1ibmFpbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NzI5MDc2NX19fV19&Signature=ivlUaJTuB6mH2DF04HHQo231m5WzpziMEylseSItrvLzmB6y2cpCg4HLcPCgRKhl823yOf1ks0iHUNB7nzD8CRlOXRGTnmdvCBMTmmyUfbqIW9HXEh0a2N8YybC0vlD3CnrOU3Bb1lRfOuQSxjA2GT0R2XGXIMxS8Axz5vfWTmo_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 8070, "width": 250, "height": 188}], "proxies": [{"type": "video-3g",
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-3g.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLTNnLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNjE5NjV9fX1dfQ__&Signature=eY5S-GkDUKe1MCdKOarygxN5lztXUQdb97U5SFIpR-BdqlFI4Y12dJC3XhI~DyvTNi8bTHDTDFjDXtt1NWTN2c2ZyFn2lzzo~d3YArexS9KnaupsJDfdEBXCyuE5T~3qfr4HD6R3Ng7iv63ElUQQEt-Lih20PT4Z-DV-iLUGKeU_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "width": 360, "height": 270, "audioBitRate": 128455, "videoBitRate": 199373,
+        "size": 74070555, "isExternal": false}, {"type": "video-sd", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-sd.mp4?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXNkLm1wND91PTE2YTU1NWQwNWM2MDQzOWE4MjQzYTNkNmMzNDlmZDhiJmE9MjYwMTNkNmJkY2NlNDdmYzk4MTJiYjdkYzNlZDQ0ZmYmY3Q9YWJiMDY2OGQ1YjA1NDIwMGI2YTg5YzM4MjYwMjRlNDImZXQ9c3RyZWFtIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODQyNjE5NjV9fX1dfQ__&Signature=gzDfi2fzN4ddIl6oXboonVKrlzcoRiNAhyI5I7bu8wpMK-hp-X2V54v5SNgF5BaoVBbJ4aIYsCjL1XaHshX6HTH6WI06FekY1vZqb6ljsCVxFQ65nM1Aunny6CgqNzf38fAUvdCk4GZkaR4AYNkP35B9SHb4aNINEXxx3uVYy-4_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "width": 480, "height": 360, "audioBitRate": 196492, "videoBitRate": 557649,
+        "size": 168403186, "isExternal": false}], "type": "Video", "format": "mp4",
+        "status": "Complete", "lastActivityOn": "2023-03-17T19:21:22.016Z", "modifiedOn":
+        "2021-11-30T15:28:52.567Z", "md5Checksum": "7a25955378f5b552c9bc140d6635f7e3",
+        "clipSource": {}, "technicalMetadata": {"type": "Video", "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/cpb-aacip-191-29b5mpvv.mp4.xml?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9jcGItYWFjaXAtMTkxLTI5YjVtcHZ2Lm1wNC54bWwiLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDIyOTU2NX19fV19&Signature=cUnq2BKr~TINflVBoHNY7Hd1Fqf~IiOKXbde1YLA6uKnbT62crfU63ZncfeT0w4D5MkzC89gV9yonj1kf5tZVa3QeYnrAJQAAdFwMxf~RfRo7XrVYFgkUVSasdajIIuO44~1lrwLPN9wXwkuyxXkgiv3uOh8THvhhuhrWqzafZ0_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "size": 6358, "avContainer": {"bitRate": 1048885, "derivedTimeCode": "00:00:00;00",
+        "duration": 1770.224, "format": "MPEG-4", "formatCommercialName": "MPEG-4",
+        "formatProfile": "Base Media", "start": 0.0, "streams": [{"bitDepth": 8, "bitRate":
+        844671, "codec": "h264", "codecLongName": "H.264 / AVC / MPEG-4 AVC / MPEG-4
+        part 10", "codecName": "AVC", "codecProfile": "Main@L3", "codecSettings":
+        "CABAC / 4 Ref Frames", "duration": 1770.201767, "fourCC": "avc1", "frameRateDenominator":
+        1001, "frameRateNumerator": 30000, "height": 360, "index": 0, "start": 0.0,
+        "timeCode": "00:00:00;00", "totalFrames": 53053, "type": "Video", "videoColorSpace":
+        "YUV", "videoDARHeight": 3, "videoDARWidth": 4, "videoPARHeight": 1, "videoPARWidth":
+        1, "videoScanType": "Progressive", "width": 480}, {"audioAnalysis": "Stereo",
+        "audioChannelCount": 2, "audioLayout": "Stereo", "audioSampleRate": 48000,
+        "bitRate": 195455, "bitRateMode": "CBR", "codec": "aac", "codecLongName":
+        "AAC (Advanced Audio Coding)", "codecName": "AAC", "codecProfile": "LC", "duration":
+        1770.202, "fourCC": "mp4a", "index": 1, "start": 0.0, "type": "Audio"}, {"fourCC":
+        "tmcd", "index": 2, "start": 0.0, "timeCode": "00:00:00;00", "type": "Data"}]},
+        "isExternal": false}, "archiveStatus": "Not archived", "restoreStatus": "Not
+        restored", "uploadCompleteDate": "2021-11-30T15:25:37.01Z", "isTrashed": false,
+        "isFavorite": false, "isExternal": false, "uploadTransferType": "MultipartHttp",
+        "folder": {"id": "a1459cf719eb4a7cb2686663018be161", "name": "Workspace"},
+        "runtime": 1770.224, "workspace": {"id": "051303c1c1d24da7988128e6d2f56aa9",
+        "name": "American Archive of Public Broadcasting", "class": "Team"}, "network":
+        {"id": "e573ff14defc4b4e9ea393c3150a396c", "name": "American Archive", "class":
+        "Company"}, "enterpriseNetwork": {"id": "2075d1389045443d97dfc24c9107f78f",
+        "name": "WGBH"}, "filmstrips": [{"frameHeight": 188, "frameWidth": 250, "frames":
+        14, "width": 3500, "height": 188, "type": "video-filmstrip-scrub", "location":
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-scrub.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zY3J1Yi5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI2MTk2NX19fV19&Signature=MZsUZJr2w6Sks5kSQzdmkdKEcSYxRtZLU7JoLUZDIyOc4XLvdMHFWk1ENAHAYFpKdRs5T0zLMwxHEmDCiaXvAslPWHJfysZEV7NKcBn7HF-Ro1lXwDPhd-kpcfKMKt2mNH0Lh60duL3UxVI7RRZ1VxRYF-o8Bq3~IMLzyt~JplI_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "isExternal": false}, {"frameHeight": 34, "frameWidth": 46, "frames": 199,
+        "width": 9154, "height": 34, "type": "video-filmstrip-small", "location":
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-filmstrip-small.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZpbG1zdHJpcC1zbWFsbC5qcGciLCJDb25kaXRpb24iOnsiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY4NDI2MTk2NX19fV19&Signature=eZbapETigXU7plJtWTzbRk8Xg96EYTZ-rjvMPmJ7hMqPPthNPkT8YhfLT9f2IH7Fv~snz~h1BW5C3a597~AhwLffpRHnWxk-jCIIX5hj-PjcDvBRTU0z5EC1I7aZMKcXU-OtJC13IucUAUVsd3qRIuKbP2VfZa9R0rWOUL2djus_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "isExternal": false}], "waveforms": [{"type": "video-waveform", "size": 1031206,
+        "location": "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-waveform.txt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLXdhdmVmb3JtLnR4dCIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjYxOTY1fX19XX0_&Signature=JFGuTIfIjHyLYPFJr~1SoNykgF-jly07T45D~OFLYI4ZXEXQOFMmgQ6tFFbngvsk1laAprWW3zU3f4f7fsmxr4K~LJa6nI5X7YnsfI66kb2F60c0cwkuU7wE86p9Vi75QGfpdGi~xFpyfxP05w5GBVtuOqtE3hDq2ZWyaMgSpgI_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "sampleMethod": "SamplesCount", "maxAmplitude": 0, "isExternal": false}],
+        "mediaAnalyses": [{"type": "video-frame-level-loudness", "size": 212586, "location":
+        "https://cdn01.cimediacloud.com/cifiles/26013d6bdcce47fc9812bb7dc3ed44ff/renditions/video-frame-level-loudness.wav?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NkbjAxLmNpbWVkaWFjbG91ZC5jb20vY2lmaWxlcy8yNjAxM2Q2YmRjY2U0N2ZjOTgxMmJiN2RjM2VkNDRmZi9yZW5kaXRpb25zL3ZpZGVvLWZyYW1lLWxldmVsLWxvdWRuZXNzLndhdiIsIkNvbmRpdGlvbiI6eyJJcEFkZHJlc3MiOnsiQVdTOlNvdXJjZUlwIjoiMC4wLjAuMC8wIn0sIkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjg0MjYxOTY1fX19XX0_&Signature=ZYbOdNphHrVNOPuBDI9laBAJA95NbKMRTzZJL04KGhxpKo2UuSz0pLR4Hpso~Zewg7bY8lnxRfivazHiaQ~4P4pkaYlFbC4UVXcnr5hLiFWlBV6ZRCTS1kVnlcv01xCgJW~~7M2eF262XUQE9M48WxAgGe503AfRUH2LVziKDqo_&Key-Pair-Id=APKAJNUSFH4IKQRZ44WA",
+        "isExternal": false}], "acquisitionSource": {"name": "Workspace"}, "hlsPlaylistUrl":
+        "https://io.cimediacloud.com/assets/26013d6bdcce47fc9812bb7dc3ed44ff/preview/hls/playlist.m3u8?u=16a555d05c60439a8243a3d6c349fd8b&a=26013d6bdcce47fc9812bb7dc3ed44ff&ct=abb0668d5b054200b6a89c3826024e42&et=stream&Expires=1684261965&Signature=uGC%2F83r8WkMPpsihCAfTcuM%2Bp87r%2FGAUzTyF7pecdY8%3D",
+        "totalFolderCount": 1, "isTimedTextMatch": false, "batchId": "331fecb4cd4e45a38cc01f7865d61cb3",
+        "kind": "Asset", "createdBy": {"id": "ac001ff970c14b358664d9ee4da0c39b", "name":
+        "Miranda Villesvik", "email": "miranda_villesvik@wgbh.org"}}], "order": {"by":
+        "Relevance", "direction": "Desc"}}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '11446'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 16 May 2023 06:32:45 GMT
+      Expires:
+      - '-1'
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=86400; includeSubDomains
+      X-Frame-Options:
+      - deny
+      X-RateLimit-Limit:
+      - '5000'
+      X-RateLimit-Remaining:
+      - '4990'
+      X-RateLimit-Reset:
+      - '1684218780'
     status:
       code: 200
       message: OK
