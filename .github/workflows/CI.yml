@@ -8,7 +8,7 @@ jobs:
     uses: WGBH-MLA/.github/.github/workflows/pytest.yml@main
     secrets: inherit
     with:
-      pytest_args: -n auto
+      pytest_args: -n auto --nbmake
 
   lint:
     name: 👕 Lint
