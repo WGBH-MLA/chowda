@@ -36,6 +36,7 @@ test = [
     'pytest-xdist~=3.2',
     'httpx~=0.24',
     'nbmake~=1.4',
+    'urllib3~=1.26',
 ]
 locust = ['locust~=2.15', 'pydantic-factories~=1.17']
 
