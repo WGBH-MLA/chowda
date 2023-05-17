@@ -17,7 +17,7 @@
         <link rel="next" href="../../reference/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.12">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
     
     
       
@@ -1717,9 +1717,9 @@ Licensed under the Apache License, Version 2.0.
                     </div>
                 </clipboard-copy>
             </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="kn">from</span> <span class="nn">factories</span> <span class="kn">import</span> <span class="o">*</span>
+            <div class="highlight-ipynb hl-python "><pre><span></span><span class="kn">from</span> <span class="nn">tests.factories</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
-<div id="cell-1" class="clipboard-copy-txt">from factories import *</div>
+<div id="cell-1" class="clipboard-copy-txt">from tests.factories import *</div>
         
         </div>
     </div>
@@ -1739,8 +1739,8 @@ Licensed under the Apache License, Version 2.0.
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div  class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -1768,30 +1768,6 @@ Licensed under the Apache License, Version 2.0.
     </div>
 
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:53,797 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:53,800 INFO sqlalchemy.engine.Engine INSERT INTO batches (name, description) VALUES (?, ?)
-2023-04-05 13:11:53,802 INFO sqlalchemy.engine.Engine [generated in 0.00180s] (&#39;Batch 0&#39;, &#39;Batch 0 Description&#39;)
-2023-04-05 13:11:53,804 INFO sqlalchemy.engine.Engine COMMIT
-</pre>
-</div>
-</div>
-
-</div>
-
 </div>
 
 </div>
@@ -1827,9 +1803,13 @@ Licensed under the Apache License, Version 2.0.
                     </div>
                 </clipboard-copy>
             </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="o">.</span><span class="n">object_session</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+            <div class="highlight-ipynb hl-python "><pre><span></span><span class="kn">from</span> <span class="nn">sqlmodel</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="o">.</span><span class="n">object_session</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
 </pre></div>
-<div id="cell-3" class="clipboard-copy-txt">session = Session.object_session(batch)</div>
+<div id="cell-3" class="clipboard-copy-txt">from sqlmodel import Session
+
+session = Session.object_session(batch)</div>
         
         </div>
     </div>
@@ -1959,8 +1939,8 @@ Licensed under the Apache License, Version 2.0.
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div  class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -1988,34 +1968,6 @@ Licensed under the Apache License, Version 2.0.
     </div>
 
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:54,189 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:54,193 INFO sqlalchemy.engine.Engine SELECT batches.id AS batches_id, batches.name AS batches_name 
-FROM batches 
-WHERE batches.id = ?
-2023-04-05 13:11:54,194 INFO sqlalchemy.engine.Engine [generated in 0.00104s] (14,)
-2023-04-05 13:11:54,196 INFO sqlalchemy.engine.Engine UPDATE batches SET description=? WHERE batches.id = ?
-2023-04-05 13:11:54,197 INFO sqlalchemy.engine.Engine [generated in 0.00072s] (&#39;exceedingly jolly&#39;, 14)
-2023-04-05 13:11:54,198 INFO sqlalchemy.engine.Engine COMMIT
-</pre>
-</div>
-</div>
-
-</div>
-
 </div>
 
 </div>
@@ -2103,7 +2055,7 @@ WHERE batches.id = ?
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2118,17 +2070,17 @@ WHERE batches.id = ?
                     </div>
                 </clipboard-copy>
             </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
-   <span class="n">batch_copy</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span>
-       <span class="n">select</span><span class="p">(</span><span class="n">Batch</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Batch</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">batch</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-   <span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+            <div class="highlight-ipynb hl-python "><pre><span></span><span class="kn">from</span> <span class="nn">sqlmodel</span> <span class="kn">import</span> <span class="n">select</span>
+
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+    <span class="n">batch_copy</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">Batch</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Batch</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">batch</span><span class="o">.</span><span class="n">id</span><span class="p">))</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;batch_copy.description = &#39;</span><span class="p">,</span> <span class="n">batch_copy</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
 <span class="c1"># =&gt; foo</span>
 </pre></div>
-<div id="cell-8" class="clipboard-copy-txt">with Session(engine) as db:
-   batch_copy = db.exec(
-       select(Batch).where(Batch.id==batch.id)
-   ).first()
+<div id="cell-8" class="clipboard-copy-txt">from sqlmodel import select
+
+with Session(engine) as db:
+    batch_copy = db.exec(select(Batch).where(Batch.id == batch.id)).first()
 print('batch_copy.description = ', batch_copy.description)
 # => foo</div>
         
@@ -2150,18 +2102,7 @@ print('batch_copy.description = ', batch_copy.description)
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:54,422 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:54,423 INFO sqlalchemy.engine.Engine SELECT batches.id AS batches_id, batches.name AS batches_name, batches.description AS batches_description 
-FROM batches 
-WHERE batches.id = ?
-2023-04-05 13:11:54,424 INFO sqlalchemy.engine.Engine [generated in 0.00088s] (14,)
-2023-04-05 13:11:54,426 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:54,428 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.name, batches.description 
-FROM batches 
-WHERE batches.id = ?
-2023-04-05 13:11:54,429 INFO sqlalchemy.engine.Engine [generated in 0.00082s] (14,)
-2023-04-05 13:11:54,430 INFO sqlalchemy.engine.Engine ROLLBACK
-batch_copy.description =  exceedingly jolly
+<pre>batch_copy.description =  exceedingly jolly and effortlessly charming and elaborately loquacious
 </pre>
 </div>
 </div>
@@ -2189,7 +2130,7 @@ batch_copy.description =  exceedingly jolly
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2250,13 +2191,13 @@ batch_copy.description =  exceedingly jolly
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div  class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2273,42 +2214,19 @@ batch_copy.description =  exceedingly jolly
             </div>
             <div class="highlight-ipynb hl-python "><pre><span></span><span class="n">batch_copy</span><span class="o">.</span><span class="n">description</span> <span class="o">+=</span> <span class="s2">&quot; and effortlessly charming&quot;</span>
 <span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
-   <span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">batch_copy</span><span class="p">)</span>
-   <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">batch_copy</span><span class="p">)</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 </pre></div>
 <div id="cell-10" class="clipboard-copy-txt">batch_copy.description += " and effortlessly charming"
 with Session(engine) as db:
-   db.add(batch_copy)
-   db.commit()</div>
+    db.add(batch_copy)
+    db.commit()
+</div>
         
         </div>
     </div>
 
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:54,703 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:54,705 INFO sqlalchemy.engine.Engine UPDATE batches SET description=? WHERE batches.id = ?
-2023-04-05 13:11:54,706 INFO sqlalchemy.engine.Engine [cached since 0.5094s ago] (&#39;exceedingly jolly and effortlessly charming&#39;, 14)
-2023-04-05 13:11:54,707 INFO sqlalchemy.engine.Engine COMMIT
-</pre>
-</div>
-</div>
-
-</div>
-
 </div>
 
 </div>
@@ -2333,7 +2251,7 @@ with Session(engine) as db:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2349,14 +2267,15 @@ with Session(engine) as db:
                 </clipboard-copy>
             </div>
             <div class="highlight-ipynb hl-python "><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
-   <span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">batch_copy</span><span class="p">)</span>
-   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;batch_copy.description = &#39;</span><span class="p">,</span> <span class="n">batch_copy</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
-   <span class="c1"># =&gt; batch_copy.description =  exceedingly jolly and effortlessly charming</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">batch_copy</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;batch_copy.description = &#39;</span><span class="p">,</span> <span class="n">batch_copy</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+    <span class="c1"># =&gt; batch_copy.description =  exceedingly jolly and effortlessly charming</span>
 </pre></div>
 <div id="cell-11" class="clipboard-copy-txt">with Session(engine) as db:
-   db.add(batch_copy)
-   print('batch_copy.description = ', batch_copy.description)
-   # => batch_copy.description =  exceedingly jolly and effortlessly charming</div>
+    db.add(batch_copy)
+    print('batch_copy.description = ', batch_copy.description)
+    # => batch_copy.description =  exceedingly jolly and effortlessly charming
+</div>
         
         </div>
     </div>
@@ -2376,13 +2295,7 @@ with Session(engine) as db:
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:54,955 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:54,956 INFO sqlalchemy.engine.Engine SELECT batches.id AS batches_id, batches.name AS batches_name, batches.description AS batches_description 
-FROM batches 
-WHERE batches.id = ?
-2023-04-05 13:11:54,957 INFO sqlalchemy.engine.Engine [cached since 0.534s ago] (14,)
-batch_copy.description =  exceedingly jolly and effortlessly charming
-2023-04-05 13:11:54,959 INFO sqlalchemy.engine.Engine ROLLBACK
+<pre>batch_copy.description =  exceedingly jolly and effortlessly charming
 </pre>
 </div>
 </div>
@@ -2409,7 +2322,7 @@ batch_copy.description =  exceedingly jolly and effortlessly charming
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2477,7 +2390,7 @@ batch_copy.description =  exceedingly jolly and effortlessly charming
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2519,11 +2432,7 @@ print('batch.description after refresh = ', batch.description)
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:55,366 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.name, batches.description 
-FROM batches 
-WHERE batches.id = ?
-2023-04-05 13:11:55,368 INFO sqlalchemy.engine.Engine [generated in 0.00136s] (14,)
-batch.description after refresh =  exceedingly jolly and effortlessly charming
+<pre>batch.description after refresh =  exceedingly jolly and effortlessly charming
 </pre>
 </div>
 </div>
@@ -2551,7 +2460,7 @@ batch.description after refresh =  exceedingly jolly and effortlessly charming
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2588,13 +2497,13 @@ batch.description after refresh =  exceedingly jolly and effortlessly charming
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div  class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2611,36 +2520,13 @@ batch.description after refresh =  exceedingly jolly and effortlessly charming
             </div>
             <div class="highlight-ipynb hl-python "><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 </pre></div>
-<div id="cell-15" class="clipboard-copy-txt">
-session.commit()</div>
+<div id="cell-15" class="clipboard-copy-txt">session.commit()
+</div>
         
         </div>
     </div>
 
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:55,512 INFO sqlalchemy.engine.Engine UPDATE batches SET description=? WHERE batches.id = ?
-2023-04-05 13:11:55,513 INFO sqlalchemy.engine.Engine [cached since 1.317s ago] (&#39;exceedingly jolly and effortlessly charming and fantastically flatulent&#39;, 14)
-2023-04-05 13:11:55,515 INFO sqlalchemy.engine.Engine COMMIT
-</pre>
-</div>
-</div>
-
-</div>
-
 </div>
 
 </div>
@@ -2661,7 +2547,7 @@ session.commit()</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2677,18 +2563,19 @@ session.commit()</div>
                 </clipboard-copy>
             </div>
             <div class="highlight-ipynb hl-python "><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
-   <span class="n">batch_copy</span><span class="o">.</span><span class="n">description</span> <span class="o">+=</span> <span class="s2">&quot; and elaborately loquacious&quot;</span>
-   <span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">batch_copy</span><span class="p">)</span>
-   <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;batch_copy.description = &#39;</span><span class="p">,</span> <span class="n">batch_copy</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+    <span class="n">batch_copy</span><span class="o">.</span><span class="n">description</span> <span class="o">+=</span> <span class="s2">&quot; and elaborately loquacious&quot;</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">batch_copy</span><span class="p">)</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;batch_copy.description = &#39;</span><span class="p">,</span> <span class="n">batch_copy</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
 <span class="c1"># =&gt; batch_copy.description =  exceedingly jolly and effortlessly charming and elaborately loquacious</span>
 </pre></div>
 <div id="cell-16" class="clipboard-copy-txt">with Session(engine) as db:
-   batch_copy.description += " and elaborately loquacious"
-   db.add(batch_copy)
-   db.commit()
-   print('batch_copy.description = ', batch_copy.description)
-# => batch_copy.description =  exceedingly jolly and effortlessly charming and elaborately loquacious</div>
+    batch_copy.description += " and elaborately loquacious"
+    db.add(batch_copy)
+    db.commit()
+    print('batch_copy.description = ', batch_copy.description)
+# => batch_copy.description =  exceedingly jolly and effortlessly charming and elaborately loquacious
+</div>
         
         </div>
     </div>
@@ -2708,17 +2595,7 @@ session.commit()</div>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:55,579 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:55,580 INFO sqlalchemy.engine.Engine UPDATE batches SET description=? WHERE batches.id = ?
-2023-04-05 13:11:55,581 INFO sqlalchemy.engine.Engine [cached since 1.385s ago] (&#39;exceedingly jolly and effortlessly charming and elaborately loquacious&#39;, 14)
-2023-04-05 13:11:55,583 INFO sqlalchemy.engine.Engine COMMIT
-2023-04-05 13:11:55,586 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:55,586 INFO sqlalchemy.engine.Engine SELECT batches.id AS batches_id, batches.name AS batches_name, batches.description AS batches_description 
-FROM batches 
-WHERE batches.id = ?
-2023-04-05 13:11:55,587 INFO sqlalchemy.engine.Engine [cached since 1.164s ago] (14,)
-batch_copy.description =  exceedingly jolly and effortlessly charming and elaborately loquacious
-2023-04-05 13:11:55,589 INFO sqlalchemy.engine.Engine ROLLBACK
+<pre>batch_copy.description =  exceedingly jolly and effortlessly charming and elaborately loquacious
 </pre>
 </div>
 </div>
@@ -2805,7 +2682,7 @@ batch_copy.description =  exceedingly jolly and effortlessly charming and elabor
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "toc.integrate", "navigation.top", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c2be25ad.min.js"></script>
+      <script src="../../assets/javascripts/bundle.b4d07000.min.js"></script>
       
     
   </body>
