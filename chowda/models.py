@@ -3,13 +3,14 @@
 SQLModels for DB and validation
 """
 
-from typing import Any, Dict, List, Optional
-from pydantic import AnyHttpUrl, EmailStr, stricturl
-from sqlalchemy import JSON, Column
-from starlette.requests import Request
-from sqlmodel import Field, Relationship, SQLModel
-
 from enum import Enum
+from typing import Any, Dict, List, Optional
+
+from pydantic import AnyHttpUrl, BaseModel, EmailStr, stricturl
+from pydantic import Field as pydantic_Field
+from sqlalchemy import JSON, Column
+from sqlmodel import Field, Relationship, SQLModel
+from starlette.requests import Request
 
 MediaUrl = stricturl(allowed_schemes=['video', 'audio', 'text'], tld_required=False)
 """Media url validator. Must have prefix of video, audio, or text. No TLD required.
@@ -23,6 +24,15 @@ class AppStatus(Enum):
     RUNNING = 'running'
     COMPLETE = 'complete'
     FAILED = 'failed'
+
+
+class ThumbnailType(Enum):
+    LARGE = 'large'
+    MEDIUM = 'medium'
+    SMALL = 'small'
+    STANDARD = 'standard'
+    VIDEO_SD = 'video-sd'
+    VIDEO_3G = 'video-3g'
 
 
 class User(SQLModel, table=True):
@@ -81,6 +91,28 @@ class MediaFile(SQLModel, table=True):
 
     async def __admin_select2_repr__(self, request: Request) -> str:
         return f'<span><strong>{self.guid}</strong></span>'
+
+
+class SonyCiAssetThumbnail(BaseModel):
+    type: ThumbnailType = pydantic_Field(..., alias='type')
+    location: str
+    size: int
+    width: int
+    height: int
+
+
+class SonyCiAsset(SQLModel, table=True):
+    __tablename__ = 'sonyci_assets'
+    # TODO: primary key should be string, SonyCi Asset ID. Change to str
+    # when we no longer want to use the UI for testing.
+    id: Optional[int] = Field(primary_key=True)
+    name: str
+    size: int
+    type: str
+    thumbnail: Optional[SonyCiAssetThumbnail] = Field(
+        sa_column=Column(JSON), default=None
+    )
+    description: Optional[str] = Field(default=None)
 
 
 class Collection(SQLModel, table=True):

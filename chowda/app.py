@@ -19,6 +19,7 @@ from chowda.models import (
     ClamsEvent,
     Collection,
     MediaFile,
+    SonyCiAsset,
     Pipeline,
     User,
 )
@@ -53,6 +54,7 @@ admin = Admin(
 # Add views
 admin.add_view(ModelView(User, icon='fa fa-users'))
 admin.add_view(ModelView(MediaFile, icon='fa fa-file-video'))
+admin.add_view(ModelView(SonyCiAsset, icon='fa fa-file-video'))
 admin.add_view(CollectionView(Collection, icon='fa fa-folder'))
 admin.add_view(ModelView(ClamsApp, icon='fa fa-box'))
 admin.add_view(ModelView(Pipeline, icon='fa fa-boxes-stacked'))
