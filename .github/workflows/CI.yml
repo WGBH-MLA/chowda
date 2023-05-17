@@ -5,10 +5,10 @@ on: [push, pull_request]
 jobs:
   tests:
     name: ⚗️ Application Tests
-    uses: WGBH-MLA/.github/.github/workflows/pytest.yml@main
+    uses: WGBH-MLA/.github/.github/workflows/pytest.yml@pdm
     secrets: inherit
     with:
-      pytest_args: -n auto --nbmake
+      pytest_args: -vn auto --nbmake
 
   lint:
     name: 👕 Lint
