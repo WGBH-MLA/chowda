@@ -11,17 +11,17 @@
       
       
       
-        <link rel="prev" href="../ingest/">
+        <link rel="prev" href="../../install/">
       
       
-        <link rel="next" href="../../reference/">
+        <link rel="next" href="../session/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.12">
     
     
       
-        <title>SQLModel Session exercise - Chowda</title>
+        <title>Ingest - Chowda</title>
       
     
     
@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#sqlmodel-session-exercise" class="md-skip">
+        <a href="#ingest" class="md-skip">
           Skip to content
         </a>
       
@@ -126,7 +126,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              SQLModel Session exercise
+              Ingest
             
           </span>
         </div>
@@ -250,7 +250,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../ingest/" class="md-tabs__link md-tabs__link--active">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
         Examples
       </a>
     </li>
@@ -396,20 +396,6 @@
               
   
   
-  
-    <li class="md-nav__item">
-      <a href="../ingest/" class="md-nav__link">
-        Ingest
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
     
   
   
@@ -422,12 +408,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          SQLModel Session exercise
+          Ingest
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        SQLModel Session exercise
+        Ingest
       </a>
       
         
@@ -446,106 +432,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-a-new-batch-from-factory" class="md-nav__link">
-    Create a new Batch from factory
+  <a href="#but-we-can-do-better" class="md-nav__link">
+    But we can do better!
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#grab-the-session-the-batch-was-created-with-for-inspection" class="md-nav__link">
-    Grab the session the Batch was created with for inspection.
+  <a href="#but-we-can-do-even-better" class="md-nav__link">
+    But we can do even better!
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#change-something-on-the-batch" class="md-nav__link">
-    Change something on the batch
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#view-the-changes-that-have-yet-to-be-committed-to-the-db" class="md-nav__link">
-    View the changes that have yet to be committed to the db
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#commit-the-changes-to-the-db" class="md-nav__link">
-    Commit the changes to the db.
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verify-there-are-no-other-pending-changes" class="md-nav__link">
-    Verify there are no other pending changes.
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#use-a-contextual-session" class="md-nav__link">
-    Use a contextual session
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#now-change-batch_copydescripiton" class="md-nav__link">
-    Now change batch_copy.descripiton,
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#note-after-committing-changes-to-batch_copy-using-contextual-session-in-this-way" class="md-nav__link">
-    NOTE: after committing changes to batch_copy using contextual session in this way,
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#confirm-that-our-original-batch-instance-still-has-the-old-description" class="md-nav__link">
-    Confirm that our original Batch instance still has the old description
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#refresh-the-original-batch-instance" class="md-nav__link">
-    Refresh the original Batch instance
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#now-lets-edit-batchdescription-and-batch_copydescription" class="md-nav__link">
-    Now let's edit batch.description and batch_copy.description
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#save-the-first-edit" class="md-nav__link">
-    save the first edit
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#save-the-second-edit" class="md-nav__link">
-    save the second edit
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#unsurprisingly-the-2nd-save-wins" class="md-nav__link">
-    Unsurprisingly, the 2nd save wins.
+  <a href="#fastest" class="md-nav__link">
+    Fastest!
   </a>
   
 </li>
@@ -554,6 +456,20 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../session/" class="md-nav__link">
+        SQLModel Session exercise
+      </a>
     </li>
   
 
@@ -661,7 +577,7 @@
               <article class="md-content__inner md-typeset">
                 
 
-    <a href="session.ipynb" title="Download Notebook" class="md-content__button md-icon">
+    <a href="ingest.ipynb" title="Download Notebook" class="md-content__button md-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7 7-7Z"/></svg>
     </a>
 
@@ -1707,7 +1623,7 @@ Licensed under the Apache License, Version 2.0.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="sqlmodel-session-exercise">SQLModel Session exercise<a class="anchor-link" href="#sqlmodel-session-exercise">&#182;</a></h1><p>Adapted from Drew's slack example</p>
+<h1 id="ingest">Ingest<a class="anchor-link" href="#ingest">&#182;</a></h1><p>Ingest all guids from AAPB into Chowda</p>
 
 </div>
 </div>
@@ -1718,7 +1634,7 @@ Licensed under the Apache License, Version 2.0.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1733,9 +1649,22 @@ Licensed under the Apache License, Version 2.0.
                     </div>
                 </clipboard-copy>
             </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="kn">from</span> <span class="nn">factories</span> <span class="kn">import</span> <span class="o">*</span>
+            <div class="highlight-ipynb hl-python "><pre><span></span><span class="kn">from</span> <span class="nn">sonyci</span> <span class="kn">import</span> <span class="n">SonyCi</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span>
+
+<span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DB_URL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;sqlite:///../../chowda.development.sqlite&#39;</span>
+<span class="kn">from</span> <span class="nn">tests.factories</span> <span class="kn">import</span> <span class="n">MediaFileFactory</span>
+
+<span class="n">ci</span> <span class="o">=</span> <span class="n">SonyCi</span><span class="o">.</span><span class="n">load_from_toml</span><span class="p">(</span><span class="s1">&#39;../../ci.toml&#39;</span><span class="p">)</span>
 </pre></div>
-<div id="cell-1" class="clipboard-copy-txt">from factories import *</div>
+<div id="cell-1" class="clipboard-copy-txt">from sonyci import SonyCi
+from os import environ
+
+environ['DB_URL'] = 'sqlite:///../../chowda.development.sqlite'
+from tests.factories import MediaFileFactory
+
+ci = SonyCi.load_from_toml('../../ci.toml')
+</div>
         
         </div>
     </div>
@@ -1744,24 +1673,13 @@ Licensed under the Apache License, Version 2.0.
 </div>
 
 </div>
-</div>
-<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="create-a-new-batch-from-factory">Create a new Batch from factory<a class="anchor-link" href="#create-a-new-batch-from-factory">&#182;</a></h2>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div  class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1776,9 +1694,21 @@ Licensed under the Apache License, Version 2.0.
                     </div>
                 </clipboard-copy>
             </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="n">batch</span> <span class="o">=</span> <span class="n">BatchFactory</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+            <div class="highlight-ipynb hl-python "><pre><span></span><span class="k">def</span> <span class="nf">get_batch</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">ci</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s1">&#39;workspaces/</span><span class="si">{</span><span class="n">ci</span><span class="o">.</span><span class="n">workspace_id</span><span class="si">}</span><span class="s1">/contents?kind=asset&amp;limit=100&amp;fields=id,name&amp;offset=</span><span class="si">{</span><span class="n">n</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="p">)[</span><span class="s1">&#39;items&#39;</span><span class="p">]</span>
+
+
+<span class="n">count</span> <span class="o">=</span> <span class="n">ci</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;workspaces/</span><span class="si">{</span><span class="n">ci</span><span class="o">.</span><span class="n">workspace_id</span><span class="si">}</span><span class="s1">/contents?kind=asset&amp;limit=1&#39;</span><span class="p">)[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span>
 </pre></div>
-<div id="cell-2" class="clipboard-copy-txt">batch = BatchFactory.create()</div>
+<div id="cell-2" class="clipboard-copy-txt">def get_batch(n):
+    return ci.get(
+        f'workspaces/{ci.workspace_id}/contents?kind=asset&limit=100&fields=id,name&offset={n*100}'
+    )['items']
+
+
+count = ci.get(f'workspaces/{ci.workspace_id}/contents?kind=asset&limit=1')['count']</div>
         
         </div>
     </div>
@@ -1786,41 +1716,6 @@ Licensed under the Apache License, Version 2.0.
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:53,797 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:53,800 INFO sqlalchemy.engine.Engine INSERT INTO batches (name, description) VALUES (?, ?)
-2023-04-05 13:11:53,802 INFO sqlalchemy.engine.Engine [generated in 0.00180s] (&#39;Batch 0&#39;, &#39;Batch 0 Description&#39;)
-2023-04-05 13:11:53,804 INFO sqlalchemy.engine.Engine COMMIT
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="grab-the-session-the-batch-was-created-with-for-inspection">Grab the session the Batch was created with for inspection.<a class="anchor-link" href="#grab-the-session-the-batch-was-created-with-for-inspection">&#182;</a></h2>
-</div>
-</div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div  class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -1828,7 +1723,7 @@ Licensed under the Apache License, Version 2.0.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1843,9 +1738,16 @@ Licensed under the Apache License, Version 2.0.
                     </div>
                 </clipboard-copy>
             </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="o">.</span><span class="n">object_session</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+            <div class="highlight-ipynb hl-python "><pre><span></span><span class="k">def</span> <span class="nf">ingest</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span> <span class="o">//</span> <span class="mi">100</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">get_batch</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+            <span class="n">MediaFileFactory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">asset</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">guid</span><span class="o">=</span><span class="n">asset</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
 </pre></div>
-<div id="cell-3" class="clipboard-copy-txt">session = Session.object_session(batch)</div>
+<div id="cell-3" class="clipboard-copy-txt">def ingest():
+    for i in range(count // 100 + 1):
+        for asset in get_batch(i):
+            MediaFileFactory.create(id=asset['id'], guid=asset['name'])
+</div>
         
         </div>
     </div>
@@ -1861,7 +1763,21 @@ Licensed under the Apache License, Version 2.0.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="change-something-on-the-batch">Change something on the batch<a class="anchor-link" href="#change-something-on-the-batch">&#182;</a></h2>
+<p><code>ingest()</code> took 68 minutes to ingest 174,170 guids!</p>
+<p>42 guids/second</p>
+
+</div>
+</div>
+</div>
+</div>
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="but-we-can-do-better">But we can do better!<a class="anchor-link" href="#but-we-can-do-better">&#182;</a></h2><p>First, we'll group the <code>MediaFile</code>s so we can add them in a single database commit.</p>
+
 </div>
 </div>
 </div>
@@ -1871,7 +1787,7 @@ Licensed under the Apache License, Version 2.0.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1886,9 +1802,31 @@ Licensed under the Apache License, Version 2.0.
                     </div>
                 </clipboard-copy>
             </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="n">batch</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;exceedingly jolly&quot;</span>
+            <div class="highlight-ipynb hl-python "><pre><span></span><span class="kn">from</span> <span class="nn">sqlmodel</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="kn">from</span> <span class="nn">chowda.models</span> <span class="kn">import</span> <span class="n">MediaFile</span>
+<span class="kn">from</span> <span class="nn">chowda.db</span> <span class="kn">import</span> <span class="n">engine</span>
+
+
+<span class="k">def</span> <span class="nf">batch_ingest_session</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="n">get_batch</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">media</span> <span class="o">=</span> <span class="p">[</span><span class="n">MediaFile</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">asset</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="nb">id</span><span class="o">=</span><span class="n">asset</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">]</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">add_all</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 </pre></div>
-<div id="cell-4" class="clipboard-copy-txt">batch.description = "exceedingly jolly"</div>
+<div id="cell-4" class="clipboard-copy-txt">from sqlmodel import Session
+
+from chowda.models import MediaFile
+from chowda.db import engine
+
+
+def batch_ingest_session(n):
+    with Session(engine) as session:
+        batch = get_batch(n)
+        media = [MediaFile(guid=asset['name'], id=asset['id']) for asset in batch]
+        session.add_all(media)
+        session.commit()</div>
         
         </div>
     </div>
@@ -1904,17 +1842,18 @@ Licensed under the Apache License, Version 2.0.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="view-the-changes-that-have-yet-to-be-committed-to-the-db">View the changes that have yet to be committed to the db<a class="anchor-link" href="#view-the-changes-that-have-yet-to-be-committed-to-the-db">&#182;</a></h2>
+<p>Each call currently happens in series, so we can use <code>multiprocessing</code> to parallelize the ingestion process.</p>
+
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div  class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1929,37 +1868,27 @@ Licensed under the Apache License, Version 2.0.
                     </div>
                 </clipboard-copy>
             </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;session.dirty = &#39;</span><span class="p">,</span> <span class="n">session</span><span class="o">.</span><span class="n">dirty</span><span class="p">)</span>
-<span class="c1"># =&gt; session.dirty = IdentitySet([Batch(description=&#39;foo&#39;)])</span>
+            <div class="highlight-ipynb hl-python "><pre><span></span><span class="kn">from</span> <span class="nn">multiprocessing.pool</span> <span class="kn">import</span> <span class="n">ThreadPool</span>
+
+
+<span class="k">def</span> <span class="nf">batch_ingest_with_threadpool</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">ThreadPool</span><span class="p">()</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">batch_ingest_session</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span> <span class="o">//</span> <span class="mi">100</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+            <span class="k">pass</span>
 </pre></div>
-<div id="cell-5" class="clipboard-copy-txt">print('session.dirty = ', session.dirty)
-# => session.dirty = IdentitySet([Batch(description='foo')])</div>
+<div id="cell-5" class="clipboard-copy-txt">from multiprocessing.pool import ThreadPool
+
+
+def batch_ingest_with_threadpool():
+    with ThreadPool() as pool:
+        for _ in pool.map(batch_ingest_session, range(count // 100 + 1)):
+            pass
+</div>
         
         </div>
     </div>
 
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>session.dirty =  IdentitySet([Batch(description=&#39;exceedingly jolly&#39;)])
-</pre>
-</div>
-</div>
-
-</div>
-
 </div>
 
 </div>
@@ -1970,18 +1899,21 @@ Licensed under the Apache License, Version 2.0.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="commit-the-changes-to-the-db">Commit the changes to the db.<a class="anchor-link" href="#commit-the-changes-to-the-db">&#182;</a></h2><p>Note that we do not have to call session.add(batch) since the Batch instance is already attached to the session.</p>
+<p>11 minutes!</p>
+<p>That's a 6x speedup!</p>
+<p>264 guids/second</p>
+<h2 id="but-we-can-do-even-better">But we can do even better!<a class="anchor-link" href="#but-we-can-do-even-better">&#182;</a></h2><p>Since this operation is network bound, we can use more processes than we have cores.</p>
 
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div  class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1996,42 +1928,18 @@ Licensed under the Apache License, Version 2.0.
                     </div>
                 </clipboard-copy>
             </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <div class="highlight-ipynb hl-python "><pre><span></span><span class="k">with</span> <span class="n">ThreadPool</span><span class="p">()</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">batch_ingest_session</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span> <span class="o">//</span> <span class="mi">100000</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+        <span class="k">pass</span>
 </pre></div>
-<div id="cell-6" class="clipboard-copy-txt">session.commit()</div>
+<div id="cell-6" class="clipboard-copy-txt">with ThreadPool() as pool:
+    for _ in pool.map(batch_ingest_session, range(count // 100000 + 1)):
+        pass</div>
         
         </div>
     </div>
 
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:54,189 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:54,193 INFO sqlalchemy.engine.Engine SELECT batches.id AS batches_id, batches.name AS batches_name 
-FROM batches 
-WHERE batches.id = ?
-2023-04-05 13:11:54,194 INFO sqlalchemy.engine.Engine [generated in 0.00104s] (14,)
-2023-04-05 13:11:54,196 INFO sqlalchemy.engine.Engine UPDATE batches SET description=? WHERE batches.id = ?
-2023-04-05 13:11:54,197 INFO sqlalchemy.engine.Engine [generated in 0.00072s] (&#39;exceedingly jolly&#39;, 14)
-2023-04-05 13:11:54,198 INFO sqlalchemy.engine.Engine COMMIT
-</pre>
-</div>
-</div>
-
-</div>
-
 </div>
 
 </div>
@@ -2042,17 +1950,20 @@ WHERE batches.id = ?
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="verify-there-are-no-other-pending-changes">Verify there are no other pending changes.<a class="anchor-link" href="#verify-there-are-no-other-pending-changes">&#182;</a></h2>
+<h2 id="fastest">Fastest!<a class="anchor-link" href="#fastest">&#182;</a></h2><p>1m 49s!</p>
+<p>That's a 37x speedup!</p>
+<p>1600 guids/second!!!</p>
+
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div  class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2067,11 +1978,9 @@ WHERE batches.id = ?
                     </div>
                 </clipboard-copy>
             </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;session.dirty = &#39;</span><span class="p">,</span> <span class="n">session</span><span class="o">.</span><span class="n">dirty</span><span class="p">)</span>
-<span class="c1"># =&gt; IdentitySet([])</span>
+            <div class="highlight-ipynb hl-python "><pre><span></span>
 </pre></div>
-<div id="cell-7" class="clipboard-copy-txt">print('session.dirty = ', session.dirty)
-# => IdentitySet([])</div>
+<div id="cell-7" class="clipboard-copy-txt"></div>
         
         </div>
     </div>
@@ -2079,682 +1988,6 @@ WHERE batches.id = ?
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>session.dirty =  IdentitySet([])
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="use-a-contextual-session">Use a contextual session<a class="anchor-link" href="#use-a-contextual-session">&#182;</a></h2><p>(called &quot;db&quot;) to grab a separate copy of the batch and verify it has the change.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-            <div class="zeroclipboard-container">
-                <clipboard-copy for="cell-8">
-                <div>
-                    <span class="notice" hidden>Copied!</span>
-                    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                        <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                        <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                    </svg>
-                    </div>
-                </clipboard-copy>
-            </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
-   <span class="n">batch_copy</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span>
-       <span class="n">select</span><span class="p">(</span><span class="n">Batch</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Batch</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">batch</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-   <span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;batch_copy.description = &#39;</span><span class="p">,</span> <span class="n">batch_copy</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
-<span class="c1"># =&gt; foo</span>
-</pre></div>
-<div id="cell-8" class="clipboard-copy-txt">with Session(engine) as db:
-   batch_copy = db.exec(
-       select(Batch).where(Batch.id==batch.id)
-   ).first()
-print('batch_copy.description = ', batch_copy.description)
-# => foo</div>
-        
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:54,422 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:54,423 INFO sqlalchemy.engine.Engine SELECT batches.id AS batches_id, batches.name AS batches_name, batches.description AS batches_description 
-FROM batches 
-WHERE batches.id = ?
-2023-04-05 13:11:54,424 INFO sqlalchemy.engine.Engine [generated in 0.00088s] (14,)
-2023-04-05 13:11:54,426 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:54,428 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.name, batches.description 
-FROM batches 
-WHERE batches.id = ?
-2023-04-05 13:11:54,429 INFO sqlalchemy.engine.Engine [generated in 0.00082s] (14,)
-2023-04-05 13:11:54,430 INFO sqlalchemy.engine.Engine ROLLBACK
-batch_copy.description =  exceedingly jolly
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Note that since we grabbed batch_copy using a contextual session, and that context has ended, so has the session, and the object is currently unattached to any session.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-            <div class="zeroclipboard-container">
-                <clipboard-copy for="cell-9">
-                <div>
-                    <span class="notice" hidden>Copied!</span>
-                    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                        <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                        <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                    </svg>
-                    </div>
-                </clipboard-copy>
-            </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;seesion for batch_copy = &#39;</span><span class="p">,</span> <span class="n">Session</span><span class="o">.</span><span class="n">object_session</span><span class="p">(</span><span class="n">batch_copy</span><span class="p">))</span>
-<span class="c1"># =&gt; None</span>
-</pre></div>
-<div id="cell-9" class="clipboard-copy-txt">print('seesion for batch_copy = ', Session.object_session(batch_copy))
-# => None</div>
-        
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>seesion for batch_copy =  None
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="now-change-batch_copydescripiton">Now change batch_copy.descripiton,<a class="anchor-link" href="#now-change-batch_copydescripiton">&#182;</a></h2><p>save it with a contextual session, and see how it affected or original Batch instance, which is still alive and attached to the session it was created with.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-            <div class="zeroclipboard-container">
-                <clipboard-copy for="cell-10">
-                <div>
-                    <span class="notice" hidden>Copied!</span>
-                    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                        <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                        <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                    </svg>
-                    </div>
-                </clipboard-copy>
-            </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="n">batch_copy</span><span class="o">.</span><span class="n">description</span> <span class="o">+=</span> <span class="s2">&quot; and effortlessly charming&quot;</span>
-<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
-   <span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">batch_copy</span><span class="p">)</span>
-   <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-</pre></div>
-<div id="cell-10" class="clipboard-copy-txt">batch_copy.description += " and effortlessly charming"
-with Session(engine) as db:
-   db.add(batch_copy)
-   db.commit()</div>
-        
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:54,703 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:54,705 INFO sqlalchemy.engine.Engine UPDATE batches SET description=? WHERE batches.id = ?
-2023-04-05 13:11:54,706 INFO sqlalchemy.engine.Engine [cached since 0.5094s ago] (&#39;exceedingly jolly and effortlessly charming&#39;, 14)
-2023-04-05 13:11:54,707 INFO sqlalchemy.engine.Engine COMMIT
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="note-after-committing-changes-to-batch_copy-using-contextual-session-in-this-way">NOTE: after committing changes to batch_copy using contextual session in this way,<a class="anchor-link" href="#note-after-committing-changes-to-batch_copy-using-contextual-session-in-this-way">&#182;</a></h2><p>trying to access attributes on the object like batch_copy.description raises an error:</p>
-<blockquote>
-<p>Instance &lt;Batch at 0x107b84e10&gt; is not bound to a Session; attribute refresh operation cannot proceed</p>
-</blockquote>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-            <div class="zeroclipboard-container">
-                <clipboard-copy for="cell-11">
-                <div>
-                    <span class="notice" hidden>Copied!</span>
-                    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                        <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                        <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                    </svg>
-                    </div>
-                </clipboard-copy>
-            </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
-   <span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">batch_copy</span><span class="p">)</span>
-   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;batch_copy.description = &#39;</span><span class="p">,</span> <span class="n">batch_copy</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
-   <span class="c1"># =&gt; batch_copy.description =  exceedingly jolly and effortlessly charming</span>
-</pre></div>
-<div id="cell-11" class="clipboard-copy-txt">with Session(engine) as db:
-   db.add(batch_copy)
-   print('batch_copy.description = ', batch_copy.description)
-   # => batch_copy.description =  exceedingly jolly and effortlessly charming</div>
-        
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:54,955 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:54,956 INFO sqlalchemy.engine.Engine SELECT batches.id AS batches_id, batches.name AS batches_name, batches.description AS batches_description 
-FROM batches 
-WHERE batches.id = ?
-2023-04-05 13:11:54,957 INFO sqlalchemy.engine.Engine [cached since 0.534s ago] (14,)
-batch_copy.description =  exceedingly jolly and effortlessly charming
-2023-04-05 13:11:54,959 INFO sqlalchemy.engine.Engine ROLLBACK
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="confirm-that-our-original-batch-instance-still-has-the-old-description">Confirm that our original Batch instance still has the old description<a class="anchor-link" href="#confirm-that-our-original-batch-instance-still-has-the-old-description">&#182;</a></h2>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-            <div class="zeroclipboard-container">
-                <clipboard-copy for="cell-12">
-                <div>
-                    <span class="notice" hidden>Copied!</span>
-                    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                        <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                        <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                    </svg>
-                    </div>
-                </clipboard-copy>
-            </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;batch.description before refresh = &#39;</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
-<span class="c1"># =&gt; batch.description before refresh = exceedingly jolly</span>
-</pre></div>
-<div id="cell-12" class="clipboard-copy-txt">print('batch.description before refresh = ', batch.description)
-# => batch.description before refresh = exceedingly jolly
-</div>
-        
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>batch.description before refresh =  exceedingly jolly
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="refresh-the-original-batch-instance">Refresh the original Batch instance<a class="anchor-link" href="#refresh-the-original-batch-instance">&#182;</a></h2><p>and check the description again</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-            <div class="zeroclipboard-container">
-                <clipboard-copy for="cell-13">
-                <div>
-                    <span class="notice" hidden>Copied!</span>
-                    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                        <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                        <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                    </svg>
-                    </div>
-                </clipboard-copy>
-            </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;batch.description after refresh = &#39;</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
-<span class="c1"># =&gt; batch.description after refresh = exceedingly jolly and effortlessly charming</span>
-</pre></div>
-<div id="cell-13" class="clipboard-copy-txt">session.refresh(batch)
-print('batch.description after refresh = ', batch.description)
-# => batch.description after refresh = exceedingly jolly and effortlessly charming
-</div>
-        
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:55,366 INFO sqlalchemy.engine.Engine SELECT batches.id, batches.name, batches.description 
-FROM batches 
-WHERE batches.id = ?
-2023-04-05 13:11:55,368 INFO sqlalchemy.engine.Engine [generated in 0.00136s] (14,)
-batch.description after refresh =  exceedingly jolly and effortlessly charming
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="now-lets-edit-batchdescription-and-batch_copydescription">Now let's edit <code>batch.description</code> and <code>batch_copy.description</code><a class="anchor-link" href="#now-lets-edit-batchdescription-and-batch_copydescription">&#182;</a></h2><p>and update them both independently to see what happens.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-            <div class="zeroclipboard-container">
-                <clipboard-copy for="cell-14">
-                <div>
-                    <span class="notice" hidden>Copied!</span>
-                    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                        <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                        <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                    </svg>
-                    </div>
-                </clipboard-copy>
-            </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="n">batch</span><span class="o">.</span><span class="n">description</span> <span class="o">+=</span> <span class="s2">&quot; and fantastically flatulent&quot;</span>
-</pre></div>
-<div id="cell-14" class="clipboard-copy-txt">batch.description += " and fantastically flatulent"</div>
-        
-        </div>
-    </div>
-
-</div>
-</div>
-
-</div>
-</div>
-<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="save-the-first-edit">save the first edit<a class="anchor-link" href="#save-the-first-edit">&#182;</a></h2>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-            <div class="zeroclipboard-container">
-                <clipboard-copy for="cell-15">
-                <div>
-                    <span class="notice" hidden>Copied!</span>
-                    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                        <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                        <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                    </svg>
-                    </div>
-                </clipboard-copy>
-            </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-</pre></div>
-<div id="cell-15" class="clipboard-copy-txt">
-session.commit()</div>
-        
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:55,512 INFO sqlalchemy.engine.Engine UPDATE batches SET description=? WHERE batches.id = ?
-2023-04-05 13:11:55,513 INFO sqlalchemy.engine.Engine [cached since 1.317s ago] (&#39;exceedingly jolly and effortlessly charming and fantastically flatulent&#39;, 14)
-2023-04-05 13:11:55,515 INFO sqlalchemy.engine.Engine COMMIT
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="save-the-second-edit">save the second edit<a class="anchor-link" href="#save-the-second-edit">&#182;</a></h2>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-            <div class="zeroclipboard-container">
-                <clipboard-copy for="cell-16">
-                <div>
-                    <span class="notice" hidden>Copied!</span>
-                    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                        <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                        <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                    </svg>
-                    </div>
-                </clipboard-copy>
-            </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
-   <span class="n">batch_copy</span><span class="o">.</span><span class="n">description</span> <span class="o">+=</span> <span class="s2">&quot; and elaborately loquacious&quot;</span>
-   <span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">batch_copy</span><span class="p">)</span>
-   <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;batch_copy.description = &#39;</span><span class="p">,</span> <span class="n">batch_copy</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
-<span class="c1"># =&gt; batch_copy.description =  exceedingly jolly and effortlessly charming and elaborately loquacious</span>
-</pre></div>
-<div id="cell-16" class="clipboard-copy-txt">with Session(engine) as db:
-   batch_copy.description += " and elaborately loquacious"
-   db.add(batch_copy)
-   db.commit()
-   print('batch_copy.description = ', batch_copy.description)
-# => batch_copy.description =  exceedingly jolly and effortlessly charming and elaborately loquacious</div>
-        
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023-04-05 13:11:55,579 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:55,580 INFO sqlalchemy.engine.Engine UPDATE batches SET description=? WHERE batches.id = ?
-2023-04-05 13:11:55,581 INFO sqlalchemy.engine.Engine [cached since 1.385s ago] (&#39;exceedingly jolly and effortlessly charming and elaborately loquacious&#39;, 14)
-2023-04-05 13:11:55,583 INFO sqlalchemy.engine.Engine COMMIT
-2023-04-05 13:11:55,586 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2023-04-05 13:11:55,586 INFO sqlalchemy.engine.Engine SELECT batches.id AS batches_id, batches.name AS batches_name, batches.description AS batches_description 
-FROM batches 
-WHERE batches.id = ?
-2023-04-05 13:11:55,587 INFO sqlalchemy.engine.Engine [cached since 1.164s ago] (14,)
-batch_copy.description =  exceedingly jolly and effortlessly charming and elaborately loquacious
-2023-04-05 13:11:55,589 INFO sqlalchemy.engine.Engine ROLLBACK
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="unsurprisingly-the-2nd-save-wins">Unsurprisingly, the 2nd save wins.<a class="anchor-link" href="#unsurprisingly-the-2nd-save-wins">&#182;</a></h2><p>The changes saved in original Batch instance with it's original session get overwritten by this one.</p>
-
-</div>
-</div>
 </div>
 </div>
 </div>
