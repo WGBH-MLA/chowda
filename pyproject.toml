@@ -49,6 +49,7 @@ docs = [
     'mkdocstrings[python]~=0.21',
     'mkdocs-jupyter~=0.24',
 ]
+ci = ['setuptools']
 
 [tool.pdm]
 version = { source = 'file', path = 'chowda/_version.py' }

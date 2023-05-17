@@ -8,6 +8,7 @@ jobs:
     uses: WGBH-MLA/.github/.github/workflows/pytest.yml@pdm
     secrets: inherit
     with:
+      pdm_args: -G test,ci
       pytest_args: -n auto --nbmake
 
   lint:
