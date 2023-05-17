@@ -6,7 +6,7 @@ from chowda.models import (
     ClamsEvent,
     AppStatus,
 )
-from factories import (
+from tests.factories import (
     MediaFileFactory,
     BatchFactory,
     CollectionFactory,
