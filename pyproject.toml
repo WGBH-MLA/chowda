@@ -35,6 +35,7 @@ test = [
     'pytest-sugar~=0.9',
     'pytest-xdist~=3.2',
     'httpx~=0.24',
+    'nbmake~=1.4',
     'urllib3~=1.26',
 ]
 locust = ['locust~=2.15', 'pydantic-factories~=1.17']
@@ -49,6 +50,7 @@ docs = [
     'mkdocstrings[python]~=0.21',
     'mkdocs-jupyter~=0.24',
 ]
+ci = ['setuptools']
 
 [tool.pdm]
 version = { source = 'file', path = 'chowda/_version.py' }
@@ -57,7 +59,7 @@ version = { source = 'file', path = 'chowda/_version.py' }
 omit = ['tests/*']
 
 [tool.pytest.ini_options]
-testpaths = ['tests']
+testpaths = ['tests', 'docs']
 
 [tool.ruff.flake8-quotes]
 inline-quotes = 'single'

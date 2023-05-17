@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
-from chowda import app
+
+from chowda.app import app
 
 client = TestClient(app)
 
