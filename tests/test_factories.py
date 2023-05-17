@@ -1,20 +1,16 @@
-from sqlmodel import SQLModel
-from chowda.models import (
-    MediaFile,
-    Batch,
-    ClamsApp,
-    ClamsEvent,
-    AppStatus,
-)
-from factories import (
-    MediaFileFactory,
-    BatchFactory,
-    CollectionFactory,
-    ClamsAppFactory,
-    PipelineFactory,
-    ClamsEventFactory,
-)
 from random import choice
+
+from sqlmodel import SQLModel
+
+from chowda.models import AppStatus, Batch, ClamsApp, ClamsEvent, MediaFile
+from tests.factories import (
+    BatchFactory,
+    ClamsAppFactory,
+    ClamsEventFactory,
+    CollectionFactory,
+    MediaFileFactory,
+    PipelineFactory,
+)
 
 
 def test_media_file_factory():
