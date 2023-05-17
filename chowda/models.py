@@ -4,13 +4,12 @@ SQLModels for DB and validation
 """
 
 from enum import Enum
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set
 
-from pydantic import AnyHttpUrl, BaseModel, EmailStr
-from pydantic import Field as pydantic_Field
-from pydantic import stricturl
+from pydantic import AnyHttpUrl, BaseModel, EmailStr, stricturl
 from sqlalchemy import JSON, Column
-from sqlmodel import Field, Relationship, SQLModel
+from sqlalchemy.dialects import postgresql
+from sqlmodel import Field, Relationship, SQLModel, String
 from starlette.requests import Request
 
 MediaUrl = stricturl(allowed_schemes=['video', 'audio', 'text'], tld_required=False)
@@ -25,6 +24,11 @@ class AppStatus(Enum):
     RUNNING = 'running'
     COMPLETE = 'complete'
     FAILED = 'failed'
+
+
+class MediaType(Enum):
+    VIDEO = 'Video'
+    AUDIO = 'Audio'
 
 
 class ThumbnailType(Enum):
@@ -101,8 +105,8 @@ class MediaFile(SQLModel, table=True):
         return f'<span><strong>{self.guid}</strong></span>'
 
 
-class SonyCiAssetThumbnail(BaseModel):
-    type: ThumbnailType = pydantic_Field(..., alias='type')
+class SonyCiAssetThumbnail(SQLModel):
+    type: ThumbnailType
     location: str
     size: int
     width: int
@@ -111,15 +115,18 @@ class SonyCiAssetThumbnail(BaseModel):
 
 class SonyCiAsset(SQLModel, table=True):
     __tablename__ = 'sonyci_assets'
-    # TODO: primary key should be string, SonyCi Asset ID. Change to str
-    # when we no longer want to use the UI for testing.
-    id: Optional[int] = Field(primary_key=True)
+    id: Optional[str] = Field(primary_key=True)
     name: str
     size: int
-    type: str
-    thumbnail: Optional[SonyCiAssetThumbnail] = Field(
-        sa_column=Column(JSON), default=None
-    )
+    type: Optional[MediaType] = Field(default=None)
+    # thumbnails: Optional[List[SonyCiAssetThumbnail]] = Field(
+    #     sa_column=Column(JSON), default=None
+    # )
+    # thumbnails: List[SonyCiAssetThumbnail]
+    # thumbnails: Optional[Set[str]] = Field(
+    #     default=None, sa_column=Column(postgresql.ARRAY(String()))
+    # )
+    thumbnails: Optional[List[str]] = Field(sa_column=Column(JSON), default=None)
     description: Optional[str] = Field(default=None)
 
 
@@ -215,4 +222,5 @@ class ClamsEvent(SQLModel, table=True):
         return f'{self.clams_app.name}: {self.status}'
 
     async def __admin_select2_repr__(self, request: Request) -> str:
+        return f'<span><strong>{self.clams_app.name}:</strong> {self.status}</span>'
         return f'<span><strong>{self.clams_app.name}:</strong> {self.status}</span>'
