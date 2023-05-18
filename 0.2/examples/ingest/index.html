@@ -1650,20 +1650,25 @@ Licensed under the Apache License, Version 2.0.
                 </clipboard-copy>
             </div>
             <div class="highlight-ipynb hl-python "><pre><span></span><span class="kn">from</span> <span class="nn">sonyci</span> <span class="kn">import</span> <span class="n">SonyCi</span>
+<span class="kn">from</span> <span class="nn">sonyci.log</span> <span class="kn">import</span> <span class="n">log</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span>
 
-<span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DB_URL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;sqlite:///../../chowda.development.sqlite&#39;</span>
+<span class="c1"># environ[&#39;DB_URL&#39;] = &#39;sqlite:///../../chowda.development.sqlite&#39;</span>
 <span class="kn">from</span> <span class="nn">tests.factories</span> <span class="kn">import</span> <span class="n">MediaFileFactory</span>
 
+<span class="n">log</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
 <span class="n">ci</span> <span class="o">=</span> <span class="n">SonyCi</span><span class="o">.</span><span class="n">load_from_toml</span><span class="p">(</span><span class="s1">&#39;../../ci.toml&#39;</span><span class="p">)</span>
 </pre></div>
 <div id="cell-1" class="clipboard-copy-txt">from sonyci import SonyCi
+from sonyci.log import log
 from os import environ
 
-environ['DB_URL'] = 'sqlite:///../../chowda.development.sqlite'
+# environ['DB_URL'] = 'sqlite:///../../chowda.development.sqlite'
 from tests.factories import MediaFileFactory
 
-ci = SonyCi.load_from_toml('../../ci.toml')</div>
+log.remove()
+ci = SonyCi.load_from_toml('../../ci.toml')
+</div>
         
         </div>
     </div>
@@ -1697,7 +1702,8 @@ ci = SonyCi.load_from_toml('../../ci.toml')</div>
 <span class="n">count</span>
 </pre></div>
 <div id="cell-2" class="clipboard-copy-txt">count = ci.get(f'workspaces/{ci.workspace_id}/contents?kind=asset&limit=1')['count']
-count</div>
+count
+</div>
         
         </div>
     </div>
@@ -1729,7 +1735,7 @@ count</div>
             </div>
             <div class="highlight-ipynb hl-python "><pre><span></span><span class="k">def</span> <span class="nf">get_batch</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">ci</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s1">&#39;workspaces/</span><span class="si">{</span><span class="n">ci</span><span class="o">.</span><span class="n">workspace_id</span><span class="si">}</span><span class="s1">/contents?kind=asset&amp;limit=100&amp;fields=id,name,type,size,thumbnails&amp;offset=</span><span class="si">{</span><span class="n">n</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="sa">f</span><span class="s1">&#39;workspaces/</span><span class="si">{</span><span class="n">ci</span><span class="o">.</span><span class="n">workspace_id</span><span class="si">}</span><span class="s1">/contents?kind=asset&amp;limit=100&amp;fields=id,name,type,size,thumbnails,format&amp;offset=</span><span class="si">{</span><span class="n">n</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s1">&#39;</span>
     <span class="p">)[</span><span class="s1">&#39;items&#39;</span><span class="p">]</span>
 
 
@@ -1737,12 +1743,11 @@ count</div>
 </pre></div>
 <div id="cell-3" class="clipboard-copy-txt">def get_batch(n):
     return ci.get(
-        f'workspaces/{ci.workspace_id}/contents?kind=asset&limit=100&fields=id,name,type,size,thumbnails&offset={n*100}'
+        f'workspaces/{ci.workspace_id}/contents?kind=asset&limit=100&fields=id,name,type,size,thumbnails,format&offset={n*100}'
     )['items']
 
 
-# get_batch(0)
-</div>
+# get_batch(0)</div>
         
         </div>
     </div>
@@ -1780,7 +1785,8 @@ count</div>
 <div id="cell-4" class="clipboard-copy-txt">def ingest():
     for i in range(count // 100 + 1):
         for asset in get_batch(i):
-            MediaFileFactory.create(id=asset['id'], guid=asset['name'])</div>
+            MediaFileFactory.create(id=asset['id'], guid=asset['name'])
+</div>
         
         </div>
     </div>
@@ -1844,7 +1850,7 @@ count</div>
 <span class="k">def</span> <span class="nf">batch_ingest_session</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
         <span class="n">batch</span> <span class="o">=</span> <span class="n">get_batch</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-        <span class="n">batch</span> <span class="o">=</span> <span class="p">[{</span><span class="o">**</span><span class="n">m</span><span class="p">,</span> <span class="s1">&#39;thumbnails&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;thumbnails&#39;</span><span class="p">:</span> <span class="n">m</span><span class="p">[</span><span class="s1">&#39;thumbnails&#39;</span><span class="p">]}}</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">]</span>
+        <span class="c1"># batch = [{**m, &#39;thumbnails&#39;: {&#39;thumbnails&#39;: m[&#39;thumbnails&#39;]}} for m in batch]</span>
         <span class="n">media</span> <span class="o">=</span> <span class="p">[</span><span class="n">SonyCiAsset</span><span class="p">(</span><span class="o">**</span><span class="n">asset</span><span class="p">)</span> <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">]</span>
         <span class="n">session</span><span class="o">.</span><span class="n">add_all</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
         <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
@@ -1861,13 +1867,14 @@ from chowda.db import engine
 def batch_ingest_session(n):
     with Session(engine) as session:
         batch = get_batch(n)
-        batch = [{**m, 'thumbnails': {'thumbnails': m['thumbnails']}} for m in batch]
+        # batch = [{**m, 'thumbnails': {'thumbnails': m['thumbnails']}} for m in batch]
         media = [SonyCiAsset(**asset) for asset in batch]
         session.add_all(media)
         session.commit()
 
 
-# batch_ingest_session(11)</div>
+# batch_ingest_session(11)
+</div>
         
         </div>
     </div>
@@ -1923,7 +1930,8 @@ def batch_ingest_session(n):
 def batch_ingest_with_threadpool():
     with ThreadPool() as pool:
         for _ in pool.map(batch_ingest_session, range(count // 100 + 1)):
-            pass</div>
+            pass
+</div>
         
         </div>
     </div>
@@ -1968,13 +1976,16 @@ def batch_ingest_with_threadpool():
                     </div>
                 </clipboard-copy>
             </div>
-            <div class="highlight-ipynb hl-python "><pre><span></span><span class="k">with</span> <span class="n">ThreadPool</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">batch_ingest_session</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span> <span class="o">//</span> <span class="mi">100</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
-        <span class="k">pass</span>
+            <div class="highlight-ipynb hl-python "><pre><span></span><span class="k">def</span> <span class="nf">batch_ingest_with_threadpool</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">ThreadPool</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">batch_ingest_session</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span> <span class="o">//</span> <span class="mi">100</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+            <span class="k">pass</span>
 </pre></div>
-<div id="cell-7" class="clipboard-copy-txt">with ThreadPool(32) as pool:
-    for _ in pool.map(batch_ingest_session, range(count // 100 + 1)):
-        pass</div>
+<div id="cell-7" class="clipboard-copy-txt">def batch_ingest_with_threadpool():
+    with ThreadPool(32) as pool:
+        for _ in pool.map(batch_ingest_session, range(count // 100 + 1)):
+            pass
+</div>
         
         </div>
     </div>
