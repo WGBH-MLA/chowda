@@ -141,6 +141,9 @@ class ClamsApp(SQLModel, table=True):
     async def __admin_repr__(self, request: Request):
         return f'{self.name or self.id}'
 
+    async def __admin_select2_repr__(self, request: Request):
+        return f'<span><strong>{self.name}</span>'
+
 
 class Pipeline(SQLModel, table=True):
     __tablename__ = 'pipelines'
