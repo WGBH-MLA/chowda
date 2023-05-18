@@ -38,12 +38,31 @@ class MediaFileCount(IntegerField):
 
 class CollectionView(ModelView):
     fields = [
-        'id',
         'name',
         'description',
         MediaFileCount(
             'media_files',
-            label='MediaFiles Count',
+            label='Size',
+            read_only=True,
+            exclude_from_edit=True,
+            exclude_from_create=True,
+        ),
+        # 'media_files',  # default view
+        MediaFilesGuidLinkField(
+            'media_files',
+            label='GUID Links',
+            display_template='displays/media_file_guid_links.html',
+        ),
+    ]
+
+
+class BatchView(ModelView):
+    fields = [
+        'name',
+        'description',
+        MediaFileCount(
+            'media_files',
+            label='Size',
             read_only=True,
             exclude_from_edit=True,
             exclude_from_create=True,
