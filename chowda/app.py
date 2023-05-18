@@ -22,7 +22,7 @@ from chowda.models import (
     Pipeline,
     User,
 )
-from chowda.views import CollectionView
+from chowda.views import CollectionView, BatchView
 
 
 def init_database() -> None:
@@ -56,7 +56,7 @@ admin.add_view(ModelView(MediaFile, icon='fa fa-file-video'))
 admin.add_view(CollectionView(Collection, icon='fa fa-folder'))
 admin.add_view(ModelView(ClamsApp, icon='fa fa-box'))
 admin.add_view(ModelView(Pipeline, icon='fa fa-boxes-stacked'))
-admin.add_view(ModelView(Batch, icon='fa fa-folder'))
+admin.add_view(BatchView(Batch, icon='fa fa-folder'))
 admin.add_view(ModelView(ClamsEvent, icon='fa fa-file-lines'))
 
 # Mount admin to app
