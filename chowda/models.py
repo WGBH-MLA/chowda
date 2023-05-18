@@ -27,8 +27,8 @@ class AppStatus(Enum):
 
 
 class MediaType(Enum):
-    VIDEO = 'Video'
-    AUDIO = 'Audio'
+    video = 'Video'
+    audio = 'Audio'
 
 
 class ThumbnailType(Enum):
@@ -87,7 +87,7 @@ class MediaFile(SQLModel, table=True):
     """
 
     __tablename__ = 'media_files'
-    id: Optional[str] = Field(primary_key=True)
+    id: Optional[int] = Field(primary_key=True, default=None)
     guid: str = Field(index=True)
     mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
     collections: List['Collection'] = Relationship(
@@ -123,19 +123,10 @@ class SonyCiAsset(SQLModel, table=True):
     name: str
     size: int
     type: Optional[MediaType] = Field(default=None)
-    thumbnails: Optional[Dict[str, Any]] = Field(sa_column=Column(JSON), default=None)
-    # thumbnails: Optional[List[SonyCiAssetThumbnail]] = Field(
-    #     sa_column=Column(JSON), default=None
-    # )
-    # thumbnails: List[SonyCiAssetThumbnail]
-    # thumbnails: Optional[Set[str]] = Field(
-    #     default=None, sa_column=Column(postgresql.ARRAY(String))
-    # )
-    # thumbnails: Optional[Set[str]] = Field(
-    #     sa_column=Column(postgresql.ARRAY(String())), default=None
-    # )
-    # thumbnails: Optional[AssetThumbnails] = Field(default=None, sa_column=Column(JSON))
-    # description: Optional[str] = Field(default=None)
+    format: Optional[str] = Field(default=None, index=True)
+    thumbnails: Optional[List[Dict[str, Any]]] = Field(
+        sa_column=Column(postgresql.ARRAY(JSON)), default=None
+    )
 
 
 class Collection(SQLModel, table=True):
@@ -230,5 +221,4 @@ class ClamsEvent(SQLModel, table=True):
         return f'{self.clams_app.name}: {self.status}'
 
     async def __admin_select2_repr__(self, request: Request) -> str:
-        return f'<span><strong>{self.clams_app.name}:</strong> {self.status}</span>'
         return f'<span><strong>{self.clams_app.name}:</strong> {self.status}</span>'

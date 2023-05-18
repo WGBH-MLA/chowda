@@ -17,7 +17,6 @@ def get_engine(env=ENVIRONMENT):
     if env == 'development':
         return create_engine(
             DB_URL,
-            connect_args={'check_same_thread': False},
             echo=True,
         )
     if env == 'production':
