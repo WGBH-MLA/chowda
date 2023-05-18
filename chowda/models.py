@@ -105,6 +105,10 @@ class MediaFile(SQLModel, table=True):
         return f'<span><strong>{self.guid}</strong></span>'
 
 
+class AssetThumbnails(SQLModel):
+    thumbnails: Dict[str, Any]
+
+
 class SonyCiAssetThumbnail(SQLModel):
     type: ThumbnailType
     location: str
@@ -119,15 +123,19 @@ class SonyCiAsset(SQLModel, table=True):
     name: str
     size: int
     type: Optional[MediaType] = Field(default=None)
+    thumbnails: Optional[Dict[str, Any]] = Field(sa_column=Column(JSON), default=None)
     # thumbnails: Optional[List[SonyCiAssetThumbnail]] = Field(
     #     sa_column=Column(JSON), default=None
     # )
     # thumbnails: List[SonyCiAssetThumbnail]
     # thumbnails: Optional[Set[str]] = Field(
-    #     default=None, sa_column=Column(postgresql.ARRAY(String()))
+    #     default=None, sa_column=Column(postgresql.ARRAY(String))
     # )
-    thumbnails: Optional[List[str]] = Field(sa_column=Column(JSON), default=None)
-    description: Optional[str] = Field(default=None)
+    # thumbnails: Optional[Set[str]] = Field(
+    #     sa_column=Column(postgresql.ARRAY(String())), default=None
+    # )
+    # thumbnails: Optional[AssetThumbnails] = Field(default=None, sa_column=Column(JSON))
+    # description: Optional[str] = Field(default=None)
 
 
 class Collection(SQLModel, table=True):
