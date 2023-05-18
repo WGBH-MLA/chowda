@@ -72,5 +72,32 @@ class BatchView(ModelView):
             'media_files',
             label='GUID Links',
             display_template='displays/media_file_guid_links.html',
+            exclude_from_list=True,
         ),
+    ]
+
+
+class MediaFileView(ModelView):
+    fields = ['guid', 'collections', 'batches']
+
+
+class UserView(ModelView):
+    fields = ['first_name', 'last_name', 'email']
+
+
+class ClamsAppView(ModelView):
+    fields = ['name', 'endpoint', 'description', 'pipelines']
+
+
+class PipelineView(ModelView):
+    fields = ['name', 'description', 'clams_apps']
+
+
+class ClamsEventView(ModelView):
+    fields = [
+        'batch',
+        'media_file',
+        'clams_app',
+        'status',
+        'response_json',
     ]
