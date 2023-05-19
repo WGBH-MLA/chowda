@@ -7,7 +7,6 @@ from fastapi.staticfiles import StaticFiles
 from sqlmodel import SQLModel
 from starlette.responses import HTMLResponse
 from starlette.routing import Route
-from starlette_admin.contrib.sqlmodel import ModelView
 
 from chowda._version import __version__
 from chowda.admin import Admin
