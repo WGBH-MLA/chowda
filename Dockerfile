@@ -9,6 +9,7 @@ RUN pip install -U pip
 COPY pyproject.toml pdm.lock README.md ./
 COPY chowda chowda
 
+
 ###########################
 # 'dev' build stage
 ###########################
@@ -54,4 +55,9 @@ CMD poetry run locust
 ############################
 FROM base as production
 RUN pip install .[production]
+
+COPY static static
+COPY templates templates
+ENV ENVIRONMENT=production
+
 CMD gunicorn chowda.app:app -b 0.0.0.0:8000 -w 2 --worker-class uvicorn.workers.UvicornWorker
