@@ -77,6 +77,12 @@ class MediaFile(SQLModel, table=True):
     )
     clams_events: List['ClamsEvent'] = Relationship(back_populates='media_file')
 
+    async def __admin_repr__(self, request: Request):
+        return self.guid
+
+    async def __admin_select2_repr__(self, request: Request) -> str:
+        return f'<span><strong>{self.guid}</strong></span>'
+
 
 class Collection(SQLModel, table=True):
     __tablename__ = 'collections'
