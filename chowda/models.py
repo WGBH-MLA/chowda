@@ -4,14 +4,13 @@ SQLModels for DB and validation
 """
 
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional
 
-from pydantic import AnyHttpUrl, BaseModel, EmailStr, stricturl
+from pydantic import AnyHttpUrl, EmailStr, stricturl
 from sqlalchemy import JSON, Column
 from sqlalchemy.dialects import postgresql
-from sqlmodel import Field, Relationship, SQLModel, String
+from sqlmodel import Field, Relationship, SQLModel
 from starlette.requests import Request
-
 
 MediaUrl = stricturl(allowed_schemes=['video', 'audio', 'text'], tld_required=False)
 """Media url validator. Must have prefix of video, audio, or text. No TLD required.

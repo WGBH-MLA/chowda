@@ -29,6 +29,7 @@ from chowda.views import (
     CollectionView,
     MediaFileView,
     PipelineView,
+    SonyCiAssetView,
     UserView,
 )
 
@@ -60,7 +61,7 @@ admin = Admin(
 
 # Add views
 admin.add_view(MediaFileView(MediaFile, icon='fa fa-file-video'))
-admin.add_view(ModelView(SonyCiAsset, icon='fa fa-file-video'))
+admin.add_view(SonyCiAssetView(SonyCiAsset, icon='fa fa-file-video'))
 admin.add_view(CollectionView(Collection, icon='fa fa-folder'))
 admin.add_view(BatchView(Batch, icon='fa fa-folder', label='Batches'))
 admin.add_view(ClamsAppView(ClamsApp, icon='fa fa-box'))
