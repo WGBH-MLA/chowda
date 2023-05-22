@@ -11,6 +11,7 @@ from sqlmodel import Field, Relationship, SQLModel
 
 from enum import Enum
 
+
 MediaUrl = stricturl(allowed_schemes=['video', 'audio', 'text'], tld_required=False)
 """Media url validator. Must have prefix of video, audio, or text. No TLD required.
 Example:
