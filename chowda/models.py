@@ -11,6 +11,7 @@ from sqlmodel import Field, Relationship, SQLModel
 
 from enum import Enum
 
+
 MediaUrl = stricturl(allowed_schemes=['video', 'audio', 'text'], tld_required=False)
 """Media url validator. Must have prefix of video, audio, or text. No TLD required.
 Example:
@@ -75,12 +76,6 @@ class MediaFile(SQLModel, table=True):
         back_populates='media_files', link_model=MediaFileBatchLink
     )
     clams_events: List['ClamsEvent'] = Relationship(back_populates='media_file')
-
-    async def __admin_repr__(self, request: Request):
-        return self.guid
-
-    async def __admin_select2_repr__(self, request: Request) -> str:
-        return f'<span><strong>{self.guid}</strong></span>'
 
 
 class Collection(SQLModel, table=True):

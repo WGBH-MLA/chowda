@@ -40,6 +40,8 @@ test = [
     "pytest-xdist~=3.3",
     "httpx~=0.24",
     'nbmake~=1.4',
+    "vcrpy~=4.2",
+    "pytest-vcr~=1.0",
     'urllib3~=1.26',
 ]
 locust = [
@@ -47,12 +49,10 @@ locust = [
     "pydantic-factories~=1.17",
 ]
 
+
 [tool.pdm.dev-dependencies]
-dev = [
-    "uvicorn~=0.22",
-    "black~=23.3",
-    "ruff~=0.0",
-]
+dev = ['uvicorn~=0.21', 'black~=23.3', 'ruff~=0.0', 'pre-commit~=2.21']
+
 docs = [
     "mkdocs~=1.4",
     "mkdocs-material~=9.1",
