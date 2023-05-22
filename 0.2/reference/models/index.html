@@ -15,7 +15,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
     
     
       
@@ -246,7 +246,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../examples/session/" class="md-tabs__link">
+      <a href="../../examples/ingest/" class="md-tabs__link">
         Examples
       </a>
     </li>
@@ -374,6 +374,8 @@
         
           
         
+          
+        
       
       
         <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -387,6 +389,20 @@
           Examples
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/ingest/" class="md-nav__link">
+        Ingest
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -525,6 +541,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#chowda.models.MediaFile" class="md-nav__link">
+    MediaFile
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#chowda.models.User" class="md-nav__link">
     User
   </a>
@@ -616,6 +639,126 @@
 
 
 
+<h2 id="chowda.models.MediaFile" class="doc doc-heading">
+        <code>MediaFile</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="sqlmodel.SQLModel">SQLModel</span></code></p>
+
+  
+      <p>Media file model</p>
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>id</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>SonyCi asset id</p></td>
+        </tr>
+        <tr>
+          <td><code>guid</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>asset guid</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        <details class="quote">
+          <summary>Source code in <code>chowda/models.py</code></summary>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MediaFile</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Media file model</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        id: SonyCi asset id</span>
+<span class="sd">        guid: asset guid</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;media_files&#39;</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">guid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">mmif_json</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">sa_column</span><span class="o">=</span><span class="n">Column</span><span class="p">(</span><span class="n">JSON</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">collections</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Collection&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
+        <span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;media_files&#39;</span><span class="p">,</span> <span class="n">link_model</span><span class="o">=</span><span class="n">MediaFileCollectionLink</span>
+    <span class="p">)</span>
+    <span class="n">batches</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Batch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
+        <span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;media_files&#39;</span><span class="p">,</span> <span class="n">link_model</span><span class="o">=</span><span class="n">MediaFileBatchLink</span>
+    <span class="p">)</span>
+    <span class="n">clams_events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;ClamsEvent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;media_file&#39;</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__admin_repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">guid</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__admin_select2_repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;&lt;span&gt;&lt;strong&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">guid</span><span class="si">}</span><span class="s1">&lt;/strong&gt;&lt;/span&gt;&#39;</span>
+</code></pre></div></td></tr></table></div>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="chowda.models.User" class="doc doc-heading">
         <code>User</code>
 
@@ -674,24 +817,24 @@
 
         <details class="quote">
           <summary>Source code in <code>chowda/models.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;User model</span>
 
 <span class="sd">    Attributes:</span>
