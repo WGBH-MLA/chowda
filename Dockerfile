@@ -9,6 +9,7 @@ RUN pip install -U pip
 COPY pyproject.toml pdm.lock README.md ./
 COPY chowda chowda
 
+
 ###########################
 # 'dev' build stage
 ###########################
@@ -25,7 +26,7 @@ ENV PATH=$PATH:/app/__pypackages__/3.11/bin/
 # Install dev dependencies with pdm
 RUN pdm install -G dev
 # Start dev server.
-CMD uvicorn chowda:app --host 0.0.0.0 --reload --log-level debug
+CMD uvicorn chowda.app:app --host 0.0.0.0 --reload --log-level debug
 
 
 ###########################
@@ -54,4 +55,9 @@ CMD poetry run locust
 ############################
 FROM base as production
 RUN pip install .[production]
-CMD gunicorn chowda:app -b 0.0.0.0:8000 -w 2 --worker-class uvicorn.workers.UvicornWorker
+
+COPY static static
+COPY templates templates
+ENV ENVIRONMENT=production
+
+CMD gunicorn chowda.app:app -b 0.0.0.0:8000 -w 2 --worker-class uvicorn.workers.UvicornWorker

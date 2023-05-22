@@ -12,6 +12,7 @@ from sqlalchemy.dialects import postgresql
 from sqlmodel import Field, Relationship, SQLModel, String
 from starlette.requests import Request
 
+
 MediaUrl = stricturl(allowed_schemes=['video', 'audio', 'text'], tld_required=False)
 """Media url validator. Must have prefix of video, audio, or text. No TLD required.
 Example:
@@ -186,6 +187,9 @@ class ClamsApp(SQLModel, table=True):
 
     async def __admin_repr__(self, request: Request):
         return f'{self.name or self.id}'
+
+    async def __admin_select2_repr__(self, request: Request):
+        return f'<span><strong>{self.name}</span>'
 
 
 class Pipeline(SQLModel, table=True):

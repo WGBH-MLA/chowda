@@ -38,12 +38,11 @@ class MediaFileCount(IntegerField):
 
 class CollectionView(ModelView):
     fields = [
-        'id',
         'name',
         'description',
         MediaFileCount(
             'media_files',
-            label='MediaFiles Count',
+            label='Size',
             read_only=True,
             exclude_from_edit=True,
             exclude_from_create=True,
@@ -54,4 +53,51 @@ class CollectionView(ModelView):
             label='GUID Links',
             display_template='displays/media_file_guid_links.html',
         ),
+    ]
+
+
+class BatchView(ModelView):
+    fields = [
+        'name',
+        'description',
+        MediaFileCount(
+            'media_files',
+            label='Size',
+            read_only=True,
+            exclude_from_edit=True,
+            exclude_from_create=True,
+        ),
+        # 'media_files',  # default view
+        MediaFilesGuidLinkField(
+            'media_files',
+            label='GUID Links',
+            display_template='displays/media_file_guid_links.html',
+            exclude_from_list=True,
+        ),
+    ]
+
+
+class MediaFileView(ModelView):
+    fields = ['guid', 'collections', 'batches']
+
+
+class UserView(ModelView):
+    fields = ['first_name', 'last_name', 'email']
+
+
+class ClamsAppView(ModelView):
+    fields = ['name', 'endpoint', 'description', 'pipelines']
+
+
+class PipelineView(ModelView):
+    fields = ['name', 'description', 'clams_apps']
+
+
+class ClamsEventView(ModelView):
+    fields = [
+        'batch',
+        'media_file',
+        'clams_app',
+        'status',
+        'response_json',
     ]
