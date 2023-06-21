@@ -65,7 +65,7 @@ docs = [
     "mkdocs-jupyter~=0.24",
 ]
 ci = [
-    "setuptools~=67.8",
+    "setuptools~=68.0",
 ]
 
 [tool.pdm]
