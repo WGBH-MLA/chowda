@@ -1,32 +1,9 @@
 from sqlalchemy import create_engine
 from sqlmodel import SQLModel
-from sqlmodel.pool import StaticPool
-
-from chowda import models  # noqa F401
-from chowda.config import DB_URL, DEBUG, ENVIRONMENT
+from chowda.config import DB_URL, DEBUG
 
 
-def get_engine(env=ENVIRONMENT):
-    """Return a SQLAlchemy engine for the given environment"""
-    if env == 'test':
-        return create_engine(
-            'sqlite:///:memory:',
-            connect_args={'check_same_thread': False},
-            echo=DEBUG,
-            poolclass=StaticPool,
-        )
-    if env == 'development':
-        return create_engine(
-            DB_URL,
-            echo=DEBUG,
-        )
-    if env == 'production':
-        return create_engine(DB_URL, echo=DEBUG)
-    raise Exception(f'Unknown environment: {env}')
-
-
-engine = get_engine()
-
+engine = create_engine(DB_URL, echo=DEBUG)
 
 # Create database from SQLModel schema
 SQLModel.metadata.create_all(engine)

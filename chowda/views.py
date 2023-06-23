@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from json import loads
-from typing import Any
+from typing import Any, ClassVar
 
 from requests import Request
 from starlette_admin import BaseField, IntegerField
@@ -35,7 +35,7 @@ class MediaFileCount(IntegerField):
 
 
 class CollectionView(ModelView):
-    fields = [
+    fields: ClassVar[list[Any]] = [
         'name',
         'description',
         MediaFileCount(
@@ -55,7 +55,7 @@ class CollectionView(ModelView):
 
 
 class BatchView(ModelView):
-    fields = [
+    fields: ClassVar[list[Any]] = [
         'name',
         'description',
         MediaFileCount(
@@ -76,23 +76,23 @@ class BatchView(ModelView):
 
 
 class MediaFileView(ModelView):
-    fields = ['guid', 'collections', 'batches']
+    fields: ClassVar[list[Any]] = ['guid', 'collections', 'batches']
 
 
 class UserView(ModelView):
-    fields = ['first_name', 'last_name', 'email']
+    fields: ClassVar[list[Any]] = ['first_name', 'last_name', 'email']
 
 
 class ClamsAppView(ModelView):
-    fields = ['name', 'endpoint', 'description', 'pipelines']
+    fields: ClassVar[list[Any]] = ['name', 'endpoint', 'description', 'pipelines']
 
 
 class PipelineView(ModelView):
-    fields = ['name', 'description', 'clams_apps']
+    fields: ClassVar[list[Any]] = ['name', 'description', 'clams_apps']
 
 
 class ClamsEventView(ModelView):
-    fields = [
+    fields: ClassVar[list[Any]] = [
         'batch',
         'media_file',
         'clams_app',
@@ -102,7 +102,7 @@ class ClamsEventView(ModelView):
 
 
 class SonyCiAssetView(ModelView):
-    fields = [
+    fields: ClassVar[list[Any]] = [
         'name',
         'size',
         'type',
