@@ -10,13 +10,9 @@ jobs:
     with:
       pdm_args: -G test,ci
       pytest_args: -n auto --nbmake
-    # Service containers to run with `container-job`
     services:
-      # Label used to access the service container
       postgres:
-        # Docker Hub image
         image: postgres
-        # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: postgres
         # Set health checks to wait until postgres has started
@@ -25,7 +21,6 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-
 
   lint:
     name: 👕 Lint
