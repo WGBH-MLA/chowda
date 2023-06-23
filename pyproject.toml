@@ -16,6 +16,7 @@ dependencies = [
     "sqlmodel~=0.0",
     "pydantic[email]~=1.10",
     "sonyci~=0.1",
+    "psycopg2~=2.9",
 ]
 requires-python = '>=3.8.1,<4.0'
 readme = 'README.md'
@@ -28,7 +29,6 @@ repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project.optional-dependencies]
 production = [
-    "psycopg2~=2.9",
     "uvicorn[standard]~=0.22",
     "gunicorn~=20.1",
 ]
