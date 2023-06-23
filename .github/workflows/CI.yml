@@ -3,14 +3,6 @@ name: 🧪 Integration Tests
 on: [push, pull_request]
 
 jobs:
-  postgres:
-    runs-on: ubuntu-latest
-    # Docker Hub image
-    container: postgres
-    # Provide the password for postgres
-    env:
-      POSTGRES_PASSWORD: postgres
-
   tests:
     name: ⚗️ Application Tests
     uses: WGBH-MLA/.github/.github/workflows/pytest.yml@pdm
@@ -18,7 +10,22 @@ jobs:
     with:
       pdm_args: -G test,ci
       pytest_args: -n auto --nbmake
-    needs: postgres
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
 
   lint:
     name: 👕 Lint
