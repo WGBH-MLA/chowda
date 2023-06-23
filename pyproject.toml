@@ -17,6 +17,7 @@ dependencies = [
     "pydantic[email]~=1.10",
     "sonyci~=0.1",
     "psycopg2~=2.9",
+    "metaflow>=2.9.6",
 ]
 requires-python = '>=3.8.1,<4.0'
 readme = 'README.md'
