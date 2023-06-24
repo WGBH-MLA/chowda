@@ -3,11 +3,11 @@
 SQLModels for DB and validation
 """
 
-from enum import Enum
+import enum
 from typing import Any, Dict, List, Optional
 
 from pydantic import AnyHttpUrl, EmailStr, stricturl
-from sqlalchemy import JSON, Column
+from sqlalchemy import JSON, Column, Enum  # noqa: F401
 from sqlalchemy.dialects import postgresql
 from sqlmodel import Field, Relationship, SQLModel
 from starlette.requests import Request
@@ -19,19 +19,19 @@ Example:
 """
 
 
-class AppStatus(Enum):
+class AppStatus(enum.Enum):
     PENDING = 'pending'
     RUNNING = 'running'
     COMPLETE = 'complete'
     FAILED = 'failed'
 
 
-class MediaType(Enum):
+class MediaType(enum.Enum):
     video = 'Video'
     audio = 'Audio'
 
 
-class ThumbnailType(Enum):
+class ThumbnailType(enum.Enum):
     LARGE = 'large'
     MEDIUM = 'medium'
     SMALL = 'small'
