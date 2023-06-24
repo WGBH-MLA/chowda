@@ -12,6 +12,9 @@ from chowda.config import DB_URL, DEBUG
 from chowda import models  # noqa: F401
 
 
+print('\n\nIN DB.PY\n\n')
+
+
 engine = create_engine(DB_URL, echo=DEBUG)
 
 # Create database from SQLModel schema

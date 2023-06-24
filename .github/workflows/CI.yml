@@ -9,7 +9,7 @@ jobs:
     secrets: inherit
     with:
       pdm_args: -G test,ci
-      pytest_args: -n auto --nbmake -ra
+      pytest_args: -n auto --nbmake -ra -s
 
   lint:
     name: 👕 Lint
