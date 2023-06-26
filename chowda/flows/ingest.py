@@ -11,29 +11,36 @@ class IngestFlow(FlowSpec):
         """Get total asset count and start batch ingest."""
         from sonyci import SonyCi
 
+        from chowda.utils import chunks_sequential
+
         self.ci = SonyCi(**SonyCi.from_env())
         self.asset_count = self.ci.get(
             f'workspaces/{self.ci.workspace_id}/contents?kind=asset&limit=1'
         )['count']
         log.success(f'Get asset count: {self.asset_count}')
 
-        self.pages = range(self.asset_count // 100 + 1, 100)
-        self.next(self.ingest_page, foreach='pages')
+        self.chunks = [
+            list(l) for l in chunks_sequential(range(self.asset_count // 100 + 1), 8)
+        ]
+        self.next(self.ingest_pages, foreach='chunks')
 
     @step
-    def ingest_page(self):
-        """Ingest a page of assets."""
-        print(f'Ingest page {self.input}')
-        self.batch_ingest_session(self.input)
-        # TODO: return total success/failuresexit
-        log.success(f'Ingested page {self.input}')
+    def ingest_pages(self):
+        """Ingest a batch of asset pages"""
+        log.info(f'Ingest pages {self.input}')
+        self.results = []
+        for page in self.input:
+            self.results.append(self.batch_ingest_page(page))
+        self.results = sum(self.results)
+        log.success(f'Ingested batch {self.input} with {self.results} assets')
         self.next(self.join)
 
     @step
     def join(self, inputs):
         """Join all threads."""
-        print('Join')
-        self.results = [i.result for i in inputs]
+        self.results = [i.results for i in inputs]
+        log.success(f'Joined {len(self.results)} threads')
+        log.info(self.results)
         self.next(self.end)
 
     @step
@@ -47,7 +54,7 @@ class IngestFlow(FlowSpec):
             f'workspaces/{self.ci.workspace_id}/contents?kind=asset&limit=100&fields=id,name,type,size,thumbnails,format&offset={n*100}'
         )['items']
 
-    def batch_ingest_session(self, n):
+    def batch_ingest_page(self, n):
         from sqlmodel import Session
 
         from chowda.db import engine
@@ -60,8 +67,10 @@ class IngestFlow(FlowSpec):
             results = []
             for m in media:
                 results.append(session.execute(upsert(SonyCiAsset, m, ['id'])))
-            self.result = sum([r.rowcount for r in results])
+            result = sum([r.rowcount for r in results])
             session.commit()
+            log.success(f'Ingested page {n} with {result} assets')
+            return result
 
 
 if __name__ == '__main__':
