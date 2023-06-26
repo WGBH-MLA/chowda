@@ -9,12 +9,8 @@ jobs:
     secrets: inherit
     with:
       pdm_args: -G test,ci
-      pytest_args: -n auto --nbmake
-      environment:
-        - DB_USER: postgres
-        - DB_PASSWORD: postgres
-        - DB_HOST: localhost
-        - DB_PORT: 5432
+      pytest_args: -n auto --nbmake -ra -s
+    concurrency: ci-${{ github.ref }}
 
   lint:
     name: 👕 Lint

@@ -3,11 +3,11 @@
 SQLModels for DB and validation
 """
 
-from enum import Enum
+import enum
 from typing import Any, Dict, List, Optional
 
 from pydantic import AnyHttpUrl, EmailStr, stricturl
-from sqlalchemy import JSON, Column
+from sqlalchemy import JSON, Column, Enum
 from sqlalchemy.dialects import postgresql
 from sqlmodel import Field, Relationship, SQLModel
 from starlette.requests import Request
@@ -19,19 +19,19 @@ Example:
 """
 
 
-class AppStatus(Enum):
+class AppStatus(enum.Enum):
     PENDING = 'pending'
     RUNNING = 'running'
     COMPLETE = 'complete'
     FAILED = 'failed'
 
 
-class MediaType(Enum):
+class MediaType(enum.Enum):
     video = 'Video'
     audio = 'Audio'
 
 
-class ThumbnailType(Enum):
+class ThumbnailType(enum.Enum):
     LARGE = 'large'
     MEDIUM = 'medium'
     SMALL = 'small'
@@ -122,7 +122,7 @@ class SonyCiAsset(SQLModel, table=True):
     id: Optional[str] = Field(primary_key=True)
     name: str
     size: int = Field(sa_column=Column(postgresql.BIGINT))
-    type: Optional[MediaType] = Field(default=None)
+    type: MediaType = Field(sa_column=Column(Enum(MediaType)))
     format: Optional[str] = Field(default=None, index=True)
     thumbnails: Optional[List[Dict[str, Any]]] = Field(
         sa_column=Column(postgresql.ARRAY(JSON)), default=None
