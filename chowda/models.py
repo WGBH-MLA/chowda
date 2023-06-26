@@ -7,7 +7,7 @@ import enum
 from typing import Any, Dict, List, Optional
 
 from pydantic import AnyHttpUrl, EmailStr, stricturl
-from sqlalchemy import JSON, Column, Enum  # noqa: F401
+from sqlalchemy import JSON, Column, Enum
 from sqlalchemy.dialects import postgresql
 from sqlmodel import Field, Relationship, SQLModel
 from starlette.requests import Request
@@ -122,7 +122,7 @@ class SonyCiAsset(SQLModel, table=True):
     id: Optional[str] = Field(primary_key=True)
     name: str
     size: int
-    type: Optional[MediaType] = Field(default=None)
+    type: MediaType = Field(sa_column=Column(Enum(MediaType)))
     format: Optional[str] = Field(default=None, index=True)
     thumbnails: Optional[List[Dict[str, Any]]] = Field(
         sa_column=Column(postgresql.ARRAY(JSON)), default=None
