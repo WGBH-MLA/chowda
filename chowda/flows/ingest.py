@@ -20,7 +20,8 @@ class IngestFlow(FlowSpec):
         log.success(f'Get asset count: {self.asset_count}')
 
         self.chunks = [
-            list(l) for l in chunks_sequential(range(self.asset_count // 100 + 1), 8)
+            list(chunk)
+            for chunk in chunks_sequential(range(self.asset_count // 100 + 1), 8)
         ]
         self.next(self.ingest_pages, foreach='chunks')
 
