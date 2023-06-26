@@ -121,7 +121,7 @@ class SonyCiAsset(SQLModel, table=True):
     __tablename__ = 'sonyci_assets'
     id: Optional[str] = Field(primary_key=True)
     name: str
-    size: int
+    size: int = Field(sa_column=Column(postgresql.BIGINT))
     type: Optional[MediaType] = Field(default=None)
     format: Optional[str] = Field(default=None, index=True)
     thumbnails: Optional[List[Dict[str, Any]]] = Field(
