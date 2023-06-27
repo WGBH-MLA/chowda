@@ -10,7 +10,7 @@ jobs:
     with:
       pdm_args: -G test,ci
       pytest_args: -n auto --nbmake -ra -s
-    concurrency: ci-${{ github.ref }}
+      pg_db: chowda
 
   lint:
     name: 👕 Lint
