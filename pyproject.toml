@@ -16,6 +16,7 @@ dependencies = [
     "sqlmodel~=0.0",
     "pydantic[email]~=1.10",
     "sonyci~=0.1",
+    "alembic>=1.11.1",
 ]
 requires-python = '>=3.8.1,<4.0'
 readme = 'README.md'
