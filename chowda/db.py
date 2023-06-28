@@ -30,7 +30,7 @@ engine = get_engine()
 
 
 # Create database from SQLModel schema
-SQLModel.metadata.create_all(engine)
+# SQLModel.metadata.create_all(engine)
 
 
 # TODO: implement async engine

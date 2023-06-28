@@ -33,7 +33,9 @@ from chowda.views import (
 
 
 def init_database() -> None:
-    SQLModel.metadata.create_all(engine)
+    # TODO: replace with Alembic migration
+    # SQLModel.metadata.create_all(engine)
+    pass
 
 
 app = FastAPI(
