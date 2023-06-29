@@ -10,3 +10,10 @@ def create_async_engine():
     from sqlmodel.ext.asyncio.session import AsyncEngine
 
     return AsyncEngine(engine)
+
+
+def init_db():
+    from chowda import models
+    from sqlmodel import SQLModel
+
+    SQLModel.metadata.create_all(engine)
