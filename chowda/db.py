@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine
-from sqlmodel.pool import StaticPool
-from chowda.config import DB_URL, DEBUG, ENVIRONMENT
+from chowda.config import DB_URL, DEBUG
 
 
 engine = create_engine(DB_URL, echo=DEBUG)

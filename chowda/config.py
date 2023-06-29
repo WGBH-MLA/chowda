@@ -1,11 +1,11 @@
 from os import environ
 from dotenv import load_dotenv, find_dotenv
 
-ENVIRONMENT = environ.get('ENVIRONMENT', 'development')
+CHOWDA_ENV = environ.get('CHOWDA_ENV', 'development')
 
 
 dotenv_path = find_dotenv(
-    filename=f'chowda/.env.{ENVIRONMENT}', raise_error_if_not_found=True
+    filename=f'chowda/.env.{CHOWDA_ENV}', raise_error_if_not_found=True
 )
 
 
