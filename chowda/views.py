@@ -1,13 +1,11 @@
-from starlette_admin import (
-    BaseField,
-    IntegerField,
-)
-from starlette_admin.contrib.sqlmodel import ModelView
-from starlette_admin._types import RequestAction
 from dataclasses import dataclass
 from json import loads
-from requests import Request
 from typing import Any, ClassVar
+
+from requests import Request
+from starlette_admin import BaseField, IntegerField
+from starlette_admin._types import RequestAction
+from starlette_admin.contrib.sqlmodel import ModelView
 
 
 @dataclass

@@ -30,7 +30,6 @@ from chowda.views import (
     UserView,
 )
 
-
 app = FastAPI(
     title='Chowda',
     version=__version__,

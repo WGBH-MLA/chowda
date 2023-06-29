@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine
+
 from chowda.config import DB_URL, DEBUG
 
-
-engine = create_engine(DB_URL, echo=DEBUG)
+engine = create_engine(DB_URL, echo=DEBUG, connect_args={'check_same_thread': False})
 
 
 # TODO: implement async engine
@@ -13,7 +13,8 @@ def create_async_engine():
 
 
 def init_db():
-    from chowda import models  # noqa: F401
     from sqlmodel import SQLModel
+
+    from chowda import models  # noqa: F401
 
     SQLModel.metadata.create_all(engine)
