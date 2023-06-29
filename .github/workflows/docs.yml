@@ -1,11 +1,11 @@
 name: 📖 Docs
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
       - docs
+  workflow_dispatch:
 
 jobs:
   build:
