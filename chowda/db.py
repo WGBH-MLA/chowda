@@ -13,7 +13,7 @@ def create_async_engine():
 
 
 def init_db():
-    from chowda import models
+    from chowda import models  # noqa: F401
     from sqlmodel import SQLModel
 
     SQLModel.metadata.create_all(engine)
