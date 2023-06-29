@@ -4,7 +4,6 @@ Main Chowda application"""
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from sqlmodel import SQLModel
 from starlette.responses import HTMLResponse
 from starlette.routing import Route
 
@@ -32,12 +31,6 @@ from chowda.views import (
 )
 
 
-def init_database() -> None:
-    # TODO: replace with Alembic migration
-    # SQLModel.metadata.create_all(engine)
-    pass
-
-
 app = FastAPI(
     title='Chowda',
     version=__version__,
@@ -47,7 +40,6 @@ app = FastAPI(
             lambda r: HTMLResponse('<a href="/admin/">Click me to get to Admin!</a>'),
         )
     ],
-    on_startup=[init_database],
 )
 app.mount('/static', StaticFiles(directory=STATIC_DIR), name='static')
 
