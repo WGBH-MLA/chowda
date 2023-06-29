@@ -8,11 +8,14 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
+from alembic.config import Config
+
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
-config = context.config
+config = Config('./alembic.ini')
 config.set_main_option('sqlalchemy.url', DB_URL)
+
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -25,7 +28,7 @@ target_metadata = SQLModel.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
+# my_important_option = config.get_main_option("my_important_option")  # noqa: ERA001
 # ... etc.
 
 
