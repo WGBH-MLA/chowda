@@ -2,7 +2,6 @@ from json import dumps, loads
 from json.decoder import JSONDecodeError
 from os import environ, path
 from pytest import fixture
-from chowda.db import init_database
 
 # Set ENVIRONMENT env var to 'test' always. This serves as a flag for anywhere else in
 # the application where we need to detect whether we are running tests or not.
@@ -15,9 +14,16 @@ if not environ.get('CI_CONFIG'):
     environ['CI_CONFIG'] = './tests/ci.test.toml'
 
 
-# Create the test database. This alleviates the need to run Alembic migartions
-# on a test database prior to running tests.
-init_database()
+# setup_test_db.
+# - scope=session means it's run once per run of pytest.
+# - autouse=true means it runs automatically
+@fixture(scope='session', autouse=True)
+def setup_test_db():
+    from chowda.db import engine
+    from chowda import models  # noqa: F401
+    from sqlmodel import SQLModel
+
+    SQLModel.metadata.create_all(engine)
 
 
 def clean_response(response: dict):
