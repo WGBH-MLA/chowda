@@ -40,6 +40,12 @@ Install the package
 pip install .
 ```
 
+## Run database migrations with Alembic
+```shell
+alembic upgrade head
+```
+
+
 ## Run the application
 
 ```shell
