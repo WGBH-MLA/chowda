@@ -14,7 +14,7 @@
         <link rel="prev" href="..">
       
       
-        <link rel="next" href="../examples/session/">
+        <link rel="next" href="../examples/__init__/">
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.16">
@@ -250,7 +250,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../examples/session/" class="md-tabs__link">
+      <a href="../examples/__init__/" class="md-tabs__link">
         Examples
       </a>
     </li>
@@ -403,6 +403,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#run-database-migrations-with-alembic" class="md-nav__link">
+    Run database migrations with Alembic
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#run-the-application" class="md-nav__link">
     Run the application
   </a>
@@ -452,6 +459,8 @@
         
           
         
+          
+        
       
       
         <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -465,6 +474,20 @@
           Examples
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/__init__/" class="md-nav__link">
+          init  
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -513,6 +536,8 @@
         
           
         
+          
+        
       
       
         
@@ -543,6 +568,20 @@
     <li class="md-nav__item">
       <a href="../reference/app/" class="md-nav__link">
         App
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/database/" class="md-nav__link">
+        Database Management
       </a>
     </li>
   
@@ -608,6 +647,9 @@
 </code></pre></div>
 <p>Install the package</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>.
+</code></pre></div>
+<h2 id="run-database-migrations-with-alembic">Run database migrations with Alembic</h2>
+<div class="highlight"><pre><span></span><code>alembic<span class="w"> </span>upgrade<span class="w"> </span>head
 </code></pre></div>
 <h2 id="run-the-application">Run the application</h2>
 <div class="highlight"><pre><span></span><code>uvicorn<span class="w"> </span>chowda:app<span class="w"> </span>--reload

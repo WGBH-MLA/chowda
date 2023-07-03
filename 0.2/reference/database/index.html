@@ -11,17 +11,17 @@
       
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../app/">
       
       
-        <link rel="next" href="../database/">
+        <link rel="next" href="../models/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.16">
     
     
       
-        <title>App - Chowda</title>
+        <title>Database Management - Chowda</title>
       
     
     
@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#app" class="md-skip">
+        <a href="#database-management" class="md-skip">
           Skip to content
         </a>
       
@@ -126,7 +126,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              App
+              Database Management
             
           </span>
         </div>
@@ -481,6 +481,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../app/" class="md-nav__link">
+        App
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -493,12 +507,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          App
+          Database Management
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        App
+        Database Management
       </a>
       
         
@@ -517,9 +531,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#chowda.app" class="md-nav__link">
-    chowda.app
+  <a href="#migrations-with-alembic" class="md-nav__link">
+    Migrations with Alembic
   </a>
+  
+    <nav class="md-nav" aria-label="Migrations with Alembic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-migrations" class="md-nav__link">
+    Creating migrations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checking-to-see-if-there-are-any-migrations-to-run" class="md-nav__link">
+    Checking to see if there are any migrations to run
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-migrations" class="md-nav__link">
+    Run migrations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -527,20 +568,6 @@
   
 </nav>
       
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../database/" class="md-nav__link">
-        Database Management
-      </a>
     </li>
   
 
@@ -584,37 +611,33 @@
                   
 
 
-<h1 id="app">App</h1>
-
-
-<div class="doc doc-object doc-module">
-
-
-<a id="chowda.app"></a>
-  <div class="doc doc-contents first">
-  
-      <p>App</p>
-<p>Main Chowda application</p>
-
-  
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-  </div>
-
-</div>
+<h1 id="database-management">Database Management</h1>
+<h2 id="migrations-with-alembic">Migrations with Alembic</h2>
+<p>Chowda uses <a href="https://alembic.sqlalchemy.org/en/latest/">Alembic</a>, a migration tool for the <a href="https://www.sqlalchemy.org/">SQLAlchemy</a>, which is the database ORM used by <a href="https://sqlmodel.tiangolo.com/">SQLModel</a>.</p>
+<h3 id="creating-migrations">Creating migrations</h3>
+<p>Chowda's models inherit from <code>SQLModel</code> and if the <code>table=True</code> parameter is passed, then the model is for representing data stored in a database table. For these models to work correctly, the underlying table needs to match the <code>SQLModel</code> definition in python code, and this is where migrations come in.</p>
+<p>Alembic can detect the differences between Chowda's models and the underlying databse schema and then generate a migration script to change the database to match the model.</p>
+<p>After you have made the changes to your model classes, run the following command from the command line:
+<div class="highlight"><pre><span></span><code>alembic<span class="w"> </span>revision<span class="w"> </span>--autogenerate<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;short_desc_of_model_changes&quot;</span>
+</code></pre></div>
+This will generate a migration script under <code>migrations/revision</code>. The script name will be an random ID for the revision followed by the value of the <code>-m</code> flag, e.g.  <code>480b8fe17026_short_desc_of_db_change.py</code>.</p>
+<p>NOTE: After a migration is run, the revision ID in the file name is stored in the <code>alembic_version</code> table that is added to the database when Alembic is first installed. This table is what tells Alembic whether there are migrations to run or not.</p>
+<h3 id="checking-to-see-if-there-are-any-migrations-to-run">Checking to see if there are any migrations to run</h3>
+<p>From the command line run:
+<div class="highlight"><pre><span></span><code>alembic<span class="w"> </span>check
+</code></pre></div>
+If there are no migrations to run, you should see:
+<div class="highlight"><pre><span></span><code>No<span class="w"> </span>new<span class="w"> </span>upgrade<span class="w"> </span>operations<span class="w"> </span>detected.
+</code></pre></div>
+If there are migrations to run, you should see:
+<div class="highlight"><pre><span></span><code>ERROR<span class="w"> </span><span class="o">[</span>alembic.util.messaging<span class="o">]</span><span class="w"> </span>Target<span class="w"> </span>database<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>up<span class="w"> </span>to<span class="w"> </span>date.
+<span class="w">  </span>FAILED:<span class="w"> </span>Target<span class="w"> </span>database<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>up<span class="w"> </span>to<span class="w"> </span>date.
+</code></pre></div></p>
+<h3 id="run-migrations">Run migrations</h3>
+<p>From the command line run:
+<div class="highlight"><pre><span></span><code>alembic<span class="w"> </span>upgrade<span class="w"> </span>head
+</code></pre></div>
+This will run all migrations that haven't yet been run. If there were no migrations that needed to run, nothing will happen.</p>
 
 
 
