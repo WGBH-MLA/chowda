@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 
 from chowda.config import DB_URL, DEBUG
 
-engine = create_engine(DB_URL, echo=DEBUG, connect_args={'check_same_thread': False})
+engine = create_engine(DB_URL, echo=DEBUG)
 
 
 # TODO: implement async engine
