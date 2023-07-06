@@ -2,12 +2,18 @@
 # 'base' build stage, common to all build stages
 ###########################
 FROM python as base
+
 # Set working dir to /app, where all Chowda code lives.
 WORKDIR /app
 RUN pip install -U pip
+
 # Copy app code to container
 COPY pyproject.toml pdm.lock README.md ./
 COPY chowda chowda
+
+# Copy migration files
+COPY alembic.ini ./
+COPY migrations migrations
 
 
 ###########################
