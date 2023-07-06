@@ -403,6 +403,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#create-postgresql-database-and-start-the-database-server" class="md-nav__link">
+    Create PostgreSQL database and start the database server
+  </a>
+  
+    <nav class="md-nav" aria-label="Create PostgreSQL database and start the database server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#command-explained" class="md-nav__link">
+    Command explained
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#run-database-migrations-with-alembic" class="md-nav__link">
     Run database migrations with Alembic
   </a>
@@ -420,6 +440,33 @@
   <a href="#seed-the-database" class="md-nav__link">
     Seed the database
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-tests" class="md-nav__link">
+    Running tests
+  </a>
+  
+    <nav class="md-nav" aria-label="Running tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-test-database-and-running-a-postgres-server" class="md-nav__link">
+    Creating the test database and running a postgres server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-the-tests-from-terminal" class="md-nav__link">
+    Running the tests from terminal
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -461,8 +508,6 @@
         
           
         
-          
-        
       
       
         <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -485,20 +530,6 @@
     <li class="md-nav__item">
       <a href="../examples/__init__/" class="md-nav__link">
           init  
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../examples/ingest/" class="md-nav__link">
-        Ingest
       </a>
     </li>
   
@@ -664,6 +695,40 @@
 <p>Install the package</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>.
 </code></pre></div>
+<h3 id="create-postgresql-database-and-start-the-database-server">Create PostgreSQL database and start the database server</h3>
+<p>Chowda needs to have a PostgreSQL server running and database named <code>chowda-development</code> (tests use a database <code>chowda-test</code>).</p>
+<p>There are many ways to do this, but an easy way is to use docker. After starting Docker on your local machine, the following command will start a container using the <code>postgres</code> image in Dockerhub.</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>pg<span class="w"> </span>-p<span class="w"> </span><span class="m">5432</span>:5432<span class="w"> </span>-e<span class="w"> </span><span class="nv">POSTGRES_USER</span><span class="o">=</span>postgres<span class="w"> </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>postgres<span class="w"> </span>-e<span class="w"> </span><span class="nv">POSTGRES_DB</span><span class="o">=</span>chowda-development<span class="w"> </span>postgres
+</code></pre></div>
+<h4 id="command-explained">Command explained</h4>
+<ul>
+<li><code>docker run</code> runs a docker container</li>
+<li><code>--rm</code> option will remove the docker container once it exits.</li>
+<li><code>--name pg</code> will name the running container <code>pg</code> so it can be identified when listing running containers.</li>
+<li><code>-p 5432:5432</code> forwards port 5432 on your local machine to port 5432 (default postgres port) on the running container.</li>
+<li><code>-e POSTGRES_USER=postgres</code> sets ENV var on container for the postgres username</li>
+<li>
+<p><code>-e POSTGRES_PASSWORD=postgres</code> sets ENV var on container for postgres password</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not a secure password, but that's ok for test and development environments.</p>
+</div>
+</li>
+<li>
+<p><code>-e POSTGRES_DB=chowda-development</code> sets ENV var on container for the name of postgres database to use</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>postgres</code> image will create the database when starting the container.</p>
+</div>
+</li>
+<li>
+<p><code>postgres</code> is the name of the Docker image to use when starting the container.</p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the environment variables values in the command must match the values that are part of the <code>DB_URL</code> environment variable specified in <code>.env.development</code>.</p>
+</div>
 <h2 id="run-database-migrations-with-alembic">Run database migrations with Alembic</h2>
 <div class="highlight"><pre><span></span><code>alembic<span class="w"> </span>upgrade<span class="w"> </span>head
 </code></pre></div>
@@ -676,6 +741,15 @@
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>tests/seeds.py
 </code></pre></div>
 <p><strong>Optional:</strong> Customize the number of records created by changing the <code>num_*</code> variables in the <code>seed</code> function.</p>
+<h2 id="running-tests">Running tests</h2>
+<p>Chowda uses <code>pytest</code> for testing.</p>
+<h3 id="creating-the-test-database-and-running-a-postgres-server">Creating the test database and running a postgres server</h3>
+<p>This is done the same way as in the development environment (see above), only the database name is changed.
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>pg<span class="w"> </span>-p<span class="w"> </span><span class="m">5432</span>:5432<span class="w"> </span>-e<span class="w"> </span><span class="nv">POSTGRES_USER</span><span class="o">=</span>postgres<span class="w"> </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>postgres<span class="w"> </span>-e<span class="w"> </span><span class="nv">POSTGRES_DB</span><span class="o">=</span>chowda-development<span class="w"> </span>postgres
+</code></pre></div></p>
+<h3 id="running-the-tests-from-terminal">Running the tests from terminal</h3>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>--vcr-record<span class="o">=</span>none<span class="w"> </span>--nbmake
+</code></pre></div>
 <h2 id="deactivate-the-virtual-environment">Deactivate the virtual environment</h2>
 <p>Run the <code>deactivate</code> command to return to your normal shell environment.</p>
 <div class="highlight"><pre><span></span><code>deactivate
