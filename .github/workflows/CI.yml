@@ -2,6 +2,9 @@ name: 🧪 Integration Tests
 
 on: [push, pull_request, workflow_dispatch]
 
+env:
+  DB_URL: postgresql://postgres:postgres@postgres:5432/chowda-test
+
 jobs:
   tests:
     name: ⚗️ Application Tests
@@ -11,8 +14,7 @@ jobs:
       pdm_args: -G test,ci
       pytest_args: -n auto --nbmake
       pg_db: chowda-test
-    env:
-      DB_URL: postgresql://postgres:postgres@postgres:5432/chowda-test
+
 
   lint:
     name: 👕 Lint
