@@ -58,6 +58,6 @@ RUN pip install .[production]
 
 COPY static static
 COPY templates templates
-ENV ENVIRONMENT=production
+ENV CHOWDA_ENV=production
 
 CMD gunicorn chowda.app:app -b 0.0.0.0:8000 -w 2 --worker-class uvicorn.workers.UvicornWorker

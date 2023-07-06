@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine
 from sqlmodel import SQLModel
-from chowda.config import DB_URL, DEBUG
 
 # NOTE: models must be imported prior to calling SQL.metadata.create_all(engine)
 # Using this method to create the database schems is only temporary until we
@@ -10,7 +9,7 @@ from chowda.config import DB_URL, DEBUG
 # the SQLModel.metadata.create_all(engine) command will actually create the db
 # tables.
 from chowda import models  # noqa: F401
-
+from chowda.config import DB_URL, DEBUG
 
 print('\n\nabout to create all!\n\n')
 
@@ -25,3 +24,11 @@ def create_async_engine():
     from sqlmodel.ext.asyncio.session import AsyncEngine
 
     return AsyncEngine(engine)
+
+
+def init_db():
+    from sqlmodel import SQLModel
+
+    from chowda import models  # noqa: F401
+
+    SQLModel.metadata.create_all(engine)

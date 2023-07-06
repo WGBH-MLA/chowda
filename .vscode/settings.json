@@ -2,7 +2,8 @@
   "python.testing.pytestArgs": [
     "tests",
     "--vcr-record=none",
-    "-ra"
+    "-ra",
+    "--nbmake"
   ],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true

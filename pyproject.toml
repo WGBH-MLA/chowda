@@ -11,12 +11,14 @@ dynamic = ['version']
 description = 'A CLAMS processing application'
 authors = [{ name = 'WGBH-MLA', email = 'ryan_harbert@wgbh.org' }]
 dependencies = [
-    "fastapi~=0.97",
-    "starlette-admin~=0.9",
+    "fastapi~=0.99",
+    "starlette-admin~=0.10",
     "sqlmodel~=0.0",
     "pydantic[email]~=1.10",
     "sonyci~=0.1",
     "psycopg2~=2.9",
+    "alembic~=1.11",
+    "python-dotenv~=1.0",
 ]
 requires-python = '>=3.8.1,<4.0'
 readme = 'README.md'
@@ -28,34 +30,23 @@ documentation = 'https://WGBH-MLA.github.io/chowda/'
 repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project.optional-dependencies]
-production = [
-    "uvicorn[standard]~=0.22",
-    "gunicorn~=20.1",
-]
+production = ["uvicorn[standard]~=0.22", "gunicorn~=20.1"]
 test = [
     "factory-boy~=3.2",
-    "pytest~=7.3",
+    "pytest~=7.4",
     "pytest-cov~=4.1",
     "pytest-sugar~=0.9",
     "pytest-xdist~=3.3",
     "httpx~=0.24",
     "nbmake~=1.4",
-    "vcrpy~=4.3",
+    "vcrpy~=5.0",
     "pytest-vcr~=1.0",
     "urllib3~=1.26",
 ]
-locust = [
-    "locust~=2.15",
-    "pydantic-factories~=1.17",
-]
+locust = ["locust~=2.15", "pydantic-factories~=1.17"]
 
 [tool.pdm.dev-dependencies]
-dev = [
-    "uvicorn~=0.22",
-    "black~=23.3",
-    "ruff~=0.0",
-    "pre-commit~=3.3",
-]
+dev = ["uvicorn~=0.22", "black~=23.3", "ruff~=0.0", "pre-commit~=3.3"]
 docs = [
     "mkdocs~=1.4",
     "mkdocs-material~=9.1",
@@ -64,9 +55,7 @@ docs = [
     "mkdocstrings[python]~=0.22",
     "mkdocs-jupyter~=0.24",
 ]
-ci = [
-    "setuptools~=68.0",
-]
+ci = ["setuptools~=68.0"]
 
 [tool.pdm]
 version = { source = 'file', path = 'chowda/_version.py' }
