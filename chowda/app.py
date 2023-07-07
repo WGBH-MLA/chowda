@@ -28,6 +28,7 @@ from chowda.views import (
     MediaFileView,
     PipelineView,
     UserView,
+    DashboardView,
 )
 
 app = FastAPI(
@@ -51,6 +52,7 @@ admin = Admin(
 )
 
 # Add views
+admin.add_view(DashboardView(label='Dashboard', icon='fa fa-gauge', path='/'))
 admin.add_view(MediaFileView(MediaFile, icon='fa fa-file-video'))
 admin.add_view(CollectionView(Collection, icon='fa fa-folder'))
 admin.add_view(BatchView(Batch, icon='fa fa-folder', label='Batches'))
@@ -58,6 +60,7 @@ admin.add_view(ClamsAppView(ClamsApp, icon='fa fa-box'))
 admin.add_view(PipelineView(Pipeline, icon='fa fa-boxes-stacked'))
 admin.add_view(ClamsEventView(ClamsEvent, icon='fa fa-file-lines'))
 admin.add_view(UserView(User, icon='fa fa-users'))
+
 
 # Mount admin to app
 admin.mount_to(app)
