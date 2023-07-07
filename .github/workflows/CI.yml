@@ -2,15 +2,18 @@ name: 🧪 Integration Tests
 
 on: [push, pull_request, workflow_dispatch]
 
+env:
+  DB_URL: postgresql://postgres:postgres@postgres:5432/chowda-test
+
 jobs:
   tests:
     name: ⚗️ Application Tests
-    uses: WGBH-MLA/.github/.github/workflows/pytest-with-postgres.yml@pytest-with-postgres
+    uses: WGBH-MLA/.github/.github/workflows/pytest-with-postgres.yml@main
     secrets: inherit
     with:
       pdm_args: -G test,ci
       pytest_args: -n auto --nbmake -ra -s
-      pg_db: chowda
+      pg_db: chowda-test
 
   lint:
     name: 👕 Lint

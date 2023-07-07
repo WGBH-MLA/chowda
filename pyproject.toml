@@ -19,6 +19,7 @@ dependencies = [
     "psycopg2~=2.9",
     "alembic~=1.11",
     "python-dotenv~=1.0",
+    "psycopg2~=2.9",
 ]
 requires-python = '>=3.8.1,<4.0'
 readme = 'README.md'
@@ -30,7 +31,10 @@ documentation = 'https://WGBH-MLA.github.io/chowda/'
 repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project.optional-dependencies]
-production = ["uvicorn[standard]~=0.22", "gunicorn~=20.1"]
+production = [
+    "uvicorn[standard]~=0.22",
+    "gunicorn~=20.1",
+]
 test = [
     "factory-boy~=3.2",
     "pytest~=7.4",
