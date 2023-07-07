@@ -1,4 +1,4 @@
-from metaflow import FlowSpec, step
+from metaflow import FlowSpec, secrets, step
 
 from chowda.log import log
 
@@ -6,6 +6,7 @@ from chowda.log import log
 class IngestFlow(FlowSpec):
     """Ingest all assets from SonyCi."""
 
+    @secrets(sources=['CLAMS-SonyCi-API'])
     @step
     def start(self):
         """Get total asset count and start batch ingest."""
@@ -21,7 +22,7 @@ class IngestFlow(FlowSpec):
 
         self.chunks = [
             list(chunk)
-            for chunk in chunks_sequential(range(self.asset_count // 100 + 1), 8)
+            for chunk in chunks_sequential(range(self.asset_count // 100 + 1), 16)
         ]
         self.next(self.ingest_pages, foreach='chunks')
 
