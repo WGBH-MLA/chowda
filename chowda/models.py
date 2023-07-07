@@ -119,8 +119,8 @@ class SonyCiAssetThumbnail(SQLModel):
 
 class SonyCiAsset(SQLModel, table=True):
     __tablename__ = 'sonyci_assets'
-    id: Optional[int] = Field(primary_key=True, default=None)
-    sonyci_id: str = Field(index=True)
+    asset_id: Optional[int] = Field(primary_key=True, default=None)
+    id: str = Field(index=True)
     name: str = Field(index=True)
     size: int = Field(index=True)
     type: MediaType = Field(sa_column=Column(Enum(MediaType)))
