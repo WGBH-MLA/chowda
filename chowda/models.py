@@ -119,9 +119,10 @@ class SonyCiAssetThumbnail(SQLModel):
 
 class SonyCiAsset(SQLModel, table=True):
     __tablename__ = 'sonyci_assets'
-    id: Optional[str] = Field(primary_key=True)
-    name: str
-    size: int
+    id: Optional[int] = Field(primary_key=True, default=None)
+    sonyci_id: str = Field(index=True)
+    name: str = Field(index=True)
+    size: int = Field(index=True)
     type: MediaType = Field(sa_column=Column(Enum(MediaType)))
     format: Optional[str] = Field(default=None, index=True)
     thumbnails: Optional[List[Dict[str, Any]]] = Field(
@@ -131,7 +132,7 @@ class SonyCiAsset(SQLModel, table=True):
 
 class Collection(SQLModel, table=True):
     __tablename__ = 'collections'
-    id: Optional[int] = Field(primary_key=True)
+    id: Optional[int] = Field(primary_key=True, default=None)
     name: str
     description: str
     media_files: List['MediaFile'] = Relationship(
@@ -147,7 +148,7 @@ class Collection(SQLModel, table=True):
 
 class Batch(SQLModel, table=True):
     __tablename__ = 'batches'
-    id: Optional[int] = Field(primary_key=True)
+    id: Optional[int] = Field(primary_key=True, default=None)
     name: str
     description: str
     pipeline_id: Optional[int] = Field(default=None, foreign_key='pipelines.id')
@@ -175,7 +176,7 @@ class ClamsAppPipelineLink(SQLModel, table=True):
 
 class ClamsApp(SQLModel, table=True):
     __tablename__ = 'clams_apps'
-    id: Optional[int] = Field(primary_key=True)
+    id: Optional[int] = Field(primary_key=True, default=None)
     name: str
     endpoint: AnyHttpUrl
     description: str
@@ -193,7 +194,7 @@ class ClamsApp(SQLModel, table=True):
 
 class Pipeline(SQLModel, table=True):
     __tablename__ = 'pipelines'
-    id: Optional[int] = Field(primary_key=True)
+    id: Optional[int] = Field(primary_key=True, default=None)
     name: str
     description: str
     clams_apps: List[ClamsApp] = Relationship(
@@ -210,7 +211,7 @@ class Pipeline(SQLModel, table=True):
 
 class ClamsEvent(SQLModel, table=True):
     __tablename__ = 'clams_events'
-    id: Optional[int] = Field(primary_key=True)
+    id: Optional[int] = Field(primary_key=True, default=None)
     status: str
     response_json: Dict[str, Any] = Field(sa_column=Column(JSON))
     batch_id: Optional[int] = Field(default=None, foreign_key='batches.id')
