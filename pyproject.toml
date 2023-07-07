@@ -62,6 +62,9 @@ ci = ["setuptools~=68.0"]
 [tool.pdm]
 version = { source = 'file', path = 'chowda/_version.py' }
 
+[tool.black]
+extend-exclude= ['migrations']
+
 [tool.coverage.run]
 omit = ['tests/*']
 
