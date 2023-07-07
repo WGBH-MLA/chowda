@@ -1,17 +1,25 @@
 from json import dumps, loads
 from json.decoder import JSONDecodeError
 from os import environ, path
+
 from pytest import fixture
 
-# Set ENVIRONMENT env var to 'test' always. This serves as a flag for anywhere else in
+# Set CHOWDA_ENV env var to 'test' always. This serves as a flag for anywhere else in
 # the application where we need to detect whether we are running tests or not.
-environ['ENVIRONMENT'] = 'test'
+environ['CHOWDA_ENV'] = 'test'
+
+# This import must come *after* setting CHOWDA_ENV to 'test' above.
+from chowda.db import init_db  # noqa: E402
 
 # Set CI_CONFIG to use ./test/ci.test.toml *only* if it's not already set. We need to be
 # able to set the CI_CONFIG to point to a real SonyCi account and workspace when we are
 # recording our VCR cassette fixtures for testing.
 if not environ.get('CI_CONFIG'):
     environ['CI_CONFIG'] = './tests/ci.test.toml'
+
+
+# Call init_db to create test database.
+init_db()
 
 
 def clean_response(response: dict):
