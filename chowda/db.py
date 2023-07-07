@@ -1,5 +1,4 @@
 from sqlalchemy import create_engine
-from sqlmodel import SQLModel
 
 from chowda.config import DB_URL, DEBUG
 
