@@ -20,3 +20,6 @@ session.ipynb
 
 # Common local sony ci credentials file
 ci.toml
+
+# Metaflow generated files
+metaflow.s3.*
