@@ -78,6 +78,8 @@ class MediaFileFactory(ChowdaFactory):
     class Meta:
         model = MediaFile
 
+    id = factory.Faker('sha256')
+
     guid = factory.Faker('guid')
 
     @factory.post_generation

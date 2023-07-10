@@ -99,3 +99,13 @@ class ClamsEventView(ModelView):
         'status',
         'response_json',
     ]
+
+
+class SonyCiAssetView(ModelView):
+    fields: ClassVar[list[Any]] = [
+        'name',
+        'size',
+        'type',
+        'format',
+        'thumbnails',
+    ]

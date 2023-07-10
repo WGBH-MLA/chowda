@@ -3,11 +3,12 @@
 SQLModels for DB and validation
 """
 
-from enum import Enum
+import enum
 from typing import Any, Dict, List, Optional
 
 from pydantic import AnyHttpUrl, EmailStr, stricturl
-from sqlalchemy import JSON, Column
+from sqlalchemy import JSON, Column, Enum
+from sqlalchemy.dialects import postgresql
 from sqlmodel import Field, Relationship, SQLModel
 from starlette.requests import Request
 
@@ -18,11 +19,25 @@ Example:
 """
 
 
-class AppStatus(Enum):
+class AppStatus(enum.Enum):
     PENDING = 'pending'
     RUNNING = 'running'
     COMPLETE = 'complete'
     FAILED = 'failed'
+
+
+class MediaType(enum.Enum):
+    video = 'Video'
+    audio = 'Audio'
+
+
+class ThumbnailType(enum.Enum):
+    LARGE = 'large'
+    MEDIUM = 'medium'
+    SMALL = 'small'
+    STANDARD = 'standard'
+    VIDEO_SD = 'video-sd'
+    VIDEO_3G = 'video-3g'
 
 
 class User(SQLModel, table=True):
@@ -64,8 +79,15 @@ class MediaFileBatchLink(SQLModel, table=True):
 
 
 class MediaFile(SQLModel, table=True):
+    """Media file model
+
+    Attributes:
+        id: SonyCi asset id
+        guid: asset guid
+    """
+
     __tablename__ = 'media_files'
-    id: Optional[int] = Field(primary_key=True)
+    id: Optional[int] = Field(primary_key=True, default=None)
     guid: str = Field(index=True)
     mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
     collections: List['Collection'] = Relationship(
@@ -83,9 +105,33 @@ class MediaFile(SQLModel, table=True):
         return f'<span><strong>{self.guid}</strong></span>'
 
 
+class AssetThumbnails(SQLModel):
+    thumbnails: Dict[str, Any]
+
+
+class SonyCiAssetThumbnail(SQLModel):
+    type: ThumbnailType
+    location: str
+    size: int
+    width: int
+    height: int
+
+
+class SonyCiAsset(SQLModel, table=True):
+    __tablename__ = 'sonyci_assets'
+    id: str = Field(primary_key=True, index=True)
+    name: str = Field(index=True)
+    size: int = Field(index=True, sa_column=Column(postgresql.BIGINT))
+    type: MediaType = Field(sa_column=Column(Enum(MediaType)))
+    format: Optional[str] = Field(default=None, index=True)
+    thumbnails: Optional[List[Dict[str, Any]]] = Field(
+        sa_column=Column(postgresql.ARRAY(JSON)), default=None
+    )
+
+
 class Collection(SQLModel, table=True):
     __tablename__ = 'collections'
-    id: Optional[int] = Field(primary_key=True)
+    id: Optional[int] = Field(primary_key=True, default=None)
     name: str
     description: str
     media_files: List['MediaFile'] = Relationship(
@@ -101,7 +147,7 @@ class Collection(SQLModel, table=True):
 
 class Batch(SQLModel, table=True):
     __tablename__ = 'batches'
-    id: Optional[int] = Field(primary_key=True)
+    id: Optional[int] = Field(primary_key=True, default=None)
     name: str
     description: str
     pipeline_id: Optional[int] = Field(default=None, foreign_key='pipelines.id')
@@ -129,7 +175,7 @@ class ClamsAppPipelineLink(SQLModel, table=True):
 
 class ClamsApp(SQLModel, table=True):
     __tablename__ = 'clams_apps'
-    id: Optional[int] = Field(primary_key=True)
+    id: Optional[int] = Field(primary_key=True, default=None)
     name: str
     endpoint: AnyHttpUrl
     description: str
@@ -147,7 +193,7 @@ class ClamsApp(SQLModel, table=True):
 
 class Pipeline(SQLModel, table=True):
     __tablename__ = 'pipelines'
-    id: Optional[int] = Field(primary_key=True)
+    id: Optional[int] = Field(primary_key=True, default=None)
     name: str
     description: str
     clams_apps: List[ClamsApp] = Relationship(
@@ -164,7 +210,7 @@ class Pipeline(SQLModel, table=True):
 
 class ClamsEvent(SQLModel, table=True):
     __tablename__ = 'clams_events'
-    id: Optional[int] = Field(primary_key=True)
+    id: Optional[int] = Field(primary_key=True, default=None)
     status: str
     response_json: Dict[str, Any] = Field(sa_column=Column(JSON))
     batch_id: Optional[int] = Field(default=None, foreign_key='batches.id')
