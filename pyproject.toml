@@ -16,6 +16,7 @@ dependencies = [
     "sqlmodel~=0.0",
     "pydantic[email]~=1.10",
     "sonyci~=0.1",
+    "psycopg2~=2.9",
     "alembic~=1.11",
     "python-dotenv~=1.0",
     "psycopg2~=2.9",
@@ -46,18 +47,10 @@ test = [
     "pytest-vcr~=1.0",
     "urllib3~=1.26",
 ]
-locust = [
-    "locust~=2.15",
-    "pydantic-factories~=1.17",
-]
+locust = ["locust~=2.15", "pydantic-factories~=1.17"]
 
 [tool.pdm.dev-dependencies]
-dev = [
-    "uvicorn~=0.22",
-    "black~=23.3",
-    "ruff~=0.0",
-    "pre-commit~=3.3",
-]
+dev = ["uvicorn~=0.22", "black~=23.3", "ruff~=0.0", "pre-commit~=3.3"]
 docs = [
     "mkdocs~=1.4",
     "mkdocs-material~=9.1",
@@ -66,12 +59,13 @@ docs = [
     "mkdocstrings[python]~=0.22",
     "mkdocs-jupyter~=0.24",
 ]
-ci = [
-    "setuptools~=68.0",
-]
+ci = ["setuptools~=68.0"]
 
 [tool.pdm]
 version = { source = 'file', path = 'chowda/_version.py' }
+
+[tool.black]
+extend-exclude = ['migrations']
 
 [tool.coverage.run]
 omit = ['tests/*']
@@ -83,6 +77,7 @@ testpaths = ['tests', 'docs']
 inline-quotes = 'single'
 
 [tool.ruff]
+extend-exclude = ['migrations']
 select = [
     'B', # flake8-bugbear
     'C4', # flake8-comprehensions

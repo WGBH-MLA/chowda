@@ -2,6 +2,7 @@
   "python.testing.pytestArgs": [
     "tests",
     "--vcr-record=none",
+    "-ra",
     "--nbmake"
   ],
   "python.testing.unittestEnabled": false,
