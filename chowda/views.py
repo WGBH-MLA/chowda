@@ -1,11 +1,15 @@
 from dataclasses import dataclass
 from json import loads
 from typing import Any, ClassVar
+from datetime import datetime
 
 from requests import Request
 from starlette_admin import BaseField, IntegerField
 from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
+from starlette_admin import CustomView
+from starlette.templating import Jinja2Templates
+from starlette.responses import Response
 
 
 @dataclass
@@ -101,6 +105,17 @@ class ClamsEventView(ModelView):
     ]
 
 
+class DashboardView(CustomView):
+    def sony_ci_last_sync(self):
+        # TODO: replace with actual "last sync" time
+        return datetime.now()
+
+    async def render(self, request: Request, templates: Jinja2Templates) -> Response:
+        return templates.TemplateResponse(
+            'dashboard.html',
+            {'request': request, 'sony_ci_last_sync': self.sony_ci_last_sync()},
+        )
+
 class SonyCiAssetView(ModelView):
     fields: ClassVar[list[Any]] = [
         'name',
@@ -109,3 +124,4 @@ class SonyCiAssetView(ModelView):
         'format',
         'thumbnails',
     ]
+
