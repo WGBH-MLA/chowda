@@ -1,8 +1,9 @@
-from metaflow import FlowSpec, secrets, step
+from metaflow import FlowSpec, secrets, step, trigger
 
 from chowda.log import log
 
 
+@trigger(event='sync')
 class IngestFlow(FlowSpec):
     """Ingest all assets from SonyCi."""
 
