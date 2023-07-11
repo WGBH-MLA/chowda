@@ -23,3 +23,4 @@ ci.toml
 
 # Metaflow generated files
 metaflow.s3.*
+.metaflow

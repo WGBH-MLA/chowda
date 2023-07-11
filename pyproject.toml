@@ -37,20 +37,26 @@ production = [
     "gunicorn~=20.1",
 ]
 test = [
-    "factory-boy~=3.2",
-    "pytest~=7.4",
-    "pytest-cov~=4.1",
-    "pytest-sugar~=0.9",
-    "pytest-xdist~=3.3",
-    "httpx~=0.24",
-    "nbmake~=1.4",
-    "vcrpy~=5.0",
-    "pytest-vcr~=1.0",
-    "urllib3~=1.26",
+    'factory-boy~=3.2',
+    'pytest~=7.4',
+    'pytest-cov~=4.1',
+    'pytest-sugar~=0.9',
+    'pytest-xdist~=3.3',
+    'httpx~=0.24',
+    'nbmake~=1.4',
+    'vcrpy~=5.0',
+    'pytest-vcr~=1.0',
+    'urllib3~=1.26',
+    'trio~=0.22',
+    "pytest-html>=3.2.0",
+    "pytest-mock>=3.11.1",
 ]
 locust = [
     "locust~=2.15",
     "pydantic-factories~=1.17",
+]
+development = [
+    "kubernetes>=26.1.0",
 ]
 
 [tool.pdm.dev-dependencies]
@@ -61,12 +67,12 @@ dev = [
     "pre-commit~=3.3",
 ]
 docs = [
-    "mkdocs~=1.4",
-    "mkdocs-material~=9.1",
-    "mkdocs-git-revision-date-localized-plugin~=1.2",
-    "mike~=1.1",
-    "mkdocstrings[python]~=0.22",
-    "mkdocs-jupyter~=0.24",
+    'mkdocs~=1.4',
+    'mkdocs-material~=9.1',
+    'mkdocs-git-revision-date-localized-plugin~=1.2',
+    'mike~=1.1',
+    'mkdocstrings[python]~=0.22',
+    'mkdocs-jupyter~=0.24',
 ]
 ci = [
     "setuptools~=68.0",
