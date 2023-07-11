@@ -116,6 +116,7 @@ class DashboardView(CustomView):
             {'request': request, 'sony_ci_last_sync': self.sony_ci_last_sync()},
         )
 
+
 class SonyCiAssetView(ModelView):
     fields: ClassVar[list[Any]] = [
         'name',
@@ -124,4 +125,3 @@ class SonyCiAssetView(ModelView):
         'format',
         'thumbnails',
     ]
-
