@@ -1,15 +1,21 @@
 from dataclasses import dataclass
-from json import loads
-from typing import Any, ClassVar
 from datetime import datetime
+from json import loads
+from typing import Any, ClassVar, Dict
 
 from requests import Request
-from starlette_admin import BaseField, IntegerField
+from sqlmodel import Session, select
+from starlette.requests import Request
+from starlette.responses import Response
+from starlette.templating import Jinja2Templates
+from starlette_admin import BaseField, CustomView, IntegerField
 from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
-from starlette_admin import CustomView
-from starlette.templating import Jinja2Templates
-from starlette.responses import Response
+from starlette_admin.exceptions import FormValidationError
+
+from chowda.db import engine
+from chowda.log import log
+from chowda.models import MediaFile
 
 
 @dataclass
@@ -17,6 +23,7 @@ class MediaFilesGuidLinkField(BaseField):
     """A field that displays a list of MediaFile GUIDs as html links"""
 
     render_function_key: str = 'media_file_guid_links'
+    form_template: str = 'forms/media_files.html'
 
     async def serialize_value(
         self, request: Request, value: Any, action: RequestAction
@@ -72,11 +79,31 @@ class BatchView(ModelView):
         # 'media_files',  # default view
         MediaFilesGuidLinkField(
             'media_files',
-            label='GUID Links',
+            label='GUIDs',
             display_template='displays/media_file_guid_links.html',
             exclude_from_list=True,
         ),
     ]
+
+    async def validate(self, request: Request, data: Dict[str, Any]):
+        print('validate_data', data)
+        data['media_files'] = data['media_files'].split('\r\n')
+        data['media_files'] = [guid.strip() for guid in data['media_files'] if guid]
+        media_files = []
+        errors = []
+        with Session(engine) as db:
+            for guid in data['media_files']:
+                results = db.exec(select(MediaFile).where(MediaFile.guid == guid)).all()
+                if not results:
+                    errors.append(guid)
+                else:
+                    assert len(results) == 1, 'Multiple MediaFiles with same GUID'
+                    media_files.append(results[0])
+        if errors:
+            raise FormValidationError({'media_files': errors})
+        data['media_files'] = media_files
+        # return await super().validate(request, data)
+        return data
 
 
 class MediaFileView(ModelView):

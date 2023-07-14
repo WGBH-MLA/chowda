@@ -1,0 +1,14 @@
+<div class="{%if error%}is-invalid{%endif%}">
+  <textarea id="{{field.id}}" name="{{field.id}}"></textarea>
+  {% if field.help_text %}
+  <small class="form-hint">{{field.help_text}}</small>
+  {%endif%}
+</div>
+{%if error %}
+<div class="invalid-feedback">
+  <h3>Invalid GUIDS</h3>
+  <br />{% for e in error %}
+  <h6>{{e}}</h6>
+  {%endfor%}
+</div>
+{%endif%}
