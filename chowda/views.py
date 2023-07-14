@@ -5,7 +5,6 @@ from typing import Any, ClassVar, Dict
 
 from requests import Request
 from sqlmodel import Session, select
-from starlette.requests import Request
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
 from starlette_admin import BaseField, CustomView, IntegerField
@@ -14,7 +13,6 @@ from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import FormValidationError
 
 from chowda.db import engine
-from chowda.log import log
 from chowda.models import MediaFile
 
 
@@ -102,8 +100,6 @@ class BatchView(ModelView):
         if errors:
             raise FormValidationError({'media_files': errors})
         data['media_files'] = media_files
-        # return await super().validate(request, data)
-        return data
 
 
 class MediaFileView(ModelView):
