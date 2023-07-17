@@ -84,7 +84,6 @@ class BatchView(ModelView):
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
-        print('validate_data', data)
         data['media_files'] = data['media_files'].split('\r\n')
         data['media_files'] = [guid.strip() for guid in data['media_files'] if guid]
         media_files = []
