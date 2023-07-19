@@ -1,6 +1,3 @@
-[tool.pdm.build]
-includes = []
-
 [build-system]
 requires = ['pdm-backend']
 build-backend = 'pdm.backend'
@@ -33,11 +30,11 @@ repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project.optional-dependencies]
 production = [
-    "uvicorn[standard]~=0.22",
-    "gunicorn~=20.1",
+    "uvicorn[standard]~=0.23",
+    "gunicorn~=21.2",
 ]
 test = [
-    "factory-boy~=3.2",
+    "factory-boy~=3.3",
     "pytest~=7.4",
     "pytest-cov~=4.1",
     "pytest-sugar~=0.9",
@@ -52,28 +49,6 @@ locust = [
     "locust~=2.15",
     "pydantic-factories~=1.17",
 ]
-
-[tool.pdm.dev-dependencies]
-dev = [
-    "uvicorn~=0.22",
-    "black~=23.7",
-    "ruff~=0.0",
-    "pre-commit~=3.3",
-]
-docs = [
-    "mkdocs~=1.4",
-    "mkdocs-material~=9.1",
-    "mkdocs-git-revision-date-localized-plugin~=1.2",
-    "mike~=1.1",
-    "mkdocstrings[python]~=0.22",
-    "mkdocs-jupyter~=0.24",
-]
-ci = [
-    "setuptools~=68.0",
-]
-
-[tool.pdm]
-version = { source = 'file', path = 'chowda/_version.py' }
 
 [tool.black]
 extend-exclude = 'migrations'
@@ -111,3 +86,28 @@ select = [
     'W', # pycodestyle warnings
 
 ]
+
+[tool.pdm]
+version = { source = 'file', path = 'chowda/_version.py' }
+[tool.pdm.build]
+includes = []
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "uvicorn~=0.23",
+    "black~=23.7",
+    "ruff~=0.0",
+    "pre-commit~=3.3",
+]
+docs = [
+    "mkdocs~=1.4",
+    "mkdocs-material~=9.1",
+    "mkdocs-git-revision-date-localized-plugin~=1.2",
+    "mike~=1.1",
+    "mkdocstrings[python]~=0.22",
+    "mkdocs-jupyter~=0.24",
+]
+ci = [
+    "setuptools~=68.0",
+]
+
