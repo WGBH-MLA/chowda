@@ -3,14 +3,14 @@ from metaflow.integrations import ArgoEvent
 from datetime import datetime
 from pydantic import BaseModel
 
-router = APIRouter(prefix='/sony_ci')
+sony_ci = APIRouter(prefix='/sony_ci')
 
 
 class SyncResponse(BaseModel):
     started_at: datetime
 
 
-@router.post('/sync', tags=['sync'])
+@sony_ci.post('/sync', tags=['sync'])
 async def sony_ci_sync() -> SyncResponse:
     try:
         ArgoEvent('sync').publish(ignore_errors=False)
