@@ -32,7 +32,7 @@ from chowda.views import (
     UserView,
     DashboardView,
 )
-from chowda.routers import sony_ci
+from chowda.routers.sony_ci import sony_ci
 
 app = FastAPI(
     title='Chowda',
@@ -46,7 +46,7 @@ app = FastAPI(
 )
 app.mount('/static', StaticFiles(directory=STATIC_DIR), name='static')
 
-app.include_router(sony_ci.router, prefix='/api')
+app.include_router(sony_ci, prefix='/api')
 
 # Create admin
 admin = Admin(
