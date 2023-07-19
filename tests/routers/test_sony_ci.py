@@ -22,7 +22,7 @@ async def test_sony_ci_sync(mocker, async_client):
     )
 
     async with async_client as ac:
-        response = await ac.post('/sony_ci/sync')
+        response = await ac.post('/api/sony_ci/sync')
 
     assert response.status_code == 200
     assert SyncResponse(**response.json())
@@ -37,7 +37,7 @@ async def test_sony_ci_sync_fail(mocker, async_client):
     )
 
     async with async_client as ac:
-        response = await ac.post('/sony_ci/sync')
+        response = await ac.post('/api/sony_ci/sync')
 
     assert response.status_code == 500
     response_json = response.json()

@@ -46,7 +46,7 @@ app = FastAPI(
 )
 app.mount('/static', StaticFiles(directory=STATIC_DIR), name='static')
 
-app.include_router(sony_ci.router)
+app.include_router(sony_ci.router, prefix='/api')
 
 # Create admin
 admin = Admin(
