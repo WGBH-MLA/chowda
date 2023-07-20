@@ -2,6 +2,9 @@
 requires = ['pdm-backend']
 build-backend = 'pdm.backend'
 
+[tool.pdm.build]
+includes = []
+
 [project]
 name = 'chowda'
 dynamic = ['version']
@@ -44,7 +47,6 @@ test = [
 ]
 locust = ['locust~=2.15', 'pydantic-factories~=1.17']
 development = ['kubernetes>=26.1.0']
-ci = ['setuptools~=68.0']
 
 [tool.pdm.dev-dependencies]
 dev = ['uvicorn~=0.22', 'black~=23.7', 'ruff~=0.0', 'pre-commit~=3.3']
@@ -56,6 +58,7 @@ docs = [
     'mkdocstrings[python]~=0.22',
     'mkdocs-jupyter~=0.24',
 ]
+ci = ['setuptools~=68.0']
 
 [tool.pdm]
 version = { source = 'file', path = 'chowda/_version.py' }
@@ -96,6 +99,3 @@ select = [
     'W', # pycodestyle warnings
 
 ]
-
-[tool.pdm.build]
-includes = []
