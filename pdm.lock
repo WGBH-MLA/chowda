@@ -1259,8 +1259,8 @@ dependencies = [
 [metadata]
 lock_version = "4.2"
 cross_platform = true
-groups = ["default", "development", "locust", "production", "test"]
-content_hash = "sha256:79556bb3a16a6e6eddd897e087814685332f0082afb0f2f25071661af702ac69"
+groups = ["default", "ci", "development", "locust", "production", "test"]
+content_hash = "sha256:327054157c6366fbe358f3ec40c817ef5774e878ac4322d7f6b3f64447a0b976"
 
 [metadata.files]
 "alembic 1.11.1" = [
