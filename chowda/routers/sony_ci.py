@@ -1,9 +1,10 @@
+from datetime import datetime
+
 from fastapi import APIRouter, HTTPException
 from metaflow.integrations import ArgoEvent
-from datetime import datetime
 from pydantic import BaseModel
 
-sony_ci = APIRouter(prefix='/sony_ci')
+sony_ci = APIRouter()
 
 
 class SyncResponse(BaseModel):

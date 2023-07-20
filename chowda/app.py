@@ -9,6 +9,7 @@ from starlette.routing import Route
 
 from chowda._version import __version__
 from chowda.admin import Admin
+from chowda.api import api
 from chowda.config import STATIC_DIR, TEMPLATES_DIR
 from chowda.db import engine
 from chowda.models import (
@@ -26,13 +27,12 @@ from chowda.views import (
     ClamsAppView,
     ClamsEventView,
     CollectionView,
+    DashboardView,
     MediaFileView,
     PipelineView,
     SonyCiAssetView,
     UserView,
-    DashboardView,
 )
-from chowda.routers.sony_ci import sony_ci
 
 app = FastAPI(
     title='Chowda',
@@ -46,7 +46,7 @@ app = FastAPI(
 )
 app.mount('/static', StaticFiles(directory=STATIC_DIR), name='static')
 
-app.include_router(sony_ci, prefix='/api')
+app.include_router(api, prefix='/api')
 
 # Create admin
 admin = Admin(
