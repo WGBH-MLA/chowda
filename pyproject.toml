@@ -44,6 +44,8 @@ test = [
     'vcrpy~=5.0',
     'pytest-vcr~=1.0',
     'urllib3~=1.26',
+    'pytest-mock>=3.11.1',
+    "trio>=0.22.2",
 ]
 locust = ['locust~=2.15', 'pydantic-factories~=1.17']
 development = ['kubernetes>=26.1.0']
