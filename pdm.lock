@@ -2,11 +2,11 @@
 # It is not intended for manual editing.
 
 [metadata]
-groups = ["default", "development", "locust", "production", "test"]
+groups = ["default", "ci", "development", "locust", "production", "test"]
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:79556bb3a16a6e6eddd897e087814685332f0082afb0f2f25071661af702ac69"
+content_hash = "sha256:327054157c6366fbe358f3ec40c817ef5774e878ac4322d7f6b3f64447a0b976"
 
 [[package]]
 name = "alembic"
