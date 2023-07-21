@@ -24,9 +24,24 @@
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "module": "pytest",
-      "args": ["-v", "-n", "auto"],
+      "args": [
+        "-v",
+        "-n",
+        "auto"
+      ],
       "jinja": false,
       "justMyCode": false
+    },
+    {
+      "name": "Metaflow: Run",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "args": [
+        "run"
+      ],
+      "subProcess": true,
+      "console": "integratedTerminal"
     }
   ]
 }
