@@ -6,7 +6,7 @@ groups = ["default", "ci", "dev", "development", "docs", "locust", "production",
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:616d586413c612345ef9da95e725cbccc5c02cf8feb72c59ec3149bfcc38c158"
+content_hash = "sha256:ece1bc86bde4475b99cadadd2edaca8de70063aaf3fe262b09f4ff03e7c172c2"
 
 [[package]]
 name = "alembic"
@@ -69,6 +69,18 @@ summary = "Classes Without Boilerplate"
 files = [
     {file = "attrs-23.1.0-py3-none-any.whl", hash = "sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04"},
     {file = "attrs-23.1.0.tar.gz", hash = "sha256:6279836d581513a26f1bf235f9acd333bc9115683f14f7e8fae46c98fc50e015"},
+]
+
+[[package]]
+name = "authlib"
+version = "1.2.1"
+summary = "The ultimate Python library in building OAuth and OpenID Connect servers and clients."
+dependencies = [
+    "cryptography>=3.2",
+]
+files = [
+    {file = "Authlib-1.2.1-py2.py3-none-any.whl", hash = "sha256:c88984ea00149a90e3537c964327da930779afa4564e354edfd98410bea01911"},
+    {file = "Authlib-1.2.1.tar.gz", hash = "sha256:421f7c6b468d907ca2d9afede256f068f87e34d23dd221c07d13d4c234726afb"},
 ]
 
 [[package]]
@@ -3431,8 +3443,8 @@ files = [
 
 [[package]]
 name = "starlette-admin"
-version = "0.10.0"
-requires_python = ">=3.7"
+version = "0.11.0"
+requires_python = ">=3.8"
 summary = "Fast, beautiful and extensible administrative interface framework for Starlette/FastApi applications"
 dependencies = [
     "jinja2<4,>=3",
@@ -3440,8 +3452,8 @@ dependencies = [
     "starlette",
 ]
 files = [
-    {file = "starlette_admin-0.10.0-py3-none-any.whl", hash = "sha256:e2a0b148ee2b6abfcd2dd843b8a8061d1ae13b653c02676f83afa90a69bf845f"},
-    {file = "starlette_admin-0.10.0.tar.gz", hash = "sha256:af3e404b1ec921738b5313a7fbaed57221a20286b90f77ec2bd92e8936b396e0"},
+    {file = "starlette_admin-0.11.0-py3-none-any.whl", hash = "sha256:f1518e0802990bb24b26b6d8d8b1cc293e559dde7dcd3b8d02991d5b05bc340a"},
+    {file = "starlette_admin-0.11.0.tar.gz", hash = "sha256:412f5c41ae03c33f1ff111efa8424cd96bc680159175982b27b3a9509488aaa3"},
 ]
 
 [[package]]

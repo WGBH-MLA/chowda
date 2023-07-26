@@ -12,6 +12,7 @@ from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import FormValidationError
 
+from chowda.config import API_AUDIENCE
 from chowda.db import engine
 from chowda.models import MediaFile
 
@@ -41,6 +42,13 @@ class MediaFileCount(IntegerField):
         self, request: Request, value: Any, action: RequestAction
     ) -> Any:
         return len(value)
+
+
+class AdminModelView(ModelView):
+    def is_accessible(self, request: Request) -> bool:
+        return set(request.state.user.get(f'{API_AUDIENCE}/roles', set())).intersection(
+            {'admin', 'clammer'}
+        )
 
 
 class CollectionView(ModelView):
@@ -105,7 +113,7 @@ class MediaFileView(ModelView):
     fields: ClassVar[list[Any]] = ['guid', 'collections', 'batches']
 
 
-class UserView(ModelView):
+class UserView(AdminModelView):
     fields: ClassVar[list[Any]] = ['first_name', 'last_name', 'email']
 
 
@@ -139,7 +147,7 @@ class DashboardView(CustomView):
         )
 
 
-class SonyCiAssetView(ModelView):
+class SonyCiAssetView(AdminModelView):
     fields: ClassVar[list[Any]] = [
         'name',
         'size',
