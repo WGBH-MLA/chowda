@@ -6,7 +6,7 @@ groups = ["default", "ci", "dev", "development", "docs", "locust", "production",
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:ece1bc86bde4475b99cadadd2edaca8de70063aaf3fe262b09f4ff03e7c172c2"
+content_hash = "sha256:325d332e5dfc5e3c3654540656c580f01a680c8785bf77ae85ba8cce095f67ef"
 
 [[package]]
 name = "alembic"
