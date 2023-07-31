@@ -1,15 +1,5 @@
 from os import environ
 
-from dotenv import find_dotenv, load_dotenv
-
-CHOWDA_ENV = environ.get('CHOWDA_ENV', 'development')
-
-
-dotenv_path = find_dotenv(filename=f'.env.{CHOWDA_ENV}')
-
-
-load_dotenv(dotenv_path)
-
 DB_USER = environ.get('DB_USER', 'postgres')
 DB_PASSWORD = environ.get('DB_PASSWORD', 'postgres')
 DB_HOST = environ.get('DB_HOST', 'localhost')
@@ -22,3 +12,11 @@ DEBUG = bool(environ.get('DEBUG'))
 
 TEMPLATES_DIR = environ.get('TEMPLATES_DIR', 'templates')
 STATIC_DIR = environ.get('STATIC_DIR', 'static')
+
+AUTH0_CLIENT_ID = environ.get('AUTH0_CLIENT_ID')
+AUTH0_CLIENT_SECRET = environ.get('AUTH0_CLIENT_SECRET')
+AUTH0_DOMAIN = environ.get('AUTH0_DOMAIN')
+
+SECRET = environ.get('CHOWDA_SECRET')
+
+API_AUDIENCE = environ.get('API_AUDIENCE', 'https://chowda.wgbh-mla.org/api')

@@ -4,13 +4,16 @@ Main Chowda application"""
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from starlette.middleware import Middleware
+from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import HTMLResponse
 from starlette.routing import Route
 
 from chowda._version import __version__
 from chowda.admin import Admin
 from chowda.api import api
-from chowda.config import STATIC_DIR, TEMPLATES_DIR
+from chowda.auth import OAuthProvider
+from chowda.config import SECRET, STATIC_DIR, TEMPLATES_DIR
 from chowda.db import engine
 from chowda.models import (
     Batch,
@@ -54,6 +57,8 @@ admin = Admin(
     title='Chowda',
     templates_dir=TEMPLATES_DIR,
     statics_dir=STATIC_DIR,
+    auth_provider=OAuthProvider(),
+    middlewares=[Middleware(SessionMiddleware, secret_key=SECRET)],
 )
 
 # Add views

@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from datetime import datetime
 from json import loads
 from typing import Any, ClassVar, Dict
 
@@ -12,8 +11,12 @@ from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import FormValidationError
 
+from chowda.config import API_AUDIENCE
 from chowda.db import engine
 from chowda.models import MediaFile
+
+from metaflow import Flow
+from metaflow.exception import MetaflowNotFound
 
 
 @dataclass
@@ -41,6 +44,13 @@ class MediaFileCount(IntegerField):
         self, request: Request, value: Any, action: RequestAction
     ) -> Any:
         return len(value)
+
+
+class AdminModelView(ModelView):
+    def is_accessible(self, request: Request) -> bool:
+        return set(request.state.user.get(f'{API_AUDIENCE}/roles', set())).intersection(
+            {'admin', 'clammer'}
+        )
 
 
 class CollectionView(ModelView):
@@ -105,7 +115,7 @@ class MediaFileView(ModelView):
     fields: ClassVar[list[Any]] = ['guid', 'collections', 'batches']
 
 
-class UserView(ModelView):
+class UserView(AdminModelView):
     fields: ClassVar[list[Any]] = ['first_name', 'last_name', 'email']
 
 
@@ -128,18 +138,26 @@ class ClamsEventView(ModelView):
 
 
 class DashboardView(CustomView):
-    def sony_ci_last_sync(self):
-        # TODO: replace with actual "last sync" time
-        return datetime.now()
+    def sync_history(self) -> Dict[str, Any]:
+        try:
+            return [
+                {'created_at': sync_run.created_at, 'successful': sync_run.successful}
+                for sync_run in list(Flow('IngestFlow'))
+            ][:10]
+        except MetaflowNotFound:
+            return []
 
     async def render(self, request: Request, templates: Jinja2Templates) -> Response:
         return templates.TemplateResponse(
             'dashboard.html',
-            {'request': request, 'sony_ci_last_sync': self.sony_ci_last_sync()},
+            {
+                'request': request,
+                'sync_history': self.sync_history(),
+            },
         )
 
 
-class SonyCiAssetView(ModelView):
+class SonyCiAssetView(AdminModelView):
     fields: ClassVar[list[Any]] = [
         'name',
         'size',
