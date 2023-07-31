@@ -12,7 +12,7 @@ description = 'A CLAMS processing application'
 authors = [{ name = 'WGBH-MLA', email = 'ryan_harbert@wgbh.org' }]
 dependencies = [
     'fastapi~=0.100',
-    'starlette-admin~=0.10',
+    'starlette-admin~=0.11',
     'sqlmodel~=0.0',
     'pydantic[email]~=1.10',
     'sonyci~=0.1',
@@ -21,6 +21,9 @@ dependencies = [
     'alembic~=1.11',
     'python-dotenv~=1.0',
     'psycopg2~=2.9',
+    "authlib>=1.2.1",
+    "itsdangerous>=2.1.2",
+    "httpx>=0.24.1",
 ]
 requires-python = '>=3.8.1,<4.0'
 readme = 'README.md'

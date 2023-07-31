@@ -22,3 +22,11 @@ DEBUG = bool(environ.get('DEBUG'))
 
 TEMPLATES_DIR = environ.get('TEMPLATES_DIR', 'templates')
 STATIC_DIR = environ.get('STATIC_DIR', 'static')
+
+AUTH0_CLIENT_ID = environ.get('AUTH0_CLIENT_ID')
+AUTH0_CLIENT_SECRET = environ.get('AUTH0_CLIENT_SECRET')
+AUTH0_DOMAIN = environ.get('AUTH0_DOMAIN')
+
+SECRET = environ.get('CHOWDA_SECRET')
+
+API_AUDIENCE = environ.get('API_AUDIENCE', 'https://chowda.wgbh-mla.org/api')
