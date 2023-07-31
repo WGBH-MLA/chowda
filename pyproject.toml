@@ -17,10 +17,10 @@ dependencies = [
     'metaflow~=2.9',
     'alembic~=1.11',
     'python-dotenv~=1.0',
-    'authlib>=1.2.1',
-    'itsdangerous>=2.1.2',
-    'httpx>=0.24.1',
-    'rich>=13.5.1',
+    'authlib~=1.2',
+    'itsdangerous~=2.1',
+    'httpx~=0.24',
+    'rich~=13.5',
 ]
 requires-python = '>=3.8.1,<4.0'
 readme = 'README.md'
