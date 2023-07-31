@@ -17,10 +17,10 @@ dependencies = [
     'metaflow~=2.9',
     'alembic~=1.11',
     'python-dotenv~=1.0',
-    "authlib>=1.2.1",
-    "itsdangerous>=2.1.2",
-    "httpx>=0.24.1",
-    "rich>=13.5.1",
+    'authlib>=1.2.1',
+    'itsdangerous>=2.1.2',
+    'httpx>=0.24.1',
+    'rich>=13.5.1',
 ]
 requires-python = '>=3.8.1,<4.0'
 readme = 'README.md'
@@ -32,23 +32,23 @@ documentation = 'https://WGBH-MLA.github.io/chowda/'
 repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project.optional-dependencies]
-production = ["uvicorn[standard]~=0.23", "gunicorn~=21.2"]
+production = ['uvicorn[standard]~=0.23', 'gunicorn~=21.2']
 test = [
-    "factory-boy~=3.3",
-    "pytest~=7.4",
-    "pytest-cov~=4.1",
-    "pytest-sugar~=0.9",
-    "pytest-xdist~=3.3",
-    "httpx~=0.24",
-    "nbmake~=1.4",
-    "vcrpy~=5.0",
-    "pytest-vcr~=1.0",
-    "urllib3~=1.26",
-    "pytest-mock~=3.11",
-    "trio~=0.22",
+    'factory-boy~=3.3',
+    'pytest~=7.4',
+    'pytest-cov~=4.1',
+    'pytest-sugar~=0.9',
+    'pytest-xdist~=3.3',
+    'httpx~=0.24',
+    'nbmake~=1.4',
+    'vcrpy~=5.0',
+    'pytest-vcr~=1.0',
+    'urllib3~=1.26',
+    'pytest-mock~=3.11',
+    'trio~=0.22',
 ]
-locust = ["locust~=2.15", "pydantic-factories~=1.17"]
-development = ["kubernetes~=27.2"]
+locust = ['locust~=2.15', 'pydantic-factories~=1.17']
+development = ['kubernetes~=27.2']
 
 [tool.black]
 extend-exclude = 'migrations'
@@ -94,13 +94,13 @@ version = { source = 'file', path = 'chowda/_version.py' }
 includes = []
 
 [tool.pdm.dev-dependencies]
-dev = ["uvicorn~=0.23", "black~=23.7", "ruff~=0.0", "pre-commit~=3.3"]
+dev = ['uvicorn~=0.23', 'black~=23.7', 'ruff~=0.0', 'pre-commit~=3.3']
 docs = [
-    "mkdocs~=1.4",
-    "mkdocs-material~=9.1",
-    "mkdocs-git-revision-date-localized-plugin~=1.2",
-    "mike~=1.1",
-    "mkdocstrings[python]~=0.22",
-    "mkdocs-jupyter~=0.24",
+    'mkdocs~=1.4',
+    'mkdocs-material~=9.1',
+    'mkdocs-git-revision-date-localized-plugin~=1.2',
+    'mike~=1.1',
+    'mkdocstrings[python]~=0.22',
+    'mkdocs-jupyter~=0.24',
 ]
-ci = ["setuptools~=68.0"]
+ci = ['setuptools~=68.0']
