@@ -1,15 +1,5 @@
 from os import environ
 
-from dotenv import find_dotenv, load_dotenv
-
-CHOWDA_ENV = environ.get('CHOWDA_ENV', 'development')
-
-
-dotenv_path = find_dotenv(filename=f'.env.{CHOWDA_ENV}')
-
-
-load_dotenv(dotenv_path)
-
 DB_USER = environ.get('DB_USER', 'postgres')
 DB_PASSWORD = environ.get('DB_PASSWORD', 'postgres')
 DB_HOST = environ.get('DB_HOST', 'localhost')
