@@ -2,9 +2,6 @@
 requires = ['pdm-backend']
 build-backend = 'pdm.backend'
 
-[tool.pdm.build]
-includes = []
-
 [project]
 name = 'chowda'
 dynamic = ['version']
@@ -20,11 +17,10 @@ dependencies = [
     'metaflow~=2.9',
     'alembic~=1.11',
     'python-dotenv~=1.0',
-    'psycopg2~=2.9',
-    "authlib>=1.2.1",
-    "itsdangerous>=2.1.2",
-    "httpx>=0.24.1",
-    "rich>=13.5.1",
+    'authlib~=1.2',
+    'itsdangerous~=2.1',
+    'httpx~=0.24',
+    'rich~=13.5',
 ]
 requires-python = '>=3.8.1,<4.0'
 readme = 'README.md'
@@ -48,26 +44,11 @@ test = [
     'vcrpy~=5.0',
     'pytest-vcr~=1.0',
     'urllib3~=1.26',
-    'pytest-mock>=3.11.1',
-    "trio>=0.22.2",
+    'pytest-mock~=3.11',
+    'trio~=0.22',
 ]
 locust = ['locust~=2.15', 'pydantic-factories~=1.17']
-development = ['kubernetes>=26.1.0']
-
-[tool.pdm.dev-dependencies]
-dev = ['uvicorn~=0.22', 'black~=23.7', 'ruff~=0.0', 'pre-commit~=3.3']
-docs = [
-    'mkdocs~=1.4',
-    'mkdocs-material~=9.1',
-    'mkdocs-git-revision-date-localized-plugin~=1.2',
-    'mike~=1.1',
-    'mkdocstrings[python]~=0.22',
-    'mkdocs-jupyter~=0.24',
-]
-ci = ['setuptools~=68.0']
-
-[tool.pdm]
-version = { source = 'file', path = 'chowda/_version.py' }
+development = ['kubernetes~=27.2']
 
 [tool.black]
 extend-exclude = 'migrations'
@@ -105,3 +86,21 @@ select = [
     'W', # pycodestyle warnings
 
 ]
+
+[tool.pdm]
+version = { source = 'file', path = 'chowda/_version.py' }
+
+[tool.pdm.build]
+includes = []
+
+[tool.pdm.dev-dependencies]
+dev = ['uvicorn~=0.23', 'black~=23.7', 'ruff~=0.0', 'pre-commit~=3.3']
+docs = [
+    'mkdocs~=1.4',
+    'mkdocs-material~=9.1',
+    'mkdocs-git-revision-date-localized-plugin~=1.2',
+    'mike~=1.1',
+    'mkdocstrings[python]~=0.22',
+    'mkdocs-jupyter~=0.24',
+]
+ci = ['setuptools~=68.0']
