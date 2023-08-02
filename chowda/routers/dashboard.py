@@ -38,7 +38,7 @@ def admin_user(user: Annotated[User, Depends(user)]):
 
 
 @dashboard.post('/sync')
-def sync_now(user: Annotated[User, Depends(admin_user)]) -> Response:
+def sync_now(user: Annotated[User, Depends(admin_user)], request: Request) -> Response:
     flash = error = ''
     try:
         ArgoEvent('sync').publish(ignore_errors=False)
@@ -46,4 +46,4 @@ def sync_now(user: Annotated[User, Depends(admin_user)]) -> Response:
     except Exception as e:
         error = str(e)
 
-    return RedirectResponse(f'/dashboard?error={error}&flash={flash}', status_code=303)
+    return RedirectResponse(f'/admin?error={error}&flash={flash}', status_code=303)

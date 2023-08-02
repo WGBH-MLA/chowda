@@ -10,5 +10,5 @@ def test_get_admin_home():
     response = client.get('/', allow_redirects=False)
     assert response.status_code == 307, 'Admin page did not redirect sucessfully'
     assert (
-        '/dashboard' in response.headers['location']
-    ), 'Home page did not redirect to /dashboard'
+        '/admin' in response.headers['location']
+    ), 'Home page did not redirect to /admin'

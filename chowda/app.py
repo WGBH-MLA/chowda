@@ -44,7 +44,7 @@ app = FastAPI(
     routes=[
         Route(
             '/',
-            lambda r: RedirectResponse('/dashboard'),
+            lambda r: RedirectResponse('/admin'),
         )
     ],
     middleware=[Middleware(SessionMiddleware, secret_key=SECRET)],
@@ -62,8 +62,8 @@ admin = Admin(
     templates_dir=TEMPLATES_DIR,
     statics_dir=STATIC_DIR,
     auth_provider=OAuthProvider(),
-    base_url='/',
-    index_view=DashboardView(label='Dashboard', icon='fa fa-gauge', path='/dashboard'),
+    base_url='/admin',
+    index_view=DashboardView(label='Dashboard', icon='fa fa-gauge', path='/'),
 )
 
 # Add views
