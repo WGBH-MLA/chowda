@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from json import loads
 from typing import Any, ClassVar, Dict
 
+from metaflow import Flow
+from metaflow.exception import MetaflowNotFound
 from requests import Request
 from sqlmodel import Session, select
 from starlette.responses import Response
@@ -14,9 +16,6 @@ from starlette_admin.exceptions import FormValidationError
 from chowda.config import API_AUDIENCE
 from chowda.db import engine
 from chowda.models import MediaFile
-
-from metaflow import Flow
-from metaflow.exception import MetaflowNotFound
 
 
 @dataclass

@@ -61,8 +61,8 @@ class User(SQLModel, table=True):
 
 
 class MediaFileCollectionLink(SQLModel, table=True):
-    media_file_id: Optional[int] = Field(
-        default=None, foreign_key='media_files.id', primary_key=True
+    media_file_id: Optional[str] = Field(
+        default=None, foreign_key='media_files.guid', primary_key=True
     )
     collection_id: Optional[int] = Field(
         default=None, foreign_key='collections.id', primary_key=True
@@ -70,11 +70,20 @@ class MediaFileCollectionLink(SQLModel, table=True):
 
 
 class MediaFileBatchLink(SQLModel, table=True):
-    media_file_id: Optional[int] = Field(
-        default=None, foreign_key='media_files.id', primary_key=True
+    media_file_id: Optional[str] = Field(
+        default=None, foreign_key='media_files.guid', primary_key=True
     )
     batch_id: Optional[int] = Field(
         default=None, foreign_key='batches.id', primary_key=True
+    )
+
+
+class MediaFileSonyCiAssetLink(SQLModel, table=True):
+    media_file_id: Optional[str] = Field(
+        default=None, foreign_key='media_files.guid', primary_key=True
+    )
+    sonyci_asset_id: Optional[str] = Field(
+        default=None, foreign_key='sonyci_assets.id', primary_key=True
     )
 
 
@@ -82,14 +91,19 @@ class MediaFile(SQLModel, table=True):
     """Media file model
 
     Attributes:
-        id: SonyCi asset id
-        guid: asset guid
+        guid: MediaFile GUID
+        assets: List of SonyCiAssets
+        collections: List of Collections
+        batches: List of Batches
+        clams_events: List of ClamsEvents
     """
 
     __tablename__ = 'media_files'
-    id: Optional[int] = Field(primary_key=True, default=None)
-    guid: str = Field(index=True)
+    guid: Optional[str] = Field(primary_key=True, default=None, index=True)
     mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
+    assets: List['SonyCiAsset'] = Relationship(
+        back_populates='media_files', link_model=MediaFileSonyCiAssetLink
+    )
     collections: List['Collection'] = Relationship(
         back_populates='media_files', link_model=MediaFileCollectionLink
     )
@@ -126,6 +140,9 @@ class SonyCiAsset(SQLModel, table=True):
     format: Optional[str] = Field(default=None, index=True)
     thumbnails: Optional[List[Dict[str, Any]]] = Field(
         sa_column=Column(postgresql.ARRAY(JSON)), default=None
+    )
+    media_files: List[MediaFile] = Relationship(
+        back_populates='assets', link_model=MediaFileSonyCiAssetLink
     )
 
 
@@ -217,7 +234,7 @@ class ClamsEvent(SQLModel, table=True):
     batch: Optional[Batch] = Relationship(back_populates='clams_events')
     clams_app_id: Optional[int] = Field(default=None, foreign_key='clams_apps.id')
     clams_app: Optional[ClamsApp] = Relationship(back_populates='clams_events')
-    media_file_id: Optional[int] = Field(default=None, foreign_key='media_files.id')
+    media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
     media_file: Optional[MediaFile] = Relationship(back_populates='clams_events')
 
     async def __admin_repr__(self, request: Request):
