@@ -145,8 +145,8 @@ class DashboardView(CustomView):
         try:
             return [
                 {'created_at': sync_run.created_at, 'successful': sync_run.successful}
-                for sync_run in list(Flow('IngestFlow'))
-            ][:10]
+                for sync_run in list(Flow('IngestFlow'))[:10]
+            ]
         except MetaflowNotFound:
             return []
 
