@@ -380,6 +380,8 @@
         
           
         
+          
+        
       
       
         <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -416,6 +418,20 @@
     <li class="md-nav__item">
       <a href="../../examples/events/" class="md-nav__link">
         Events
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/guids/" class="md-nav__link">
+        Resolve filenames to GUIDs
       </a>
     </li>
   
@@ -714,24 +730,57 @@
     </thead>
     <tbody>
         <tr>
-          <td><code>id</code></td>
+          <td><code>guid</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[int]</code>
+                <code><span title="typing.Optional">Optional</span>[str]</code>
           </td>
           <td>
             <div class="doc-md-description">
-              <p>SonyCi asset id</p>
+              <p>MediaFile GUID</p>
             </div>
           </td>
         </tr>
         <tr>
-          <td><code>guid</code></td>
+          <td><code>assets</code></td>
           <td>
-                <code>str</code>
+                <code><span title="typing.List">List</span>[<span title="chowda.models.SonyCiAsset">SonyCiAsset</span>]</code>
           </td>
           <td>
             <div class="doc-md-description">
-              <p>asset guid</p>
+              <p>List of SonyCiAssets</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>collections</code></td>
+          <td>
+                <code><span title="typing.List">List</span>[<span title="chowda.models.Collection">Collection</span>]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>List of Collections</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>batches</code></td>
+          <td>
+                <code><span title="typing.List">List</span>[<span title="chowda.models.Batch">Batch</span>]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>List of Batches</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>clams_events</code></td>
+          <td>
+                <code><span title="typing.List">List</span>[<span title="chowda.models.ClamsEvent">ClamsEvent</span>]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>List of ClamsEvents</p>
             </div>
           </td>
         </tr>
@@ -740,16 +789,7 @@
 
             <details class="quote">
               <summary>Source code in <code>chowda/models.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 81</span>
-<span class="normal"> 82</span>
-<span class="normal"> 83</span>
-<span class="normal"> 84</span>
-<span class="normal"> 85</span>
-<span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
-<span class="normal"> 89</span>
-<span class="normal"> 90</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 90</span>
 <span class="normal"> 91</span>
 <span class="normal"> 92</span>
 <span class="normal"> 93</span>
@@ -764,18 +804,37 @@
 <span class="normal">102</span>
 <span class="normal">103</span>
 <span class="normal">104</span>
-<span class="normal">105</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MediaFile</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MediaFile</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Media file model</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        id: SonyCi asset id</span>
-<span class="sd">        guid: asset guid</span>
+<span class="sd">        guid: MediaFile GUID</span>
+<span class="sd">        assets: List of SonyCiAssets</span>
+<span class="sd">        collections: List of Collections</span>
+<span class="sd">        batches: List of Batches</span>
+<span class="sd">        clams_events: List of ClamsEvents</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;media_files&#39;</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="n">guid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">guid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">mmif_json</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">sa_column</span><span class="o">=</span><span class="n">Column</span><span class="p">(</span><span class="n">JSON</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">assets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;SonyCiAsset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
+        <span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;media_files&#39;</span><span class="p">,</span> <span class="n">link_model</span><span class="o">=</span><span class="n">MediaFileSonyCiAssetLink</span>
+    <span class="p">)</span>
     <span class="n">collections</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Collection&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
         <span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;media_files&#39;</span><span class="p">,</span> <span class="n">link_model</span><span class="o">=</span><span class="n">MediaFileCollectionLink</span>
     <span class="p">)</span>
