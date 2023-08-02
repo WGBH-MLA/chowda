@@ -111,7 +111,7 @@ class BatchView(ModelView):
 
 
 class MediaFileView(ModelView):
-    fields: ClassVar[list[Any]] = ['guid', 'collections', 'batches']
+    fields: ClassVar[list[Any]] = ['guid', 'collections', 'batches', 'assets']
 
     def can_create(self, request: Request) -> bool:
         """Permission for creating new Items. Return True by default"""
@@ -170,6 +170,7 @@ class SonyCiAssetView(AdminModelView):
         'type',
         'format',
         'thumbnails',
+        'media_files',
     ]
 
     def can_create(self, request: Request) -> bool:
