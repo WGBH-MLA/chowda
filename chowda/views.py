@@ -113,6 +113,10 @@ class BatchView(ModelView):
 class MediaFileView(ModelView):
     fields: ClassVar[list[Any]] = ['guid', 'collections', 'batches']
 
+    def can_create(self, request: Request) -> bool:
+        """Permission for creating new Items. Return True by default"""
+        return False
+
 
 class UserView(AdminModelView):
     fields: ClassVar[list[Any]] = ['first_name', 'last_name', 'email']
@@ -152,6 +156,9 @@ class DashboardView(CustomView):
             {
                 'request': request,
                 'sync_history': self.sync_history(),
+                # TODO: get flash/error messages from session, not query params
+                'flash': request.query_params.get('flash'),
+                'error': request.query_params.get('error'),
             },
         )
 
@@ -164,3 +171,7 @@ class SonyCiAssetView(AdminModelView):
         'format',
         'thumbnails',
     ]
+
+    def can_create(self, request: Request) -> bool:
+        """Sony Ci Assets are ingested from Sony Ci API, not created from the UI."""
+        return False
