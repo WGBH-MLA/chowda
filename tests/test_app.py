@@ -6,7 +6,9 @@ client = TestClient(app)
 
 
 def test_get_admin_home():
-    """GET /admin returns an HTML response"""
-    response = client.get('/')
-    assert response.status_code == 200, 'Admin page did not return sucessfully'
-    assert 'text/html' in response.headers['content-type'], 'Type is not HTML'
+    """GET / returns a Redirect response"""
+    response = client.get('/', allow_redirects=False)
+    assert response.status_code == 307, 'Admin page did not redirect sucessfully'
+    assert (
+        '/dashboard' in response.headers['location']
+    ), 'Home page did not redirect to /dashboard'
