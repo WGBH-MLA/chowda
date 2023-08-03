@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from json import loads
 from typing import Any, ClassVar, Dict
 
+from metaflow import Flow
+from metaflow.exception import MetaflowNotFound
 from requests import Request
 from sqlmodel import Session, select
 from starlette.responses import Response
@@ -14,9 +16,6 @@ from starlette_admin.exceptions import FormValidationError
 from chowda.config import API_AUDIENCE
 from chowda.db import engine
 from chowda.models import MediaFile
-
-from metaflow import Flow
-from metaflow.exception import MetaflowNotFound
 
 
 @dataclass
@@ -112,7 +111,11 @@ class BatchView(ModelView):
 
 
 class MediaFileView(ModelView):
-    fields: ClassVar[list[Any]] = ['guid', 'collections', 'batches']
+    fields: ClassVar[list[Any]] = ['guid', 'collections', 'batches', 'assets']
+
+    def can_create(self, request: Request) -> bool:
+        """Permission for creating new Items. Return True by default"""
+        return False
 
 
 class UserView(AdminModelView):
@@ -142,8 +145,8 @@ class DashboardView(CustomView):
         try:
             return [
                 {'created_at': sync_run.created_at, 'successful': sync_run.successful}
-                for sync_run in list(Flow('IngestFlow'))
-            ][:10]
+                for sync_run in list(Flow('IngestFlow'))[:10]
+            ]
         except MetaflowNotFound:
             return []
 
@@ -153,6 +156,9 @@ class DashboardView(CustomView):
             {
                 'request': request,
                 'sync_history': self.sync_history(),
+                # TODO: get flash/error messages from session, not query params
+                'flash': request.query_params.get('flash'),
+                'error': request.query_params.get('error'),
             },
         )
 
@@ -164,4 +170,9 @@ class SonyCiAssetView(AdminModelView):
         'type',
         'format',
         'thumbnails',
+        'media_files',
     ]
+
+    def can_create(self, request: Request) -> bool:
+        """Sony Ci Assets are ingested from Sony Ci API, not created from the UI."""
+        return False

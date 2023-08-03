@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
-from starlette.responses import HTMLResponse
+from starlette.responses import RedirectResponse
 from starlette.routing import Route
 
 from chowda._version import __version__
@@ -25,6 +25,7 @@ from chowda.models import (
     SonyCiAsset,
     User,
 )
+from chowda.routers.dashboard import dashboard
 from chowda.views import (
     BatchView,
     ClamsAppView,
@@ -43,13 +44,16 @@ app = FastAPI(
     routes=[
         Route(
             '/',
-            lambda r: HTMLResponse('<a href="/admin/">Click me to get to Admin!</a>'),
+            lambda r: RedirectResponse('/admin'),
         )
     ],
+    middleware=[Middleware(SessionMiddleware, secret_key=SECRET)],
 )
 app.mount('/static', StaticFiles(directory=STATIC_DIR), name='static')
 
 app.include_router(api, prefix='/api')
+app.include_router(dashboard, prefix='/dashboard')
+
 
 # Create admin
 admin = Admin(
@@ -58,11 +62,11 @@ admin = Admin(
     templates_dir=TEMPLATES_DIR,
     statics_dir=STATIC_DIR,
     auth_provider=OAuthProvider(),
-    middlewares=[Middleware(SessionMiddleware, secret_key=SECRET)],
+    base_url='/admin',
+    index_view=DashboardView(label='Dashboard', icon='fa fa-gauge', path='/'),
 )
 
 # Add views
-admin.add_view(DashboardView(label='Dashboard', icon='fa fa-gauge', path='/'))
 admin.add_view(MediaFileView(MediaFile, icon='fa fa-file-video'))
 admin.add_view(SonyCiAssetView(SonyCiAsset, icon='fa fa-file-video'))
 admin.add_view(CollectionView(Collection, icon='fa fa-folder'))

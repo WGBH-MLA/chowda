@@ -58,18 +58,36 @@ class IngestFlow(FlowSpec):
         )['items']
 
     def batch_ingest_page(self, n):
-        from sqlmodel import Session
+        from re import search, split
+
+        from sqlmodel import Session, select
 
         from chowda.db import engine
-        from chowda.models import SonyCiAsset
+        from chowda.models import MediaFile, SonyCiAsset
         from chowda.utils import upsert
 
         with Session(engine) as session:
             batch = self.get_batch(n)
             media = [SonyCiAsset(**asset) for asset in batch]
             results = []
-            for m in media:
-                results.append(session.execute(upsert(SonyCiAsset, m, ['id'])))
+            for asset in media:
+                results.append(session.execute(upsert(SonyCiAsset, asset, ['id'])))
+                # If it's a GUID
+                if search('^cpb-aacip-', asset.name):
+                    # Extract the GUID name
+                    guid = split(r'_|\.|-dupe', asset.name)[0]
+                    # Check for existing MediaFile
+                    media_file = session.exec(
+                        select(MediaFile).where(MediaFile.guid == guid)
+                    ).first()
+                    if not media_file:
+                        # Create a new MediaFile with the new guid
+                        media_file = MediaFile(guid=guid)
+                    ci_asset = session.get(SonyCiAsset, asset.id)
+                    # Add the asset to the existing MediaFile
+                    media_file.assets.append(ci_asset)
+                    session.add(media_file)
+
             result = sum([r.rowcount for r in results])
             session.commit()
             log.success(f'Ingested page {n} with {result} assets')
