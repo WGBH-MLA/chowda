@@ -42,10 +42,18 @@ def admin_user(user: Annotated[UserToken, Depends(user)]):
 
 
 @dashboard.post('/sync')
-def sync_now(user: Annotated[UserToken, Depends(admin_user)]) -> Response:
+def sync_now(
+    user: Annotated[UserToken, Depends(admin_user)], request: Request
+) -> Response:
     """Initiate a SonyCi IngestFlow with Argo Events."""
+    admin = request.url_for('admin:index')
     try:
         ArgoEvent('sync').publish(ignore_errors=False)
-        return RedirectResponse(f'/admin/?flash={"Sync started"}', status_code=303)
+        return RedirectResponse(
+            f'{admin}?flash=Sync started',
+            status_code=status.HTTP_303_SEE_OTHER,
+        )
     except Exception as error:
-        return RedirectResponse(f'/admin/?error={error!s}', status_code=303)
+        return RedirectResponse(
+            f'{admin}?error={error!s}', status_code=status.HTTP_303_SEE_OTHER
+        )
