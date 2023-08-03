@@ -1,5 +1,18 @@
 {% extends "layout.html" %}
 {% block header %}
+
+{% if error %}
+<div class="d-flex justify-content-between align-items-center">
+    <h3 style="color:#880000">{{ error }}</h3>
+</div>
+{% endif %}
+
+{% if flash %}
+<div class="d-flex justify-content-between align-items-center">
+    <h3 style="color:#0f7e0f">{{ flash }}</h3>
+</div>
+{% endif %}
+
 <div class="d-flex justify-content-between align-items-center">
     <h1>Dashboard</h1>
 </div>
@@ -9,7 +22,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <form action="/api/sony_ci/sync" method="POST">
+                <form action="/dashboard/sync" method="POST">
                     <div class="card-header">
                         <div class="container-fluid">
                             <div class="d-flex justify-content-between align-items-center">
