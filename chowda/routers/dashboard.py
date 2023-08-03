@@ -18,25 +18,25 @@ class UserToken(BaseModel):
 
 dashboard = APIRouter()
 
+unauthorized = HTTPException(
+    status_code=status.HTTP_303_SEE_OTHER,
+    detail='Not Authorized',
+    headers={'Location': '/admin/?error=Not Authorized'},
+)
+
 
 def user(request: Request):
     """Get the user token from the session."""
     user = request.session.get('user', None)
     if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Not Authorized',
-        )
+        raise unauthorized
     return UserToken(**user)
 
 
 def admin_user(user: Annotated[UserToken, Depends(user)]):
     """Check if the user has the admin role."""
     if 'admin' not in user.roles:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Not Authorized',
-        )
+        raise unauthorized
 
     return user
 
