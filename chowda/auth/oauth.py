@@ -61,7 +61,7 @@ class OAuthProvider(AuthProvider):
         request.session.update({'user': token['userinfo']})
         return RedirectResponse(request.query_params.get('next'))
 
-    def setup_admin(self, admin: 'BaseAdmin'):
+    def setup_admin(self, admin: BaseAdmin):
         super().setup_admin(admin)
         """add custom authentication callback route"""
         admin.routes.append(
@@ -73,7 +73,7 @@ class OAuthProvider(AuthProvider):
             )
         )
 
-    def get_middleware(self, admin: 'BaseAdmin') -> Middleware:
+    def get_middleware(self, admin: BaseAdmin) -> Middleware:
         return Middleware(
             AuthMiddleware, provider=self, allow_paths=['/auth0/authorize']
         )
