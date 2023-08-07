@@ -42,7 +42,7 @@ class MediaFileCount(IntegerField):
     async def serialize_value(
         self, request: Request, value: Any, action: RequestAction
     ) -> Any:
-        return len(value)
+        return str(len(value))
 
 
 class AdminModelView(ModelView):
