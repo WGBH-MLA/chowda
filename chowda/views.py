@@ -111,7 +111,15 @@ class BatchView(ModelView):
 
 
 class MediaFileView(ModelView):
-    fields: ClassVar[list[Any]] = ['guid', 'collections', 'batches', 'assets']
+    fields: ClassVar[list[Any]] = [
+        'guid',
+        'collections',
+        'batches',
+        'assets',
+        'mmif_json',
+        'clams_events',
+    ]
+    exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json', 'clams_events']
 
     def can_create(self, request: Request) -> bool:
         """Permission for creating new Items. Return True by default"""
