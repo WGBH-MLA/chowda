@@ -16,8 +16,6 @@ class UserToken(BaseModel):
     roles: set[str] = Field(set(), alias=f'{API_AUDIENCE}/roles')
 
 
-dashboard = APIRouter()
-
 unauthorized = HTTPException(
     status_code=status.HTTP_303_SEE_OTHER,
     detail='Not Authorized',
@@ -29,7 +27,7 @@ def user(request: Request):
     """Get the user token from the session."""
     user = request.session.get('user', None)
     if not user:
-        request.session['error'] = 'Not Authorized'
+        request.session['error'] = 'Not Logged In'
         raise unauthorized
     return UserToken(**user)
 
@@ -43,15 +41,16 @@ def admin_user(request: Request, user: Annotated[UserToken, Depends(user)]):
     return user
 
 
+dashboard = APIRouter(dependencies=[Depends(admin_user)])
+
+
 @dashboard.post('/sync')
-def sync_now(
-    user: Annotated[UserToken, Depends(admin_user)], request: Request
-) -> Response:
+def sync_now(request: Request) -> Response:
     """Initiate a SonyCi IngestFlow with Argo Events."""
     admin_url = request.url_for('admin:index')
     try:
         ArgoEvent('sync').publish(ignore_errors=False)
-        request.sesssion['flash'] = 'Sync Started'
+        request.session['flash'] = 'Sync Started'
         return RedirectResponse(
             f'{admin_url}',
             status_code=status.HTTP_303_SEE_OTHER,
