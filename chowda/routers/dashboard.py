@@ -21,7 +21,7 @@ dashboard = APIRouter()
 unauthorized = HTTPException(
     status_code=status.HTTP_303_SEE_OTHER,
     detail='Not Authorized',
-    headers={'Location': '/admin/?error=Not Authorized'},
+    headers={'Location': '/admin'},
 )
 
 
@@ -29,13 +29,15 @@ def user(request: Request):
     """Get the user token from the session."""
     user = request.session.get('user', None)
     if not user:
+        request.session['error'] = 'Not Authorized'
         raise unauthorized
     return UserToken(**user)
 
 
-def admin_user(user: Annotated[UserToken, Depends(user)]):
+def admin_user(request: Request, user: Annotated[UserToken, Depends(user)]):
     """Check if the user has the admin role."""
     if 'admin' not in user.roles:
+        request.session['error'] = 'Not Authorized'
         raise unauthorized
 
     return user
@@ -46,14 +48,14 @@ def sync_now(
     user: Annotated[UserToken, Depends(admin_user)], request: Request
 ) -> Response:
     """Initiate a SonyCi IngestFlow with Argo Events."""
-    admin = request.url_for('admin:index')
+    admin_url = request.url_for('admin:index')
     try:
         ArgoEvent('sync').publish(ignore_errors=False)
+        request.sesssion['flash'] = 'Sync Started'
         return RedirectResponse(
-            f'{admin}?flash=Sync started',
+            f'{admin_url}',
             status_code=status.HTTP_303_SEE_OTHER,
         )
     except Exception as error:
-        return RedirectResponse(
-            f'{admin}?error={error!s}', status_code=status.HTTP_303_SEE_OTHER
-        )
+        request.session['error'] = str(error)
+        return RedirectResponse(f'{admin_url}', status_code=status.HTTP_303_SEE_OTHER)
