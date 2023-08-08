@@ -164,9 +164,8 @@ class DashboardView(CustomView):
             {
                 'request': request,
                 'sync_history': self.sync_history(),
-                # TODO: get flash/error messages from session, not query params
-                'flash': request.query_params.get('flash'),
-                'error': request.query_params.get('error'),
+                'flash': request.session.pop('flash', ''),
+                'error': request.session.pop('error', ''),
             },
         )
 
