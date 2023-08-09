@@ -67,6 +67,7 @@ class CollectionView(ModelView):
         MediaFilesGuidLinkField(
             'media_files',
             label='GUID Links',
+            display_template='displays/media_files.html',
         ),
     ]
 
@@ -86,6 +87,7 @@ class BatchView(ModelView):
         MediaFilesGuidLinkField(
             'media_files',
             label='GUIDs',
+            display_template='displays/media_files.html',
             exclude_from_list=True,
         ),
     ]
