@@ -1,10 +1,11 @@
 <div class="{%if error%}is-invalid{%endif%}">
   <textarea class="form-control" id="{{field.id}}" name="{{field.id}}">
-  {% if data %}
-    {% for d in data%}
-      {{d.guid}}
-    {%endfor%}
-  {%endif%}</textarea>
+  {%- if data -%}
+    {% for d in data -%}
+      {{- d.guid }}&#10;
+    {%- endfor -%}
+  {%- endif -%}
+  </textarea>
 
   {% if field.help_text %}
   <small class="form-hint">{{field.help_text}}</small>
