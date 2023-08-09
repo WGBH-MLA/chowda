@@ -62,11 +62,12 @@ class CollectionView(ModelView):
             read_only=True,
             exclude_from_edit=True,
             exclude_from_create=True,
+            display_template='displays/media_file_count.html',
         ),
         # 'media_files',  # default view
         MediaFilesGuidLinkField(
             'media_files',
-            label='GUID Links',
+            label='GUIDs',
             display_template='displays/media_files.html',
         ),
     ]
@@ -82,6 +83,7 @@ class BatchView(ModelView):
             read_only=True,
             exclude_from_edit=True,
             exclude_from_create=True,
+            display_template='displays/media_file_count.html',
         ),
         # 'media_files',  # default view
         MediaFilesGuidLinkField(
