@@ -1,18 +1,21 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from json import loads
-from typing import Any, ClassVar, Dict
+from typing import Any, ClassVar, Dict, List
 
 from metaflow import Flow
+from metaflow.integrations import ArgoEvent
 from metaflow.exception import MetaflowNotFound
 from requests import Request
 from sqlmodel import Session, select
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
-from starlette_admin import BaseField, CustomView, IntegerField
+from starlette_admin import BaseField, CustomView, IntegerField, action
 from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import FormValidationError
+from starlette_admin.exceptions import ActionFailed
+
 
 from chowda.config import API_AUDIENCE
 from chowda.db import engine
@@ -75,6 +78,24 @@ class CollectionView(ModelView):
 
 
 class BatchView(ModelView):
+    actions = ["start_batch"]
+
+    @action(
+        name="start_batch",
+        text="Start",
+        confirmation="This might cost money. Are you sure?",
+        submit_btn_text="Yep",
+        submit_btn_class="btn-success",
+    )
+    async def start_batch(self, request: Request, pks: List[Any]) -> str:
+        try:
+            ArgoEvent('app_barsdetection').publish(ignore_errors=False)
+        except Exception as error:
+            raise ActionFailed(f'{error!s}')
+
+        # Display Success message
+        return "Started {} Batche(s)".format(len(pks))
+
     fields: ClassVar[list[Any]] = [
         'name',
         'description',
