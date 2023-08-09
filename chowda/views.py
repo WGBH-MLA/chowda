@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime, timedelta
 from json import loads
 from typing import Any, ClassVar, Dict
 
@@ -16,6 +17,7 @@ from starlette_admin.exceptions import FormValidationError
 from chowda.config import API_AUDIENCE
 from chowda.db import engine
 from chowda.models import MediaFile
+from chowda.routers.dashboard import UserToken
 
 
 @dataclass
@@ -159,11 +161,18 @@ class DashboardView(CustomView):
             return []
 
     async def render(self, request: Request, templates: Jinja2Templates) -> Response:
+        history = self.sync_history()
+        user = UserToken(**request.state.user)
+        sync_disabled = datetime.now() - history[0]['created_at'] < timedelta(
+            minutes=15
+        )
         return templates.TemplateResponse(
             'dashboard.html',
             {
                 'request': request,
-                'sync_history': self.sync_history(),
+                'user': user,
+                'sync_history': history,
+                'sync_disabled': sync_disabled,
                 'flash': request.session.pop('flash', ''),
                 'error': request.session.pop('error', ''),
             },
