@@ -78,23 +78,23 @@ class CollectionView(ModelView):
 
 
 class BatchView(ModelView):
-    actions = ["start_batch"]
+    actions: ClassVar[list[Any]] = ['start_batch']
 
     @action(
-        name="start_batch",
-        text="Start",
-        confirmation="This might cost money. Are you sure?",
-        submit_btn_text="Yep",
-        submit_btn_class="btn-success",
+        name='start_batch',
+        text='Start',
+        confirmation='This might cost money. Are you sure?',
+        submit_btn_text='Yep',
+        submit_btn_class='btn-success',
     )
     async def start_batch(self, request: Request, pks: List[Any]) -> str:
         try:
             ArgoEvent('app_barsdetection').publish(ignore_errors=False)
         except Exception as error:
-            raise ActionFailed(f'{error!s}')
+            raise ActionFailed(f'{error!s}') from error
 
         # Display Success message
-        return "Started {} Batche(s)".format(len(pks))
+        return f'Started {len(pks)} Batche(s)'
 
     fields: ClassVar[list[Any]] = [
         'name',
