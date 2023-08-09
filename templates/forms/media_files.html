@@ -1,16 +1,22 @@
-<div class="{%if error%}is-invalid{%endif%}">
-  <textarea id="{{field.id}}" name="{{field.id}}">{% if data %}
-{% for d in data%}{{d.guid}}
-{%endfor%}{%endif%}</textarea>
+<div class="{% if error %}is-invalid{% endif %}">
+  <textarea class="form-control" id="{{ field.id }}" name="{{ field.id }}">
+  {%- if data -%}
+    {% for d in data -%}
+      {{- d.guid }}&#10;
+    {%- endfor -%}
+  {%- endif -%}
+  </textarea>
+
   {% if field.help_text %}
   <small class="form-hint">{{field.help_text}}</small>
-  {%endif%}
+  {% endif %}
 </div>
+
 {%if error %}
 <div class="invalid-feedback">
   <h3>Invalid GUIDS</h3>
   <br />{% for e in error %}
-  <h6>{{e}}</h6>
-  {%endfor%}
+  <h6>{{ e }}</h6>
+  {% endfor %}
 </div>
-{%endif%}
+{% endif %}
