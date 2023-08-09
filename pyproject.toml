@@ -8,7 +8,7 @@ dynamic = ['version']
 description = 'A CLAMS processing application'
 authors = [{ name = 'WGBH-MLA', email = 'ryan_harbert@wgbh.org' }]
 dependencies = [
-    "fastapi~=0.100",
+    "fastapi~=0.101",
     "starlette-admin~=0.11",
     "sqlmodel~=0.0",
     "pydantic[email]~=1.10",
@@ -51,7 +51,7 @@ test = [
     "trio~=0.22",
 ]
 locust = [
-    "locust~=2.15",
+    "locust~=2.16",
     "pydantic-factories~=1.17",
 ]
 development = [
