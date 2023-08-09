@@ -61,15 +61,17 @@
                         </div>
                     </div>
             </div>
+            {% if 'admin' in user.roles %}
             <div class="card-footer text-black">
                 <div class="btn-list ms-auto justify-content-end">
-                    <button type="submit" name="_add_another" class="btn">
+                    <button type="submit" name="_add_another" class="btn" {{ 'disabled' if sync_disabled }}>
                         <i class="fa-solid fa-rotate me-2">
                         </i>
                         {{ _("Sync Now")}}
                     </button>
                 </div>
             </div>
+            {% endif %}
             </form>
         </div>
     </div>
