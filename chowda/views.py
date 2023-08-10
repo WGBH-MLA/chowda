@@ -10,7 +10,7 @@ from requests import Request
 from sqlmodel import Session, select
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
-from starlette_admin import BaseField, CustomView, IntegerField, action
+from starlette_admin import CustomView, IntegerField, TextAreaField, action
 from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import FormValidationError
@@ -19,12 +19,12 @@ from starlette_admin.exceptions import ActionFailed
 
 from chowda.config import API_AUDIENCE
 from chowda.db import engine
-from chowda.models import MediaFile
+from chowda.models import MediaFile, Batch
 from chowda.routers.dashboard import UserToken
 
 
 @dataclass
-class MediaFilesGuidLinkField(BaseField):
+class MediaFilesGuidsField(TextAreaField):
     """A field that displays a list of MediaFile GUIDs as html links"""
 
     render_function_key: str = 'media_file_guid_links'
@@ -35,7 +35,7 @@ class MediaFilesGuidLinkField(BaseField):
     ) -> Any:
         if action == RequestAction.LIST:
             return [loads(m.json()) for m in value]
-        return await super().serialize_value(request, value, action)
+        return [media_file.guid for media_file in value]
 
 
 @dataclass
@@ -69,7 +69,7 @@ class CollectionView(ModelView):
             exclude_from_create=True,
         ),
         # 'media_files',  # default view
-        MediaFilesGuidLinkField(
+        MediaFilesGuidsField(
             'media_files',
             label='GUID Links',
             display_template='displays/media_files.html',
@@ -78,41 +78,37 @@ class CollectionView(ModelView):
 
 
 class BatchView(ModelView):
+    exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
+    exclude_fields_from_create: ClassVar[list[Any]] = [Batch.id]
+    exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
+
     actions: ClassVar[list[Any]] = ['start_batch']
 
-    @action(
-        name='start_batch',
-        text='Start',
-        confirmation='This might cost money. Are you sure?',
-        submit_btn_text='Yep',
-        submit_btn_class='btn-success',
-    )
-    async def start_batch(self, request: Request, pks: List[Any]) -> str:
-        try:
-            ArgoEvent('app_barsdetection').publish(ignore_errors=False)
-        except Exception as error:
-            raise ActionFailed(f'{error!s}') from error
-
-        # Display Success message
-        return f'Started {len(pks)} Batche(s)'
-
     fields: ClassVar[list[Any]] = [
+        'id',
         'name',
+        'pipeline',
         'description',
-        MediaFileCount(
+        MediaFilesGuidsField(
             'media_files',
-            label='Size',
-            read_only=True,
-            exclude_from_edit=True,
-            exclude_from_create=True,
-        ),
-        # 'media_files',  # default view
-        MediaFilesGuidLinkField(
-            'media_files',
-            label='GUIDs',
+            required=True,
+            placeholder='Enter GUIDs here',
+            form_template='forms/media_files.html',
             display_template='displays/media_files.html',
-            exclude_from_list=True,
         ),
+        # MediaFileCount(
+        #     'media_files',
+        #     label='Size',
+        #     exclude_from_edit=True,
+        #     exclude_from_create=True,
+        # ),
+        # # 'media_files',  # default view
+        # MediaFilesGuidsField(
+        #     'media_files',
+        #     label='GUIDs',
+        #     display_template='displays/media_files.html',
+        #     exclude_from_list=True,
+        # ),
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
@@ -131,6 +127,25 @@ class BatchView(ModelView):
         if errors:
             raise FormValidationError({'media_files': errors})
         data['media_files'] = media_files
+
+    @action(
+        name='start_batch',
+        text='Start',
+        confirmation='This might cost money. Are you sure?',
+        submit_btn_text='Yep',
+        submit_btn_class='btn-success',
+    )
+    async def start_batch(self, request: Request, pks: List[Any]) -> str:
+        try:
+            for guid in pks:
+                ArgoEvent('app-barsdetection', payload={'guid': guid}).publish(
+                    ignore_errors=False
+                )
+        except Exception as error:
+            raise ActionFailed(f'{error!s}') from error
+
+        # Display Success message
+        return f'Started {len(pks)} Batche(s)'
 
 
 class MediaFileView(ModelView):
