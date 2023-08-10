@@ -137,10 +137,14 @@ class BatchView(ModelView):
     )
     async def start_batch(self, request: Request, pks: List[Any]) -> str:
         try:
-            for guid in pks:
-                ArgoEvent('app-barsdetection', payload={'guid': guid}).publish(
-                    ignore_errors=False
-                )
+            for batch_id in pks:
+                with Session(engine) as db:
+                    batch = db.get(Batch, batch_id)
+                    for media_file in batch.media_files:
+                        ArgoEvent(
+                            'app-barsdetection', payload={'guid': media_file.guid}
+                        ).publish(ignore_errors=False)
+
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
 
