@@ -102,7 +102,7 @@ class BatchView(ModelView):
         #     exclude_from_edit=True,
         #     exclude_from_create=True,
         # ),
-        # # 'media_files',  # default view
+        'media_files',  # default view
         # MediaFilesGuidsField(
         #     'media_files',
         #     label='GUIDs',
