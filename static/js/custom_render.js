@@ -3,9 +3,7 @@ Object.assign(render, {
     // Render a list of media files to a string of links to media files
     return data.map(
       media_file =>
-        `<a href="../media-file/detail/${
-          media_file.id
-        }"> ${media_file.guid.replace(/^cpb-aacip-/, '')} </a>`
+        `<a href="../media-file/detail/${media_file.guid}"> ${media_file.guid} </a>`
     )
   },
   media_file_count: function render(data, type, full, meta, fieldOptions) {

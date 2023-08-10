@@ -4,8 +4,8 @@ from json import loads
 from typing import Any, ClassVar, Dict, List
 
 from metaflow import Flow
-from metaflow.integrations import ArgoEvent
 from metaflow.exception import MetaflowNotFound
+from metaflow.integrations import ArgoEvent
 from requests import Request
 from sqlmodel import Session, select
 from starlette.responses import Response
@@ -13,14 +13,13 @@ from starlette.templating import Jinja2Templates
 from starlette_admin import CustomView, IntegerField, TextAreaField, action
 from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
-from starlette_admin.exceptions import FormValidationError
-from starlette_admin.exceptions import ActionFailed
-
+from starlette_admin.exceptions import ActionFailed, FormValidationError
 
 from chowda.config import API_AUDIENCE
 from chowda.db import engine
-from chowda.models import MediaFile, Batch
+from chowda.models import Batch, MediaFile
 from chowda.routers.dashboard import UserToken
+from chowda.utils import validate_media_files
 
 
 @dataclass
@@ -43,11 +42,12 @@ class MediaFileCount(IntegerField):
     """A field that displays the number of MediaFiles in a collection or batch"""
 
     render_function_key: str = 'media_file_count'
+    display_template: str = 'displays/media_file_count.html'
 
     async def serialize_value(
         self, request: Request, value: Any, action: RequestAction
     ) -> Any:
-        return str(len(value))
+        return len(value)
 
 
 class AdminModelView(ModelView):
@@ -63,6 +63,7 @@ class CollectionView(ModelView):
         'description',
         MediaFileCount(
             'media_files',
+            id='media_file_count',
             label='Size',
             read_only=True,
             exclude_from_edit=True,
@@ -71,14 +72,17 @@ class CollectionView(ModelView):
         # 'media_files',  # default view
         MediaFilesGuidsField(
             'media_files',
+            id='media_file_guids',
             label='GUID Links',
             display_template='displays/media_files.html',
         ),
     ]
 
+    async def validate(self, request: Request, data: Dict[str, Any]):
+        validate_media_files(data)
+
 
 class BatchView(ModelView):
-    exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
     exclude_fields_from_create: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
 
@@ -89,26 +93,13 @@ class BatchView(ModelView):
         'name',
         'pipeline',
         'description',
-        MediaFilesGuidsField(
+        MediaFileCount(
             'media_files',
-            required=True,
-            placeholder='Enter GUIDs here',
-            form_template='forms/media_files.html',
-            display_template='displays/media_files.html',
+            label='Size',
+            exclude_from_edit=True,
+            exclude_from_create=True,
         ),
-        # MediaFileCount(
-        #     'media_files',
-        #     label='Size',
-        #     exclude_from_edit=True,
-        #     exclude_from_create=True,
-        # ),
         'media_files',  # default view
-        # MediaFilesGuidsField(
-        #     'media_files',
-        #     label='GUIDs',
-        #     display_template='displays/media_files.html',
-        #     exclude_from_list=True,
-        # ),
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
