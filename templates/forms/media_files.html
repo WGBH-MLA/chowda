@@ -2,7 +2,7 @@
   <textarea class="form-control" id="{{ field.id }}" name="{{ field.id }}">
   {%- if data -%}
     {% for d in data -%}
-      {{- d.guid }}&#10;
+      {{- d }}&#10;
     {%- endfor -%}
   {%- endif -%}
   </textarea>
