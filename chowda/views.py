@@ -107,7 +107,7 @@ class BatchView(ModelView):
 
     async def is_action_allowed(self, request: Request, name: str) -> bool:
         if name == 'start_batch':
-            return 'clammer' in user(request).roles
+            return user(request).is_clammer
         return await super().is_action_allowed(request, name)
 
     @action(
