@@ -92,8 +92,7 @@ class BatchView(ModelView):
         MediaFilesGuidsField(
             'media_files',
             id='media_file_guids',
-            label='GUID Links',
-            display_template='displays/media_files.html',
+            label='GUIDs',
         ),
     ]
 
