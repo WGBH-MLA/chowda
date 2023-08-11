@@ -15,8 +15,7 @@ from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
 
-from chowda.auth.utils import UserToken, user
-from chowda.config import API_AUDIENCE
+from chowda.auth.utils import user
 from chowda.db import engine
 from chowda.models import Batch
 from chowda.utils import validate_media_files
@@ -52,9 +51,8 @@ class MediaFileCount(IntegerField):
 
 class AdminModelView(ModelView):
     def is_accessible(self, request: Request) -> bool:
-        return set(request.state.user.get(f'{API_AUDIENCE}/roles', set())).intersection(
-            {'admin', 'clammer'}
-        )
+        user = user(request)  # noqa: F823
+        return user.is_admin or user.is_clammer
 
 
 class CollectionView(ModelView):
@@ -185,7 +183,7 @@ class DashboardView(CustomView):
 
     async def render(self, request: Request, templates: Jinja2Templates) -> Response:
         history = self.sync_history()
-        user = UserToken(**request.state.user)
+        user = user(request)  # noqa: F823
         sync_disabled = datetime.now() - history[0]['created_at'] < timedelta(
             minutes=15
         )
