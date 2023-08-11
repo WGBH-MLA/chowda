@@ -87,14 +87,12 @@ class BatchView(ModelView):
             read_only=True,
             exclude_from_edit=True,
             exclude_from_create=True,
-            display_template='displays/media_file_count.html',
         ),
         # 'media_files',  # default view
         MediaFilesGuidsField(
             'media_files',
             id='media_file_guids',
             label='GUIDs',
-            display_template='displays/media_files.html',
         ),
     ]
 
