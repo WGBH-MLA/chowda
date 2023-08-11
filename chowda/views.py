@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from json import loads
 from typing import Any, ClassVar, Dict, List
 
 from metaflow import Flow
