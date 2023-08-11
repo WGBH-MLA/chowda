@@ -5,8 +5,8 @@ from typing import Any, ClassVar, Dict, List
 from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
 from metaflow.integrations import ArgoEvent
-from requests import Request
 from sqlmodel import Session
+from starlette.requests import Request
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
 from starlette_admin import CustomView, IntegerField, TextAreaField, action
@@ -47,13 +47,37 @@ class MediaFileCount(IntegerField):
         return len(value)
 
 
+class BaseModelView(ModelView):
+    """Base permissions for all views"""
+
+    def can_create(self, request: Request) -> bool:
+        return get_user(request).is_clammer
+
+    def can_delete(self, request: Request) -> bool:
+        return get_user(request).is_clammer
+
+    def can_edit(self, request: Request) -> bool:
+        return get_user(request).is_clammer
+
+
 class AdminModelView(ModelView):
+    """Base Admin permissions for all protected views"""
+
     def is_accessible(self, request: Request) -> bool:
         user = get_user(request)
         return user.is_admin or user.is_clammer
 
+    def can_create(self, request: Request) -> bool:
+        return get_user(request).is_admin
 
-class CollectionView(ModelView):
+    def can_delete(self, request: Request) -> bool:
+        return get_user(request).is_admin
+
+    def can_edit(self, request: Request) -> bool:
+        return get_user(request).is_admin
+
+
+class CollectionView(BaseModelView):
     fields: ClassVar[list[Any]] = [
         'name',
         'description',
@@ -69,7 +93,7 @@ class CollectionView(ModelView):
     ]
 
 
-class BatchView(ModelView):
+class BatchView(BaseModelView):
     exclude_fields_from_create: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
 
@@ -129,7 +153,7 @@ class BatchView(ModelView):
         return f'Started {len(pks)} Batche(s)'
 
 
-class MediaFileView(ModelView):
+class MediaFileView(BaseModelView):
     fields: ClassVar[list[Any]] = [
         'guid',
         'collections',
@@ -141,23 +165,25 @@ class MediaFileView(ModelView):
     exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json', 'clams_events']
 
     def can_create(self, request: Request) -> bool:
-        """Permission for creating new Items. Return True by default"""
-        return False
+        return get_user(request).is_admin
 
 
 class UserView(AdminModelView):
     fields: ClassVar[list[Any]] = ['first_name', 'last_name', 'email']
 
 
-class ClamsAppView(ModelView):
+class ClamsAppView(BaseModelView):
     fields: ClassVar[list[Any]] = ['name', 'endpoint', 'description', 'pipelines']
 
 
-class PipelineView(ModelView):
+class PipelineView(AdminModelView):
     fields: ClassVar[list[Any]] = ['name', 'description', 'clams_apps']
 
+    def is_accessible(self, request: Request) -> bool:
+        return True
 
-class ClamsEventView(ModelView):
+
+class ClamsEventView(BaseModelView):
     fields: ClassVar[list[Any]] = [
         'batch',
         'media_file',
