@@ -84,6 +84,7 @@ class BatchView(ModelView):
             'media_files',
             id='media_file_count',
             label='Size',
+            read_only=True,
             exclude_from_edit=True,
             exclude_from_create=True,
         ),
