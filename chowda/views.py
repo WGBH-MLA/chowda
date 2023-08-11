@@ -7,18 +7,18 @@ from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
 from metaflow.integrations import ArgoEvent
 from requests import Request
-from sqlmodel import Session, select
+from sqlmodel import Session
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
 from starlette_admin import CustomView, IntegerField, TextAreaField, action
 from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
-from starlette_admin.exceptions import ActionFailed, FormValidationError
+from starlette_admin.exceptions import ActionFailed
 
+from chowda.auth.utils import UserToken, user
 from chowda.config import API_AUDIENCE
 from chowda.db import engine
-from chowda.models import Batch, MediaFile
-from chowda.routers.dashboard import UserToken
+from chowda.models import Batch
 from chowda.utils import validate_media_files
 
 
@@ -103,21 +103,12 @@ class BatchView(ModelView):
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
-        data['media_files'] = data['media_files'].split('\r\n')
-        data['media_files'] = [guid.strip() for guid in data['media_files'] if guid]
-        media_files = []
-        errors = []
-        with Session(engine) as db:
-            for guid in data['media_files']:
-                results = db.exec(select(MediaFile).where(MediaFile.guid == guid)).all()
-                if not results:
-                    errors.append(guid)
-                else:
-                    assert len(results) == 1, 'Multiple MediaFiles with same GUID'
-                    media_files.append(results[0])
-        if errors:
-            raise FormValidationError({'media_files': errors})
-        data['media_files'] = media_files
+        validate_media_files(data)
+
+    async def is_action_allowed(self, request: Request, name: str) -> bool:
+        if name == 'start_batch':
+            return 'clammer' in user(request).roles
+        return await super().is_action_allowed(request, name)
 
     @action(
         name='start_batch',
@@ -127,6 +118,7 @@ class BatchView(ModelView):
         submit_btn_class='btn-success',
     )
     async def start_batch(self, request: Request, pks: List[Any]) -> str:
+        """Starts a Batch by sending a message to the Argo Event Bus"""
         try:
             for batch_id in pks:
                 with Session(engine) as db:
