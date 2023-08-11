@@ -31,7 +31,7 @@ unauthorized = HTTPException(
 )
 
 
-def user(request: Request) -> UserToken:
+def get_user(request: Request) -> UserToken:
     """Get the user token from the session."""
     user = request.session.get('user', None)
     if not user:
@@ -41,7 +41,7 @@ def user(request: Request) -> UserToken:
 
 
 def admin_user(
-    request: Request, user: Annotated[UserToken, Depends(user)]
+    request: Request, user: Annotated[UserToken, Depends(get_user)]
 ) -> UserToken:
     """Check if the user has the admin role using FastAPI Depends.
     If not, sets a session error and raises an HTTPException."""

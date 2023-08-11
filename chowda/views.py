@@ -15,7 +15,7 @@ from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
 
-from chowda.auth.utils import user
+from chowda.auth.utils import get_user
 from chowda.db import engine
 from chowda.models import Batch
 from chowda.utils import validate_media_files
@@ -27,12 +27,11 @@ class MediaFilesGuidsField(TextAreaField):
 
     render_function_key: str = 'media_file_guid_links'
     form_template: str = 'forms/media_files.html'
+    display_template: str = 'displays/media_files.html'
 
     async def serialize_value(
         self, request: Request, value: Any, action: RequestAction
     ) -> Any:
-        if action == RequestAction.LIST:
-            return [loads(m.json()) for m in value]
         return [media_file.guid for media_file in value]
 
 
@@ -51,7 +50,7 @@ class MediaFileCount(IntegerField):
 
 class AdminModelView(ModelView):
     def is_accessible(self, request: Request) -> bool:
-        user = user(request)  # noqa: F823
+        user = get_user(request)
         return user.is_admin or user.is_clammer
 
 
@@ -67,17 +66,8 @@ class CollectionView(ModelView):
             exclude_from_edit=True,
             exclude_from_create=True,
         ),
-        # 'media_files',  # default view
-        MediaFilesGuidsField(
-            'media_files',
-            id='media_file_guids',
-            label='GUID Links',
-            display_template='displays/media_files.html',
-        ),
+        'media_files',  # default view
     ]
-
-    async def validate(self, request: Request, data: Dict[str, Any]):
-        validate_media_files(data)
 
 
 class BatchView(ModelView):
@@ -93,11 +83,18 @@ class BatchView(ModelView):
         'description',
         MediaFileCount(
             'media_files',
+            id='media_file_count',
             label='Size',
             exclude_from_edit=True,
             exclude_from_create=True,
         ),
-        'media_files',  # default view
+        # 'media_files',  # default view
+        MediaFilesGuidsField(
+            'media_files',
+            id='media_file_guids',
+            label='GUID Links',
+            display_template='displays/media_files.html',
+        ),
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
@@ -105,7 +102,7 @@ class BatchView(ModelView):
 
     async def is_action_allowed(self, request: Request, name: str) -> bool:
         if name == 'start_batch':
-            return user(request).is_clammer
+            return get_user(request).is_clammer
         return await super().is_action_allowed(request, name)
 
     @action(
@@ -123,7 +120,7 @@ class BatchView(ModelView):
                     batch = db.get(Batch, batch_id)
                     for media_file in batch.media_files:
                         ArgoEvent(
-                            'app-barsdetection', payload={'guid': media_file.guid}
+                            batch.pipeline.name, payload={'guid': media_file.guid}
                         ).publish(ignore_errors=False)
 
         except Exception as error:
@@ -183,7 +180,7 @@ class DashboardView(CustomView):
 
     async def render(self, request: Request, templates: Jinja2Templates) -> Response:
         history = self.sync_history()
-        user = user(request)  # noqa: F823
+        user = get_user(request)
         sync_disabled = datetime.now() - history[0]['created_at'] < timedelta(
             minutes=15
         )
