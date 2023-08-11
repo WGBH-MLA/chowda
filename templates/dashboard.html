@@ -60,7 +60,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    {% if 'admin' in user.roles %}
+                    {% if user.is_admin %}
                     <div class="card-footer text-black">
                         <div class="btn-list ms-auto justify-content-end">
                             <button type="submit" name="_add_another" class="btn" {{ 'disabled' if sync_disabled }}>
