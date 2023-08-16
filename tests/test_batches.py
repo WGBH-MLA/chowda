@@ -35,12 +35,6 @@ def session():
 async def test_create_batch(
     client: TestClient, async_client: AsyncClient, session: Session
 ):
-    # response = client.post(
-    #     '/admin/batch/create',
-    #     data={'name': 'test batch'},
-    #     follow_redirects=False,
-    # )
-
     response = await async_client.post(
         '/admin/batch/create',
         data={'name': 'test batch'},
