@@ -1,10 +1,11 @@
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+from httpx import AsyncClient
 from pytest import fixture, mark
 from pytest_asyncio import fixture as async_fixture
-from fastapi.testclient import TestClient
-from chowda.db import engine
 from sqlmodel import Session, select
-from fastapi import FastAPI
-from httpx import AsyncClient
+
+from chowda.db import engine
 from chowda.models import Batch
 
 
@@ -44,7 +45,7 @@ async def test_create_batch(
     session: Session,
     unsaved_batch: Batch,
 ):
-    response = async_client.post(
+    response = await async_client.post(
         '/admin/batch/create',
         data=unsaved_batch.dict(),
         follow_redirects=False,
