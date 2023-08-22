@@ -9,7 +9,9 @@ from sqlmodel import Session
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
-from starlette_admin import CustomView, IntegerField, TextAreaField, action
+from starlette.datastructures import FormData
+from starlette_admin import CustomView, action
+from starlette_admin.fields import IntegerField, TextAreaField
 from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
@@ -17,7 +19,7 @@ from starlette_admin.exceptions import ActionFailed
 from chowda.auth.utils import get_user
 from chowda.db import engine
 from chowda.models import Batch
-from chowda.utils import validate_media_files
+from chowda.utils import validate_media_file_guids
 
 
 @dataclass
@@ -28,15 +30,25 @@ class MediaFilesGuidsField(TextAreaField):
     form_template: str = 'forms/media_files.html'
     display_template: str = 'displays/media_files.html'
 
+    async def parse_form_data(
+        self, request: Request, form_data: FormData, action: RequestAction
+    ) -> Any:
+        """Maps a string of GUID to a list"""
+        return form_data.get(self.id).split()
+
     async def serialize_value(
         self, request: Request, value: Any, action: RequestAction
     ) -> Any:
+        """Maps a Collection's MediaFile objects to a list of GUIDs"""
         return [media_file.guid for media_file in value]
 
 
 @dataclass
 class MediaFileCount(IntegerField):
     """A field that displays the number of MediaFiles in a collection or batch"""
+
+    exclude_from_create: bool = True
+    exclude_from_edit: bool = True
 
     render_function_key: str = 'media_file_count'
     display_template: str = 'displays/media_file_count.html'
@@ -89,8 +101,16 @@ class CollectionView(BaseModelView):
             exclude_from_edit=True,
             exclude_from_create=True,
         ),
-        'media_files',  # default view
+        # 'media_files',  # default view
+        MediaFilesGuidsField(
+            'media_files',
+            id='media_files',
+            label='GUIDs',
+        ),
     ]
+
+    async def validate(self, request: Request, data: Dict[str, Any]):
+        validate_media_file_guids(request, data)
 
 
 class BatchView(BaseModelView):
@@ -121,7 +141,7 @@ class BatchView(BaseModelView):
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
-        validate_media_files(data)
+        validate_media_file_guids(request, data)
 
     async def is_action_allowed(self, request: Request, name: str) -> bool:
         if name == 'start_batch':
@@ -154,6 +174,8 @@ class BatchView(BaseModelView):
 
 
 class MediaFileView(BaseModelView):
+    pk_attr = 'guid'
+
     fields: ClassVar[list[Any]] = [
         'guid',
         'collections',
