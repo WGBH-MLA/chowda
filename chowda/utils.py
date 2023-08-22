@@ -62,18 +62,31 @@ def validate_media_file_guids(request: Request, data: Dict[str, Any]):
     from starlette_admin.exceptions import FormValidationError
 
     errors = []
+    media_files = []
 
     with Session(engine) as db:
-        for guid in data['media_files']:
-            media_files = db.exec(select(MediaFile).where(MediaFile.guid == guid)).all()
-            if not media_files:
-                errors.append(guid)
-    if errors:
-        raise FormValidationError({'media_files': errors})
+        # Get all MediaFiles objects for the GUIDs in data['media_files']
+        media_files = db.exec(
+            select(MediaFile).where(MediaFile.guid.in_(data['media_files']))
+        ).all()
 
-    # Replace GUID strings with MediaFile objects in `data` dict. Very important.
+        # Any value in data['media_files'] that does not have a corresponding MediaFile
+        # object is invalid, so add it to the errors
+        valid_guids = [media_file.guid for media_file in media_files]
+        invalid_guids = [
+            guid for guid in data['media_files'] if guid not in valid_guids
+        ]
+
+        if len(invalid_guids):
+            raise FormValidationError({'media_files': invalid_guids})
+
+    # Replace GUID strings with MediaFile objects in `data` dict so they will get added
+    # the parent object.
     data['media_files'] = media_files
 
     # Add MediaFile objects to the DB session Starlette admin uses for persistence.
+    # This is a bit of a hack to play nice with starlette-admin, but without it, an
+    # error is thrown if starlette-admin tries to add a validated MediaFile object
+    # to a parent object when that MediaFile is already there.
     for media_file in data['media_files']:
         request.state.session.add(media_file)
