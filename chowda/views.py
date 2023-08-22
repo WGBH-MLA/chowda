@@ -47,6 +47,9 @@ class MediaFilesGuidsField(TextAreaField):
 class MediaFileCount(IntegerField):
     """A field that displays the number of MediaFiles in a collection or batch"""
 
+    exclude_from_create: bool = True
+    exclude_from_edit: bool = True
+
     render_function_key: str = 'media_file_count'
     display_template: str = 'displays/media_file_count.html'
 
