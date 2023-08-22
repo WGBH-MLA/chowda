@@ -68,11 +68,9 @@ omit = ['tests/*']
 [tool.pytest.ini_options]
 testpaths = ['tests', 'docs']
 
-[tool.ruff.flake8-quotes]
-inline-quotes = 'single'
-
 [tool.ruff]
 extend-exclude = ['migrations']
+ignore = ['Q000']
 select = [
     'B', # flake8-bugbear
     'C4', # flake8-comprehensions
