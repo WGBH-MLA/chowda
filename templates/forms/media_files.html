@@ -1,5 +1,5 @@
 <div class="{% if error %}is-invalid{% endif %}">
-  <textarea class="form-control" id="{{ field.id }}" name="{{ field.id }}">
+  <textarea class="form-control" id="{{ field.id }}" name="{{ field.id }}" rows="20">
   {%- if data -%}
     {% for d in data -%}
       {{- d }}&#10;
