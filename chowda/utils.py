@@ -3,6 +3,8 @@ from typing import Any, Dict
 from pydantic import BaseModel
 from sqlalchemy.dialects.postgresql import insert
 
+from starlette.requests import Request
+
 
 def upsert(
     model: BaseModel,
@@ -40,27 +42,38 @@ def chunks_sequential(lst, n):
         yield lst[si : si + (d + 1 if i < r else d)]
 
 
-def validate_media_files(data: Dict[str, Any]):
-    """Validate that the media_files are valid GUIDs and exist in the database"""
-    from sqlmodel import Session, select
+# def validate_media_files(view: ModelView, request: Request, data: Dict[str, Any]):
+def validate_media_file_guids(request: Request, data: Dict[str, Any]):
+    """
+    1) Validates MediaFile GUIDs by fetching the MediaFile objects from the database,
+    2) Replaces the GUID strings with the found objects in the `data` dict
+    3) Adds the found objects to request.state.session which is the db session used by
+       Starlette-admin when saving.
 
+    NOTE: Starlette-admin does not provide a clean way to trigger validation errors when
+    related objects cannot be found because it does not provide an out-of-box feature
+    for end users to enter foreign keys as strings in order to related them to other
+    objects. But that's exactly what we need to do here: enter GUIDs as strings to
+    relate to Batch and  Collection objects.
+    """
+    from sqlmodel import Session, select
     from chowda.db import engine
     from chowda.models import MediaFile
+    from starlette_admin.exceptions import FormValidationError
 
-    data['media_files'] = data['media_files'].split('\r\n')
-    data['media_files'] = [guid.strip() for guid in data['media_files'] if guid]
-    media_files = []
     errors = []
+
     with Session(engine) as db:
         for guid in data['media_files']:
-            results = db.exec(select(MediaFile).where(MediaFile.guid == guid)).all()
-            if not results:
+            media_files = db.exec(select(MediaFile).where(MediaFile.guid == guid)).all()
+            if not media_files:
                 errors.append(guid)
-            else:
-                assert len(results) == 1, 'Multiple MediaFiles with same GUID'
-                media_files.append(results[0])
     if errors:
-        from starlette_admin.exceptions import FormValidationError
-
         raise FormValidationError({'media_files': errors})
+
+    # Replace GUID strings with MediaFile objects in `data` dict. Very important.
     data['media_files'] = media_files
+
+    # Add MediaFile objects to the DB session Starlette admin uses for persistence.
+    for media_file in data['media_files']:
+        request.state.session.add(media_file)
