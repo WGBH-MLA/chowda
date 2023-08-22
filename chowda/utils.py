@@ -61,7 +61,6 @@ def validate_media_file_guids(request: Request, data: Dict[str, Any]):
     from chowda.models import MediaFile
     from starlette_admin.exceptions import FormValidationError
 
-    errors = []
     media_files = []
 
     with Session(engine) as db:
