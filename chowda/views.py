@@ -6,19 +6,19 @@ from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
 from metaflow.integrations import ArgoEvent
 from sqlmodel import Session, select
+from starlette.datastructures import FormData
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
-from starlette.datastructures import FormData
 from starlette_admin import CustomView, action
-from starlette_admin.fields import IntegerField, TextAreaField
 from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
+from starlette_admin.fields import IntegerField, TextAreaField
 
 from chowda.auth.utils import get_user
 from chowda.db import engine
-from chowda.models import Batch
+from chowda.models import Batch, Collection
 from chowda.utils import validate_media_file_guids
 
 
@@ -90,6 +90,9 @@ class AdminModelView(ModelView):
 
 
 class CollectionView(BaseModelView):
+    exclude_fields_from_list: ClassVar[list[Any]] = [Collection.media_files]
+    exclude_fields_from_detail: ClassVar[list[Any]] = [Collection.id]
+
     fields: ClassVar[list[Any]] = [
         'name',
         'description',
@@ -116,6 +119,8 @@ class CollectionView(BaseModelView):
 class BatchView(BaseModelView):
     exclude_fields_from_create: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
+    exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
+    exclude_fields_from_detail: ClassVar[list[Any]] = [Batch.id]
 
     actions: ClassVar[list[Any]] = [
         'start_batches',
@@ -184,7 +189,7 @@ class BatchView(BaseModelView):
         submit_btn_class='btn-success',
     )
     async def duplicate_batches(self, request: Request, pks: List[Any]) -> str:
-        """Starts a Batch by sending a message to the Argo Event Bus"""
+        """Create a new batch from the selected batch"""
         try:
             with Session(engine) as db:
                 for batch_id in pks:
@@ -211,7 +216,7 @@ class BatchView(BaseModelView):
         submit_btn_class='btn-success',
     )
     async def combine_batches(self, request: Request, pks: List[Any]) -> str:
-        """Starts a Batch by sending a message to the Argo Event Bus"""
+        """Merge multiple batches into a new batch"""
         try:
             with Session(engine) as db:
                 batches = db.exec(select(Batch).where(Batch.id.in_(pks))).all()
