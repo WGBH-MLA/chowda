@@ -165,7 +165,7 @@ class CollectionView(BaseModelView):
                 for collection in collections:
                     new_batch = Batch(
                         name=f'Batch from {collection.name}',
-                        description=f'Batch from Collection {str(collection.id)}',
+                        description=f'Batch from Collection {collection.id!s}',
                     )
                     new_batch.media_files = collection.media_files
                     db.add(new_batch)
