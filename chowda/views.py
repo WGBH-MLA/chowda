@@ -5,7 +5,7 @@ from typing import Any, ClassVar, Dict, List
 from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
 from metaflow.integrations import ArgoEvent
-from sqlmodel import Session
+from sqlmodel import Session, select
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
@@ -117,7 +117,11 @@ class BatchView(BaseModelView):
     exclude_fields_from_create: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
 
-    actions: ClassVar[list[Any]] = ['start_batch']
+    actions: ClassVar[list[Any]] = [
+        'start_batches',
+        'duplicate_batches',
+        'combine_batches',
+    ]
 
     fields: ClassVar[list[Any]] = [
         'id',
@@ -144,18 +148,18 @@ class BatchView(BaseModelView):
         validate_media_file_guids(request, data)
 
     async def is_action_allowed(self, request: Request, name: str) -> bool:
-        if name == 'start_batch':
+        if name == 'start_batches':
             return get_user(request).is_clammer
         return await super().is_action_allowed(request, name)
 
     @action(
-        name='start_batch',
+        name='start_batches',
         text='Start',
         confirmation='This might cost money. Are you sure?',
         submit_btn_text='Yep',
         submit_btn_class='btn-success',
     )
-    async def start_batch(self, request: Request, pks: List[Any]) -> str:
+    async def start_batches(self, request: Request, pks: List[Any]) -> str:
         """Starts a Batch by sending a message to the Argo Event Bus"""
         try:
             for batch_id in pks:
@@ -171,6 +175,63 @@ class BatchView(BaseModelView):
 
         # Display Success message
         return f'Started {len(pks)} Batche(s)'
+
+    @action(
+        name='duplicate_batches',
+        text='Duplicate',
+        confirmation='Duplicate all selected Batches?',
+        submit_btn_text='Indeed!',
+        submit_btn_class='btn-success',
+    )
+    async def duplicate_batches(self, request: Request, pks: List[Any]) -> str:
+        """Starts a Batch by sending a message to the Argo Event Bus"""
+        try:
+            with Session(engine) as db:
+                for batch_id in pks:
+                    existing_batch = db.get(Batch, batch_id)
+                    new_batch_params = existing_batch.dict()
+                    new_batch_params.pop('id')
+                    new_batch_params['name'] += ' [COPY]'
+                    new_batch = Batch(**new_batch_params)
+                    new_batch.media_files = existing_batch.media_files
+                    db.add(new_batch)
+                db.commit()
+
+        except Exception as error:
+            raise ActionFailed(f'{error!s}') from error
+
+        # Display Success message
+        return f'Duplicated {len(pks)} Batch(es)'
+
+    @action(
+        name='combine_batches',
+        text='Combine',
+        confirmation='Combine all selected Batches into a new Batch?',
+        submit_btn_text='Heck yeah!',
+        submit_btn_class='btn-success',
+    )
+    async def combine_batches(self, request: Request, pks: List[Any]) -> str:
+        """Starts a Batch by sending a message to the Argo Event Bus"""
+        try:
+            with Session(engine) as db:
+                batches = db.exec(select(Batch).where(Batch.id.in_(pks))).all()
+                # TODO: What are the best defaults for a newly combined Batch?
+                new_batch = Batch(
+                    name=f'Combination of {len(batches)} Batches',
+                    description=f'Combination of {len(batches)} Batches',
+                )
+
+                for batch in batches:
+                    new_batch.media_files += batch.media_files
+
+                db.add(new_batch)
+                db.commit()
+
+        except Exception as error:
+            raise ActionFailed(f'{error!s}') from error
+
+        # Display Success message
+        return f'Combined {len(pks)} Batch(es)'
 
 
 class MediaFileView(BaseModelView):
