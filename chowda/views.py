@@ -47,16 +47,14 @@ class MediaFilesGuidsField(TextAreaField):
 class MediaFileCount(IntegerField):
     """A field that displays the number of MediaFiles in a collection or batch"""
 
-    exclude_from_create: bool = True
+    name: str = 'media_file_count'
+    label: str = 'Size'
+    read_only: bool = True
     exclude_from_edit: bool = True
+    exclude_from_create: bool = True
 
-    render_function_key: str = 'media_file_count'
-    display_template: str = 'displays/media_file_count.html'
-
-    async def serialize_value(
-        self, request: Request, value: Any, action: RequestAction
-    ) -> Any:
-        return len(value)
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        return len(obj.media_files)
 
 
 class BaseModelView(ModelView):
@@ -96,14 +94,7 @@ class CollectionView(BaseModelView):
     fields: ClassVar[list[Any]] = [
         'name',
         'description',
-        MediaFileCount(
-            'media_files',
-            id='media_file_count',
-            label='Size',
-            read_only=True,
-            exclude_from_edit=True,
-            exclude_from_create=True,
-        ),
+        MediaFileCount(),
         # 'media_files',  # default view
         MediaFilesGuidsField(
             'media_files',
@@ -133,15 +124,7 @@ class BatchView(BaseModelView):
         'name',
         'pipeline',
         'description',
-        MediaFileCount(
-            'media_files',
-            id='media_file_count',
-            label='Size',
-            read_only=True,
-            exclude_from_edit=True,
-            exclude_from_create=True,
-        ),
-        # 'media_files',  # default view
+        MediaFileCount(),
         MediaFilesGuidsField(
             'media_files',
             id='media_file_guids',
