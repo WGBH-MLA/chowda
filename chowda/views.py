@@ -11,7 +11,7 @@ from starlette.responses import Response
 from starlette.templating import Jinja2Templates
 from starlette.datastructures import FormData
 from starlette_admin import CustomView, action
-from starlette_admin.fields import IntegerField, TextAreaField
+from starlette_admin.fields import IntegerField, TextAreaField, BaseField
 from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
@@ -27,8 +27,7 @@ class MediaFilesGuidsField(TextAreaField):
     """A field that displays a list of MediaFile GUIDs as html links"""
 
     render_function_key: str = 'media_file_guid_links'
-    form_template: str = 'forms/media_files.html'
-    display_template: str = 'displays/media_files.html'
+    form_template: str = 'forms/media_file_guids_textarea.html'
 
     async def parse_form_data(
         self, request: Request, form_data: FormData, action: RequestAction
@@ -101,11 +100,19 @@ class CollectionView(BaseModelView):
             exclude_from_edit=True,
             exclude_from_create=True,
         ),
-        # 'media_files',  # default view
         MediaFilesGuidsField(
             'media_files',
-            id='media_files',
+            id='media_file_guids',
             label='GUIDs',
+            exclude_from_detail=True,
+        ),
+        BaseField(
+            'media_files',
+            display_template='displays/collection_media_files.html',
+            label='Media Files',
+            exclude_from_edit=True,
+            exclude_from_create=True,
+            exclude_from_list=True,
         ),
     ]
 
@@ -132,11 +139,20 @@ class BatchView(BaseModelView):
             exclude_from_edit=True,
             exclude_from_create=True,
         ),
-        # 'media_files',  # default view
         MediaFilesGuidsField(
             'media_files',
             id='media_file_guids',
             label='GUIDs',
+            exclude_from_detail=True,
+        ),
+        BaseField(
+            'media_files',
+            display_template='displays/batch_media_files.html',
+            label='Media Files',
+            exclude_from_edit=True,
+            exclude_from_create=True,
+            exclude_from_list=True,
+            read_only=True,
         ),
     ]
 
