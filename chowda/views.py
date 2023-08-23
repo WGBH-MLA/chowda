@@ -121,6 +121,8 @@ class BatchView(BaseModelView):
     exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
     exclude_fields_from_detail: ClassVar[list[Any]] = [Batch.id]
 
+    fields_default_sort: ClassVar[BaseField] = [(Batch.id, True)]
+
     actions: ClassVar[list[Any]] = [
         'start_batches',
         'duplicate_batches',
