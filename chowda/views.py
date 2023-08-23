@@ -201,15 +201,16 @@ class BatchView(BaseModelView):
                 with Session(engine) as db:
                     batch = db.get(Batch, batch_id)
                     for media_file in batch.media_files:
-                        ArgoEvent(
-                            batch.pipeline.name, payload={'guid': media_file.guid}
+                        publish_return_value = ArgoEvent(
+                            batch.pipeline.name,
+                            payload={'bach_id': batch_id, 'guid': media_file.guid},
                         ).publish(ignore_errors=False)
 
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
 
         # Display Success message
-        return f'Started {len(pks)} Batche(s)'
+        return f'Started {len(pks)} Batch(es)'
 
     @action(
         name='duplicate_batches',
