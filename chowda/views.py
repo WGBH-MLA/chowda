@@ -89,7 +89,8 @@ class AdminModelView(ModelView):
 
 
 class CollectionView(BaseModelView):
-    exclude_fields_from_list: ClassVar[list[Any]] = [Collection.media_files]
+    # FIXME exclude_fields_from_list: ClassVar[list[Any]] = [Collection.media_files]
+    # Hiding the media_files field from the list view hides the media_file_count field
     exclude_fields_from_detail: ClassVar[list[Any]] = [Collection.id]
 
     fields: ClassVar[list[Any]] = [
@@ -126,7 +127,7 @@ class CollectionView(BaseModelView):
 class BatchView(BaseModelView):
     exclude_fields_from_create: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
-    exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
+    # FIXME exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
     exclude_fields_from_detail: ClassVar[list[Any]] = [Batch.id]
 
     actions: ClassVar[list[Any]] = [
