@@ -18,7 +18,7 @@ from starlette_admin.exceptions import ActionFailed
 
 from chowda.auth.utils import get_user
 from chowda.db import engine
-from chowda.models import Batch
+from chowda.models import Batch, Collection
 from chowda.utils import validate_media_file_guids
 
 
@@ -90,6 +90,9 @@ class AdminModelView(ModelView):
 
 
 class CollectionView(BaseModelView):
+    exclude_fields_from_list: ClassVar[list[Any]] = [Collection.media_files]
+    exclude_fields_from_detail: ClassVar[list[Any]] = [Collection.id]
+
     fields: ClassVar[list[Any]] = [
         'name',
         'description',
@@ -116,6 +119,8 @@ class CollectionView(BaseModelView):
 class BatchView(BaseModelView):
     exclude_fields_from_create: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
+    exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
+    exclude_fields_from_detail: ClassVar[list[Any]] = [Batch.id]
 
     actions: ClassVar[list[Any]] = ['start_batch']
 
