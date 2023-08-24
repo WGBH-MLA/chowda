@@ -1,16 +1,21 @@
-<table id="dt" class="table table-vcenter text-nowrap dataTable no-footer" aria-describedby="dt_info">
-
-    <thead>
-        <tr>
-            <th>GUID</th>
-        </tr>
-    </thead>
-
-    {% for media_file in data %}
+<table
+  id="dt"
+  class="table table-vcenter text-nowrap dataTable no-footer"
+  aria-describedby="dt_info"
+>
+  <thead>
     <tr>
-        <td>
-            <a href="../../media-file/detail/{{ guid }}">{{ media_file.guid }}</a>
-        </td>
+      <th>GUID</th>
     </tr>
-    {% endfor %}
+  </thead>
+
+  {% for media_file in data %}
+  <tr>
+    <td>
+      <a href="../../media-file/detail/{{ media_file.guid }}"
+        >{{ media_file.guid }}</a
+      >
+    </td>
+  </tr>
+  {% endfor %}
 </table>
