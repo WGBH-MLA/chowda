@@ -90,6 +90,8 @@ class CollectionView(BaseModelView):
     exclude_fields_from_list: ClassVar[list[Any]] = [Collection.media_files]
     exclude_fields_from_detail: ClassVar[list[Any]] = [Collection.id]
 
+    actions: ClassVar[list[Any]] = ['create_batch', 'create_multiple_batches']
+
     fields: ClassVar[list[Any]] = [
         'name',
         'description',
@@ -113,6 +115,67 @@ class CollectionView(BaseModelView):
 
     async def validate(self, request: Request, data: Dict[str, Any]):
         validate_media_file_guids(request, data)
+
+    @action(
+        name='create_batch',
+        text='Create Batch',
+        confirmation='Create a single Batch from these Collections?',
+        submit_btn_text='Yep',
+        submit_btn_class='btn-success',
+    )
+    async def create_batch(self, request: Request, pks: List[Any]) -> str:
+        """Create a new batch from the combined collections"""
+        try:
+            with Session(engine) as db:
+                collections = db.exec(
+                    select(Collection).where(Collection.id.in_(pks))
+                ).all()
+                names = [collection.name for collection in collections]
+                ids = [str(collection.id) for collection in collections]
+                new_batch = Batch(
+                    name=f'Batch from {", ".join(names)}',
+                    description=f'Batch from {", ".join(ids)}',
+                )
+                for collection in collections:
+                    new_batch.media_files += collection.media_files
+                db.add(new_batch)
+                db.commit()
+
+        except Exception as error:
+            raise ActionFailed(f'{error!s}') from error
+
+        # Display Success message
+        return f'Created Batch from {", ".join(names)}'
+
+    @action(
+        name='create_multiple_batches',
+        text='Create multiple Batches',
+        confirmation='Create multiple Batches from these Collections?',
+        submit_btn_text='Yep',
+        submit_btn_class='btn-success',
+    )
+    async def create_multiple_batches(self, request: Request, pks: List[Any]) -> str:
+        """Create multiple batches from the collections"""
+        try:
+            with Session(engine) as db:
+                collections = db.exec(
+                    select(Collection).where(Collection.id.in_(pks))
+                ).all()
+                names = [collection.name for collection in collections]
+                for collection in collections:
+                    new_batch = Batch(
+                        name=f'Batch from {collection.name}',
+                        description=f'Batch from Collection {collection.id!s}',
+                    )
+                    new_batch.media_files = collection.media_files
+                    db.add(new_batch)
+                db.commit()
+
+        except Exception as error:
+            raise ActionFailed(f'{error!s}') from error
+
+        # Display Success message
+        return f'Created Batches from {", ".join(names)}'
 
 
 class BatchView(BaseModelView):
