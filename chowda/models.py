@@ -228,7 +228,7 @@ class Pipeline(SQLModel, table=True):
 class MetaflowRun(SQLModel, table=True):
     __tablename__ = 'metaflow_runs'
     id: Optional[str] = Field(primary_key=True, default=None)
-    response_json: Dict[str, Any] = Field(sa_column=Column(JSON))
+    pathspec: str
     batch_id: Optional[int] = Field(default=None, foreign_key='batches.id')
     batch: Optional[Batch] = Relationship(back_populates='metaflow_runs')
     media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
