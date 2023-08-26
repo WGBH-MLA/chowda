@@ -20,7 +20,7 @@ def seed(
     num_media_files: int = 1000,
     num_collections: int = 100,
     num_batches: int = 100,
-    num_clams_apps: int = len(CLAMSProvider.app_names),  # noqa: B008
+    num_clams_apps: int = len(CLAMSProvider.app_names),
     num_pipelines: int = 10,
     num_clams_events: int = 1000,
     num_users: int = 10,

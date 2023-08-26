@@ -30,7 +30,7 @@ def chunks_of_size(lst, n):
 
 def chunks_striped(lst, n):
     """Yield n number of striped chunks from l."""
-    for i in range(0, n):
+    for i in range(n):
         yield lst[i::n]
 
 
