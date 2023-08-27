@@ -11,6 +11,7 @@ from sqlalchemy import JSON, Column, Enum
 from sqlalchemy.dialects import postgresql
 from sqlmodel import Field, Relationship, SQLModel
 from starlette.requests import Request
+from metaflow import Run, namespace
 
 MediaUrl = stricturl(allowed_schemes=['video', 'audio', 'text'], tld_required=False)
 """Media url validator. Must have prefix of video, audio, or text. No TLD required.
@@ -111,6 +112,19 @@ class MediaFile(SQLModel, table=True):
         back_populates='media_files', link_model=MediaFileBatchLink
     )
     metaflow_runs: List['MetaflowRun'] = Relationship(back_populates='media_file')
+
+    def metaflow_runs_for_batch(self, batch_id: int):
+        return [
+            metaflow_run
+            for metaflow_run in self.metaflow_runs
+            if metaflow_run.batch_id == batch_id
+        ]
+
+    def last_metaflow_run_for_batch(self, batch_id: int):
+        # TODO: is getting the last one sufficient, or do we need to add sortable timestamps?
+        runs = self.metaflow_runs_for_batch(batch_id=batch_id)
+        if len(runs) > 0:
+            return runs[-1]
 
     async def __admin_repr__(self, request: Request):
         return self.guid
@@ -235,3 +249,9 @@ class MetaflowRun(SQLModel, table=True):
     batch: Optional[Batch] = Relationship(back_populates='metaflow_runs')
     media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
     media_file: Optional[MediaFile] = Relationship(back_populates='metaflow_runs')
+
+    @property
+    def source(self):
+        # TODO: is setting namespace to None the right way to go here?
+        namespace(None)
+        return Run(self.pathspec)

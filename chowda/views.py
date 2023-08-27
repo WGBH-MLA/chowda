@@ -20,6 +20,8 @@ from chowda.fields import (
     MediaFileCount,
     MediaFilesGuidsField,
     BatchMediaFilesDisplayField,
+    BatchPercentCompleted,
+    BatchPercentSuccessful,
 )
 from chowda.models import Batch, Collection, MediaFile
 from chowda.utils import validate_media_file_guids
@@ -167,6 +169,8 @@ class BatchView(BaseModelView):
         'pipeline',
         'description',
         MediaFileCount(),
+        BatchPercentCompleted(),
+        BatchPercentSuccessful(),
         MediaFilesGuidsField(
             'media_files',
             id='media_file_guids',
