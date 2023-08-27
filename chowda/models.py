@@ -199,7 +199,6 @@ class ClamsApp(SQLModel, table=True):
     pipelines: List['Pipeline'] = Relationship(
         back_populates='clams_apps', link_model=ClamsAppPipelineLink
     )
-    metaflow_runs: List['MetaflowRun'] = Relationship(back_populates='clams_app')
 
     async def __admin_repr__(self, request: Request):
         return f'{self.name or self.id}'

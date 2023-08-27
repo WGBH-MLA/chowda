@@ -279,9 +279,8 @@ class MediaFileView(BaseModelView):
         'batches',
         'assets',
         'mmif_json',
-        'clams_events',
     ]
-    exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json', 'clams_events']
+    exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json']
 
     def can_create(self, request: Request) -> bool:
         return get_user(request).is_admin
@@ -300,16 +299,6 @@ class PipelineView(AdminModelView):
 
     def is_accessible(self, request: Request) -> bool:
         return True
-
-
-class ClamsEventView(BaseModelView):
-    fields: ClassVar[list[Any]] = [
-        'batch',
-        'media_file',
-        'clams_app',
-        'status',
-        'response_json',
-    ]
 
 
 class DashboardView(CustomView):

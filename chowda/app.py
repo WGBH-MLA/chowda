@@ -18,7 +18,6 @@ from chowda.db import engine
 from chowda.models import (
     Batch,
     ClamsApp,
-    ClamsEvent,
     Collection,
     MediaFile,
     Pipeline,
@@ -29,7 +28,6 @@ from chowda.routers.dashboard import dashboard
 from chowda.views import (
     BatchView,
     ClamsAppView,
-    ClamsEventView,
     CollectionView,
     DashboardView,
     MediaFileView,
@@ -73,7 +71,6 @@ admin.add_view(CollectionView(Collection, icon='fa fa-folder'))
 admin.add_view(BatchView(Batch, icon='fa fa-folder', label='Batches'))
 admin.add_view(ClamsAppView(ClamsApp, icon='fa fa-box'))
 admin.add_view(PipelineView(Pipeline, icon='fa fa-boxes-stacked'))
-admin.add_view(ClamsEventView(ClamsEvent, icon='fa fa-file-lines'))
 admin.add_view(UserView(User, icon='fa fa-users'))
 
 

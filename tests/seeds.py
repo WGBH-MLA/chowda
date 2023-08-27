@@ -4,7 +4,6 @@ from chowda.models import AppStatus
 from tests.factories import (
     BatchFactory,
     ClamsAppFactory,
-    ClamsEventFactory,
     CLAMSProvider,
     CollectionFactory,
     MediaFileFactory,
@@ -22,7 +21,6 @@ def seed(
     num_batches: int = 100,
     num_clams_apps: int = len(CLAMSProvider.app_names),  # noqa: B008
     num_pipelines: int = 10,
-    num_clams_events: int = 1000,
     num_users: int = 10,
 ):
     """Seed the database with sample data."""
@@ -50,17 +48,6 @@ def seed(
     for media_file in media_files:
         media_file.batches = sample(batches, randint(0, 3))
         media_file.collections = [choice(collections)]
-
-    # Create some sample ClamsEvents
-    # on random batches, media files, and clams apps from the pipeline
-    for _ in range(num_clams_events):
-        batch = choice(batches)
-        ClamsEventFactory.create(
-            batch=batch,
-            media_file=choice(batch.media_files),
-            clams_app=choice(batch.pipeline.clams_apps),
-            status=choice(status).value,
-        )
 
     factory_session.commit()
 
