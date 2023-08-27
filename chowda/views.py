@@ -272,6 +272,7 @@ class BatchView(BaseModelView):
 
 class MediaFileView(BaseModelView):
     pk_attr = 'guid'
+    actions = ['create_new_batch']
 
     fields: ClassVar[list[Any]] = [
         'guid',
@@ -284,6 +285,16 @@ class MediaFileView(BaseModelView):
 
     def can_create(self, request: Request) -> bool:
         return get_user(request).is_admin
+
+    @action(
+        name='create_new_batch',
+        text='Create Batch',
+        confirmation='Create a Batches from these Media Files?',
+        submit_btn_text='Yasss!',
+        submit_btn_class='btn-success',
+    )
+    async def create_new_batch(self, request: Request, pks: List[Any]) -> str:
+        return "TODO: code created batch"
 
 
 class UserView(AdminModelView):
