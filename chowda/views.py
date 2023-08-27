@@ -8,6 +8,7 @@ from sqlmodel import Session, select
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
+from starlette.datastructures import FormData
 from starlette_admin import CustomView, action
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
@@ -292,15 +293,24 @@ class MediaFileView(BaseModelView):
         confirmation='Create a Batches from these Media Files?',
         submit_btn_text='Yasss!',
         submit_btn_class='btn-success',
+        form='''
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_name" placeholder="Batch Name">
+                <textarea class="form-control" name="batch_description" placeholder="Batch Description"></textarea>
+            </div>
+        </form>
+        ''',
     )
     async def create_new_batch(self, request: Request, pks: List[Any]) -> str:
         with Session(engine) as db:
             media_files = db.exec(
                 select(MediaFile).where(MediaFile.guid.in_(pks))
             ).all()
+            data: FormData = await request.form()
             batch = Batch(
-                name="TODO: enter from confirmation form",
-                description="TODO: enter from confirmation form",
+                name=data.get("batch_name"),
+                description=data.get("batch_description"),
                 media_files=media_files,
             )
             db.add(batch)
