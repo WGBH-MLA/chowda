@@ -16,7 +16,7 @@ from starlette_admin.fields import BaseField
 from chowda.auth.utils import get_user
 from chowda.db import engine
 from chowda.fields import MediaFileCount, MediaFilesGuidsField
-from chowda.models import Batch, Collection
+from chowda.models import Batch, Collection, MediaFile
 from chowda.utils import validate_media_file_guids
 
 
@@ -294,7 +294,19 @@ class MediaFileView(BaseModelView):
         submit_btn_class='btn-success',
     )
     async def create_new_batch(self, request: Request, pks: List[Any]) -> str:
-        return "TODO: code created batch"
+        with Session(engine) as db:
+            media_files = db.exec(
+                select(MediaFile).where(MediaFile.guid.in_(pks))
+            ).all()
+            batch = Batch(
+                name="TODO: enter from confirmation form",
+                description="TODO: enter from confirmation form",
+                media_files=media_files,
+            )
+            db.add(batch)
+            db.commit()
+
+        return f"Batch of {len(pks)} Media Files created"
 
 
 class UserView(AdminModelView):
