@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th>GUID</th>
-      <th>Metaflow Run</th>
+      <th>Metaflow Run ID</th>
       <th>Status</th>
     </tr>
   </thead>
@@ -13,7 +13,9 @@
       <a href="../../media-file/detail/{{ media_file.guid }}">{{ media_file.guid }}</a>
     </td>
     <td>
-      <a href="TODO">{{ media_file.metaflow_runs }}</a>
+      <a href="http://mario.wgbh-mla.org/{{ media_file.metaflow_runs[-1].pathspec}}" target="blank">{{
+        media_file.metaflow_runs[-1].id
+        }}</a>
     </td>
     <td>
       {% if media_file.status %} {{ media_file.status }} {% else %}
