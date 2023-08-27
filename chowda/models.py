@@ -145,6 +145,9 @@ class SonyCiAsset(SQLModel, table=True):
         back_populates='assets', link_model=MediaFileSonyCiAssetLink
     )
 
+    async def __admin_repr__(self, request: Request):
+        return self.name
+
 
 class Collection(SQLModel, table=True):
     __tablename__ = 'collections'
