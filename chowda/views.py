@@ -16,7 +16,11 @@ from starlette_admin.fields import BaseField
 
 from chowda.auth.utils import get_user
 from chowda.db import engine
-from chowda.fields import MediaFileCount, MediaFilesGuidsField
+from chowda.fields import (
+    MediaFileCount,
+    MediaFilesGuidsField,
+    BatchMediaFilesDisplayField,
+)
 from chowda.models import Batch, Collection, MediaFile
 from chowda.utils import validate_media_file_guids
 
@@ -169,15 +173,7 @@ class BatchView(BaseModelView):
             label='GUIDs',
             exclude_from_detail=True,
         ),
-        BaseField(
-            'media_files',
-            display_template='displays/batch_media_files.html',
-            label='Media Files',
-            exclude_from_edit=True,
-            exclude_from_create=True,
-            exclude_from_list=True,
-            read_only=True,
-        ),
+        BatchMediaFilesDisplayField(),
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):

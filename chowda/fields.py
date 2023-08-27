@@ -4,7 +4,8 @@ from typing import Any
 from starlette.datastructures import FormData
 from starlette.requests import Request
 from starlette_admin._types import RequestAction
-from starlette_admin.fields import IntegerField, TextAreaField
+from starlette_admin.fields import IntegerField, TextAreaField, BaseField
+from metaflow import Run, namespace
 
 
 @dataclass
@@ -39,3 +40,31 @@ class MediaFileCount(IntegerField):
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
         return len(obj.media_files)
+
+
+@dataclass
+class BatchMediaFilesDisplayField(BaseField):
+    name: str = 'batch_media_files'
+    display_template: str = 'displays/batch_media_files.html'
+    label: str = 'Media Files'
+    exclude_from_edit: bool = True
+    exclude_from_create: bool = True
+    exclude_from_list: bool = True
+    read_only: bool = True
+
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        media_file_rows = []
+        namespace(None)
+
+        for media_file in obj.media_files:
+            # Lookup the real Metaflow Run using the last Run ID
+            run = Run(media_file.metaflow_runs[-1].pathspec)
+            media_file_row = {
+                'guid': media_file.guid,
+                'run_id': run.id,
+                'run_link': f'http://mario.wgbh-mla.org/{run.pathspec}',
+                'finished_at': run.finished_at or '',
+                'successful': run.successful,
+            }
+            media_file_rows.append(media_file_row)
+        return media_file_rows

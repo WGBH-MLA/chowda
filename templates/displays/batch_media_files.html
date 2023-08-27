@@ -2,25 +2,27 @@
   <thead>
     <tr>
       <th>GUID</th>
-      <th>Metaflow Run ID</th>
-      <th>Status</th>
+      <th>Metaflow Run</th>
+      <th>Finished At</th>
+      <th>Successful</th>
     </tr>
   </thead>
 
-  {% for media_file in data %}
+  {% for media_file_row in data %}
   <tr>
     <td>
-      <a href="../../media-file/detail/{{ media_file.guid }}">{{ media_file.guid }}</a>
+      <a href="../../media-file/detail/{{ media_file_row['guid'] }}">{{ media_file_row['guid'] }}</a>
     </td>
     <td>
-      <a href="http://mario.wgbh-mla.org/{{ media_file.metaflow_runs[-1].pathspec}}" target="blank">{{
-        media_file.metaflow_runs[-1].id
+      <a href="{{ media_file_row['run_link']}}" target="blank">{{
+        media_file_row['run_id']
         }}</a>
     </td>
     <td>
-      {% if media_file.status %} {{ media_file.status }} {% else %}
-      <em>none</em>
-      {% endif %}
+      {{ media_file_row['finished_at'] }}
+    </td>
+    <td>
+      {{ media_file_row['successful'] }}
     </td>
   </tr>
   {% endfor %}
