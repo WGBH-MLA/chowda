@@ -1,11 +1,8 @@
-<table
-  id="dt"
-  class="table table-vcenter text-nowrap dataTable no-footer"
-  aria-describedby="dt_info"
->
+<table id="dt" class="table table-vcenter text-nowrap dataTable no-footer" aria-describedby="dt_info">
   <thead>
     <tr>
       <th>GUID</th>
+      <th>Metaflow Run</th>
       <th>Status</th>
     </tr>
   </thead>
@@ -13,9 +10,10 @@
   {% for media_file in data %}
   <tr>
     <td>
-      <a href="../../media-file/detail/{{ media_file.guid }}"
-        >{{ media_file.guid }}</a
-      >
+      <a href="../../media-file/detail/{{ media_file.guid }}">{{ media_file.guid }}</a>
+    </td>
+    <td>
+      <a href="TODO">{{ media_file.metaflow_runs }}</a>
     </td>
     <td>
       {% if media_file.status %} {{ media_file.status }} {% else %}
