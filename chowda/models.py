@@ -121,10 +121,10 @@ class MediaFile(SQLModel, table=True):
         ]
 
     def last_metaflow_run_for_batch(self, batch_id: int):
-        # TODO: is getting the last one sufficient, or do we need to add sortable timestamps?
+        # TODO: is getting the last one sufficient, or do we need to add sortable
+        # timestamps?
         runs = self.metaflow_runs_for_batch(batch_id=batch_id)
-        if len(runs) > 0:
-            return runs[-1]
+        return runs[-1] if len(runs) > 0 else None
 
     async def __admin_repr__(self, request: Request):
         return self.guid
