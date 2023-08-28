@@ -4,7 +4,6 @@ from sqlalchemy import orm
 
 from chowda.db import engine
 from chowda.models import (
-    AppStatus,
     Batch,
     ClamsApp,
     Collection,
