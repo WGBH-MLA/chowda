@@ -60,7 +60,7 @@ class BatchMediaFilesDisplayField(BaseField):
             media_file_row = {
                 'guid': media_file.guid,
                 'run_id': run.id,
-                'run_link': f'http://mario.wgbh-mla.org/{run.pathspec}',
+                'run_link': f'https://mario.wgbh-mla.org/{run.pathspec}',
                 'finished_at': run.source.finished_at or '',
                 'successful': run.source.successful,
             }
