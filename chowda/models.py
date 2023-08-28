@@ -145,6 +145,10 @@ class SonyCiAsset(SQLModel, table=True):
         back_populates='assets', link_model=MediaFileSonyCiAssetLink
     )
 
+    @property
+    def thumbnails_by_type(self):
+        return {thumbnail['type']: thumbnail for thumbnail in self.thumbnails}
+
 
 class Collection(SQLModel, table=True):
     __tablename__ = 'collections'

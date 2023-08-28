@@ -9,4 +9,8 @@ Object.assign(render, {
     // Render a count of media files
     return data.length
   },
+
+  sony_ci_asset_thumbnail: function render(data, type, full, meta, fieldOptions) {
+    return `<img src="${data.location}" style="max-height:150px;">`
+  },
 })

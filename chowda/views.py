@@ -15,7 +15,7 @@ from starlette_admin.fields import BaseField
 
 from chowda.auth.utils import get_user
 from chowda.db import engine
-from chowda.fields import MediaFileCount, MediaFilesGuidsField
+from chowda.fields import MediaFileCount, MediaFilesGuidsField, SonyCiAssetThumbnail
 from chowda.models import Batch, Collection
 from chowda.utils import validate_media_file_guids
 
@@ -342,11 +342,11 @@ class DashboardView(CustomView):
 
 class SonyCiAssetView(AdminModelView):
     fields: ClassVar[list[Any]] = [
+        SonyCiAssetThumbnail(),
         'name',
         'size',
         'type',
         'format',
-        'thumbnails',
         'media_files',
     ]
 

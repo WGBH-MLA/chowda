@@ -4,7 +4,7 @@ from typing import Any
 from starlette.datastructures import FormData
 from starlette.requests import Request
 from starlette_admin._types import RequestAction
-from starlette_admin.fields import IntegerField, TextAreaField
+from starlette_admin.fields import BaseField, IntegerField, TextAreaField
 
 
 @dataclass
@@ -39,3 +39,19 @@ class MediaFileCount(IntegerField):
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
         return len(obj.media_files)
+
+
+@dataclass
+class SonyCiAssetThumbnail(BaseField):
+    """A the thumbnails for a SonyCiAsset mdoel"""
+
+    name: str = 'sony_ci_assest_thumbnail'
+    label: str = 'Thumbnail'
+    display_template: str = 'displays/sony_ci_asset_thumbnail.html'
+    read_only: bool = True
+    exclude_from_create: bool = True
+
+    render_function_key: str = 'sony_ci_asset_thumbnail'
+
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        return obj.thumbnails_by_type['standard']
