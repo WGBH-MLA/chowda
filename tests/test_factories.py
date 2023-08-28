@@ -1,8 +1,6 @@
-from random import choice
-
 from sqlmodel import SQLModel
 
-from chowda.models import AppStatus, Batch, ClamsApp, MediaFile
+from chowda.models import Batch, ClamsApp, MediaFile
 from tests.factories import (
     BatchFactory,
     ClamsAppFactory,

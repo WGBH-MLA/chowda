@@ -202,7 +202,7 @@ class BatchView(BaseModelView):
                 with Session(engine) as db:
                     batch = db.get(Batch, batch_id)
                     for media_file in batch.media_files:
-                        publish_return_value = ArgoEvent(
+                        ArgoEvent(
                             batch.pipeline.name,
                             payload={'bach_id': batch_id, 'guid': media_file.guid},
                         ).publish(ignore_errors=False)
@@ -272,8 +272,8 @@ class BatchView(BaseModelView):
 
 
 class MediaFileView(BaseModelView):
-    pk_attr = 'guid'
-    actions = ['create_new_batch']
+    pk_attr: str = 'guid'
+    actions: ClassVar[list[Any]] = ['create_new_batch']
 
     fields: ClassVar[list[Any]] = [
         'guid',
@@ -293,14 +293,16 @@ class MediaFileView(BaseModelView):
         confirmation='Create a Batches from these Media Files?',
         submit_btn_text='Yasss!',
         submit_btn_class='btn-success',
-        form='''
+        form="""
         <form>
             <div class="mt-3">
-                <input type="text" class="form-control" name="batch_name" placeholder="Batch Name">
-                <textarea class="form-control" name="batch_description" placeholder="Batch Description"></textarea>
+                <input type="text" class="form-control" name="batch_name"
+                    placeholder="Batch Name">
+                <textarea class="form-control" name="batch_description"
+                    placeholder="Batch Description"></textarea>
             </div>
         </form>
-        ''',
+        """,
     )
     async def create_new_batch(self, request: Request, pks: List[Any]) -> str:
         with Session(engine) as db:
