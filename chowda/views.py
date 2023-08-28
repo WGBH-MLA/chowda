@@ -5,10 +5,10 @@ from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
 from metaflow.integrations import ArgoEvent
 from sqlmodel import Session, select
+from starlette.datastructures import FormData
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
-from starlette.datastructures import FormData
 from starlette_admin import CustomView, action
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
@@ -17,11 +17,11 @@ from starlette_admin.fields import BaseField
 from chowda.auth.utils import get_user
 from chowda.db import engine
 from chowda.fields import (
-    MediaFileCount,
-    MediaFilesGuidsField,
     BatchMediaFilesDisplayField,
     BatchPercentCompleted,
     BatchPercentSuccessful,
+    MediaFileCount,
+    MediaFilesGuidsField,
 )
 from chowda.models import Batch, Collection, MediaFile
 from chowda.utils import validate_media_file_guids
@@ -273,9 +273,9 @@ class BatchView(BaseModelView):
 
 class MediaFileView(BaseModelView):
     pk_attr: str = 'guid'
-    actions: ClassVar[list[Any]] = ['create_new_batch']
+    actions: ClassVar[List[str]] = ['create_new_batch']
 
-    fields: ClassVar[list[Any]] = [
+    fields: ClassVar[list[str]] = [
         'guid',
         'collections',
         'batches',

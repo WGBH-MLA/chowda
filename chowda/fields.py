@@ -4,7 +4,7 @@ from typing import Any
 from starlette.datastructures import FormData
 from starlette.requests import Request
 from starlette_admin._types import RequestAction
-from starlette_admin.fields import IntegerField, TextAreaField, BaseField
+from starlette_admin.fields import BaseField, IntegerField, TextAreaField
 
 
 @dataclass
@@ -57,14 +57,15 @@ class BatchMediaFilesDisplayField(BaseField):
         for media_file in obj.media_files:
             # Lookup the real Metaflow Run using the last Run ID
             run = media_file.last_metaflow_run_for_batch(batch_id=obj.id)
-            media_file_row = {
-                'guid': media_file.guid,
-                'run_id': run.id,
-                'run_link': f'https://mario.wgbh-mla.org/{run.pathspec}',
-                'finished_at': run.source.finished_at or '',
-                'successful': run.source.successful,
-            }
-            media_file_rows.append(media_file_row)
+            if run:
+                media_file_row = {
+                    'guid': media_file.guid,
+                    'run_id': run.id,
+                    'run_link': f'https://mario.wgbh-mla.org/{run.pathspec}',
+                    'finished_at': run.source.finished_at or '',
+                    'successful': run.source.successful,
+                }
+                media_file_rows.append(media_file_row)
         return media_file_rows
 
 
