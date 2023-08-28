@@ -10,13 +10,17 @@
 
   {% for media_file_row in data %}
   <tr>
+
     <td>
-      <a href="../../media-file/detail/{{ media_file_row['guid'] }}">{{ media_file_row['guid'] }}</a>
+      <a class="m-1 py-1 px-2 badge bg-blue-lt lead"
+        href="../../media-file/detail/{{ media_file_row['guid'] }}">{{media_file_row['guid'] }}
+      </a>
     </td>
     <td>
-      <a href="{{ media_file_row['run_link']}}" target="blank">{{
-        media_file_row['run_id']
-        }}</a>
+      <a href="{{ media_file_row['run_link']}}" target="blank">
+        {{ media_file_row['run_id'] }}
+        <i class="fa fa-external-link" aria-hidden="true"></i>
+      </a>
     </td>
     <td>
       {{ media_file_row['finished_at'] }}
