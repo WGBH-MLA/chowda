@@ -201,10 +201,15 @@ class BatchView(BaseModelView):
             for batch_id in pks:
                 with Session(engine) as db:
                     batch = db.get(Batch, batch_id)
+                    pipeline = [app.endpoint for app in batch.pipeline.clams_apps]
                     for media_file in batch.media_files:
                         ArgoEvent(
                             'pipeline',
-                            payload={'batch_id': batch_id, 'guid': media_file.guid},
+                            payload={
+                                'batch_id': batch_id,
+                                'guid': media_file.guid,
+                                'pipeline': pipeline,
+                            },
                         ).publish(ignore_errors=False)
 
         except Exception as error:
