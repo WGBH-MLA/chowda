@@ -15,11 +15,14 @@ from tests.factories import (
 status = list(AppStatus)
 
 
+NUM_CLAMS_APPS = len(CLAMSProvider.app_names)
+
+
 def seed(
     num_media_files: int = 1000,
     num_collections: int = 100,
     num_batches: int = 100,
-    num_clams_apps: int = len(CLAMSProvider.app_names),  # noqa: B008
+    num_clams_apps: int = NUM_CLAMS_APPS,
     num_pipelines: int = 10,
     num_users: int = 10,
 ):
