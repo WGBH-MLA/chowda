@@ -72,6 +72,8 @@ class BatchMediaFilesDisplayField(BaseField):
 @dataclass
 class BatchPercentCompleted(BaseField):
     name: str = 'batch_percent_completed'
+    exclude_from_edit: bool = True
+    exclude_from_create: bool = True
     label: str = 'Completed %'
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
@@ -96,6 +98,8 @@ class BatchPercentCompleted(BaseField):
 class BatchPercentSuccessful(BaseField):
     name: str = 'batch_percent_successful'
     label: str = 'Successful %'
+    exclude_from_create: bool = True
+    exclude_from_edit: bool = True
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
         runs = [
