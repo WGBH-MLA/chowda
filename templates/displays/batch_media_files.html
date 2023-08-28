@@ -17,10 +17,14 @@
       </a>
     </td>
     <td>
+      {% if media_file_row['run_link'] %}
       <a href="{{ media_file_row['run_link']}}" target="blank">
         {{ media_file_row['run_id'] }}
         <i class="fa fa-external-link" aria-hidden="true"></i>
       </a>
+      {% else %}
+      None
+      {% endif %}
     </td>
     <td>
       {{ media_file_row['finished_at'] }}

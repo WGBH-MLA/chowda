@@ -55,17 +55,24 @@ class BatchMediaFilesDisplayField(BaseField):
         media_file_rows = []
 
         for media_file in obj.media_files:
+            media_file_row = {'guid': media_file.guid}
+
             # Lookup the real Metaflow Run using the last Run ID
             run = media_file.last_metaflow_run_for_batch(batch_id=obj.id)
             if run:
-                media_file_row = {
-                    'guid': media_file.guid,
-                    'run_id': run.id,
-                    'run_link': f'https://mario.wgbh-mla.org/{run.pathspec}',
-                    'finished_at': run.source.finished_at or '',
-                    'successful': run.source.successful,
-                }
-                media_file_rows.append(media_file_row)
+                media_file_row['run_id'] = run.id
+                media_file_row[
+                    'run_link'
+                ] = f'https://mario.wgbh-mla.org/{run.pathspec}'
+                media_file_row['finished_at'] = run.source.finished_at or ''
+                media_file_row['successful'] = run.source.successful
+            else:
+                media_file_row['run_id'] = None
+                media_file_row['run_link'] = None
+                media_file_row['finished_at'] = None
+                media_file_row['successful'] = None
+
+            media_file_rows.append(media_file_row)
         return media_file_rows
 
 

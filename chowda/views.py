@@ -204,7 +204,7 @@ class BatchView(BaseModelView):
                     for media_file in batch.media_files:
                         ArgoEvent(
                             batch.pipeline.name,
-                            payload={'bach_id': batch_id, 'guid': media_file.guid},
+                            payload={'batch_id': batch_id, 'guid': media_file.guid},
                         ).publish(ignore_errors=False)
 
         except Exception as error:
