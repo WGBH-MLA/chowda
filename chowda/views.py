@@ -203,7 +203,7 @@ class BatchView(BaseModelView):
                     batch = db.get(Batch, batch_id)
                     for media_file in batch.media_files:
                         ArgoEvent(
-                            batch.pipeline.name,
+                            'pipeline',
                             payload={'batch_id': batch_id, 'guid': media_file.guid},
                         ).publish(ignore_errors=False)
 
