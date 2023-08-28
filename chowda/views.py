@@ -201,8 +201,8 @@ class BatchView(BaseModelView):
             for batch_id in pks:
                 with Session(engine) as db:
                     batch = db.get(Batch, batch_id)
-                    pipeline = [app.endpoint for app in batch.pipeline.clams_apps].join(
-                        ','
+                    pipeline = ','.join(
+                        [app.endpoint for app in batch.pipeline.clams_apps]
                     )
                     for media_file in batch.media_files:
                         ArgoEvent(
