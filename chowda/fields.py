@@ -97,7 +97,7 @@ class BatchPercentCompleted(BaseField):
         ]
 
         finished_runs = [run for run in runs if run.finished_at]
-        percent_completed = finished_runs / len(obj.media_files)
+        percent_completed = len(finished_runs) / len(obj.media_files)
 
         return f'{percent_completed:.1%}'
 
