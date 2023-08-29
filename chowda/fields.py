@@ -78,6 +78,8 @@ class BatchMediaFilesDisplayField(BaseField):
 
 @dataclass
 class BatchPercentCompleted(BaseField):
+    """A field that displays the percentage of MediaFiles in a batch that have finished"""
+
     name: str = 'batch_percent_completed'
     exclude_from_edit: bool = True
     exclude_from_create: bool = True
@@ -94,15 +96,15 @@ class BatchPercentCompleted(BaseField):
         ]
 
         finished_runs = [run for run in runs if run.finished_at]
-        failed_runs = [run for run in runs if not run.successful]
-        total_complete = len(finished_runs) + len(failed_runs)
-        percent_completed = total_complete / len(obj.media_files)
+        percent_completed = finished_runs / len(obj.media_files)
 
         return f'{percent_completed:.1%}'
 
 
 @dataclass
 class BatchPercentSuccessful(BaseField):
+    """The percentage of MediaFiles in a batch that have finished successfully"""
+
     name: str = 'batch_percent_successful'
     label: str = 'Successful %'
     exclude_from_create: bool = True
