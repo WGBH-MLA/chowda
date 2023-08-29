@@ -13,8 +13,8 @@ def test_get_admin_home():
 
 def test_get_admin_redirect():
     """GET /admin returns a Redirect response"""
-    response = client.get('/admin', allow_redirects=False)
-    assert response.status_code == 307, 'Home page did not redirect sucessfully'
+    response = client.get('/admin/', allow_redirects=False)
+    assert response.status_code == 303, 'Home page did not redirect sucessfully'
     assert (
-        '/admin/' in response.headers['location']
+        '/admin/login?next=' in response.headers['location']
     ), 'Home page did not redirect to /admin/'
