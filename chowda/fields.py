@@ -78,7 +78,8 @@ class BatchMediaFilesDisplayField(BaseField):
 
 @dataclass
 class BatchPercentCompleted(BaseField):
-    """A field that displays the percentage of MediaFiles in a batch that have finished"""
+    """A field that displays the percentage of MediaFiles
+    in a batch that have finished"""
 
     name: str = 'batch_percent_completed'
     exclude_from_edit: bool = True
