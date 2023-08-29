@@ -198,8 +198,8 @@ class BatchView(BaseModelView):
     async def start_batches(self, request: Request, pks: List[Any]) -> str:
         """Starts a Batch by sending a message to the Argo Event Bus"""
         try:
-            for batch_id in pks:
-                with Session(engine) as db:
+            with Session(engine) as db:
+                for batch_id in pks:
                     batch = db.get(Batch, batch_id)
                     pipeline = ','.join(
                         [app.endpoint for app in batch.pipeline.clams_apps]
