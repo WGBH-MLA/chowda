@@ -4,10 +4,8 @@ from sqlalchemy import orm
 
 from chowda.db import engine
 from chowda.models import (
-    AppStatus,
     Batch,
     ClamsApp,
-    ClamsEvent,
     Collection,
     MediaFile,
     Pipeline,
@@ -163,11 +161,3 @@ class PipelineFactory(ChowdaFactory):
         if extracted:
             for clams_app in extracted:
                 self.clams_apps.append(clams_app)
-
-
-class ClamsEventFactory(ChowdaFactory):
-    class Meta:
-        model = ClamsEvent
-
-    status: str = factory.Faker('random_element', elements=AppStatus)
-    response_json: dict = factory.Faker('json')

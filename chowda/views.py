@@ -5,6 +5,7 @@ from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
 from metaflow.integrations import ArgoEvent
 from sqlmodel import Session, select
+from starlette.datastructures import FormData
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
@@ -15,8 +16,14 @@ from starlette_admin.fields import BaseField
 
 from chowda.auth.utils import get_user
 from chowda.db import engine
-from chowda.fields import MediaFileCount, MediaFilesGuidsField, SonyCiAssetThumbnail
-from chowda.models import Batch, Collection
+from chowda.fields import (
+    BatchMediaFilesDisplayField,
+    BatchPercentCompleted,
+    BatchPercentSuccessful,
+    MediaFileCount,
+    MediaFilesGuidsField,
+)
+from chowda.models import Batch, Collection, MediaFile
 from chowda.utils import validate_media_file_guids
 
 
@@ -162,21 +169,15 @@ class BatchView(BaseModelView):
         'pipeline',
         'description',
         MediaFileCount(),
+        BatchPercentCompleted(),
+        BatchPercentSuccessful(),
         MediaFilesGuidsField(
             'media_files',
             id='media_file_guids',
             label='GUIDs',
             exclude_from_detail=True,
         ),
-        BaseField(
-            'media_files',
-            display_template='displays/batch_media_files.html',
-            label='Media Files',
-            exclude_from_edit=True,
-            exclude_from_create=True,
-            exclude_from_list=True,
-            read_only=True,
-        ),
+        BatchMediaFilesDisplayField(),
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
@@ -197,19 +198,27 @@ class BatchView(BaseModelView):
     async def start_batches(self, request: Request, pks: List[Any]) -> str:
         """Starts a Batch by sending a message to the Argo Event Bus"""
         try:
-            for batch_id in pks:
-                with Session(engine) as db:
+            with Session(engine) as db:
+                for batch_id in pks:
                     batch = db.get(Batch, batch_id)
+                    pipeline = ','.join(
+                        [app.endpoint for app in batch.pipeline.clams_apps]
+                    )
                     for media_file in batch.media_files:
                         ArgoEvent(
-                            batch.pipeline.name, payload={'guid': media_file.guid}
+                            'pipeline',
+                            payload={
+                                'batch_id': batch_id,
+                                'guid': media_file.guid,
+                                'pipeline': pipeline,
+                            },
                         ).publish(ignore_errors=False)
 
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
 
         # Display Success message
-        return f'Started {len(pks)} Batche(s)'
+        return f'Started {len(pks)} Batch(es)'
 
     @action(
         name='duplicate_batches',
@@ -270,20 +279,53 @@ class BatchView(BaseModelView):
 
 
 class MediaFileView(BaseModelView):
-    pk_attr = 'guid'
+    pk_attr: str = 'guid'
+    actions: ClassVar[List[str]] = ['create_new_batch']
 
-    fields: ClassVar[list[Any]] = [
+    fields: ClassVar[list[str]] = [
         'guid',
         'collections',
         'batches',
         'assets',
         'mmif_json',
-        'clams_events',
     ]
-    exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json', 'clams_events']
+    exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json']
 
     def can_create(self, request: Request) -> bool:
         return get_user(request).is_admin
+
+    @action(
+        name='create_new_batch',
+        text='Create Batch',
+        confirmation='Create a Batches from these Media Files?',
+        submit_btn_text='Yasss!',
+        submit_btn_class='btn-success',
+        form="""
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_name"
+                    placeholder="Batch Name">
+                <textarea class="form-control" name="batch_description"
+                    placeholder="Batch Description"></textarea>
+            </div>
+        </form>
+        """,
+    )
+    async def create_new_batch(self, request: Request, pks: List[Any]) -> str:
+        with Session(engine) as db:
+            media_files = db.exec(
+                select(MediaFile).where(MediaFile.guid.in_(pks))
+            ).all()
+            data: FormData = await request.form()
+            batch = Batch(
+                name=data.get("batch_name"),
+                description=data.get("batch_description"),
+                media_files=media_files,
+            )
+            db.add(batch)
+            db.commit()
+
+        return f"Batch of {len(pks)} Media Files created"
 
 
 class UserView(AdminModelView):
@@ -299,16 +341,6 @@ class PipelineView(AdminModelView):
 
     def is_accessible(self, request: Request) -> bool:
         return True
-
-
-class ClamsEventView(BaseModelView):
-    fields: ClassVar[list[Any]] = [
-        'batch',
-        'media_file',
-        'clams_app',
-        'status',
-        'response_json',
-    ]
 
 
 class DashboardView(CustomView):

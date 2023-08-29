@@ -6,6 +6,7 @@ SQLModels for DB and validation
 import enum
 from typing import Any, Dict, List, Optional
 
+from metaflow import Run, namespace
 from pydantic import AnyHttpUrl, EmailStr, stricturl
 from sqlalchemy import JSON, Column, Enum
 from sqlalchemy.dialects import postgresql
@@ -95,7 +96,7 @@ class MediaFile(SQLModel, table=True):
         assets: List of SonyCiAssets
         collections: List of Collections
         batches: List of Batches
-        clams_events: List of ClamsEvents
+        metaflow_runs: List of MetaflowRuns
     """
 
     __tablename__ = 'media_files'
@@ -110,7 +111,20 @@ class MediaFile(SQLModel, table=True):
     batches: List['Batch'] = Relationship(
         back_populates='media_files', link_model=MediaFileBatchLink
     )
-    clams_events: List['ClamsEvent'] = Relationship(back_populates='media_file')
+    metaflow_runs: List['MetaflowRun'] = Relationship(back_populates='media_file')
+
+    def metaflow_runs_for_batch(self, batch_id: int):
+        return [
+            metaflow_run
+            for metaflow_run in self.metaflow_runs
+            if metaflow_run.batch_id == batch_id
+        ]
+
+    def last_metaflow_run_for_batch(self, batch_id: int):
+        # TODO: is getting the last one sufficient, or do we need to add sortable
+        # timestamps?
+        runs = self.metaflow_runs_for_batch(batch_id=batch_id)
+        return runs[-1] if len(runs) > 0 else None
 
     async def __admin_repr__(self, request: Request):
         return self.guid
@@ -149,6 +163,9 @@ class SonyCiAsset(SQLModel, table=True):
     def thumbnails_by_type(self):
         return {thumbnail['type']: thumbnail for thumbnail in self.thumbnails}
 
+    async def __admin_repr__(self, request: Request):
+        return self.name
+
 
 class Collection(SQLModel, table=True):
     __tablename__ = 'collections'
@@ -176,7 +193,7 @@ class Batch(SQLModel, table=True):
     media_files: List[MediaFile] = Relationship(
         back_populates='batches', link_model=MediaFileBatchLink
     )
-    clams_events: List['ClamsEvent'] = Relationship(back_populates='batch')
+    metaflow_runs: List['MetaflowRun'] = Relationship(back_populates='batch')
 
     async def __admin_repr__(self, request: Request):
         return f'{self.name or self.id}'
@@ -203,7 +220,6 @@ class ClamsApp(SQLModel, table=True):
     pipelines: List['Pipeline'] = Relationship(
         back_populates='clams_apps', link_model=ClamsAppPipelineLink
     )
-    clams_events: List['ClamsEvent'] = Relationship(back_populates='clams_app')
 
     async def __admin_repr__(self, request: Request):
         return f'{self.name or self.id}'
@@ -229,20 +245,17 @@ class Pipeline(SQLModel, table=True):
         return f'<span><strong>{self.name or self.id}</span>'
 
 
-class ClamsEvent(SQLModel, table=True):
-    __tablename__ = 'clams_events'
-    id: Optional[int] = Field(primary_key=True, default=None)
-    status: str
-    response_json: Dict[str, Any] = Field(sa_column=Column(JSON))
+class MetaflowRun(SQLModel, table=True):
+    __tablename__ = 'metaflow_runs'
+    id: Optional[str] = Field(primary_key=True, default=None)
+    pathspec: str
     batch_id: Optional[int] = Field(default=None, foreign_key='batches.id')
-    batch: Optional[Batch] = Relationship(back_populates='clams_events')
-    clams_app_id: Optional[int] = Field(default=None, foreign_key='clams_apps.id')
-    clams_app: Optional[ClamsApp] = Relationship(back_populates='clams_events')
+    batch: Optional[Batch] = Relationship(back_populates='metaflow_runs')
     media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
-    media_file: Optional[MediaFile] = Relationship(back_populates='clams_events')
+    media_file: Optional[MediaFile] = Relationship(back_populates='metaflow_runs')
 
-    async def __admin_repr__(self, request: Request):
-        return f'{self.clams_app.name}: {self.status}'
-
-    async def __admin_select2_repr__(self, request: Request) -> str:
-        return f'<span><strong>{self.clams_app.name}:</strong> {self.status}</span>'
+    @property
+    def source(self):
+        # TODO: is setting namespace to None the right way to go here?
+        namespace(None)
+        return Run(self.pathspec)
