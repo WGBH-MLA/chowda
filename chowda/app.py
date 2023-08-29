@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
-from starlette.responses import RedirectResponse
+from starlette.responses import HTMLResponse
 from starlette.routing import Route
 
 from chowda._version import __version__
@@ -42,7 +42,7 @@ app = FastAPI(
     routes=[
         Route(
             '/',
-            lambda r: RedirectResponse('/admin'),
+            lambda r: HTMLResponse('<h1>Chowda!</h1><br><a href="/admin">Login</a>'),
         )
     ],
     middleware=[Middleware(SessionMiddleware, secret_key=SECRET)],
