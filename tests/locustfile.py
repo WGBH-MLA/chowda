@@ -16,7 +16,6 @@ models = {
     'clams-app': ClamsAppFactory,
     'pipeline': PipelineFactory,
     'batch': BatchFactory,
-    # 'clams-event': ClamsEventFactory,
 }
 
 

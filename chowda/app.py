@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
-from starlette.responses import RedirectResponse
+from starlette.responses import HTMLResponse
 from starlette.routing import Route
 
 from chowda._version import __version__
@@ -18,7 +18,6 @@ from chowda.db import engine
 from chowda.models import (
     Batch,
     ClamsApp,
-    ClamsEvent,
     Collection,
     MediaFile,
     Pipeline,
@@ -29,7 +28,6 @@ from chowda.routers.dashboard import dashboard
 from chowda.views import (
     BatchView,
     ClamsAppView,
-    ClamsEventView,
     CollectionView,
     DashboardView,
     MediaFileView,
@@ -44,7 +42,7 @@ app = FastAPI(
     routes=[
         Route(
             '/',
-            lambda r: RedirectResponse('/admin'),
+            lambda r: HTMLResponse('<h1>Chowda!</h1><br><a href="/admin">Login</a>'),
         )
     ],
     middleware=[Middleware(SessionMiddleware, secret_key=SECRET)],
@@ -73,7 +71,6 @@ admin.add_view(CollectionView(Collection, icon='fa fa-folder'))
 admin.add_view(BatchView(Batch, icon='fa fa-folder', label='Batches'))
 admin.add_view(ClamsAppView(ClamsApp, icon='fa fa-box'))
 admin.add_view(PipelineView(Pipeline, icon='fa fa-boxes-stacked'))
-admin.add_view(ClamsEventView(ClamsEvent, icon='fa fa-file-lines'))
 admin.add_view(UserView(User, icon='fa fa-users'))
 
 
