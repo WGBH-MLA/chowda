@@ -159,6 +159,10 @@ class SonyCiAsset(SQLModel, table=True):
         back_populates='assets', link_model=MediaFileSonyCiAssetLink
     )
 
+    @property
+    def thumbnails_by_type(self):
+        return {thumbnail['type']: thumbnail for thumbnail in self.thumbnails}
+
     async def __admin_repr__(self, request: Request):
         return self.name
 

@@ -42,7 +42,25 @@ class MediaFileCount(IntegerField):
 
 
 @dataclass
+class SonyCiAssetThumbnail(BaseField):
+    """A field to display SonyCiAsset thumbnails"""
+
+    name: str = 'sony_ci_assest_thumbnail'
+    label: str = 'Thumbnail'
+    display_template: str = 'displays/sony_ci_asset_thumbnail.html'
+    read_only: bool = True
+    exclude_from_create: bool = True
+
+    render_function_key: str = 'sony_ci_asset_thumbnail'
+
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        return obj.thumbnails_by_type.get('standard')
+
+
+@dataclass
 class BatchMediaFilesDisplayField(BaseField):
+    """A field that displays a list of MediaFiles in a batch"""
+
     name: str = 'batch_media_files'
     display_template: str = 'displays/batch_media_files.html'
     label: str = 'Media Files'
@@ -78,8 +96,7 @@ class BatchMediaFilesDisplayField(BaseField):
 
 @dataclass
 class BatchPercentCompleted(BaseField):
-    """A field that displays the percentage of MediaFiles
-    in a batch that have finished"""
+    """The percentage of MediaFiles in a batch that have finished"""
 
     name: str = 'batch_percent_completed'
     exclude_from_edit: bool = True
@@ -97,9 +114,11 @@ class BatchPercentCompleted(BaseField):
         ]
 
         finished_runs = [run for run in runs if run.finished_at]
-        percent_completed = len(finished_runs) / len(obj.media_files)
+        if obj.media_files:
+            percent_completed = len(finished_runs) / len(obj.media_files)
 
-        return f'{percent_completed:.1%}'
+            return f'{percent_completed:.1%}'
+        return None
 
 
 @dataclass
@@ -122,7 +141,8 @@ class BatchPercentSuccessful(BaseField):
         ]
 
         successful_runs = [run for run in runs if run.successful]
+        if obj.media_files:
+            percent_successful = len(successful_runs) / len(obj.media_files)
 
-        percent_successful = len(successful_runs) / len(obj.media_files)
-
-        return f'{percent_successful:.1%}'
+            return f'{percent_successful:.1%}'
+        return None

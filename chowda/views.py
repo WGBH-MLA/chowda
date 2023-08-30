@@ -22,6 +22,7 @@ from chowda.fields import (
     BatchPercentSuccessful,
     MediaFileCount,
     MediaFilesGuidsField,
+    SonyCiAssetThumbnail,
 )
 from chowda.models import Batch, Collection, MediaFile
 from chowda.utils import validate_media_file_guids
@@ -374,11 +375,11 @@ class DashboardView(CustomView):
 
 class SonyCiAssetView(AdminModelView):
     fields: ClassVar[list[Any]] = [
+        SonyCiAssetThumbnail(),
         'name',
         'size',
         'type',
         'format',
-        'thumbnails',
         'media_files',
     ]
 
