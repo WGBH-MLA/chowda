@@ -54,10 +54,13 @@ class SonyCiAssetThumbnail(BaseField):
     render_function_key: str = 'sony_ci_asset_thumbnail'
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
-        return obj.thumbnails_by_type['standard']
+        return obj.thumbnails_by_type.get('standard')
 
 
+@dataclass
 class BatchMediaFilesDisplayField(BaseField):
+    """A field that displays a list of MediaFiles in a batch"""
+
     name: str = 'batch_media_files'
     display_template: str = 'displays/batch_media_files.html'
     label: str = 'Media Files'
@@ -112,9 +115,11 @@ class BatchPercentCompleted(BaseField):
         ]
 
         finished_runs = [run for run in runs if run.finished_at]
-        percent_completed = len(finished_runs) / len(obj.media_files)
+        if obj.media_files:
+            percent_completed = len(finished_runs) / len(obj.media_files)
 
-        return f'{percent_completed:.1%}'
+            return f'{percent_completed:.1%}'
+        return None
 
 
 @dataclass
@@ -137,7 +142,8 @@ class BatchPercentSuccessful(BaseField):
         ]
 
         successful_runs = [run for run in runs if run.successful]
+        if obj.media_files:
+            percent_successful = len(successful_runs) / len(obj.media_files)
 
-        percent_successful = len(successful_runs) / len(obj.media_files)
-
-        return f'{percent_successful:.1%}'
+            return f'{percent_successful:.1%}'
+        return None
