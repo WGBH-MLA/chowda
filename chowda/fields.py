@@ -43,7 +43,7 @@ class MediaFileCount(IntegerField):
 
 @dataclass
 class SonyCiAssetThumbnail(BaseField):
-    """A the thumbnails for a SonyCiAsset mdoel"""
+    """A field to display SonyCiAsset thumbnails"""
 
     name: str = 'sony_ci_assest_thumbnail'
     label: str = 'Thumbnail'
@@ -96,8 +96,7 @@ class BatchMediaFilesDisplayField(BaseField):
 
 @dataclass
 class BatchPercentCompleted(BaseField):
-    """A field that displays the percentage of MediaFiles
-    in a batch that have finished"""
+    """The percentage of MediaFiles in a batch that have finished"""
 
     name: str = 'batch_percent_completed'
     exclude_from_edit: bool = True
