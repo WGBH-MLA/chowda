@@ -3,7 +3,6 @@
 SQLModels for DB and validation
 """
 
-import datetime
 import enum
 from datetime import datetime
 from typing import Any, Dict, List, Optional
