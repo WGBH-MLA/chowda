@@ -58,40 +58,29 @@ class SonyCiAssetThumbnail(BaseField):
 
 
 @dataclass
-class BatchMediaFilesDisplayField(BaseField):
-    """A field that displays a list of MediaFiles in a batch"""
+class BatchMetaflowRunDisplayField(BaseField):
+    """A field that displays a list of MetaflowRuns in a batch"""
 
-    name: str = 'batch_media_files'
-    display_template: str = 'displays/batch_media_files.html'
-    label: str = 'Media Files'
+    name: str = 'batch_metaflow_runs'
+    display_template: str = 'displays/batch_metaflow_runs.html'
+    label: str = 'Metaflow Runs'
     exclude_from_edit: bool = True
     exclude_from_create: bool = True
     exclude_from_list: bool = True
     read_only: bool = True
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
-        media_file_rows = []
-
-        for media_file in obj.media_files:
-            media_file_row = {'guid': media_file.guid}
-
-            # Lookup the real Metaflow Run using the last Run ID
-            run = media_file.last_metaflow_run_for_batch(batch_id=obj.id)
-            if run:
-                media_file_row['run_id'] = run.id
-                media_file_row[
-                    'run_link'
-                ] = f'https://mario.wgbh-mla.org/{run.pathspec}'
-                media_file_row['finished_at'] = run.source.finished_at or ''
-                media_file_row['successful'] = run.source.successful
-            else:
-                media_file_row['run_id'] = None
-                media_file_row['run_link'] = None
-                media_file_row['finished_at'] = None
-                media_file_row['successful'] = None
-
-            media_file_rows.append(media_file_row)
-        return media_file_rows
+        return [
+            {
+                'guid': run.media_file_id,
+                'run_id': run.id,
+                'run_link': f'https://mario.wgbh-mla.org/{run.pathspec}',
+                'finished_at': run.finished_at or '',
+                'finished': run.finished,
+                'successful': run.successful,
+            }
+            for run in obj.metaflow_runs
+        ]
 
 
 @dataclass

@@ -17,7 +17,7 @@ from starlette_admin.fields import BaseField
 from chowda.auth.utils import get_user
 from chowda.db import engine
 from chowda.fields import (
-    BatchMediaFilesDisplayField,
+    BatchMetaflowRunDisplayField,
     BatchPercentCompleted,
     BatchPercentSuccessful,
     MediaFileCount,
@@ -178,8 +178,7 @@ class BatchView(BaseModelView):
             label='GUIDs',
             exclude_from_detail=True,
         ),
-        # BatchMediaFilesDisplayField(),
-        'metaflow_runs',
+        BatchMetaflowRunDisplayField(),
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
