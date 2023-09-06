@@ -3,12 +3,14 @@
 SQLModels for DB and validation
 """
 
+import datetime
 import enum
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from metaflow import Run, namespace
 from pydantic import AnyHttpUrl, EmailStr, stricturl
-from sqlalchemy import JSON, Column, Enum
+from sqlalchemy import JSON, Column, DateTime, Enum
 from sqlalchemy.dialects import postgresql
 from sqlmodel import Field, Relationship, SQLModel
 from starlette.requests import Request
@@ -253,6 +255,10 @@ class MetaflowRun(SQLModel, table=True):
     batch: Optional[Batch] = Relationship(back_populates='metaflow_runs')
     media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
     media_file: Optional[MediaFile] = Relationship(back_populates='metaflow_runs')
+    finished: bool = Field(default=False)
+    finished_at: Optional[datetime] = Field(sa_column=DateTime, default=None)
+    duration: Optional[int] = Field(default=None)
+    successful: Optional[bool] = Field(default=None)
 
     @property
     def source(self):

@@ -178,7 +178,8 @@ class BatchView(BaseModelView):
             label='GUIDs',
             exclude_from_detail=True,
         ),
-        BatchMediaFilesDisplayField(),
+        # BatchMediaFilesDisplayField(),
+        'metaflow_runs',
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
@@ -386,3 +387,7 @@ class SonyCiAssetView(AdminModelView):
     def can_create(self, request: Request) -> bool:
         """Sony Ci Assets are ingested from Sony Ci API, not created from the UI."""
         return False
+
+
+class MetaflowRunView(AdminModelView):
+    form_include_pk: ClassVar[bool] = True

@@ -104,20 +104,9 @@ class BatchPercentCompleted(BaseField):
     label: str = 'Completed %'
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
-        runs = [
-            last_run.source
-            for last_run in [
-                media_file.last_metaflow_run_for_batch(batch_id=obj.id)
-                for media_file in obj.media_files
-            ]
-            if last_run
-        ]
-
-        finished_runs = [run for run in runs if run.finished_at]
-        if obj.media_files:
-            percent_completed = len(finished_runs) / len(obj.media_files)
-
-            return f'{percent_completed:.1%}'
+        runs = [run.finished for run in obj.metaflow_runs]
+        if runs:
+            return f'{runs.count(True) / len(obj.media_files):.1%}'
         return None
 
 
@@ -131,18 +120,7 @@ class BatchPercentSuccessful(BaseField):
     exclude_from_edit: bool = True
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
-        runs = [
-            last_run.source
-            for last_run in [
-                media_file.last_metaflow_run_for_batch(batch_id=obj.id)
-                for media_file in obj.media_files
-            ]
-            if last_run
-        ]
-
-        successful_runs = [run for run in runs if run.successful]
-        if obj.media_files:
-            percent_successful = len(successful_runs) / len(obj.media_files)
-
-            return f'{percent_successful:.1%}'
+        runs = [run.successful for run in obj.metaflow_runs]
+        if runs:
+            return f'{runs.count(True) / len(obj.media_files):.1%}'
         return None

@@ -20,6 +20,7 @@ from chowda.models import (
     ClamsApp,
     Collection,
     MediaFile,
+    MetaflowRun,
     Pipeline,
     SonyCiAsset,
     User,
@@ -31,6 +32,7 @@ from chowda.views import (
     CollectionView,
     DashboardView,
     MediaFileView,
+    MetaflowRunView,
     PipelineView,
     SonyCiAssetView,
     UserView,
@@ -72,6 +74,7 @@ admin.add_view(BatchView(Batch, icon='fa fa-folder', label='Batches'))
 admin.add_view(ClamsAppView(ClamsApp, icon='fa fa-box'))
 admin.add_view(PipelineView(Pipeline, icon='fa fa-boxes-stacked'))
 admin.add_view(UserView(User, icon='fa fa-users'))
+admin.add_view(MetaflowRunView(MetaflowRun, icon='fa fa-person-running'))
 
 
 # Mount admin to app
