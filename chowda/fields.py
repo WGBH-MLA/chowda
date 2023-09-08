@@ -70,17 +70,35 @@ class BatchMetaflowRunDisplayField(BaseField):
     read_only: bool = True
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
-        return [
-            {
-                'guid': run.media_file_id,
-                'run_id': run.id,
-                'run_link': f'https://mario.wgbh-mla.org/{run.pathspec}',
-                'finished_at': run.finished_at or '',
-                'finished': run.finished,
-                'successful': run.successful,
-            }
-            for run in obj.metaflow_runs
-        ]
+        # Check if any runs are still running
+        running = [run for run in obj.metaflow_runs if not run.finished]
+        new_runs = None
+        if running:
+            from metaflow import Run, namespace
+
+            # Check status of running runs
+            namespace(None)
+            runs = [Run(run.pathspec) for run in running]
+            finished = [run for run in runs if run.finished]
+            if finished:
+                from sqlmodel import Session, select
+
+                from chowda.db import engine
+                from chowda.models import Batch, MetaflowRun
+
+                with Session(engine) as db:
+                    for run in finished:
+                        r = db.exec(
+                            select(MetaflowRun).where(MetaflowRun.id == run.id)
+                        ).one()
+                        r.finished = True
+                        r.successful = run.successful
+                        db.add(r)
+                    db.commit()
+                    # Refresh the data for the page
+                    new_runs = db.get(Batch, obj.id).metaflow_runs
+
+        return [run.dict() for run in new_runs or obj.metaflow_runs]
 
 
 @dataclass

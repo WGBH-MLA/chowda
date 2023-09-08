@@ -1,4 +1,8 @@
-<table id="dt" class="table table-vcenter text-nowrap dataTable no-footer" aria-describedby="dt_info">
+<table
+  id="dt"
+  class="table table-vcenter text-nowrap dataTable no-footer"
+  aria-describedby="dt_info"
+>
   <thead>
     <tr>
       <th>GUID</th>
@@ -10,28 +14,24 @@
 
   {% for media_file_row in data %}
   <tr>
-
     <td>
-      <a class="m-1 py-1 px-2 badge bg-blue-lt lead"
-        href="../../media-file/detail/{{ media_file_row['guid'] }}">{{media_file_row['guid'] }}
+      <a
+        class="m-1 py-1 px-2 badge bg-blue-lt lead"
+        href="../../media-file/detail/{{ media_file_row.media_file_id }}"
+        >{{media_file_row.media_file_id }}
       </a>
     </td>
     <td>
-      {% if media_file_row['run_link'] %}
-      <a href="{{ media_file_row['run_link']}}" target="blank">
-        {{ media_file_row['run_id'] }}
+      <a
+        href="https://mario.wgbh-mla.org/{{ media_file_row.pathspec}}"
+        target="blank"
+      >
+        {{ media_file_row.pathspec }}
         <i class="fa fa-external-link" aria-hidden="true"></i>
       </a>
-      {% else %}
-      None
-      {% endif %}
     </td>
-    <td>
-      {{ media_file_row['finished_at'] }}
-    </td>
-    <td>
-      {{ media_file_row['successful'] }}
-    </td>
+    <td>{{ media_file_row.finished }}</td>
+    <td>{{ media_file_row.successful }}</td>
   </tr>
   {% endfor %}
 </table>
