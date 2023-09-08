@@ -254,9 +254,13 @@ class MetaflowRun(SQLModel, table=True):
     batch: Optional[Batch] = Relationship(back_populates='metaflow_runs')
     media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
     media_file: Optional[MediaFile] = Relationship(back_populates='metaflow_runs')
+    created_at: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), default=datetime.utcnow)
+    )
     finished: bool = Field(default=False)
-    finished_at: Optional[datetime] = Field(sa_column=DateTime, default=None)
-    duration: Optional[int] = Field(default=None)
+    finished_at: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), default=None)
+    )
     successful: Optional[bool] = Field(default=None)
 
     @property

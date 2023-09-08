@@ -110,6 +110,9 @@ class BatchMetaflowRunDisplayField(BaseField):
                 'finished_at': run['finished_at'].isoformat()
                 if run.get('finished_at')
                 else None,
+                'created_at': run['created_at'].isoformat()
+                if run.get('created_at')
+                else None,
             }
             for run in value
         ]
