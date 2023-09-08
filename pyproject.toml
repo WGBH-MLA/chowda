@@ -15,7 +15,7 @@ dependencies = [
     "sonyci~=0.1",
     "psycopg2~=2.9",
     "metaflow~=2.9",
-    "alembic~=1.11",
+    "alembic~=1.12",
     "python-dotenv~=1.0",
     "authlib~=1.2",
     "itsdangerous~=2.1",
@@ -105,14 +105,14 @@ dev = [
     "uvicorn~=0.23",
     "black~=23.7",
     "ruff~=0.0",
-    "pre-commit~=3.3",
+    "pre-commit~=3.4",
 ]
 docs = [
     "mkdocs~=1.5",
     "mkdocs-material~=9.2",
     "mkdocs-git-revision-date-localized-plugin~=1.2",
     "mike~=1.1",
-    "mkdocstrings[python]~=0.22",
+    "mkdocstrings[python]~=0.23",
     "mkdocs-jupyter~=0.24",
 ]
 ci = [
