@@ -101,6 +101,19 @@ class BatchMetaflowRunDisplayField(BaseField):
 
         return [run.dict() for run in new_runs or obj.metaflow_runs]
 
+    async def serialize_value(
+        self, request: Request, value: Any, action: RequestAction
+    ) -> Any:
+        return [
+            {
+                **run,
+                'finished_at': run['finished_at'].isoformat()
+                if run.get('finished_at')
+                else None,
+            }
+            for run in value
+        ]
+
 
 @dataclass
 class BatchPercentCompleted(BaseField):
