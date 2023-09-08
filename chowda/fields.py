@@ -93,6 +93,7 @@ class BatchMetaflowRunDisplayField(BaseField):
                         ).one()
                         r.finished = True
                         r.successful = run.successful
+                        r.finished_at = run.finished_at
                         db.add(r)
                     db.commit()
                     # Refresh the data for the page
