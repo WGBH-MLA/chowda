@@ -58,40 +58,64 @@ class SonyCiAssetThumbnail(BaseField):
 
 
 @dataclass
-class BatchMediaFilesDisplayField(BaseField):
-    """A field that displays a list of MediaFiles in a batch"""
+class BatchMetaflowRunDisplayField(BaseField):
+    """A field that displays a list of MetaflowRuns in a batch"""
 
-    name: str = 'batch_media_files'
-    display_template: str = 'displays/batch_media_files.html'
-    label: str = 'Media Files'
+    name: str = 'batch_metaflow_runs'
+    display_template: str = 'displays/batch_metaflow_runs.html'
+    label: str = 'Metaflow Runs'
     exclude_from_edit: bool = True
     exclude_from_create: bool = True
     exclude_from_list: bool = True
     read_only: bool = True
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
-        media_file_rows = []
+        # Check if any runs are still running
+        running = [run for run in obj.metaflow_runs if not run.finished]
+        new_runs = None
+        if running:
+            from metaflow import Run, namespace
 
-        for media_file in obj.media_files:
-            media_file_row = {'guid': media_file.guid}
+            # Check status of running runs
+            namespace(None)
+            runs = [Run(run.pathspec) for run in running]
+            finished = [run for run in runs if run.finished]
+            if finished:
+                from sqlmodel import Session, select
 
-            # Lookup the real Metaflow Run using the last Run ID
-            run = media_file.last_metaflow_run_for_batch(batch_id=obj.id)
-            if run:
-                media_file_row['run_id'] = run.id
-                media_file_row[
-                    'run_link'
-                ] = f'https://mario.wgbh-mla.org/{run.pathspec}'
-                media_file_row['finished_at'] = run.source.finished_at or ''
-                media_file_row['successful'] = run.source.successful
-            else:
-                media_file_row['run_id'] = None
-                media_file_row['run_link'] = None
-                media_file_row['finished_at'] = None
-                media_file_row['successful'] = None
+                from chowda.db import engine
+                from chowda.models import Batch, MetaflowRun
 
-            media_file_rows.append(media_file_row)
-        return media_file_rows
+                with Session(engine) as db:
+                    for run in finished:
+                        r = db.exec(
+                            select(MetaflowRun).where(MetaflowRun.id == run.id)
+                        ).one()
+                        r.finished = True
+                        r.successful = run.successful
+                        r.finished_at = run.finished_at
+                        db.add(r)
+                    db.commit()
+                    # Refresh the data for the page
+                    new_runs = db.get(Batch, obj.id).metaflow_runs
+
+        return [run.dict() for run in new_runs or obj.metaflow_runs]
+
+    async def serialize_value(
+        self, request: Request, value: Any, action: RequestAction
+    ) -> Any:
+        return [
+            {
+                **run,
+                'finished_at': run['finished_at'].isoformat()
+                if run.get('finished_at')
+                else None,
+                'created_at': run['created_at'].isoformat()
+                if run.get('created_at')
+                else None,
+            }
+            for run in value
+        ]
 
 
 @dataclass
@@ -104,20 +128,9 @@ class BatchPercentCompleted(BaseField):
     label: str = 'Completed %'
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
-        runs = [
-            last_run.source
-            for last_run in [
-                media_file.last_metaflow_run_for_batch(batch_id=obj.id)
-                for media_file in obj.media_files
-            ]
-            if last_run
-        ]
-
-        finished_runs = [run for run in runs if run.finished_at]
-        if obj.media_files:
-            percent_completed = len(finished_runs) / len(obj.media_files)
-
-            return f'{percent_completed:.1%}'
+        runs = [run.finished for run in obj.metaflow_runs]
+        if runs:
+            return f'{runs.count(True) / len(obj.media_files):.1%}'
         return None
 
 
@@ -131,18 +144,7 @@ class BatchPercentSuccessful(BaseField):
     exclude_from_edit: bool = True
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
-        runs = [
-            last_run.source
-            for last_run in [
-                media_file.last_metaflow_run_for_batch(batch_id=obj.id)
-                for media_file in obj.media_files
-            ]
-            if last_run
-        ]
-
-        successful_runs = [run for run in runs if run.successful]
-        if obj.media_files:
-            percent_successful = len(successful_runs) / len(obj.media_files)
-
-            return f'{percent_successful:.1%}'
+        runs = [run.successful for run in obj.metaflow_runs]
+        if runs:
+            return f'{runs.count(True) / len(obj.media_files):.1%}'
         return None

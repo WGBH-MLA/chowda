@@ -17,7 +17,7 @@ from starlette_admin.fields import BaseField
 from chowda.auth.utils import get_user
 from chowda.db import engine
 from chowda.fields import (
-    BatchMediaFilesDisplayField,
+    BatchMetaflowRunDisplayField,
     BatchPercentCompleted,
     BatchPercentSuccessful,
     MediaFileCount,
@@ -178,7 +178,7 @@ class BatchView(BaseModelView):
             label='GUIDs',
             exclude_from_detail=True,
         ),
-        BatchMediaFilesDisplayField(),
+        BatchMetaflowRunDisplayField(),
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
@@ -386,3 +386,7 @@ class SonyCiAssetView(AdminModelView):
     def can_create(self, request: Request) -> bool:
         """Sony Ci Assets are ingested from Sony Ci API, not created from the UI."""
         return False
+
+
+class MetaflowRunView(AdminModelView):
+    form_include_pk: ClassVar[bool] = True
