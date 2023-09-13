@@ -1,4 +1,5 @@
 from json import loads
+from time import sleep
 
 from fastapi import APIRouter, HTTPException
 from metaflow import Flow, Run, namespace
@@ -22,14 +23,13 @@ def event(event: dict):
         payload = body['payload']
 
         # Find which run this event came from.
+        sleep(1)  # FIXME hack for testing
         namespace(None)
         pipeline_runs = Flow('Pipeline').runs()
         for run in pipeline_runs:
             print('Checking run', run.id)
             data = run.data
             if not data:
-                from time import sleep
-
                 for n in range(1, 4):
                     print(f'No run data yet, sleeping {2**n} seconds...')
                     sleep(2**n)
