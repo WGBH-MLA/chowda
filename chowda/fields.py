@@ -141,3 +141,17 @@ class BatchUnstartedGuids(BaseField):
         runs = obj.metaflow_runs
         running_guids = {run.media_file.guid for run in runs}
         return [MediaFile(guid=guid) for guid in ids - running_guids]
+
+
+@dataclass
+class BatchUnstartedGuidsCount(IntegerField):
+    """The number of MetaflowRuns in a batch that have not yet started"""
+
+    name: str = 'batch_unstarted_guids_count'
+    read_only: bool = True
+    label: str = 'Unstarted GUIDs'
+    exclude_from_create: bool = True
+    exclude_from_edit: bool = True
+
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        return len(obj.media_files) - len(obj.metaflow_runs)
