@@ -20,6 +20,7 @@ from chowda.fields import (
     BatchMetaflowRunDisplayField,
     BatchPercentCompleted,
     BatchPercentSuccessful,
+    BatchUnstartedGuids,
     MediaFileCount,
     MediaFilesGuidsField,
     SonyCiAssetThumbnail,
@@ -172,6 +173,7 @@ class BatchView(BaseModelView):
         MediaFileCount(),
         BatchPercentCompleted(),
         BatchPercentSuccessful(),
+        BatchUnstartedGuids(),
         MediaFilesGuidsField(
             'media_files',
             id='media_file_guids',

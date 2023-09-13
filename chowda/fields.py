@@ -6,6 +6,8 @@ from starlette.requests import Request
 from starlette_admin._types import RequestAction
 from starlette_admin.fields import BaseField, IntegerField, TextAreaField
 
+from chowda.models import MediaFile
+
 
 @dataclass
 class MediaFilesGuidsField(TextAreaField):
@@ -119,3 +121,23 @@ class BatchPercentSuccessful(BaseField):
         if runs:
             return f'{runs.count(True) / len(obj.media_files):.1%}'
         return None
+
+
+@dataclass
+class BatchUnstartedGuids(BaseField):
+    """GUIDs in a batch that have not yet started"""
+
+    name: str = 'batch_unstarted_guids'
+    read_only: bool = True
+    label: str = 'Unstarted GUIDs'
+    exclude_from_create: bool = True
+    exclude_from_edit: bool = True
+    exclude_from_list: bool = True
+
+    display_template: str = 'displays/collection_media_files.html'
+
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        ids = {media_file.guid for media_file in obj.media_files}
+        runs = obj.metaflow_runs
+        running_guids = {run.media_file.guid for run in runs}
+        return [MediaFile(guid=guid) for guid in ids - running_guids]
