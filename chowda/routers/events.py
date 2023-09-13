@@ -25,6 +25,14 @@ def event(event: dict):
         namespace(None)
         pipeline_runs = Flow('Pipeline').runs()
         for run in pipeline_runs:
+            if not run.data:
+                from time import sleep
+
+                for n in range(1, 5):
+                    print(f'No run data yet, sleeping {2**n} seconds...')
+                    sleep(2**n)
+                    if run.data:
+                        break
             if (
                 run.data.guid == payload['guid']
                 and run.data.batch_id == payload['batch_id']
@@ -61,7 +69,7 @@ def event(event: dict):
             if not row:
                 raise HTTPException(404, 'MetaflowRun row not found!')
             namespace(None)
-            run = Run(payload['flow_name'] + payload['run_id'])
+            run = Run(f"{payload['flow_name']}/{payload['run_id']}")
             row.finished = run.finished
             row.finished_at = run.finished_at
             row.successful = run.successful
