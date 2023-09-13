@@ -262,6 +262,8 @@ class MetaflowRun(SQLModel, table=True):
         sa_column=Column(DateTime(timezone=True), default=None)
     )
     successful: Optional[bool] = Field(default=None)
+    current_step: Optional[str] = Field(default=None)
+    current_task: Optional[str] = Field(default=None)
 
     @property
     def source(self):

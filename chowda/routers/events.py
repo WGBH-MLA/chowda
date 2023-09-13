@@ -36,6 +36,8 @@ def event(event: dict):
             row.finished = run.finished
             row.finished_at = run.finished_at
             row.successful = run.successful
+            row.current_step = payload['step_name']
+            row.current_task = payload['task_id']
             db.add(row)
             db.commit()
             print('Successfully updated MetaflowRun row!', row)
