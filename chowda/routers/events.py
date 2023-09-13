@@ -1,12 +1,11 @@
 from json import loads
-from time import sleep
 
 from fastapi import APIRouter, HTTPException
-from metaflow import Flow, Run, namespace
-from sqlmodel import Session, select
+from metaflow import Run, namespace
+from sqlmodel import Session
 
 from chowda.db import engine
-from chowda.models import Batch, MediaFile, MetaflowRun
+from chowda.models import MetaflowRun
 
 events = APIRouter()
 
@@ -20,50 +19,11 @@ def event(event: dict):
     body = loads(event['body'])
     if body['name'] == 'pipeline':
         print('new pipeline event!')
-        payload = body['payload']
-
-        # Find which run this event came from.
-        sleep(2)  # FIXME hack for testing
-        namespace(None)
-        pipeline_runs = Flow('Pipeline').runs()
-        for run in pipeline_runs:
-            print('Checking run', run.id)
-            data = run.data
-            if not data:
-                for n in range(1, 4):
-                    print(f'No run data yet, sleeping {2**n} seconds...')
-                    sleep(2**n)
-                    data = run.data
-                    if data:
-                        print('Continuing with run data!', data)
-                        break
-                if not data:
-                    raise HTTPException(400, 'No run data')
-            if data.guid == payload['guid'] and data.batch_id == payload['batch_id']:
-                print('Found run! Creating new record.')
-                with Session(engine) as db:
-                    media_file = db.exec(
-                        select(MediaFile).where(MediaFile.guid == payload['guid']).one()
-                    )
-                    batch = db.get(Batch, int(payload['batch_id']))
-                    row = Batch(
-                        id=run.id,
-                        batch=batch,
-                        media_file=media_file,
-                        pathspec=run.pathspec,
-                        created_at=run.created_at,
-                        finished=run.finished,
-                        finished_at=run.finished_at,
-                        successful=run.successful,
-                    )
-                    db.add(row)
-                    db.commit()
-                    print('Successfully created new Batch row!', row)
-                    return
-        # If we get here, we didn't find the run.
-        # TODO: Should we try again? For now, return 404.
-        raise HTTPException(404, 'Run not found')
-
+        # FIXME: Ideally, we would add the run to the database here,
+        # but the run_id won't be minted until metaflow gets this event.
+        # For now, we can continue creating the db row inside the running flow,
+        # then update metaflow status events, as they come in.
+        return
     if body['name'].startswith('metaflow.Pipeline'):
         print('Found event!', body['name'])
         payload = body['payload']
