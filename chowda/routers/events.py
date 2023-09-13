@@ -25,18 +25,19 @@ def event(event: dict):
         namespace(None)
         pipeline_runs = Flow('Pipeline').runs()
         for run in pipeline_runs:
-            if not run.data:
+            print('Checking run', run.id)
+            data = run.data
+            if not data:
                 from time import sleep
 
-                for n in range(1, 5):
+                for n in range(1, 4):
                     print(f'No run data yet, sleeping {2**n} seconds...')
                     sleep(2**n)
                     if run.data:
+                        data = run.data
+                        print('Continuing with run data!', data)
                         break
-            if (
-                run.data.guid == payload['guid']
-                and run.data.batch_id == payload['batch_id']
-            ):
+            if data.guid == payload['guid'] and data.batch_id == payload['batch_id']:
                 print('Found run! Creating new record.')
                 with Session(engine) as db:
                     media_file = db.exec(
