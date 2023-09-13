@@ -23,7 +23,7 @@ def event(event: dict):
         payload = body['payload']
 
         # Find which run this event came from.
-        sleep(1)  # FIXME hack for testing
+        sleep(2)  # FIXME hack for testing
         namespace(None)
         pipeline_runs = Flow('Pipeline').runs()
         for run in pipeline_runs:
@@ -33,10 +33,12 @@ def event(event: dict):
                 for n in range(1, 4):
                     print(f'No run data yet, sleeping {2**n} seconds...')
                     sleep(2**n)
-                    if run.data:
-                        data = run.data
+                    data = run.data
+                    if data:
                         print('Continuing with run data!', data)
                         break
+                if not data:
+                    raise HTTPException(400, 'No run data')
             if data.guid == payload['guid'] and data.batch_id == payload['batch_id']:
                 print('Found run! Creating new record.')
                 with Session(engine) as db:
