@@ -1,3 +1,5 @@
+from json import loads
+
 from fastapi import APIRouter, HTTPException
 from metaflow import Flow, Run, namespace
 from sqlmodel import select
@@ -14,7 +16,7 @@ def event(event: dict):
     print('Chowda event received', event)
     if not event.get('body'):
         raise HTTPException(400, 'No body')
-    body = dict(event['body'])
+    body = loads(event['body'])
     if body['name'] == 'pipeline':
         print('new pipeline event!')
         payload = body['payload']
