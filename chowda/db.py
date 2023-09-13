@@ -18,3 +18,10 @@ def init_db():
     from chowda import models  # noqa: F401
 
     SQLModel.metadata.create_all(engine)
+
+
+def get_db():
+    from sqlmodel import Session
+
+    with Session(engine) as session:
+        yield session
