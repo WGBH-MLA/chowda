@@ -137,10 +137,7 @@ class BatchUnstartedGuids(BaseField):
     display_template: str = 'displays/collection_media_files.html'
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
-        ids = {media_file.guid for media_file in obj.media_files}
-        runs = obj.metaflow_runs
-        running_guids = {run.media_file.guid for run in runs}
-        return [MediaFile(guid=guid) for guid in ids - running_guids]
+        return [MediaFile(guid=guid) for guid in obj.unstarted_guids()]
 
 
 @dataclass
@@ -154,4 +151,4 @@ class BatchUnstartedGuidsCount(IntegerField):
     exclude_from_edit: bool = True
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
-        return len(obj.media_files) - len(obj.metaflow_runs)
+        return len(obj.unstarted_guids())
