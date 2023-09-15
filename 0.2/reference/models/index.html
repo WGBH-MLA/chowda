@@ -708,6 +708,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#chowda.models.Batch" class="md-nav__link">
+    Batch
+  </a>
+  
+    <nav class="md-nav" aria-label="Batch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chowda.models.Batch.unstarted_guids" class="md-nav__link">
+    unstarted_guids()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#chowda.models.MediaFile" class="md-nav__link">
     MediaFile
   </a>
@@ -807,6 +827,124 @@
 
 
 
+<h2 id="chowda.models.Batch" class="doc doc-heading">
+          <code>Batch</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="sqlmodel.SQLModel">SQLModel</span></code></p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>chowda/models.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Batch</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;batches&#39;</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">pipeline_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">foreign_key</span><span class="o">=</span><span class="s1">&#39;pipelines.id&#39;</span><span class="p">)</span>
+    <span class="n">pipeline</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">&#39;Pipeline&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;batches&#39;</span><span class="p">)</span>
+    <span class="n">media_files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">MediaFile</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
+        <span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;batches&#39;</span><span class="p">,</span> <span class="n">link_model</span><span class="o">=</span><span class="n">MediaFileBatchLink</span>
+    <span class="p">)</span>
+    <span class="n">metaflow_runs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;MetaflowRun&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;batch&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">unstarted_guids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the set of GUIDs that are not currently running&quot;&quot;&quot;</span>
+        <span class="n">ids</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="p">{</span><span class="n">media_file</span><span class="o">.</span><span class="n">guid</span> <span class="k">for</span> <span class="n">media_file</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">media_files</span><span class="p">}</span>
+        <span class="n">running_guids</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="p">{</span><span class="n">run</span><span class="o">.</span><span class="n">media_file</span><span class="o">.</span><span class="n">guid</span> <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metaflow_runs</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">ids</span> <span class="o">-</span> <span class="n">running_guids</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__admin_repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s1">&#39;</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__admin_select2_repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;&lt;span&gt;&lt;strong&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s1">&lt;/span&gt;&#39;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="chowda.models.Batch.unstarted_guids" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">unstarted_guids</span><span class="p">()</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Returns the set of GUIDs that are not currently running</p>
+
+          <details class="quote">
+            <summary>Source code in <code>chowda/models.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">unstarted_guids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the set of GUIDs that are not currently running&quot;&quot;&quot;</span>
+    <span class="n">ids</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="p">{</span><span class="n">media_file</span><span class="o">.</span><span class="n">guid</span> <span class="k">for</span> <span class="n">media_file</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">media_files</span><span class="p">}</span>
+    <span class="n">running_guids</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="p">{</span><span class="n">run</span><span class="o">.</span><span class="n">media_file</span><span class="o">.</span><span class="n">guid</span> <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metaflow_runs</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">ids</span> <span class="o">-</span> <span class="n">running_guids</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="chowda.models.MediaFile" class="doc doc-heading">
           <code>MediaFile</code>
 
@@ -869,7 +1007,7 @@
         <tr>
           <td><code>batches</code></td>
           <td>
-                <code><span title="typing.List">List</span>[<span title="chowda.models.Batch">Batch</span>]</code>
+                <code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="chowda.models.Batch" href="#chowda.models.Batch">Batch</a>]</code>
           </td>
           <td>
             <div class="doc-md-description">
