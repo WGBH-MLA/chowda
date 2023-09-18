@@ -33,7 +33,7 @@ from chowda.utils import validate_media_file_guids
 class ChowdaModelView(ModelView):
     """Base permissions for all views"""
 
-    page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
+    page_size_options: ClassVar[list[int]] = [10, 25, 100, 1000, -1]
 
 
 class ClammerModelView(ChowdaModelView):
@@ -291,6 +291,7 @@ class BatchView(ClammerModelView):
 
 class MediaFileView(ClammerModelView):
     pk_attr: str = 'guid'
+
     actions: ClassVar[List[str]] = ['create_new_batch']
 
     fields: ClassVar[list[str]] = [
@@ -301,6 +302,7 @@ class MediaFileView(ClammerModelView):
         'mmif_json',
     ]
     exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json']
+    page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
 
     def can_create(self, request: Request) -> bool:
         return get_user(request).is_admin
@@ -392,6 +394,8 @@ class SonyCiAssetView(AdminModelView):
         'format',
         'media_files',
     ]
+
+    page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
 
     def can_create(self, request: Request) -> bool:
         """Sony Ci Assets are ingested from Sony Ci API, not created from the UI."""
