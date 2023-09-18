@@ -30,10 +30,14 @@ from chowda.models import Batch, Collection, MediaFile
 from chowda.utils import validate_media_file_guids
 
 
-class BaseModelView(ModelView):
+class ChowdaModelView(ModelView):
     """Base permissions for all views"""
 
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
+
+
+class ClammerModelView(ChowdaModelView):
+    """Base Clammer permissions for all protected views"""
 
     def can_create(self, request: Request) -> bool:
         return get_user(request).is_clammer
@@ -45,7 +49,7 @@ class BaseModelView(ModelView):
         return get_user(request).is_clammer
 
 
-class AdminModelView(BaseModelView):
+class AdminModelView(ClammerModelView):
     """Base Admin permissions for all protected views"""
 
     def is_accessible(self, request: Request) -> bool:
@@ -62,7 +66,7 @@ class AdminModelView(BaseModelView):
         return get_user(request).is_admin
 
 
-class CollectionView(BaseModelView):
+class CollectionView(ClammerModelView):
     exclude_fields_from_list: ClassVar[list[Any]] = [Collection.media_files]
     exclude_fields_from_detail: ClassVar[list[Any]] = [Collection.id]
 
@@ -154,7 +158,7 @@ class CollectionView(BaseModelView):
         return f'Created Batches from {", ".join(names)}'
 
 
-class BatchView(BaseModelView):
+class BatchView(ClammerModelView):
     exclude_fields_from_create: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
@@ -285,7 +289,7 @@ class BatchView(BaseModelView):
         return f'Combined {len(pks)} Batch(es)'
 
 
-class MediaFileView(BaseModelView):
+class MediaFileView(ClammerModelView):
     pk_attr: str = 'guid'
     actions: ClassVar[List[str]] = ['create_new_batch']
 
@@ -339,7 +343,7 @@ class UserView(AdminModelView):
     fields: ClassVar[list[Any]] = ['first_name', 'last_name', 'email']
 
 
-class ClamsAppView(BaseModelView):
+class ClamsAppView(ClammerModelView):
     fields: ClassVar[list[Any]] = ['name', 'endpoint', 'description', 'pipelines']
 
 
