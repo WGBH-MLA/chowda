@@ -6,6 +6,8 @@ from starlette.requests import Request
 from starlette_admin._types import RequestAction
 from starlette_admin.fields import BaseField, IntegerField, TextAreaField
 
+from chowda.models import MediaFile
+
 
 @dataclass
 class MediaFilesGuidsField(TextAreaField):
@@ -70,36 +72,7 @@ class BatchMetaflowRunDisplayField(BaseField):
     read_only: bool = True
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
-        # Check if any runs are still running
-        running = [run for run in obj.metaflow_runs if not run.finished]
-        new_runs = None
-        if running:
-            from metaflow import Run, namespace
-
-            # Check status of running runs
-            namespace(None)
-            runs = [Run(run.pathspec) for run in running]
-            finished = [run for run in runs if run.finished]
-            if finished:
-                from sqlmodel import Session, select
-
-                from chowda.db import engine
-                from chowda.models import Batch, MetaflowRun
-
-                with Session(engine) as db:
-                    for run in finished:
-                        r = db.exec(
-                            select(MetaflowRun).where(MetaflowRun.id == run.id)
-                        ).one()
-                        r.finished = True
-                        r.successful = run.successful
-                        r.finished_at = run.finished_at
-                        db.add(r)
-                    db.commit()
-                    # Refresh the data for the page
-                    new_runs = db.get(Batch, obj.id).metaflow_runs
-
-        return [run.dict() for run in new_runs or obj.metaflow_runs]
+        return [run.dict() for run in obj.metaflow_runs]
 
     async def serialize_value(
         self, request: Request, value: Any, action: RequestAction
@@ -148,3 +121,34 @@ class BatchPercentSuccessful(BaseField):
         if runs:
             return f'{runs.count(True) / len(obj.media_files):.1%}'
         return None
+
+
+@dataclass
+class BatchUnstartedGuids(BaseField):
+    """GUIDs in a batch that have not yet started"""
+
+    name: str = 'batch_unstarted_guids'
+    read_only: bool = True
+    label: str = 'Unstarted GUIDs'
+    exclude_from_create: bool = True
+    exclude_from_edit: bool = True
+    exclude_from_list: bool = True
+
+    display_template: str = 'displays/collection_media_files.html'
+
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        return [MediaFile(guid=guid) for guid in obj.unstarted_guids()]
+
+
+@dataclass
+class BatchUnstartedGuidsCount(IntegerField):
+    """The number of MetaflowRuns in a batch that have not yet started"""
+
+    name: str = 'batch_unstarted_guids_count'
+    read_only: bool = True
+    label: str = 'Unstarted GUIDs'
+    exclude_from_create: bool = True
+    exclude_from_edit: bool = True
+
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        return len(obj.unstarted_guids())

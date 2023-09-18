@@ -7,6 +7,8 @@
     <tr>
       <th>GUID</th>
       <th>Metaflow Run</th>
+      <th>Current step</th>
+      <th>Current task</th>
       <th>Finished At</th>
       <th>Finished</th>
       <th>Successful</th>
@@ -30,6 +32,21 @@
         {{ media_file_row.pathspec }}
         <i class="fa fa-external-link" aria-hidden="true"></i>
       </a>
+    </td>
+    <td>
+      {% if media_file_row.current_task %} {{ media_file_row.current_step }} {%
+      endif %}
+    </td>
+    <td>
+      {% if media_file_row.current_task %}
+      <a
+        href="https://mario.wgbh-mla.org/{{ media_file_row.pathspec }}/{{ media_file_row.current_step }}{{ media_file_row.current_task }}"
+        target="blank"
+      >
+        {{ media_file_row.current_task }}
+        <i class="fa fa-external-link" aria-hidden="true"></i>
+      </a>
+      {% endif %}
     </td>
     <td>{{ media_file_row.finished_at }}</td>
     <td>

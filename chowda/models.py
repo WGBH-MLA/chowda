@@ -196,10 +196,16 @@ class Batch(SQLModel, table=True):
     )
     metaflow_runs: List['MetaflowRun'] = Relationship(back_populates='batch')
 
-    async def __admin_repr__(self, request: Request):
+    def unstarted_guids(self) -> set:
+        """Returns the set of GUIDs that are not currently running"""
+        ids: set = {media_file.guid for media_file in self.media_files}
+        running_guids: set = {run.media_file.guid for run in self.metaflow_runs}
+        return ids - running_guids
+
+    async def __admin_repr__(self, request: Request) -> str:
         return f'{self.name or self.id}'
 
-    async def __admin_select2_repr__(self, request: Request):
+    async def __admin_select2_repr__(self, request: Request) -> str:
         return f'<span><strong>{self.name or self.id}</span>'
 
 
@@ -262,6 +268,8 @@ class MetaflowRun(SQLModel, table=True):
         sa_column=Column(DateTime(timezone=True), default=None)
     )
     successful: Optional[bool] = Field(default=None)
+    current_step: Optional[str] = Field(default=None)
+    current_task: Optional[str] = Field(default=None)
 
     @property
     def source(self):
