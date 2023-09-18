@@ -33,7 +33,7 @@ from chowda.utils import validate_media_file_guids
 class BaseModelView(ModelView):
     """Base permissions for all views"""
 
-    page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, -1]
+    page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
 
     def can_create(self, request: Request) -> bool:
         return get_user(request).is_clammer
