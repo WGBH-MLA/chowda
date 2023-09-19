@@ -51,12 +51,12 @@ class SonyCiAssetThumbnail(BaseField):
     label: str = 'Thumbnail'
     display_template: str = 'displays/sony_ci_asset_thumbnail.html'
     read_only: bool = True
-    exclude_from_create: bool = True
+    exclude_from_edit: bool = True
 
     render_function_key: str = 'sony_ci_asset_thumbnail'
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
-        return obj.thumbnails_by_type.get('standard')
+        return obj.thumbnails_by_type.get('small')
 
 
 @dataclass
