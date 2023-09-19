@@ -7,13 +7,13 @@ client = TestClient(app)
 
 def test_get_admin_home():
     """GET / returns a Redirect response"""
-    response = client.get('/', allow_redirects=False)
+    response = client.get('/', follow_redirects=False)
     assert response.status_code == 200, 'Home page did not display sucessfully'
 
 
 def test_get_admin_redirect():
     """GET /admin returns a Redirect response"""
-    response = client.get('/admin/', allow_redirects=False)
+    response = client.get('/admin/', follow_redirects=False)
     assert response.status_code == 303, 'Home page did not redirect sucessfully'
     assert (
         '/admin/login?next=' in response.headers['location']

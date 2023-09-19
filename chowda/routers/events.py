@@ -1,9 +1,11 @@
 from json import loads
+from typing import Annotated
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from metaflow import Run, namespace
 from sqlmodel import Session
 
+from chowda.auth.utils import OAuthAccessToken, verified_access_token
 from chowda.db import engine
 from chowda.models import MetaflowRun
 
@@ -11,8 +13,17 @@ events = APIRouter()
 
 
 @events.post('/')
-def event(event: dict):
+async def event(
+    event: dict,
+    verified_access_token: Annotated[OAuthAccessToken, Depends(verified_access_token)],
+):
     """Receive an event from Argo Events."""
+    if 'create:event' not in verified_access_token.permissions:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail='Missing required permission create:event',
+        )
+
     print('Chowda event received', event)
     if not event.get('body'):
         raise HTTPException(400, 'No body')

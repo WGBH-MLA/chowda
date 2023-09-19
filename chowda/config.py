@@ -16,7 +16,11 @@ STATIC_DIR = environ.get('STATIC_DIR', 'static')
 AUTH0_CLIENT_ID = environ.get('AUTH0_CLIENT_ID')
 AUTH0_CLIENT_SECRET = environ.get('AUTH0_CLIENT_SECRET')
 AUTH0_DOMAIN = environ.get('AUTH0_DOMAIN')
+AUTH0_JWKS_URL = f'https://{AUTH0_DOMAIN}/.well-known/jwks.json'
+AUTH0_API_AUDIENCE = environ.get('AUTH0_API_AUDIENCE')
 
 SECRET = environ.get('CHOWDA_SECRET')
 
-API_AUDIENCE = environ.get('API_AUDIENCE', 'https://chowda.wgbh-mla.org/api')
+AUTH0_API_AUDIENCE = environ.get(
+    'AUTH0_API_AUDIENCE', 'https://chowda.wgbh-mla.org/api'
+)
