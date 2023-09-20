@@ -56,7 +56,7 @@ locust = [
     "pydantic-factories~=1.17",
 ]
 development = [
-    "kubernetes~=27.2",
+    "kubernetes~=28.1",
 ]
 
 [tool.black]
