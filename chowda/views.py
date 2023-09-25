@@ -31,9 +31,22 @@ from chowda.utils import validate_media_file_guids
 
 
 class ChowdaModelView(ModelView):
-    """Base permissions for all views"""
+    """Base settings for all views"""
 
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 1000, -1]
+    additional_js_links: ClassVar[list[str]] = [
+        '/static/js/datatables-extensions.min.js',
+        '/static/js/bootstrap-input.js',
+    ]
+    additional_css_links: ClassVar[list[str]] = [
+        '/static/css/datatables-extensions.min.css',
+    ]
+    datatables_options: ClassVar[Dict[str, Any]] = {
+        'dom': "r<'card-header d-flex align-items-center'<'m-0'i><'m-0 ms-auto'p>><'table-responsive't>",
+        'pagingType': 'bootstrap_input',
+        'keys': {'clipboardOrthogonal': 'export'},
+        'fixedHeader': True,
+    }
 
 
 class ClammerModelView(ChowdaModelView):
@@ -361,7 +374,7 @@ class DashboardView(CustomView):
         try:
             return [
                 {'created_at': sync_run.created_at, 'successful': sync_run.successful}
-                for sync_run in list(Flow('IngestFlow'))[:10]
+                for sync_run in list(Flow('IngestFlow'))[:5]
             ]
         except MetaflowNotFound:
             return []
