@@ -10,9 +10,9 @@ authors = [{ name = 'WGBH-MLA', email = 'ryan_harbert@wgbh.org' }]
 dependencies = [
     "fastapi~=0.103",
     "starlette-admin~=0.11",
-    "sqlmodel~=0.0",
-    "pydantic[email]~=1.10",
-    "sonyci~=0.1",
+    "sqlmodel @ git+https://github.com/AntonDeMeester/sqlmodel.git",
+    "pydantic[email]~=2.3",
+    "sonyci~=0.2",
     "psycopg2~=2.9",
     "metaflow~=2.9",
     "alembic~=1.12",
@@ -109,7 +109,7 @@ dev = [
 ]
 docs = [
     "mkdocs~=1.5",
-    "mkdocs-material~=9.3",
+    "mkdocs-material~=9.4",
     "mkdocs-git-revision-date-localized-plugin~=1.2",
     "mike~=1.1",
     "mkdocstrings[python]~=0.23",
