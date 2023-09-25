@@ -42,7 +42,7 @@ class ChowdaModelView(ModelView):
         '/static/css/datatables-extensions.min.css',
     ]
     datatables_options: ClassVar[Dict[str, Any]] = {
-        'dom': "r<'card-header d-flex align-items-center'<'m-0'i><'m-0 ms-auto'p>><'table-responsive't>",
+        'dom': "r<'card-header d-flex align-items-center'<'m-0'i><'m-0 ms-auto'p>><'table-responsive't>",  # noqa E501
         'pagingType': 'bootstrap_input',
         'keys': {'clipboardOrthogonal': 'export'},
         'fixedHeader': True,
@@ -208,8 +208,13 @@ class BatchView(ClammerModelView):
         validate_media_file_guids(request, data)
 
     async def is_action_allowed(self, request: Request, name: str) -> bool:
+        user = get_user(request)
         if name == 'start_batches':
-            return get_user(request).is_clammer
+            return user.is_clammer
+        if name == 'duplicate_batches':
+            return user.is_clammer or user.is_admin
+        if name == 'combine_batches':
+            return user.is_clammer or user.is_admin
         return await super().is_action_allowed(request, name)
 
     @action(
