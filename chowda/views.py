@@ -42,9 +42,19 @@ class ChowdaModelView(ModelView):
         '/static/css/datatables-extensions.min.css',
     ]
     datatables_options: ClassVar[Dict[str, Any]] = {
+        # Customize the dom to put the pagination controls above the table.
+        # https://datatables.net/reference/option/dom
+        # <processing/> <card-header> <info/> <pagination/> </card-header> <table/>
         'dom': "r<'card-header d-flex align-items-center'<'m-0'i><'m-0 ms-auto'p>><'table-responsive't>",  # noqa E501
+        # Use the bootstrap input plugin for pagination controls.
+        # Includes First/Last, Next/Previous, and page number input.
         'pagingType': 'bootstrap_input',
-        'keys': {'clipboardOrthogonal': 'export'},
+        # Enable the KeyTable extension to allow keyboard navigation of the table.
+        'keys': {
+            # Copy cell value, instead of the html element.
+            'clipboardOrthogonal': 'export'
+        },
+        # Enable the FixedHeader extension to keep the table header visible.
         'fixedHeader': True,
     }
 
