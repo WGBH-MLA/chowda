@@ -244,7 +244,7 @@ class BatchView(ClammerModelView):
             with Session(engine) as db:
                 for batch_id in pks:
                     existing_batch = db.get(Batch, batch_id)
-                    new_batch_params = existing_batch.dict()
+                    new_batch_params = existing_batch.model_dump()
                     new_batch_params.pop('id')
                     new_batch_params['name'] += ' [COPY]'
                     new_batch = Batch(**new_batch_params)

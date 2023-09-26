@@ -1,9 +1,14 @@
 from typing import Any, Dict
 
+from psycopg2.extensions import QuotedString
 from pydantic import BaseModel
 from sqlalchemy.dialects.postgresql import insert
-
 from starlette.requests import Request
+
+
+def adapt_url(url):
+    """Adapt a Pydantic2 Url to a psycopg2 QuotedString"""
+    return QuotedString(str(url))
 
 
 def upsert(
@@ -14,10 +19,10 @@ def upsert(
     """Returns the SQLAlchemy statement to upsert a values into a table"""
     return (
         insert(model)
-        .values(value.dict())
+        .values(value.model_dump())
         .on_conflict_do_update(
             index_elements=index_elements,
-            set_=value.dict(),
+            set_=value.model_dump(),
         )
     )
 
@@ -57,9 +62,10 @@ def validate_media_file_guids(request: Request, data: Dict[str, Any]):
     relate to Batch and  Collection objects.
     """
     from sqlmodel import Session, select
+    from starlette_admin.exceptions import FormValidationError
+
     from chowda.db import engine
     from chowda.models import MediaFile
-    from starlette_admin.exceptions import FormValidationError
 
     media_files = []
 

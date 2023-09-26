@@ -8,7 +8,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from metaflow import Run, namespace
-from pydantic import AnyHttpUrl, EmailStr
+from pydantic.networks import AnyHttpUrl, EmailStr
 from sqlalchemy import JSON, Column, DateTime, Enum
 from sqlalchemy.dialects import postgresql
 from sqlmodel import Field, Relationship, SQLModel
