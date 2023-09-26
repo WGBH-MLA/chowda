@@ -10,6 +10,7 @@ from starlette.requests import Request
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
 from starlette_admin import CustomView, action
+from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
 from starlette_admin.fields import BaseField
@@ -34,6 +35,17 @@ class ChowdaModelView(ModelView):
     """Base permissions for all views"""
 
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 1000, -1]
+
+    def title(self, request: Request) -> str:
+        if request.state.action == RequestAction.LIST:
+            return self.label
+        if request.state.action == RequestAction.DETAIL:
+            return f'{self.label} - {request.path_params["pk"]}'
+        if request.state.action == RequestAction.EDIT:
+            return f'{self.label} - Edit {request.path_params["pk"]}'
+        if request.state.action == RequestAction.CREATE:
+            return f'{self.label} - Create'
+        return None
 
 
 class ClammerModelView(ChowdaModelView):
@@ -380,9 +392,11 @@ class DashboardView(CustomView):
         sync_disabled = datetime.now() - history[0]['created_at'] < timedelta(
             minutes=15
         )
+        title = self.title(request)
         return templates.TemplateResponse(
             'dashboard.html',
             {
+                'title' if title else None: title,
                 'request': request,
                 'user': user,
                 'sync_history': history,
