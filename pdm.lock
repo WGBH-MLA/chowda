@@ -6,7 +6,7 @@ groups = ["default", "ci", "dev", "development", "docs", "locust", "production",
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:10d4b76a032227a8c3ebc31224bb4bf69aae4e20fd1700ff607f6fe3ab1e4983"
+content_hash = "sha256:69089669edfa181a464dab503207c27e57a3de2a68c069d6393c5e115d0d33a9"
 
 [[package]]
 name = "alembic"
@@ -3294,8 +3294,6 @@ name = "starlette-admin"
 version = "0.11.2"
 requires_python = ">=3.8"
 git = "https://github.com/WGBH-MLA/starlette-admin.git"
-ref = "detail-actions"
-revision = "a3fe3f27cc66217eb2901d079dcdf5f2d859b2f2"
 ref = "dev"
 revision = "bf2909e75c68d538829a9a99d0d38f5f4049b671"
 summary = "Fast, beautiful and extensible administrative interface framework for Starlette/FastApi applications"
