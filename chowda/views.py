@@ -28,12 +28,36 @@ from chowda.fields import (
 )
 from chowda.models import Batch, Collection, MediaFile
 from chowda.utils import validate_media_file_guids
+from templates import filters  # noqa: F401
 
 
 class ChowdaModelView(ModelView):
-    """Base permissions for all views"""
+    """Base settings for all views"""
 
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 1000, -1]
+    additional_js_links: ClassVar[list[str]] = [
+        '/static/js/datatables-extensions.min.js',
+        '/static/js/bootstrap-input.js',
+    ]
+    additional_css_links: ClassVar[list[str]] = [
+        '/static/css/datatables-extensions.min.css',
+    ]
+    datatables_options: ClassVar[Dict[str, Any]] = {
+        # Customize the dom to put the pagination controls above the table.
+        # https://datatables.net/reference/option/dom
+        # <processing/> <card-header> <info/> <pagination/> </card-header> <table/>
+        'dom': "r<'card-header d-flex align-items-center'<'m-0'i><'m-0 ms-auto'p>><'table-responsive't>",  # noqa E501
+        # Use the bootstrap input plugin for pagination controls.
+        # Includes First/Last, Next/Previous, and page number input.
+        'pagingType': 'bootstrap_input',
+        # Enable the KeyTable extension to allow keyboard navigation of the table.
+        'keys': {
+            # Copy cell value, instead of the html element.
+            'clipboardOrthogonal': 'export'
+        },
+        # Enable the FixedHeader extension to keep the table header visible.
+        'fixedHeader': True,
+    }
 
 
 class ClammerModelView(ChowdaModelView):
@@ -198,8 +222,13 @@ class BatchView(ClammerModelView):
         validate_media_file_guids(request, data)
 
     async def is_action_allowed(self, request: Request, name: str) -> bool:
+        user = get_user(request)
         if name == 'start_batches':
-            return get_user(request).is_clammer
+            return user.is_clammer
+        if name == 'duplicate_batches':
+            return user.is_clammer or user.is_admin
+        if name == 'combine_batches':
+            return user.is_clammer or user.is_admin
         return await super().is_action_allowed(request, name)
 
     @action(
@@ -307,7 +336,7 @@ class MediaFileView(ClammerModelView):
         'collections',
         'batches',
         'assets',
-        'mmif_json',
+        BaseField('mmif_json', display_template='displays/media_file_mmif_json.html'),
     ]
     exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json']
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
@@ -369,7 +398,7 @@ class DashboardView(CustomView):
         try:
             return [
                 {'created_at': sync_run.created_at, 'successful': sync_run.successful}
-                for sync_run in list(Flow('IngestFlow'))[:10]
+                for sync_run in list(Flow('IngestFlow'))[:5]
             ]
         except MetaflowNotFound:
             return []
