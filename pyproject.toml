@@ -9,7 +9,7 @@ description = 'A CLAMS processing application'
 authors = [{ name = 'WGBH-MLA', email = 'ryan_harbert@wgbh.org' }]
 dependencies = [
     "fastapi~=0.103",
-    "starlette-admin @ git+https://github.com/WGBH-MLA/starlette-admin.git@detail-actions",
+    "starlette-admin @ git+https://github.com/WGBH-MLA/starlette-admin.git@dev",
     "sqlmodel~=0.0",
     "pydantic[email]~=1.10",
     "sonyci~=0.1",
