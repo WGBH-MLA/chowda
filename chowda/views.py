@@ -92,6 +92,7 @@ class AdminModelView(ClammerModelView):
 class CollectionView(ClammerModelView):
     exclude_fields_from_list: ClassVar[list[Any]] = [Collection.media_files]
     exclude_fields_from_detail: ClassVar[list[Any]] = [Collection.id]
+    exclude_actions_from_detail: ClassVar[list[Any]] = ['create_multiple_batches']
 
     actions: ClassVar[list[Any]] = ['create_batch', 'create_multiple_batches']
 
@@ -123,8 +124,8 @@ class CollectionView(ClammerModelView):
         name='create_batch',
         text='Create Batch',
         confirmation='Create a single Batch from these Collections?',
+        action_btn_class='btn-ghost-primary',
         submit_btn_text='Yep',
-        submit_btn_class='btn-success',
     )
     async def create_batch(self, request: Request, pks: List[Any]) -> str:
         """Create a new batch from the combined collections"""
@@ -154,8 +155,9 @@ class CollectionView(ClammerModelView):
         name='create_multiple_batches',
         text='Create multiple Batches',
         confirmation='Create multiple Batches from these Collections?',
+        action_btn_class='btn-ghost-primary',
+        icon_class='fa-solid fa-square-plus',
         submit_btn_text='Yep',
-        submit_btn_class='btn-success',
     )
     async def create_multiple_batches(self, request: Request, pks: List[Any]) -> str:
         """Create multiple batches from the collections"""
@@ -186,6 +188,7 @@ class BatchView(ClammerModelView):
     exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
     exclude_fields_from_detail: ClassVar[list[Any]] = [Batch.id]
+    exclude_actions_from_detail: ClassVar[list[Any]] = ['combine_batches']
 
     fields_default_sort: ClassVar[BaseField] = [(Batch.id, True)]
 
@@ -231,6 +234,8 @@ class BatchView(ClammerModelView):
         name='start_batches',
         text='Start',
         confirmation='This might cost money. Are you sure?',
+        icon_class='fa fa-play',
+        action_btn_class='btn-outline-success',
         submit_btn_text='Yep',
         submit_btn_class='btn-success',
     )
@@ -263,8 +268,9 @@ class BatchView(ClammerModelView):
         name='duplicate_batches',
         text='Duplicate',
         confirmation='Duplicate all selected Batches?',
+        icon_class='fa fa-copy',
         submit_btn_text='Indeed!',
-        submit_btn_class='btn-success',
+        submit_btn_class='btn-outline-primary',
     )
     async def duplicate_batches(self, request: Request, pks: List[Any]) -> str:
         """Create a new batch from the selected batch"""
@@ -290,8 +296,10 @@ class BatchView(ClammerModelView):
         name='combine_batches',
         text='Combine',
         confirmation='Combine all selected Batches into a new Batch?',
+        icon_class='fa fa-compress',
+        action_btn_class='btn-ghost',
         submit_btn_text='Heck yeah!',
-        submit_btn_class='btn-success',
+        submit_btn_class='btn-outline-primary',
     )
     async def combine_batches(self, request: Request, pks: List[Any]) -> str:
         """Merge multiple batches into a new batch"""
@@ -338,9 +346,9 @@ class MediaFileView(ClammerModelView):
     @action(
         name='create_new_batch',
         text='Create Batch',
-        confirmation='Create a Batches from these Media Files?',
+        confirmation='Create a Batch from these Media Files?',
+        action_btn_class='btn-ghost-primary',
         submit_btn_text='Yasss!',
-        submit_btn_class='btn-success',
         form="""
         <form>
             <div class="mt-3">
