@@ -28,12 +28,36 @@ from chowda.fields import (
 )
 from chowda.models import Batch, Collection, MediaFile
 from chowda.utils import validate_media_file_guids
+from templates import filters  # noqa: F401
 
 
 class ChowdaModelView(ModelView):
-    """Base permissions for all views"""
+    """Base settings for all views"""
 
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 1000, -1]
+    additional_js_links: ClassVar[list[str]] = [
+        '/static/js/datatables-extensions.min.js',
+        '/static/js/bootstrap-input.js',
+    ]
+    additional_css_links: ClassVar[list[str]] = [
+        '/static/css/datatables-extensions.min.css',
+    ]
+    datatables_options: ClassVar[Dict[str, Any]] = {
+        # Customize the dom to put the pagination controls above the table.
+        # https://datatables.net/reference/option/dom
+        # <processing/> <card-header> <info/> <pagination/> </card-header> <table/>
+        'dom': "r<'card-header d-flex align-items-center'<'m-0'i><'m-0 ms-auto'p>><'table-responsive't>",  # noqa E501
+        # Use the bootstrap input plugin for pagination controls.
+        # Includes First/Last, Next/Previous, and page number input.
+        'pagingType': 'bootstrap_input',
+        # Enable the KeyTable extension to allow keyboard navigation of the table.
+        'keys': {
+            # Copy cell value, instead of the html element.
+            'clipboardOrthogonal': 'export'
+        },
+        # Enable the FixedHeader extension to keep the table header visible.
+        'fixedHeader': True,
+    }
 
 
 class ClammerModelView(ChowdaModelView):
@@ -69,6 +93,7 @@ class AdminModelView(ClammerModelView):
 class CollectionView(ClammerModelView):
     exclude_fields_from_list: ClassVar[list[Any]] = [Collection.media_files]
     exclude_fields_from_detail: ClassVar[list[Any]] = [Collection.id]
+    exclude_actions_from_detail: ClassVar[list[Any]] = ['create_multiple_batches']
 
     actions: ClassVar[list[Any]] = ['create_batch', 'create_multiple_batches']
 
@@ -100,8 +125,8 @@ class CollectionView(ClammerModelView):
         name='create_batch',
         text='Create Batch',
         confirmation='Create a single Batch from these Collections?',
+        action_btn_class='btn-ghost-primary',
         submit_btn_text='Yep',
-        submit_btn_class='btn-success',
     )
     async def create_batch(self, request: Request, pks: List[Any]) -> str:
         """Create a new batch from the combined collections"""
@@ -131,8 +156,9 @@ class CollectionView(ClammerModelView):
         name='create_multiple_batches',
         text='Create multiple Batches',
         confirmation='Create multiple Batches from these Collections?',
+        action_btn_class='btn-ghost-primary',
+        icon_class='fa-solid fa-square-plus',
         submit_btn_text='Yep',
-        submit_btn_class='btn-success',
     )
     async def create_multiple_batches(self, request: Request, pks: List[Any]) -> str:
         """Create multiple batches from the collections"""
@@ -163,6 +189,7 @@ class BatchView(ClammerModelView):
     exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
     exclude_fields_from_detail: ClassVar[list[Any]] = [Batch.id]
+    exclude_actions_from_detail: ClassVar[list[Any]] = ['combine_batches']
 
     fields_default_sort: ClassVar[BaseField] = [(Batch.id, True)]
 
@@ -195,14 +222,21 @@ class BatchView(ClammerModelView):
         validate_media_file_guids(request, data)
 
     async def is_action_allowed(self, request: Request, name: str) -> bool:
+        user = get_user(request)
         if name == 'start_batches':
-            return get_user(request).is_clammer
+            return user.is_clammer
+        if name == 'duplicate_batches':
+            return user.is_clammer or user.is_admin
+        if name == 'combine_batches':
+            return user.is_clammer or user.is_admin
         return await super().is_action_allowed(request, name)
 
     @action(
         name='start_batches',
         text='Start',
         confirmation='This might cost money. Are you sure?',
+        icon_class='fa fa-play',
+        action_btn_class='btn-outline-success',
         submit_btn_text='Yep',
         submit_btn_class='btn-success',
     )
@@ -235,8 +269,9 @@ class BatchView(ClammerModelView):
         name='duplicate_batches',
         text='Duplicate',
         confirmation='Duplicate all selected Batches?',
+        icon_class='fa fa-copy',
         submit_btn_text='Indeed!',
-        submit_btn_class='btn-success',
+        submit_btn_class='btn-outline-primary',
     )
     async def duplicate_batches(self, request: Request, pks: List[Any]) -> str:
         """Create a new batch from the selected batch"""
@@ -262,8 +297,10 @@ class BatchView(ClammerModelView):
         name='combine_batches',
         text='Combine',
         confirmation='Combine all selected Batches into a new Batch?',
+        icon_class='fa fa-compress',
+        action_btn_class='btn-ghost',
         submit_btn_text='Heck yeah!',
-        submit_btn_class='btn-success',
+        submit_btn_class='btn-outline-primary',
     )
     async def combine_batches(self, request: Request, pks: List[Any]) -> str:
         """Merge multiple batches into a new batch"""
@@ -299,7 +336,7 @@ class MediaFileView(ClammerModelView):
         'collections',
         'batches',
         'assets',
-        'mmif_json',
+        BaseField('mmif_json', display_template='displays/media_file_mmif_json.html'),
     ]
     exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json']
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
@@ -310,9 +347,9 @@ class MediaFileView(ClammerModelView):
     @action(
         name='create_new_batch',
         text='Create Batch',
-        confirmation='Create a Batches from these Media Files?',
+        confirmation='Create a Batch from these Media Files?',
+        action_btn_class='btn-ghost-primary',
         submit_btn_text='Yasss!',
-        submit_btn_class='btn-success',
         form="""
         <form>
             <div class="mt-3">
@@ -361,7 +398,7 @@ class DashboardView(CustomView):
         try:
             return [
                 {'created_at': sync_run.created_at, 'successful': sync_run.successful}
-                for sync_run in list(Flow('IngestFlow'))[:10]
+                for sync_run in list(Flow('IngestFlow'))[:5]
             ]
         except MetaflowNotFound:
             return []
