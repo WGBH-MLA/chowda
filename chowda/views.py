@@ -398,11 +398,8 @@ class ClamsAppView(ClammerModelView):
     fields: ClassVar[list[Any]] = ['name', 'endpoint', 'description', 'pipelines']
 
 
-class PipelineView(AdminModelView):
+class PipelineView(ClammerModelView):
     fields: ClassVar[list[Any]] = ['name', 'description', 'clams_apps']
-
-    def is_accessible(self, request: Request) -> bool:
-        return True
 
 
 class DashboardView(CustomView):
