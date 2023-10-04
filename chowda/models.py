@@ -94,6 +94,7 @@ class MediaFile(SQLModel, table=True):
 
     Attributes:
         guid: MediaFile GUID
+        mmif_json: Canonical MMIF
         assets: List of SonyCiAssets
         collections: List of Collections
         batches: List of Batches

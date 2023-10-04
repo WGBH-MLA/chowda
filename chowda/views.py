@@ -4,6 +4,7 @@ from typing import Any, ClassVar, Dict, List
 from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
 from metaflow.integrations import ArgoEvent
+from multipart.exceptions import MultipartParseError
 from sqlmodel import Session, select
 from starlette.datastructures import FormData
 from starlette.requests import Request
@@ -239,9 +240,22 @@ class BatchView(ClammerModelView):
         action_btn_class='btn-outline-success',
         submit_btn_text='Yep',
         submit_btn_class='btn-success',
+        form="""
+        <form>
+                <input type="checkbox" id="new_mmif" name="mmif">
+                <label for="new_mmif">Start from blank MMIF?</label>
+                <input type="hidden" name="_" value="">
+        </form>
+        """,
     )
     async def start_batches(self, request: Request, pks: List[Any]) -> str:
         """Starts a Batch by sending a message to the Argo Event Bus"""
+        try:
+            data: FormData = await request.form()
+        except MultipartParseError as parse_error:
+            raise ActionFailed('Error parsing form') from parse_error
+
+        new_mmif = data.get('mmif') == 'on'
         try:
             with Session(engine) as db:
                 for batch_id in pks:
@@ -256,6 +270,7 @@ class BatchView(ClammerModelView):
                                 'batch_id': batch_id,
                                 'guid': media_file.guid,
                                 'pipeline': pipeline,
+                                'new_mmif': new_mmif,
                             },
                         ).publish(ignore_errors=False)
 
@@ -329,7 +344,7 @@ class BatchView(ClammerModelView):
 class MediaFileView(ClammerModelView):
     pk_attr: str = 'guid'
 
-    actions: ClassVar[List[str]] = ['create_new_batch']
+    actions: ClassVar[List[str]] = ['create_new_batch', 'no_confirm']
 
     fields: ClassVar[list[str]] = [
         'guid',
@@ -343,6 +358,12 @@ class MediaFileView(ClammerModelView):
 
     def can_create(self, request: Request) -> bool:
         return get_user(request).is_admin
+
+    @action(
+        name='no_confirm', text='No confirmation', action_btn_class='btn-ghost-primary'
+    )
+    async def no_confirm(self, request: Request, pks: List[Any]) -> str:
+        return 'No confirmation'
 
     @action(
         name='create_new_batch',

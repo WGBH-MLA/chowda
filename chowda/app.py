@@ -76,6 +76,5 @@ admin.add_view(PipelineView(Pipeline, icon='fa fa-boxes-stacked'))
 admin.add_view(UserView(User, icon='fa fa-users'))
 admin.add_view(MetaflowRunView(MetaflowRun, icon='fa fa-person-running'))
 
-
 # Mount admin to app
 admin.mount_to(app)
