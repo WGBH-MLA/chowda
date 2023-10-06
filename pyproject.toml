@@ -20,7 +20,7 @@ dependencies = [
     "authlib~=1.2",
     "itsdangerous~=2.1",
     "httpx~=0.25",
-    "rich~=13.5",
+    "rich~=13.6",
 ]
 requires-python = '>=3.8.1,<4.0'
 readme = 'README.md'
