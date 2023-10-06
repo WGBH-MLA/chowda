@@ -1,7 +1,7 @@
 ###########################
 # 'base' build stage, common to all build stages
 ###########################
-FROM python as base
+FROM python:3.11 as base
 
 # Set working dir to /app, where all Chowda code lives.
 WORKDIR /app
