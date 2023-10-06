@@ -99,10 +99,12 @@ class MediaFile(SQLModel, table=True):
         collections: List of Collections
         batches: List of Batches
         metaflow_runs: List of MetaflowRuns
+        mmifs: List of MMIFs
     """
 
     __tablename__ = 'media_files'
     guid: Optional[str] = Field(primary_key=True, default=None, index=True)
+    mmifs: List['MMIF'] = Relationship(back_populates='media_file')
     mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
     assets: List['SonyCiAsset'] = Relationship(
         back_populates='media_files', link_model=MediaFileSonyCiAssetLink
@@ -195,6 +197,7 @@ class Batch(SQLModel, table=True):
     media_files: List[MediaFile] = Relationship(
         back_populates='batches', link_model=MediaFileBatchLink
     )
+    # mmifs: List['MMIF'] = Relationship(back_populates='batch')
     metaflow_runs: List['MetaflowRun'] = Relationship(back_populates='batch')
 
     def unstarted_guids(self) -> set:
@@ -272,8 +275,46 @@ class MetaflowRun(SQLModel, table=True):
     current_step: Optional[str] = Field(default=None)
     current_task: Optional[str] = Field(default=None)
 
+    mmif: Optional['MMIF'] = Relationship(back_populates='metaflow_run')
+
     @property
     def source(self):
         # TODO: is setting namespace to None the right way to go here?
         namespace(None)
         return Run(self.pathspec)
+
+
+class MMIF(SQLModel, table=True):
+    """MMIF model
+
+    Attributes:
+        id: Primary key
+        created_at: Creation timestamp
+        media_file_id: GUID
+        media_file: MediaFile
+        metaflow_run_id: MetaflowRun ID
+        metaflow_run: MetaflowRun
+        mmif: Source MMIF pointer
+    """
+
+    __tablename__ = 'mmifs'
+    id: Optional[int] = Field(primary_key=True, default=None)
+    created_at: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), default=datetime.utcnow)
+    )
+    media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
+    media_file: Optional[MediaFile] = Relationship(back_populates='mmifs')
+    metaflow_run_id: Optional[str] = Field(default=None, foreign_key='metaflow_runs.id')
+    metaflow_run: Optional[MetaflowRun] = Relationship(back_populates='mmif')
+    # batch_id: Optional[int] = Field(default=None, foreign_key='batches.id')
+    # batch: Optional[Batch] = Relationship(back_populates='mmifs')
+
+    mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
+    mmif_location: Optional[str] = Field(default=None)
+
+    # async def __admin_repr__(self, request: Request):
+    # return f'{self.batch.name}'  #: {self.media_file.guid}'
+
+    async def __admin_select2_repr__(self, request: Request) -> str:
+        # return f'<span>{self.batch.name}'  #: {self.media_file.guid}</span>'
+        return f'<span>{self.id}</span>'
