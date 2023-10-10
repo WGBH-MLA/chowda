@@ -102,20 +102,7 @@ class CollectionView(ClammerModelView):
         'description',
         MediaFileCount(),
         # 'media_files',  # default view
-        MediaFilesGuidsField(
-            'media_files',
-            id='media_file_guids',
-            label='GUIDs',
-            exclude_from_detail=True,
-        ),
-        BaseField(
-            'media_files',
-            display_template='displays/collection_media_files.html',
-            label='Media Files',
-            exclude_from_edit=True,
-            exclude_from_create=True,
-            exclude_from_list=True,
-        ),
+        MediaFilesGuidsField('media_files', label='GUIDs'),
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
@@ -208,13 +195,8 @@ class BatchView(ClammerModelView):
         BatchPercentCompleted(),
         BatchPercentSuccessful(),
         BatchUnstartedGuidsCount(),
-        BatchUnstartedGuids(),
-        MediaFilesGuidsField(
-            'media_files',
-            id='media_file_guids',
-            label='GUIDs',
-            exclude_from_detail=True,
-        ),
+        BatchUnstartedGuids('media_files'),
+        MediaFilesGuidsField('media_files', exclude_from_detail=True),
         BatchMetaflowRunDisplayField(),
     ]
 
