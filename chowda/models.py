@@ -29,8 +29,19 @@ class AppStatus(enum.Enum):
 
 
 class MediaType(enum.Enum):
-    video = 'Video'
-    audio = 'Audio'
+    """Media type enum
+    Type of Media: video or audio.
+    This is not the same as the format of the media file.
+
+    # FIXME:
+    Enum class attributes are the values that are stored in the database.
+    The value of the class attribute is the value returned by SonyCi (for validation)
+    But starlette-admin + SQLAlchemy send the value to the db, not the name.
+    Therefore, we need to Capatalize the name to make it match the db value.
+    """
+
+    Video = 'Video'
+    Audio = 'Audio'
 
 
 class ThumbnailType(enum.Enum):
@@ -104,7 +115,7 @@ class MediaFile(SQLModel, table=True):
 
     __tablename__ = 'media_files'
     guid: Optional[str] = Field(primary_key=True, default=None, index=True)
-    mmifs: List['MMIF'] = Relationship(back_populates='media_file')
+    # mmifs: List['MMIF'] = Relationship(back_populates='media_file')
     mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
     assets: List['SonyCiAsset'] = Relationship(
         back_populates='media_files', link_model=MediaFileSonyCiAssetLink
@@ -302,8 +313,8 @@ class MMIF(SQLModel, table=True):
     created_at: Optional[datetime] = Field(
         sa_column=Column(DateTime(timezone=True), default=datetime.utcnow)
     )
-    media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
-    media_file: Optional[MediaFile] = Relationship(back_populates='mmifs')
+    # media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
+    # media_file: Optional[MediaFile] = Relationship(back_populates='mmifs')
     metaflow_run_id: Optional[str] = Field(default=None, foreign_key='metaflow_runs.id')
     metaflow_run: Optional[MetaflowRun] = Relationship(back_populates='mmif')
     # batch_id: Optional[int] = Field(default=None, foreign_key='batches.id')
@@ -312,9 +323,8 @@ class MMIF(SQLModel, table=True):
     mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
     mmif_location: Optional[str] = Field(default=None)
 
-    # async def __admin_repr__(self, request: Request):
-    # return f'{self.batch.name}'  #: {self.media_file.guid}'
+    async def __admin_repr__(self, request: Request):
+        return f'{self.metaflow_run.batch.name}' if self.metaflow_run else self.id
 
     async def __admin_select2_repr__(self, request: Request) -> str:
-        # return f'<span>{self.batch.name}'  #: {self.media_file.guid}</span>'
-        return f'<span>{self.id}</span>'
+        return f'<span>{self.metaflow_run.batch.name if self.metaflow_run else self.id}</span>'
