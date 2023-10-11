@@ -14,7 +14,7 @@ dependencies = [
     "pydantic[email]~=1.10",
     "sonyci~=0.1",
     "psycopg2~=2.9",
-    "metaflow~=2.9",
+    "metaflow~=2.10",
     "alembic~=1.12",
     "python-dotenv~=1.0",
     "authlib~=1.2",
@@ -52,7 +52,7 @@ test = [
     "trio~=0.22",
 ]
 locust = [
-    "locust~=2.16",
+    "locust~=2.17",
     "pydantic-factories~=1.17",
 ]
 development = [
