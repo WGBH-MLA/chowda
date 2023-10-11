@@ -28,7 +28,7 @@ from chowda.fields import (
     MediaFilesGuidsField,
     SonyCiAssetThumbnail,
 )
-from chowda.models import MMIF, Batch, Collection, MediaFile
+from chowda.models import Batch, Collection, MediaFile
 from chowda.utils import validate_media_file_guids
 from templates import filters  # noqa: F401
 
@@ -348,6 +348,7 @@ class MediaFileView(ClammerModelView):
         'assets',
         BaseField('mmif_json', display_template='displays/media_file_mmif_json.html'),
         'mmifs',
+        'metaflow_runs',
     ]
     exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json', 'mmifs']
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
@@ -463,8 +464,10 @@ class MetaflowRunView(AdminModelView):
 
 
 class MMIFView(ChowdaModelView):
+    label: ClassVar[str] = 'MMIFs'
     fields: ClassVar[List[Any]] = [
         'media_file',
+        'batch',
         'metaflow_run',
         'mmif_location',
         'created_at',
