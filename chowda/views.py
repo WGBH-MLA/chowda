@@ -172,6 +172,7 @@ class CollectionView(ClammerModelView):
 
 
 class BatchView(ClammerModelView):
+    label: ClassVar[str] = 'Batches'
     exclude_fields_from_create: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
