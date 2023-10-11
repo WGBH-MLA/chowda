@@ -111,7 +111,7 @@ class BatchPercentCompleted(BaseField):
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
         runs = [run.finished for run in obj.metaflow_runs]
-        if runs:
+        if runs and obj.media_files:
             return f'{runs.count(True) / len(obj.media_files):.1%}'
         return None
 
@@ -127,7 +127,7 @@ class BatchPercentSuccessful(BaseField):
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
         runs = [run.successful for run in obj.metaflow_runs]
-        if runs:
+        if runs and obj.media_files:
             return f'{runs.count(True) / len(obj.media_files):.1%}'
         return None
 

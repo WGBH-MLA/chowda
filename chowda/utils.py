@@ -2,7 +2,6 @@ from typing import Any, Dict
 
 from pydantic import BaseModel
 from sqlalchemy.dialects.postgresql import insert
-
 from starlette.requests import Request
 
 
@@ -57,11 +56,15 @@ def validate_media_file_guids(request: Request, data: Dict[str, Any]):
     relate to Batch and  Collection objects.
     """
     from sqlmodel import Session, select
-    from chowda.db import engine
-    from chowda.models import MediaFile
     from starlette_admin.exceptions import FormValidationError
 
+    from chowda.db import engine
+    from chowda.models import MediaFile
+
     media_files = []
+
+    # Clear the session to avoid conflicts with session instances used by the API
+    request.state.session.expire_all()
 
     with Session(engine) as db:
         # Get all MediaFiles objects for the GUIDs in data['media_files']
