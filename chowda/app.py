@@ -72,7 +72,7 @@ admin = Admin(
 admin.add_view(MediaFileView(MediaFile, icon='fa fa-file-video'))
 admin.add_view(SonyCiAssetView(SonyCiAsset, icon='fa fa-file-video'))
 admin.add_view(CollectionView(Collection, icon='fa fa-folder'))
-admin.add_view(BatchView(Batch, icon='fa fa-folder', label='Batches'))
+admin.add_view(BatchView(Batch, icon='fa fa-folder'))
 admin.add_view(ClamsAppView(ClamsApp, icon='fa fa-box'))
 admin.add_view(PipelineView(Pipeline, icon='fa fa-boxes-stacked'))
 admin.add_view(UserView(User, icon='fa fa-users'))
