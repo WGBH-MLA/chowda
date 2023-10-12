@@ -91,15 +91,6 @@ class MediaFileBatchLink(SQLModel, table=True):
     )
 
 
-class MediaFileSonyCiAssetLink(SQLModel, table=True):
-    media_file_id: Optional[str] = Field(
-        default=None, foreign_key='media_files.guid', primary_key=True
-    )
-    sonyci_asset_id: Optional[str] = Field(
-        default=None, foreign_key='sonyci_assets.id', primary_key=True
-    )
-
-
 class MediaFile(SQLModel, table=True):
     """Media file model
 
@@ -205,7 +196,19 @@ class Batch(SQLModel, table=True):
     media_files: List[MediaFile] = Relationship(
         back_populates='batches', link_model=MediaFileBatchLink
     )
-    mmifs: List['MMIF'] = Relationship(back_populates='batch')
+    output_mmifs: List['MMIF'] = Relationship(
+        back_populates='batch_output',
+        sa_relationship_kwargs={
+            "primaryjoin": "Batch.id==MMIF.batch_output_id",
+        },
+    )
+
+    input_mmifs: List['MMIF'] = Relationship(
+        back_populates='batch_input',
+        sa_relationship_kwargs={
+            "primaryjoin": "Batch.id==MMIF.batch_input_id",
+        },
+    )
     metaflow_runs: List['MetaflowRun'] = Relationship(back_populates='batch')
 
     def unstarted_guids(self) -> set:
@@ -314,8 +317,20 @@ class MMIF(SQLModel, table=True):
     media_file: Optional[MediaFile] = Relationship(back_populates='mmifs')
     metaflow_run_id: Optional[str] = Field(default=None, foreign_key='metaflow_runs.id')
     metaflow_run: Optional[MetaflowRun] = Relationship(back_populates='mmif')
-    batch_id: Optional[int] = Field(default=None, foreign_key='batches.id')
-    batch: Optional[Batch] = Relationship(back_populates='mmifs')
+    batch_output_id: Optional[int] = Field(default=None, foreign_key='batches.id')
+    batch_output: Optional[Batch] = Relationship(
+        back_populates='output_mmifs',
+        sa_relationship_kwargs={
+            "primaryjoin": "MMIF.batch_output_id==Batch.id",
+        },
+    )
+    batch_input_id: Optional[int] = Field(foreign_key='batches.id', default=None)
+    batch_input: Optional[Batch] = Relationship(
+        back_populates='input_mmifs',
+        sa_relationship_kwargs={
+            "primaryjoin": "MMIF.batch_input_id==Batch.id",
+        },
+    )
 
     mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
     mmif_location: Optional[str] = Field(default=None)

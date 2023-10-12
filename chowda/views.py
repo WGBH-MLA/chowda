@@ -209,9 +209,11 @@ class BatchView(ClammerModelView):
         BatchPercentCompleted(),
         BatchPercentSuccessful(),
         BatchUnstartedGuidsCount(),
+        'input_mmifs',
         BatchUnstartedGuids('media_files'),
         MediaFilesGuidsField('media_files', exclude_from_detail=True),
         BatchMetaflowRunDisplayField(),
+        'output_mmifs',
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
@@ -339,7 +341,7 @@ class BatchView(ClammerModelView):
 class MediaFileView(ClammerModelView):
     pk_attr: str = 'guid'
 
-    actions: ClassVar[List[str]] = ['create_new_batch', 'no_confirm']
+    actions: ClassVar[List[str]] = ['create_new_batch']
 
     fields: ClassVar[list[str]] = [
         'guid',
@@ -355,12 +357,6 @@ class MediaFileView(ClammerModelView):
 
     def can_create(self, request: Request) -> bool:
         return get_user(request).is_admin
-
-    @action(
-        name='no_confirm', text='No confirmation', action_btn_class='btn-ghost-primary'
-    )
-    async def no_confirm(self, request: Request, pks: List[Any]) -> str:
-        return 'No confirmation'
 
     @action(
         name='create_new_batch',
@@ -467,7 +463,8 @@ class MMIFView(ChowdaModelView):
     label: ClassVar[str] = 'MMIFs'
     fields: ClassVar[List[Any]] = [
         'media_file',
-        'batch',
+        'batch_input',
+        'batch_output',
         'metaflow_run',
         'mmif_location',
         'created_at',
