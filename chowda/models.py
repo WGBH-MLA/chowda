@@ -117,9 +117,7 @@ class MediaFile(SQLModel, table=True):
     guid: Optional[str] = Field(primary_key=True, default=None, index=True)
     mmifs: List['MMIF'] = Relationship(back_populates='media_file')
     mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
-    assets: List['SonyCiAsset'] = Relationship(
-        back_populates='media_files', link_model=MediaFileSonyCiAssetLink
-    )
+    assets: List['SonyCiAsset'] = Relationship(back_populates='media_files')
     collections: List['Collection'] = Relationship(
         back_populates='media_files', link_model=MediaFileCollectionLink
     )
@@ -170,9 +168,8 @@ class SonyCiAsset(SQLModel, table=True):
     thumbnails: Optional[List[Dict[str, Any]]] = Field(
         sa_column=Column(postgresql.ARRAY(JSON)), default=None
     )
-    media_files: List[MediaFile] = Relationship(
-        back_populates='assets', link_model=MediaFileSonyCiAssetLink
-    )
+    media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
+    media_files: Optional[MediaFile] = Relationship(back_populates='assets')
 
     @property
     def thumbnails_by_type(self):
