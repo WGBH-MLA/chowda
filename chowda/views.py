@@ -260,16 +260,30 @@ class BatchView(ClammerModelView):
                     pipeline = ','.join(
                         [app.endpoint for app in batch.pipeline.clams_apps]
                     )
+                    mmifs = {
+                        mmif.media_file_id: mmif.mmif_location
+                        for mmif in batch.input_mmifs
+                    }
+                    mmif_guids = set(mmifs.keys())
                     for media_file in batch.media_files:
-                        ArgoEvent(
-                            'pipeline',
-                            payload={
-                                'batch_id': batch_id,
-                                'guid': media_file.guid,
-                                'pipeline': pipeline,
-                                'new_mmif': new_mmif,
-                            },
-                        ).publish(ignore_errors=False)
+                        payload = {
+                            'batch_id': batch_id,
+                            'guid': media_file.guid,
+                            'pipeline': pipeline,
+                        }
+                        if new_mmif:
+                            payload['mmif_location'] = ''
+                        elif media_file.guid in mmif_guids:
+                            # Prefer the Batch's MMIF if specified
+                            payload['mmif_location'] = mmifs[media_file.guid]
+                        else:
+                            # Use the last MMIF in the MediaFile's MMIFs
+                            payload['mmif_location'] = media_file.mmifs[
+                                -1
+                            ].mmif_location
+                        ArgoEvent('pipeline', payload=payload).publish(
+                            ignore_errors=False
+                        )
 
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
