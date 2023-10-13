@@ -477,7 +477,7 @@ class MMIFView(ChowdaModelView):
     label: ClassVar[str] = 'MMIFs'
     fields: ClassVar[List[Any]] = [
         'media_file',
-        'batch_input',
+        'batch_inputs',
         'batch_output',
         'metaflow_run',
         'mmif_location',

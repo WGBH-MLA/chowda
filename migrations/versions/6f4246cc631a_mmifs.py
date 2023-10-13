@@ -1,8 +1,8 @@
 """MMIFs
 
-Revision ID: 4b8df341aeff
+Revision ID: 6f4246cc631a
 Revises: 42a163f0faec
-Create Date: 2023-10-13 10:02:23.104677
+Create Date: 2023-10-13 11:20:49.340642
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlmodel
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '4b8df341aeff'
+revision = '6f4246cc631a'
 down_revision = '42a163f0faec'
 branch_labels = None
 depends_on = None
@@ -26,13 +26,18 @@ def upgrade() -> None:
     sa.Column('media_file_id', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('metaflow_run_id', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('batch_output_id', sa.Integer(), nullable=True),
-    sa.Column('batch_input_id', sa.Integer(), nullable=True),
     sa.Column('mmif_location', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-    sa.ForeignKeyConstraint(['batch_input_id'], ['batches.id'], ),
     sa.ForeignKeyConstraint(['batch_output_id'], ['batches.id'], ),
     sa.ForeignKeyConstraint(['media_file_id'], ['media_files.guid'], ),
     sa.ForeignKeyConstraint(['metaflow_run_id'], ['metaflow_runs.id'], ),
     sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('mmifbatchinputlink',
+    sa.Column('mmif_id', sa.Integer(), nullable=False),
+    sa.Column('batch_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['batch_id'], ['batches.id'], ),
+    sa.ForeignKeyConstraint(['mmif_id'], ['mmifs.id'], ),
+    sa.PrimaryKeyConstraint('mmif_id', 'batch_id')
     )
     op.drop_table('mediafilesonyciassetlink')
     op.alter_column('metaflow_runs', 'finished_at',
@@ -41,10 +46,11 @@ def upgrade() -> None:
                existing_nullable=True)
     op.add_column('sonyci_assets', sa.Column('media_file_id', sqlmodel.sql.sqltypes.AutoString(), nullable=True))
     op.create_foreign_key(None, 'sonyci_assets', 'media_files', ['media_file_id'], ['guid'])
+    # ### end Alembic commands ###
 
     op.execute("ALTER TYPE mediatype RENAME VALUE 'video' TO 'Video';")
     op.execute("ALTER TYPE mediatype RENAME VALUE 'audio' TO 'Audio';")
-    # ### end Alembic commands ###
+
 
 
 def downgrade() -> None:
@@ -62,8 +68,9 @@ def downgrade() -> None:
     sa.ForeignKeyConstraint(['sonyci_asset_id'], ['sonyci_assets.id'], name='mediafilesonyciassetlink_sonyci_asset_id_fkey'),
     sa.PrimaryKeyConstraint('media_file_id', 'sonyci_asset_id', name='mediafilesonyciassetlink_pkey')
     )
+    op.drop_table('mmifbatchinputlink')
     op.drop_table('mmifs')
+    # ### end Alembic commands ###
 
     op.execute("ALTER TYPE mediatype RENAME VALUE 'Video' TO 'video';")
     op.execute("ALTER TYPE mediatype RENAME VALUE 'Audio' TO 'audio';")
-    # ### end Alembic commands ###

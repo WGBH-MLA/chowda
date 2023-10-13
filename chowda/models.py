@@ -91,12 +91,20 @@ class MediaFileBatchLink(SQLModel, table=True):
     )
 
 
+class MMIFBatchInputLink(SQLModel, table=True):
+    mmif_id: Optional[int] = Field(
+        default=None, foreign_key='mmifs.id', primary_key=True
+    )
+    batch_id: Optional[int] = Field(
+        default=None, foreign_key='batches.id', primary_key=True
+    )
+
+
 class MediaFile(SQLModel, table=True):
     """Media file model
 
     Attributes:
         guid: MediaFile GUID
-        mmif_json: Canonical MMIF
         assets: List of SonyCiAssets
         collections: List of Collections
         batches: List of Batches
@@ -204,10 +212,8 @@ class Batch(SQLModel, table=True):
     )
 
     input_mmifs: List['MMIF'] = Relationship(
-        back_populates='batch_input',
-        sa_relationship_kwargs={
-            "primaryjoin": "Batch.id==MMIF.batch_input_id",
-        },
+        back_populates='batch_inputs',
+        link_model=MMIFBatchInputLink,
     )
     metaflow_runs: List['MetaflowRun'] = Relationship(back_populates='batch')
 
@@ -305,7 +311,8 @@ class MMIF(SQLModel, table=True):
         media_file: MediaFile
         metaflow_run_id: MetaflowRun ID
         metaflow_run: MetaflowRun
-        mmif: Source MMIF pointer
+        batch_output: Batch that generated this MMIF
+        batch_input: Batch that uses this as an input
     """
 
     __tablename__ = 'mmifs'
@@ -324,12 +331,9 @@ class MMIF(SQLModel, table=True):
             "primaryjoin": "MMIF.batch_output_id==Batch.id",
         },
     )
-    batch_input_id: Optional[int] = Field(foreign_key='batches.id', default=None)
-    batch_input: Optional[Batch] = Relationship(
+    batch_inputs: List[Batch] = Relationship(
         back_populates='input_mmifs',
-        sa_relationship_kwargs={
-            "primaryjoin": "MMIF.batch_input_id==Batch.id",
-        },
+        link_model=MMIFBatchInputLink,
     )
 
     mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
