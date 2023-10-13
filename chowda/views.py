@@ -239,7 +239,7 @@ class BatchView(ClammerModelView):
         submit_btn_class='btn-success',
         form="""
         <form>
-                <input type="checkbox" id="new_mmif" name="mmif">
+                <input type="checkbox" id="new_mmif" name="new_mmif">
                 <label for="new_mmif">Start from blank MMIF?</label>
                 <input type="hidden" name="_" value="">
         </form>
@@ -252,7 +252,7 @@ class BatchView(ClammerModelView):
         except MultipartParseError as parse_error:
             raise ActionFailed('Error parsing form') from parse_error
 
-        new_mmif = data.get('mmif') == 'on'
+        new_mmif = data.get('new_mmif') == 'on'
         try:
             with Session(engine) as db:
                 for batch_id in pks:
@@ -276,8 +276,8 @@ class BatchView(ClammerModelView):
                         elif media_file.guid in mmif_guids:
                             # Prefer the Batch's MMIF if specified
                             payload['mmif_location'] = mmifs[media_file.guid]
-                        else:
-                            # Use the last MMIF in the MediaFile's MMIFs
+                        elif media_file.mmifs:
+                            # If there is an MMIF in the MediaFile's MMIFs
                             payload['mmif_location'] = media_file.mmifs[
                                 -1
                             ].mmif_location
