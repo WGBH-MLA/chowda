@@ -75,28 +75,28 @@ class User(SQLModel, table=True):
 
 class MediaFileCollectionLink(SQLModel, table=True):
     media_file_id: Optional[str] = Field(
-        default=None, foreign_key='media_files.guid', primary_key=True
+        default=None, foreign_key='media_files.guid', primary_key=True, index=True
     )
     collection_id: Optional[int] = Field(
-        default=None, foreign_key='collections.id', primary_key=True
+        default=None, foreign_key='collections.id', primary_key=True, index=True
     )
 
 
 class MediaFileBatchLink(SQLModel, table=True):
     media_file_id: Optional[str] = Field(
-        default=None, foreign_key='media_files.guid', primary_key=True
+        default=None, foreign_key='media_files.guid', primary_key=True, index=True
     )
     batch_id: Optional[int] = Field(
-        default=None, foreign_key='batches.id', primary_key=True
+        default=None, foreign_key='batches.id', primary_key=True, index=True
     )
 
 
 class MMIFBatchInputLink(SQLModel, table=True):
     mmif_id: Optional[int] = Field(
-        default=None, foreign_key='mmifs.id', primary_key=True
+        default=None, foreign_key='mmifs.id', primary_key=True, index=True
     )
     batch_id: Optional[int] = Field(
-        default=None, foreign_key='batches.id', primary_key=True
+        default=None, foreign_key='batches.id', primary_key=True, index=True
     )
 
 
@@ -167,7 +167,9 @@ class SonyCiAsset(SQLModel, table=True):
     thumbnails: Optional[List[Dict[str, Any]]] = Field(
         sa_column=Column(postgresql.ARRAY(JSON)), default=None
     )
-    media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
+    media_file_id: Optional[str] = Field(
+        default=None, foreign_key='media_files.guid', index=True
+    )
     media_files: Optional[MediaFile] = Relationship(back_populates='assets')
 
     @property
@@ -232,10 +234,10 @@ class Batch(SQLModel, table=True):
 
 class ClamsAppPipelineLink(SQLModel, table=True):
     clams_app_id: Optional[int] = Field(
-        default=None, foreign_key='clams_apps.id', primary_key=True
+        default=None, foreign_key='clams_apps.id', primary_key=True, index=True
     )
     pipeline_id: Optional[int] = Field(
-        default=None, foreign_key='pipelines.id', primary_key=True
+        default=None, foreign_key='pipelines.id', primary_key=True, index=True
     )
 
 
@@ -258,7 +260,7 @@ class ClamsApp(SQLModel, table=True):
 
 class Pipeline(SQLModel, table=True):
     __tablename__ = 'pipelines'
-    id: Optional[int] = Field(primary_key=True, default=None)
+    id: Optional[int] = Field(primary_key=True, default=None, index=True)
     name: str
     description: str
     clams_apps: List[ClamsApp] = Relationship(
@@ -275,11 +277,13 @@ class Pipeline(SQLModel, table=True):
 
 class MetaflowRun(SQLModel, table=True):
     __tablename__ = 'metaflow_runs'
-    id: Optional[str] = Field(primary_key=True, default=None)
+    id: Optional[str] = Field(primary_key=True, default=None, index=True)
     pathspec: str
-    batch_id: Optional[int] = Field(default=None, foreign_key='batches.id')
+    batch_id: Optional[int] = Field(default=None, foreign_key='batches.id', index=True)
     batch: Optional[Batch] = Relationship(back_populates='metaflow_runs')
-    media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
+    media_file_id: Optional[str] = Field(
+        default=None, foreign_key='media_files.guid', index=True
+    )
     media_file: Optional[MediaFile] = Relationship(back_populates='metaflow_runs')
     created_at: Optional[datetime] = Field(
         sa_column=Column(DateTime(timezone=True), default=datetime.utcnow)
@@ -316,11 +320,13 @@ class MMIF(SQLModel, table=True):
     """
 
     __tablename__ = 'mmifs'
-    id: Optional[int] = Field(primary_key=True, default=None)
+    id: Optional[int] = Field(primary_key=True, default=None, index=True)
     created_at: Optional[datetime] = Field(
         sa_column=Column(DateTime(timezone=True), default=datetime.utcnow)
     )
-    media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
+    media_file_id: Optional[str] = Field(
+        default=None, foreign_key='media_files.guid', index=True
+    )
     media_file: Optional[MediaFile] = Relationship(back_populates='mmifs')
     metaflow_run_id: Optional[str] = Field(default=None, foreign_key='metaflow_runs.id')
     metaflow_run: Optional[MetaflowRun] = Relationship(back_populates='mmif')
