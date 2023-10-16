@@ -89,6 +89,9 @@ class MediaFileBatchLink(SQLModel, table=True):
     batch_id: Optional[int] = Field(
         default=None, foreign_key='batches.id', primary_key=True, index=True
     )
+    source_mmif_id: Optional[int] = Field(
+        default=None, foreign_key='mmifs.id', index=True
+    )
 
 
 class MMIFBatchInputLink(SQLModel, table=True):
@@ -115,7 +118,6 @@ class MediaFile(SQLModel, table=True):
     __tablename__ = 'media_files'
     guid: Optional[str] = Field(primary_key=True, default=None, index=True)
     mmifs: List['MMIF'] = Relationship(back_populates='media_file')
-    mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
     assets: List['SonyCiAsset'] = Relationship(back_populates='media_files')
     collections: List['Collection'] = Relationship(
         back_populates='media_files', link_model=MediaFileCollectionLink
@@ -316,7 +318,7 @@ class MMIF(SQLModel, table=True):
         metaflow_run_id: MetaflowRun ID
         metaflow_run: MetaflowRun
         batch_output: Batch that generated this MMIF
-        batch_input: Batch that uses this as an input
+        batch_inputs: Batch that uses this as an input
     """
 
     __tablename__ = 'mmifs'
@@ -342,7 +344,6 @@ class MMIF(SQLModel, table=True):
         link_model=MMIFBatchInputLink,
     )
 
-    mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
     mmif_location: Optional[str] = Field(default=None)
 
     async def __admin_repr__(self, request: Request):
