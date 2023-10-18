@@ -29,8 +29,19 @@ class AppStatus(enum.Enum):
 
 
 class MediaType(enum.Enum):
-    video = 'Video'
-    audio = 'Audio'
+    """Media type enum
+    Type of Media: video or audio.
+    This is not the same as the format of the media file.
+
+    # FIXME:
+    Enum class attributes are the values that are stored in the database.
+    The value of the class attribute is the value returned by SonyCi (for validation)
+    But starlette-admin + SQLAlchemy send the value to the db, not the name.
+    Therefore, we need to Capatalize the name to make it match the db value.
+    """
+
+    Video = 'Video'
+    Audio = 'Audio'
 
 
 class ThumbnailType(enum.Enum):
@@ -64,28 +75,31 @@ class User(SQLModel, table=True):
 
 class MediaFileCollectionLink(SQLModel, table=True):
     media_file_id: Optional[str] = Field(
-        default=None, foreign_key='media_files.guid', primary_key=True
+        default=None, foreign_key='media_files.guid', primary_key=True, index=True
     )
     collection_id: Optional[int] = Field(
-        default=None, foreign_key='collections.id', primary_key=True
+        default=None, foreign_key='collections.id', primary_key=True, index=True
     )
 
 
 class MediaFileBatchLink(SQLModel, table=True):
     media_file_id: Optional[str] = Field(
-        default=None, foreign_key='media_files.guid', primary_key=True
+        default=None, foreign_key='media_files.guid', primary_key=True, index=True
     )
     batch_id: Optional[int] = Field(
-        default=None, foreign_key='batches.id', primary_key=True
+        default=None, foreign_key='batches.id', primary_key=True, index=True
+    )
+    source_mmif_id: Optional[int] = Field(
+        default=None, foreign_key='mmifs.id', index=True
     )
 
 
-class MediaFileSonyCiAssetLink(SQLModel, table=True):
-    media_file_id: Optional[str] = Field(
-        default=None, foreign_key='media_files.guid', primary_key=True
+class MMIFBatchInputLink(SQLModel, table=True):
+    mmif_id: Optional[int] = Field(
+        default=None, foreign_key='mmifs.id', primary_key=True, index=True
     )
-    sonyci_asset_id: Optional[str] = Field(
-        default=None, foreign_key='sonyci_assets.id', primary_key=True
+    batch_id: Optional[int] = Field(
+        default=None, foreign_key='batches.id', primary_key=True, index=True
     )
 
 
@@ -98,14 +112,13 @@ class MediaFile(SQLModel, table=True):
         collections: List of Collections
         batches: List of Batches
         metaflow_runs: List of MetaflowRuns
+        mmifs: List of MMIFs
     """
 
     __tablename__ = 'media_files'
     guid: Optional[str] = Field(primary_key=True, default=None, index=True)
-    mmif_json: Dict[str, Any] = Field(sa_column=Column(JSON), default=None)
-    assets: List['SonyCiAsset'] = Relationship(
-        back_populates='media_files', link_model=MediaFileSonyCiAssetLink
-    )
+    mmifs: List['MMIF'] = Relationship(back_populates='media_file')
+    assets: List['SonyCiAsset'] = Relationship(back_populates='media_files')
     collections: List['Collection'] = Relationship(
         back_populates='media_files', link_model=MediaFileCollectionLink
     )
@@ -156,9 +169,10 @@ class SonyCiAsset(SQLModel, table=True):
     thumbnails: Optional[List[Dict[str, Any]]] = Field(
         sa_column=Column(postgresql.ARRAY(JSON)), default=None
     )
-    media_files: List[MediaFile] = Relationship(
-        back_populates='assets', link_model=MediaFileSonyCiAssetLink
+    media_file_id: Optional[str] = Field(
+        default=None, foreign_key='media_files.guid', index=True
     )
+    media_files: Optional[MediaFile] = Relationship(back_populates='assets')
 
     @property
     def thumbnails_by_type(self):
@@ -194,6 +208,17 @@ class Batch(SQLModel, table=True):
     media_files: List[MediaFile] = Relationship(
         back_populates='batches', link_model=MediaFileBatchLink
     )
+    output_mmifs: List['MMIF'] = Relationship(
+        back_populates='batch_output',
+        sa_relationship_kwargs={
+            "primaryjoin": "Batch.id==MMIF.batch_output_id",
+        },
+    )
+
+    input_mmifs: List['MMIF'] = Relationship(
+        back_populates='batch_inputs',
+        link_model=MMIFBatchInputLink,
+    )
     metaflow_runs: List['MetaflowRun'] = Relationship(back_populates='batch')
 
     def unstarted_guids(self) -> set:
@@ -211,10 +236,10 @@ class Batch(SQLModel, table=True):
 
 class ClamsAppPipelineLink(SQLModel, table=True):
     clams_app_id: Optional[int] = Field(
-        default=None, foreign_key='clams_apps.id', primary_key=True
+        default=None, foreign_key='clams_apps.id', primary_key=True, index=True
     )
     pipeline_id: Optional[int] = Field(
-        default=None, foreign_key='pipelines.id', primary_key=True
+        default=None, foreign_key='pipelines.id', primary_key=True, index=True
     )
 
 
@@ -237,7 +262,7 @@ class ClamsApp(SQLModel, table=True):
 
 class Pipeline(SQLModel, table=True):
     __tablename__ = 'pipelines'
-    id: Optional[int] = Field(primary_key=True, default=None)
+    id: Optional[int] = Field(primary_key=True, default=None, index=True)
     name: str
     description: str
     clams_apps: List[ClamsApp] = Relationship(
@@ -254,11 +279,13 @@ class Pipeline(SQLModel, table=True):
 
 class MetaflowRun(SQLModel, table=True):
     __tablename__ = 'metaflow_runs'
-    id: Optional[str] = Field(primary_key=True, default=None)
+    id: Optional[str] = Field(primary_key=True, default=None, index=True)
     pathspec: str
-    batch_id: Optional[int] = Field(default=None, foreign_key='batches.id')
+    batch_id: Optional[int] = Field(default=None, foreign_key='batches.id', index=True)
     batch: Optional[Batch] = Relationship(back_populates='metaflow_runs')
-    media_file_id: Optional[str] = Field(default=None, foreign_key='media_files.guid')
+    media_file_id: Optional[str] = Field(
+        default=None, foreign_key='media_files.guid', index=True
+    )
     media_file: Optional[MediaFile] = Relationship(back_populates='metaflow_runs')
     created_at: Optional[datetime] = Field(
         sa_column=Column(DateTime(timezone=True), default=datetime.utcnow)
@@ -271,8 +298,57 @@ class MetaflowRun(SQLModel, table=True):
     current_step: Optional[str] = Field(default=None)
     current_task: Optional[str] = Field(default=None)
 
+    mmif: Optional['MMIF'] = Relationship(back_populates='metaflow_run')
+
     @property
     def source(self):
         # TODO: is setting namespace to None the right way to go here?
         namespace(None)
         return Run(self.pathspec)
+
+
+class MMIF(SQLModel, table=True):
+    """MMIF model
+
+    Attributes:
+        id: Primary key
+        created_at: Creation timestamp
+        media_file_id: GUID
+        media_file: MediaFile
+        metaflow_run_id: MetaflowRun ID
+        metaflow_run: MetaflowRun
+        batch_output: Batch that generated this MMIF
+        batch_inputs: Batch that uses this as an input
+    """
+
+    __tablename__ = 'mmifs'
+    id: Optional[int] = Field(primary_key=True, default=None, index=True)
+    created_at: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), default=datetime.utcnow)
+    )
+    media_file_id: Optional[str] = Field(
+        default=None, foreign_key='media_files.guid', index=True
+    )
+    media_file: Optional[MediaFile] = Relationship(back_populates='mmifs')
+    metaflow_run_id: Optional[str] = Field(default=None, foreign_key='metaflow_runs.id')
+    metaflow_run: Optional[MetaflowRun] = Relationship(back_populates='mmif')
+    batch_output_id: Optional[int] = Field(default=None, foreign_key='batches.id')
+    batch_output: Optional[Batch] = Relationship(
+        back_populates='output_mmifs',
+        sa_relationship_kwargs={
+            "primaryjoin": "MMIF.batch_output_id==Batch.id",
+        },
+    )
+    batch_inputs: List[Batch] = Relationship(
+        back_populates='input_mmifs',
+        link_model=MMIFBatchInputLink,
+    )
+
+    mmif_location: Optional[str] = Field(default=None)
+
+    async def __admin_repr__(self, request: Request):
+        return f'{self.metaflow_run.batch.name}' if self.metaflow_run else self.id
+
+    async def __admin_select2_repr__(self, request: Request) -> str:
+        text = self.metaflow_run.batch.name if self.metaflow_run else self.id
+        return f'<span>{text}</span>'

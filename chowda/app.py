@@ -16,6 +16,7 @@ from chowda.auth import OAuthProvider
 from chowda.config import SECRET, STATIC_DIR, TEMPLATES_DIR
 from chowda.db import engine
 from chowda.models import (
+    MMIF,
     Batch,
     ClamsApp,
     Collection,
@@ -33,6 +34,7 @@ from chowda.views import (
     DashboardView,
     MediaFileView,
     MetaflowRunView,
+    MMIFView,
     PipelineView,
     SonyCiAssetView,
     UserView,
@@ -75,6 +77,7 @@ admin.add_view(ClamsAppView(ClamsApp, icon='fa fa-box'))
 admin.add_view(PipelineView(Pipeline, icon='fa fa-boxes-stacked'))
 admin.add_view(UserView(User, icon='fa fa-users'))
 admin.add_view(MetaflowRunView(MetaflowRun, icon='fa fa-person-running'))
+admin.add_view(MMIFView(MMIF, icon='fa fa-person-running'))
 
 
 # Mount admin to app

@@ -4,6 +4,7 @@ from typing import Any, ClassVar, Dict, List
 from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
 from metaflow.integrations import ArgoEvent
+from multipart.exceptions import MultipartParseError
 from sqlmodel import Session, select
 from starlette.datastructures import FormData
 from starlette.requests import Request
@@ -208,9 +209,11 @@ class BatchView(ClammerModelView):
         BatchPercentCompleted(),
         BatchPercentSuccessful(),
         BatchUnstartedGuidsCount(),
+        'input_mmifs',
         BatchUnstartedGuids('media_files'),
         MediaFilesGuidsField('media_files', exclude_from_detail=True),
         BatchMetaflowRunDisplayField(),
+        'output_mmifs',
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
@@ -234,9 +237,22 @@ class BatchView(ClammerModelView):
         action_btn_class='btn-outline-success',
         submit_btn_text='Yep',
         submit_btn_class='btn-success',
+        form="""
+        <form>
+                <input type="checkbox" id="new_mmif" name="new_mmif">
+                <label for="new_mmif">Start from blank MMIF?</label>
+                <input type="hidden" name="_" value="">
+        </form>
+        """,
     )
     async def start_batches(self, request: Request, pks: List[Any]) -> str:
         """Starts a Batch by sending a message to the Argo Event Bus"""
+        try:
+            data: FormData = await request.form()
+        except MultipartParseError as parse_error:
+            raise ActionFailed('Error parsing form') from parse_error
+
+        new_mmif = data.get('new_mmif') == 'on'
         try:
             with Session(engine) as db:
                 for batch_id in pks:
@@ -244,15 +260,30 @@ class BatchView(ClammerModelView):
                     pipeline = ','.join(
                         [app.endpoint for app in batch.pipeline.clams_apps]
                     )
+                    mmifs = {
+                        mmif.media_file_id: mmif.mmif_location
+                        for mmif in batch.input_mmifs
+                    }
+                    mmif_guids = set(mmifs.keys())
                     for media_file in batch.media_files:
-                        ArgoEvent(
-                            'pipeline',
-                            payload={
-                                'batch_id': batch_id,
-                                'guid': media_file.guid,
-                                'pipeline': pipeline,
-                            },
-                        ).publish(ignore_errors=False)
+                        payload = {
+                            'batch_id': batch_id,
+                            'guid': media_file.guid,
+                            'pipeline': pipeline,
+                        }
+                        if new_mmif:
+                            payload['mmif_location'] = ''
+                        elif media_file.guid in mmif_guids:
+                            # Prefer the Batch's MMIF if specified
+                            payload['mmif_location'] = mmifs[media_file.guid]
+                        elif media_file.mmifs:
+                            # If there is an MMIF in the MediaFile's MMIFs
+                            payload['mmif_location'] = media_file.mmifs[
+                                -1
+                            ].mmif_location
+                        ArgoEvent('pipeline', payload=payload).publish(
+                            ignore_errors=False
+                        )
 
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
@@ -332,8 +363,10 @@ class MediaFileView(ClammerModelView):
         'batches',
         'assets',
         BaseField('mmif_json', display_template='displays/media_file_mmif_json.html'),
+        'mmifs',
+        'metaflow_runs',
     ]
-    exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json']
+    exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json', 'mmifs']
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
 
     def can_create(self, request: Request) -> bool:
@@ -438,3 +471,15 @@ class SonyCiAssetView(AdminModelView):
 
 class MetaflowRunView(AdminModelView):
     form_include_pk: ClassVar[bool] = True
+
+
+class MMIFView(ChowdaModelView):
+    label: ClassVar[str] = 'MMIFs'
+    fields: ClassVar[List[Any]] = [
+        'media_file',
+        'batch_inputs',
+        'batch_output',
+        'metaflow_run',
+        'mmif_location',
+        'created_at',
+    ]
