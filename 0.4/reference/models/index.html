@@ -738,9 +738,36 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#chowda.models.MMIF" class="md-nav__link">
+    MMIF
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#chowda.models.MediaFile" class="md-nav__link">
     MediaFile
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chowda.models.MediaType" class="md-nav__link">
+    MediaType
+  </a>
+  
+    <nav class="md-nav" aria-label="MediaType">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chowda.models.MediaType--fixme" class="md-nav__link">
+    FIXME:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -851,21 +878,7 @@
 
             <details class="quote">
               <summary>Source code in <code>chowda/models.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">187</span>
-<span class="normal">188</span>
-<span class="normal">189</span>
-<span class="normal">190</span>
-<span class="normal">191</span>
-<span class="normal">192</span>
-<span class="normal">193</span>
-<span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span>
-<span class="normal">199</span>
-<span class="normal">200</span>
-<span class="normal">201</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">201</span>
 <span class="normal">202</span>
 <span class="normal">203</span>
 <span class="normal">204</span>
@@ -873,7 +886,32 @@
 <span class="normal">206</span>
 <span class="normal">207</span>
 <span class="normal">208</span>
-<span class="normal">209</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Batch</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Batch</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;batches&#39;</span>
     <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
@@ -882,6 +920,17 @@
     <span class="n">pipeline</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">&#39;Pipeline&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;batches&#39;</span><span class="p">)</span>
     <span class="n">media_files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">MediaFile</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
         <span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;batches&#39;</span><span class="p">,</span> <span class="n">link_model</span><span class="o">=</span><span class="n">MediaFileBatchLink</span>
+    <span class="p">)</span>
+    <span class="n">output_mmifs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;MMIF&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
+        <span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;batch_output&#39;</span><span class="p">,</span>
+        <span class="n">sa_relationship_kwargs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;primaryjoin&quot;</span><span class="p">:</span> <span class="s2">&quot;Batch.id==MMIF.batch_output_id&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="n">input_mmifs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;MMIF&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
+        <span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;batch_inputs&#39;</span><span class="p">,</span>
+        <span class="n">link_model</span><span class="o">=</span><span class="n">MMIFBatchInputLink</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">metaflow_runs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;MetaflowRun&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;batch&#39;</span><span class="p">)</span>
 
@@ -928,11 +977,11 @@
 
           <details class="quote">
             <summary>Source code in <code>chowda/models.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">199</span>
-<span class="normal">200</span>
-<span class="normal">201</span>
-<span class="normal">202</span>
-<span class="normal">203</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">unstarted_guids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">unstarted_guids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the set of GUIDs that are not currently running&quot;&quot;&quot;</span>
     <span class="n">ids</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="p">{</span><span class="n">media_file</span><span class="o">.</span><span class="n">guid</span> <span class="k">for</span> <span class="n">media_file</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">media_files</span><span class="p">}</span>
     <span class="n">running_guids</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="p">{</span><span class="n">run</span><span class="o">.</span><span class="n">media_file</span><span class="o">.</span><span class="n">guid</span> <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metaflow_runs</span><span class="p">}</span>
@@ -942,6 +991,241 @@
   </div>
 
 </div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="chowda.models.MMIF" class="doc doc-heading">
+          <code>MMIF</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="sqlmodel.SQLModel">SQLModel</span></code></p>
+
+  
+      <p>MMIF model</p>
+
+
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>id</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Primary key</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>created_at</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[<span title="datetime.datetime">datetime</span>]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Creation timestamp</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>media_file_id</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[str]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>GUID</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>media_file</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="chowda.models.MediaFile" href="#chowda.models.MediaFile">MediaFile</a>]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>MediaFile</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>metaflow_run_id</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[str]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>MetaflowRun ID</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>metaflow_run</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[<span title="chowda.models.MetaflowRun">MetaflowRun</span>]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>MetaflowRun</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>batch_output</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="chowda.models.Batch" href="#chowda.models.Batch">Batch</a>]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Batch that generated this MMIF</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>batch_inputs</code></td>
+          <td>
+                <code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="chowda.models.Batch" href="#chowda.models.Batch">Batch</a>]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Batch that uses this as an input</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+            <details class="quote">
+              <summary>Source code in <code>chowda/models.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MMIF</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;MMIF model</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        id: Primary key</span>
+<span class="sd">        created_at: Creation timestamp</span>
+<span class="sd">        media_file_id: GUID</span>
+<span class="sd">        media_file: MediaFile</span>
+<span class="sd">        metaflow_run_id: MetaflowRun ID</span>
+<span class="sd">        metaflow_run: MetaflowRun</span>
+<span class="sd">        batch_output: Batch that generated this MMIF</span>
+<span class="sd">        batch_inputs: Batch that uses this as an input</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;mmifs&#39;</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">sa_column</span><span class="o">=</span><span class="n">Column</span><span class="p">(</span><span class="n">DateTime</span><span class="p">(</span><span class="n">timezone</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">media_file_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">foreign_key</span><span class="o">=</span><span class="s1">&#39;media_files.guid&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">media_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MediaFile</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;mmifs&#39;</span><span class="p">)</span>
+    <span class="n">metaflow_run_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">foreign_key</span><span class="o">=</span><span class="s1">&#39;metaflow_runs.id&#39;</span><span class="p">)</span>
+    <span class="n">metaflow_run</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MetaflowRun</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;mmif&#39;</span><span class="p">)</span>
+    <span class="n">batch_output_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">foreign_key</span><span class="o">=</span><span class="s1">&#39;batches.id&#39;</span><span class="p">)</span>
+    <span class="n">batch_output</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Batch</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
+        <span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;output_mmifs&#39;</span><span class="p">,</span>
+        <span class="n">sa_relationship_kwargs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;primaryjoin&quot;</span><span class="p">:</span> <span class="s2">&quot;MMIF.batch_output_id==Batch.id&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">batch_inputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Batch</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
+        <span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;input_mmifs&#39;</span><span class="p">,</span>
+        <span class="n">link_model</span><span class="o">=</span><span class="n">MMIFBatchInputLink</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">mmif_location</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__admin_repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metaflow_run</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metaflow_run</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__admin_select2_repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metaflow_run</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metaflow_run</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;&lt;span&gt;</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s1">&lt;/span&gt;&#39;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
 
 
 
@@ -1036,26 +1320,23 @@
             </div>
           </td>
         </tr>
+        <tr>
+          <td><code>mmifs</code></td>
+          <td>
+                <code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="chowda.models.MMIF" href="#chowda.models.MMIF">MMIF</a>]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>List of MMIFs</p>
+            </div>
+          </td>
+        </tr>
     </tbody>
   </table>
 
             <details class="quote">
               <summary>Source code in <code>chowda/models.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">106</span>
 <span class="normal">107</span>
 <span class="normal">108</span>
 <span class="normal">109</span>
@@ -1083,7 +1364,20 @@
 <span class="normal">131</span>
 <span class="normal">132</span>
 <span class="normal">133</span>
-<span class="normal">134</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MediaFile</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MediaFile</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Media file model</span>
 
 <span class="sd">    Attributes:</span>
@@ -1092,14 +1386,13 @@
 <span class="sd">        collections: List of Collections</span>
 <span class="sd">        batches: List of Batches</span>
 <span class="sd">        metaflow_runs: List of MetaflowRuns</span>
+<span class="sd">        mmifs: List of MMIFs</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;media_files&#39;</span>
     <span class="n">guid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">mmif_json</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">sa_column</span><span class="o">=</span><span class="n">Column</span><span class="p">(</span><span class="n">JSON</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="n">assets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;SonyCiAsset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
-        <span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;media_files&#39;</span><span class="p">,</span> <span class="n">link_model</span><span class="o">=</span><span class="n">MediaFileSonyCiAssetLink</span>
-    <span class="p">)</span>
+    <span class="n">mmifs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;MMIF&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;media_file&#39;</span><span class="p">)</span>
+    <span class="n">assets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;SonyCiAsset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;media_files&#39;</span><span class="p">)</span>
     <span class="n">collections</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Collection&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
         <span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;media_files&#39;</span><span class="p">,</span> <span class="n">link_model</span><span class="o">=</span><span class="n">MediaFileCollectionLink</span>
     <span class="p">)</span>
@@ -1126,6 +1419,83 @@
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">__admin_select2_repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;&lt;span&gt;&lt;strong&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">guid</span><span class="si">}</span><span class="s1">&lt;/strong&gt;&lt;/span&gt;&#39;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="chowda.models.MediaType" class="doc doc-heading">
+          <code>MediaType</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code>enum.<span title="enum.Enum">Enum</span></code></p>
+
+  
+      <p>Media type enum
+Type of Media: video or audio.
+This is not the same as the format of the media file.</p>
+<h3 id="chowda.models.MediaType--fixme">FIXME:</h3>
+<p>Enum class attributes are the values that are stored in the database.
+The value of the class attribute is the value returned by SonyCi (for validation)
+But starlette-admin + SQLAlchemy send the value to the db, not the name.
+Therefore, we need to Capatalize the name to make it match the db value.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chowda/models.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MediaType</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Media type enum</span>
+<span class="sd">    Type of Media: video or audio.</span>
+<span class="sd">    This is not the same as the format of the media file.</span>
+
+<span class="sd">    # FIXME:</span>
+<span class="sd">    Enum class attributes are the values that are stored in the database.</span>
+<span class="sd">    The value of the class attribute is the value returned by SonyCi (for validation)</span>
+<span class="sd">    But starlette-admin + SQLAlchemy send the value to the db, not the name.</span>
+<span class="sd">    Therefore, we need to Capatalize the name to make it match the db value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">Video</span> <span class="o">=</span> <span class="s1">&#39;Video&#39;</span>
+    <span class="n">Audio</span> <span class="o">=</span> <span class="s1">&#39;Audio&#39;</span>
 </code></pre></div></td></tr></table></div>
             </details>
 
@@ -1228,24 +1598,24 @@
 
             <details class="quote">
               <summary>Source code in <code>chowda/models.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">56</span>
 <span class="normal">57</span>
 <span class="normal">58</span>
 <span class="normal">59</span>
 <span class="normal">60</span>
 <span class="normal">61</span>
-<span class="normal">62</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;User model</span>
 
 <span class="sd">    Attributes:</span>
