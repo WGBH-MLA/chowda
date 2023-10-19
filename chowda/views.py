@@ -200,6 +200,7 @@ class BatchView(ClammerModelView):
         'start_batches',
         'duplicate_batches',
         'combine_batches',
+        'download_mmif',
     ]
 
     fields: ClassVar[list[Any]] = [
@@ -228,6 +229,8 @@ class BatchView(ClammerModelView):
         if name == 'duplicate_batches':
             return user.is_clammer or user.is_admin
         if name == 'combine_batches':
+            return user.is_clammer or user.is_admin
+        if name == 'download_mmif':
             return user.is_clammer or user.is_admin
         return await super().is_action_allowed(request, name)
 
@@ -352,6 +355,30 @@ class BatchView(ClammerModelView):
 
         # Display Success message
         return f'Combined {len(pks)} Batch(es)'
+
+    @action(
+        name='download_mmif',
+        text='Download MMIF',
+        confirmation='Download all MMIF JSON for this Batch?',
+        icon_class='fa fa-download',
+        submit_btn_text='Gimme the MMIF!',
+        submit_btn_class='btn-outline-primary',
+    )
+    async def download_mmif(self, request: Request, pks: List[Any]) -> str:
+        """Create a new batch from the selected batch"""
+        try:
+            with Session(engine) as db:
+                batches = db.exec(select(Batch).where(Batch.id.in_(pks))).all()
+                batch_names = [b.name for b in batches]
+                # fetch all the MMIF
+                # zip it all up
+                # respond with a download
+
+        except Exception as error:
+            raise ActionFailed(f'{error!s}') from error
+
+        # Display Success message
+        return f'Downloaded all MMIF from {", ".join(batch_names)}'
 
 
 class MediaFileView(ClammerModelView):
