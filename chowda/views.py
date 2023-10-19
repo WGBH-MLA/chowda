@@ -28,7 +28,7 @@ from chowda.fields import (
     MediaFilesGuidsField,
     SonyCiAssetThumbnail,
 )
-from chowda.models import Batch, Collection, MediaFile
+from chowda.models import MMIF, Batch, Collection, MediaFile
 from chowda.utils import validate_media_file_guids
 from templates import filters  # noqa: F401
 
@@ -483,3 +483,70 @@ class MMIFView(ChowdaModelView):
         'mmif_location',
         'created_at',
     ]
+    actions: ClassVar[List[str]] = ['add_to_new_batch', 'add_to_existing_batch']
+
+    @action(
+        name='add_to_new_batch',
+        text='Add to New Batch',
+        confirmation='Create a Batch from these MMIFs?',
+        action_btn_class='btn-ghost-primary',
+        submit_btn_text="Aye, Capt'n!",
+        form="""
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_name"
+                    placeholder="Batch Name">
+                <textarea class="form-control" name="batch_description"
+                    placeholder="Batch Description"></textarea>
+            </div>
+        </form>
+        """,
+    )
+    async def add_to_new_batch(self, request: Request, pks: List[Any]) -> str:
+        try:
+            data: FormData = await request.form()
+            with Session(engine) as db:
+                mmifs = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
+                media_files = [mmif.media_file for mmif in mmifs]
+                batch = Batch(
+                    name=data.get("batch_name"),
+                    description=data.get("batch_description"),
+                    input_mmifs=mmifs,
+                    media_files=media_files,
+                )
+                db.add(batch)
+                db.commit()
+
+            return f"Batch of {len(pks)} MMIFs created"
+        except Exception as error:
+            raise ActionFailed(f'{error!s}') from error
+
+    @action(
+        name='add_to_existing_batch',
+        text='Add to Existing Batch',
+        confirmation='Which batch should these be added to?',
+        action_btn_class='btn-ghost-primary',
+        submit_btn_text="Make it so!",
+        form="""
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_id"
+                    placeholder="Batch ID">
+            </div>
+        </form>
+        """,
+    )
+    async def add_to_existing_batch(self, request: Request, pks: List[Any]) -> str:
+        try:
+            data: FormData = await request.form()
+            with Session(engine) as db:
+                mmifs = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
+                batch = db.get(Batch, data.get("batch_id"))
+                batch.input_mmifs += mmifs
+                media_files = [mmif.media_file for mmif in mmifs]
+                batch.media_files += media_files
+                db.commit()
+
+                return f"Added {len(pks)} MMIFs to Batch {batch.id}"
+        except Exception as error:
+            raise ActionFailed(f'{error!s}') from error
