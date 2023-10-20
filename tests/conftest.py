@@ -1,17 +1,16 @@
 from json import dumps, loads
 from json.decoder import JSONDecodeError
 from os import environ, path
+from typing import List, Optional, Type
 
+import jwt
+from fastapi.testclient import TestClient
+from httpx import AsyncClient
 from pytest import fixture
 
 from chowda.app import app
-from chowda.config import AUTH0_API_AUDIENCE
-from fastapi.testclient import TestClient
-from httpx import AsyncClient
 from chowda.auth.utils import jwt_signing_key
-from typing import Type, Optional, List, Any
-import jwt
-
+from chowda.config import AUTH0_API_AUDIENCE
 
 # Set CHOWDA_ENV env var to 'test' always. This serves as a flag for anywhere else in
 # the application where we need to detect whether we are running tests or not.
@@ -91,11 +90,10 @@ def fake_access_token() -> Type[callable]:
     """
 
     def _fake_access_token(
-        permissions: Optional[List[Any]] = None, algorithm: str = 'HS256'
+        permissions: Optional[List[str]] = None, algorithm: str = 'HS256'
     ) -> str:
-        if not permissions:
+        if permissions is None:
             permissions = []
-
         jwt_decoded = {
             'permissions': permissions,
             'aud': AUTH0_API_AUDIENCE,

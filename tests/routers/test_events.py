@@ -27,9 +27,7 @@ async def test_events(event: dict, async_client: AsyncClient, fake_access_token:
 
 
 @pytest.mark.asyncio
-async def test_events_missing_auth_header(
-    event: dict, async_client: AsyncClient, fake_access_token: str
-):
+async def test_events_missing_auth_header(event: dict, async_client: AsyncClient):
     async with async_client as ac:
         response = await ac.post('/api/event/', json=event, follow_redirects=True)
 
@@ -39,9 +37,7 @@ async def test_events_missing_auth_header(
 
 
 @pytest.mark.asyncio
-async def test_events_malformed_auth_header(
-    event: dict, async_client: AsyncClient, fake_access_token: str
-):
+async def test_events_malformed_auth_header(event: dict, async_client: AsyncClient):
     async with async_client as ac:
         response = await ac.post(
             '/api/event/',
@@ -55,6 +51,40 @@ async def test_events_malformed_auth_header(
     assert (
         error['detail'] == 'Bearer token malformed or missing in Authorization header'
     )
+
+
+@pytest.mark.asyncio
+async def test_events_invalid_bearer_token(event: dict, async_client: AsyncClient):
+    async with async_client as ac:
+        response = await ac.post(
+            '/api/event/',
+            json=event,
+            follow_redirects=True,
+            headers={'Authorization': 'Bearer N0t.AR3al.TOKeN'},
+        )
+
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    error = json.loads(response.text)
+    assert 'Invalid header string' in error['detail']
+
+
+@pytest.mark.asyncio
+async def test_events_valid_unauthorized_bearer_token(
+    event: dict, async_client: AsyncClient
+):
+    async with async_client as ac:
+        response = await ac.post(
+            '/api/event/',
+            json=event,
+            follow_redirects=True,
+            headers={
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'  # noqa E501
+            },
+        )
+
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    error = json.loads(response.text)
+    assert error['detail'] == 'Signature verification failed'
 
 
 @pytest.mark.asyncio

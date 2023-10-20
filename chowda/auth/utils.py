@@ -3,7 +3,6 @@ from typing import Annotated, List
 from fastapi import Depends, HTTPException, Request, status
 from pydantic import BaseModel, Field
 
-
 from chowda.config import AUTH0_API_AUDIENCE, AUTH0_JWKS_URL
 
 unauthorized_redirect = HTTPException(
@@ -69,6 +68,8 @@ def get_admin_user(
 
 
 def unverified_access_token(request: Request) -> str:
+    """Extract and return the unverified access token from the Authorization header.
+    Raises an HTTPUnauthorizedException if the header is missing or malformed."""
     auth_header = request.headers.get('Authorization', None)
 
     if not auth_header:
@@ -79,17 +80,26 @@ def unverified_access_token(request: Request) -> str:
             detail="Bearer token malformed or missing in Authorization header",
         )
 
-    # Return the access token from the Authorization header, i.e. the string without the
-    # "Bearer " prefix
+    # Return the access token from the Authorization header,
+    # i.e. the string without the "Bearer " prefix
     return auth_header.replace('Bearer ', '')
 
 
-def jwt_signing_key(request: Request) -> str:
+def jwt_signing_key(
+    unverified_access_token: Annotated[str, Depends(unverified_access_token)]
+) -> str:
+    """Get the JWT signing key from the JWKS URL."""
     from jwt import PyJWKClient
 
     jwks_client = PyJWKClient(AUTH0_JWKS_URL)
-    signing_key = jwks_client.get_signing_key_from_jwt(unverified_access_token)
-    return signing_key.key
+    try:
+        signing_key = jwks_client.get_signing_key_from_jwt(unverified_access_token)
+        return signing_key.key
+
+    except Exception as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail=str(exc)
+        ) from exc
 
 
 def verified_access_token(
@@ -99,16 +109,18 @@ def verified_access_token(
 ) -> OAuthAccessToken:
     """Decodes and verifies an access token. If any exceptions occur, an
     HTTPUnauthorizedException is raised from the original exception."""
-    try:
-        from jwt import decode
+    from jwt import decode
 
+    try:
         decoded_token = decode(
             unverified_access_token,
             jwt_signing_key,
             algorithms=['RS256', 'HS256'],
             audience='https://chowda.wgbh-mla.org/api',
         )
-
         return OAuthAccessToken(**decoded_token)
+
     except Exception as exc:
-        raise HTTPException(status_code=401, detail=str(exc)) from exc
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail=str(exc)
+        ) from exc

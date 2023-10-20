@@ -1,12 +1,17 @@
-import pytest
-from httpx import AsyncClient  # noqa: F401
-from chowda.routers.sony_ci import SyncResponse
-from metaflow.plugins.argo.argo_events import ArgoEventException
 from typing import Type
+
+import pytest
+from httpx import AsyncClient
+from metaflow.plugins.argo.argo_events import ArgoEventException
+from pytest_mock import MockerFixture
+
+from chowda.routers.sony_ci import SyncResponse
 
 
 @pytest.mark.asyncio
-async def test_sony_ci_sync(mocker, async_client, fake_access_token: str):
+async def test_sony_ci_sync(
+    mocker: MockerFixture, async_client: AsyncClient, fake_access_token: Type[callable]
+):
     mocker.patch(
         'metaflow.integrations.ArgoEvent.publish',
         autospec=True,
@@ -25,7 +30,7 @@ async def test_sony_ci_sync(mocker, async_client, fake_access_token: str):
 
 @pytest.mark.asyncio
 async def test_sony_ci_sync_fail(
-    mocker, async_client, fake_access_token: Type[callable]
+    mocker: MockerFixture, async_client: AsyncClient, fake_access_token: Type[callable]
 ):
     mocker.patch(
         'metaflow.integrations.ArgoEvent.publish',
