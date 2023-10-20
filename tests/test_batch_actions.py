@@ -4,6 +4,11 @@ import pytest
 from chowda.app import app
 
 
+@pytest.fixture
+def userinfo_in_session(async_client: AsyncClient):
+    async_client.session
+
+
 @pytest.mark.asyncio
 async def test_batch_action_download_mmif(async_client: AsyncClient):
     async with async_client as ac:
