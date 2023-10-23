@@ -14,7 +14,7 @@ from starlette_admin import CustomView, action
 from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
-from starlette_admin.fields import BaseField
+from starlette_admin.fields import BaseField, HasMany, HasOne
 
 from chowda.auth.utils import get_user
 from chowda.db import engine
@@ -477,8 +477,8 @@ class MMIFView(ChowdaModelView):
     label: ClassVar[str] = 'MMIFs'
     fields: ClassVar[List[Any]] = [
         'media_file',
-        'batch_inputs',
-        'batch_output',
+        HasMany('batch_inputs', identity='batch', label='Input to Batches'),
+        HasOne('batch_output', identity='batch', label='Generated from Batch'),
         'metaflow_run',
         'mmif_location',
         'created_at',

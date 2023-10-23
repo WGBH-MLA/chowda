@@ -347,8 +347,16 @@ class MMIF(SQLModel, table=True):
     mmif_location: Optional[str] = Field(default=None)
 
     async def __admin_repr__(self, request: Request):
-        return f'{self.metaflow_run.batch.name}' if self.metaflow_run else self.id
+        return (
+            f'{self.metaflow_run.batch.name}'
+            if self.metaflow_run and self.metaflow_run.batch
+            else self.id
+        )
 
     async def __admin_select2_repr__(self, request: Request) -> str:
-        text = self.metaflow_run.batch.name if self.metaflow_run else self.id
+        text = (
+            self.metaflow_run.batch.name
+            if self.metaflow_run and self.metaflow_run.batch
+            else self.id
+        )
         return f'<span>{text}</span>'
