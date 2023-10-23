@@ -24,10 +24,6 @@ class OAuthAccessToken(BaseModel):
     permissions: List[str] = []
 
 
-class OAuthIDToken(BaseModel):
-    """OAuth ID Token with User info"""
-
-
 class OAuthUser(BaseModel):
     """ID Token model for authorization."""
 

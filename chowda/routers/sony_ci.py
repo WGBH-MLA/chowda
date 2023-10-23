@@ -17,6 +17,11 @@ class SyncResponse(BaseModel):
 async def sony_ci_sync(
     token: Annotated[OAuthAccessToken, Depends(verified_access_token)]
 ) -> SyncResponse:
+    if 'sonyci:sync' not in token.permissions:
+        raise HTTPException(
+            status_code=403,
+            detail={'error': 'You do not have permission to sync Sony CI'},
+        )
     try:
         ArgoEvent('sync').publish(ignore_errors=False)
         return SyncResponse(started_at=datetime.utcnow())
