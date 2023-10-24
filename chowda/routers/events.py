@@ -11,7 +11,7 @@ from chowda.models import MetaflowRun
 events = APIRouter()
 
 
-@events.post('/', dependencies=[Depends(permissions(['create:event']))])
+@events.post('/', dependencies=[Depends(permissions('create:event'))])
 async def event(event: dict):
     """Receive an event from Argo Events."""
     print('Chowda event received', event)

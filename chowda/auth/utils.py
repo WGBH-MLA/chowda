@@ -1,4 +1,4 @@
-from typing import Annotated, List
+from typing import Annotated, List, Set
 
 from fastapi import Depends, HTTPException, Request, status
 from pydantic import BaseModel, Field
@@ -122,22 +122,23 @@ def verified_access_token(
         ) from exc
 
 
-def permissions(permissions: List[str]) -> None:
+def permissions(permissions: str | List[str] | Set[str]) -> None:
     """Dependency function to check if token has required permissions.
 
     Args:
-        permissions (List[str]): List of required permissions
+        permissions (str, List, Set): Required permissions. Can be a str, list, or set.
     Examples:
-        @app.get('/users/', dependencies=[Depends(permissions(['read:user']))])
-
-
+        @app.get('/users/', dependencies=[Depends(permissions('read:users'))])
     """
+    if isinstance(permissions, (str, list)):
+        permissions: set = {permissions}
 
     def _permissions(
         token: Annotated[OAuthAccessToken, Depends(verified_access_token)],
     ) -> None:
-        """Check if user has required permissions."""
-        missing_permissions = set(permissions) - set(token.permissions)
+        """Verify token has all required permissions, or raise a 403 Forbidden exception
+        with the missing permissions in the detail message."""
+        missing_permissions = permissions - set(token.permissions)
         if missing_permissions:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,

@@ -14,7 +14,7 @@ class SyncResponse(BaseModel):
 
 
 @sony_ci.post(
-    '/sync', tags=['sync'], dependencies=[Depends(permissions(['sync:sonyci']))]
+    '/sync', tags=['sync'], dependencies=[Depends(permissions('sync:sonyci'))]
 )
 async def sony_ci_sync() -> SyncResponse:
     try:
