@@ -1,10 +1,8 @@
-from fastapi import APIRouter, Depends, Request, status
+from fastapi import APIRouter, Request, status
 from metaflow.integrations import ArgoEvent
 from starlette.responses import RedirectResponse, Response
 
-from chowda.auth.utils import get_admin_user
-
-dashboard = APIRouter(dependencies=[Depends(get_admin_user)])
+dashboard = APIRouter()
 
 
 @dashboard.post('/sync')

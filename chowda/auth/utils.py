@@ -120,3 +120,28 @@ def verified_access_token(
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail=str(exc)
         ) from exc
+
+
+def permissions(permissions: List[str]) -> None:
+    """Dependency function to check if token has required permissions.
+
+    Args:
+        permissions (List[str]): List of required permissions
+    Examples:
+        @app.get('/users/', dependencies=[Depends(permissions(['read:user']))])
+
+
+    """
+
+    def _permissions(
+        token: Annotated[OAuthAccessToken, Depends(verified_access_token)],
+    ) -> None:
+        """Check if user has required permissions."""
+        missing_permissions = set(permissions) - set(token.permissions)
+        if missing_permissions:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f'Missing required permissions: {missing_permissions}',
+            )
+
+    return _permissions

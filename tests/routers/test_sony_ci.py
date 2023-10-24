@@ -19,7 +19,7 @@ async def test_sony_ci_sync(
     )
 
     async with async_client as ac:
-        bearer_token = fake_access_token(permissions=["sonyci:sync"])
+        bearer_token = fake_access_token(permissions=['sync:sonyci'])
         response = await ac.post(
             '/api/sony_ci/sync',
             headers={'Authorization': f'Bearer {bearer_token}'},
@@ -40,16 +40,16 @@ async def test_sony_ci_sync_no_permission(
     )
 
     async with async_client as ac:
-        bearer_token = fake_access_token(permissions=['sonyci:wrong_permission'])
+        bearer_token = fake_access_token(permissions=['wrong_permission:sonyci'])
         response = await ac.post(
             '/api/sony_ci/sync', headers={'Authorization': f'Bearer {bearer_token}'}
         )
 
     assert response.status_code == 403
     response_json = response.json()
-    assert (
-        response_json['detail']['error'] == 'You do not have permission to sync Sony CI'
-    )
+    error = response_json['detail']
+    assert 'Missing required permissions:' in error
+    assert "{'sync:sonyci'}" in error
 
 
 @pytest.mark.asyncio
@@ -63,7 +63,7 @@ async def test_sony_ci_sync_fail(
     )
 
     async with async_client as ac:
-        bearer_token = fake_access_token(permissions=["sonyci:sync"])
+        bearer_token = fake_access_token(permissions=['sync:sonyci'])
         response = await ac.post(
             '/api/sony_ci/sync',
             headers={
