@@ -10,7 +10,7 @@ from starlette_admin import BaseAdmin
 from starlette_admin.auth import AdminUser, AuthMiddleware, AuthProvider
 
 from chowda.config import (
-    API_AUDIENCE,
+    AUTH0_API_AUDIENCE,
     AUTH0_CLIENT_ID,
     AUTH0_CLIENT_SECRET,
     AUTH0_DOMAIN,
@@ -25,7 +25,7 @@ oauth.register(
         'scope': 'openid profile email',
     },
     server_metadata_url=f'https://{AUTH0_DOMAIN}/.well-known/openid-configuration',
-    authorize_params={'audience': API_AUDIENCE},
+    authorize_params={'audience': AUTH0_API_AUDIENCE},
 )
 
 

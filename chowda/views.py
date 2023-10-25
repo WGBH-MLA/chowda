@@ -16,7 +16,7 @@ from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
 from starlette_admin.fields import BaseField
 
-from chowda.auth.utils import get_user
+from chowda.auth.utils import get_oauth_user
 from chowda.db import engine
 from chowda.fields import (
     BatchMetaflowRunDisplayField,
@@ -77,30 +77,30 @@ class ClammerModelView(ChowdaModelView):
     """Base Clammer permissions for all protected views"""
 
     def can_create(self, request: Request) -> bool:
-        return get_user(request).is_clammer
+        return get_oauth_user(request).is_clammer
 
     def can_delete(self, request: Request) -> bool:
-        return get_user(request).is_clammer
+        return get_oauth_user(request).is_clammer
 
     def can_edit(self, request: Request) -> bool:
-        return get_user(request).is_clammer
+        return get_oauth_user(request).is_clammer
 
 
 class AdminModelView(ClammerModelView):
     """Base Admin permissions for all protected views"""
 
     def is_accessible(self, request: Request) -> bool:
-        user = get_user(request)
+        user = get_oauth_user(request)
         return user.is_admin or user.is_clammer
 
     def can_create(self, request: Request) -> bool:
-        return get_user(request).is_admin
+        return get_oauth_user(request).is_admin
 
     def can_delete(self, request: Request) -> bool:
-        return get_user(request).is_admin
+        return get_oauth_user(request).is_admin
 
     def can_edit(self, request: Request) -> bool:
-        return get_user(request).is_admin
+        return get_oauth_user(request).is_admin
 
 
 class CollectionView(ClammerModelView):
@@ -220,7 +220,7 @@ class BatchView(ClammerModelView):
         validate_media_file_guids(request, data)
 
     async def is_action_allowed(self, request: Request, name: str) -> bool:
-        user = get_user(request)
+        user = get_oauth_user(request)
         if name == 'start_batches':
             return user.is_clammer
         if name == 'duplicate_batches':
@@ -370,7 +370,7 @@ class MediaFileView(ClammerModelView):
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
 
     def can_create(self, request: Request) -> bool:
-        return get_user(request).is_admin
+        return get_oauth_user(request).is_admin
 
     @action(
         name='create_new_batch',
@@ -433,7 +433,7 @@ class DashboardView(CustomView):
 
     async def render(self, request: Request, templates: Jinja2Templates) -> Response:
         history = self.sync_history()
-        user = get_user(request)
+        user = get_oauth_user(request)
         sync_disabled = datetime.now() - history[0]['created_at'] < timedelta(
             minutes=15
         )
