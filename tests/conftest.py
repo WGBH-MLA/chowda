@@ -1,8 +1,16 @@
 from json import dumps, loads
 from json.decoder import JSONDecodeError
 from os import environ, path
+from typing import List, Optional, Type
 
+import jwt
+from fastapi.testclient import TestClient
+from httpx import AsyncClient
 from pytest import fixture
+
+from chowda.app import app
+from chowda.auth.utils import jwt_signing_key
+from chowda.config import AUTH0_API_AUDIENCE
 
 # Set CHOWDA_ENV env var to 'test' always. This serves as a flag for anywhere else in
 # the application where we need to detect whether we are running tests or not.
@@ -53,3 +61,54 @@ def vcr_config(request):
         # Replace secrets in response body
         'before_record_response': clean_response,
     }
+
+
+@fixture
+def async_client(request):
+    return AsyncClient(app=app, base_url='http://test')
+
+
+@fixture
+def client(request):
+    return TestClient(app)
+
+
+def fake_signing_key() -> str:
+    """
+    Returns a fake secret key with which to encode/decode JWTS. This is a
+    regular function, not a fixture, because it is used as a FastAPI dependency
+    override, which will throw an error if it tries to call a fixture directly.
+    """
+
+    return 'FAKE SECRET KEY'
+
+
+@fixture
+def fake_access_token() -> Type[callable]:
+    """
+    Returns a factory for generating fake access tokens for testing.
+    """
+
+    def _fake_access_token(
+        permissions: Optional[List[str]] = None, algorithm: str = 'HS256'
+    ) -> str:
+        if permissions is None:
+            permissions = []
+        jwt_decoded = {
+            'permissions': permissions,
+            'aud': AUTH0_API_AUDIENCE,
+            'sub': 'fake-api-subject',
+        }
+        return jwt.encode(jwt_decoded, fake_signing_key(), algorithm=algorithm)
+
+    return _fake_access_token
+
+
+# Override FastAPI dependency for jwt_signing_key to use the same fake signing key we
+# use for encoding the JWT.
+# NOTE: for testing we us a the synchronous HS256 algorithm which uses the same key for
+# encoding and decoding, but in production we may use the asynchronous RS256 algorithm
+# which uses a public/private key. We can do this only because the logic that does the
+# decoding attempts algorithms, first RS256 then HS256.
+# See also chowda.auth.utils.validated_access_token.
+app.dependency_overrides[jwt_signing_key] = fake_signing_key
