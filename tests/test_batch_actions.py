@@ -1,16 +1,18 @@
-from httpx import AsyncClient
 import pytest
+from fastapi.testclient import TestClient
+from httpx import AsyncClient
+from starlette.middleware.base import BaseHTTPMiddleware
+from typing import Type, Callable
 
 from chowda.app import app
 
 
-@pytest.fixture
-def userinfo_in_session(async_client: AsyncClient):
-    async_client.session
-
-
 @pytest.mark.asyncio
-async def test_batch_action_download_mmif(async_client: AsyncClient):
+async def test_batch_action_download_mmif(
+    async_client: AsyncClient, set_session_data: Type[Callable]
+):
+    set_session_data({'user': 'foo'})
+
     async with async_client as ac:
         response = await ac.get(
             "/admin/api/batch/action", params={"name": "downlaod_mmif", "pks": [2, 3]}
