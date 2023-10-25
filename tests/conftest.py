@@ -117,3 +117,33 @@ def fake_access_token() -> Type[callable]:
 # decoding attempts algorithms, first RS256 then HS256.
 # See also chowda.auth.utils.validated_access_token.
 app.dependency_overrides[jwt_signing_key] = fake_signing_key
+
+
+def set_session_data():
+    # Define a factory function that can be used to set session data for testing.
+    def _set_session_data(data: dict = {}) -> None:
+        """Set session data for testing."""
+
+        from starlette.requests import Request
+        from starlette.middleware.base import BaseHTTPMiddleware
+        from starlette.middleware import Middleware
+        from chowda.app import app
+
+        class SetSessionData(BaseHTTPMiddleware):
+            """
+            A simple middleware that sets the session data to the value of the data.
+            """
+
+            async def dispatch(self, request: Request, call_next):
+                request.session.update(data)
+                response = await call_next(request)
+                return response
+
+        # Append the session-setting middleware to the end of the middleware stack rather
+        # than using the add_middleware function that prepends it to the beginning of the
+        # middleware stack. This ensures that the SessionMiddleware has already been been
+        # run, and the session is available on the request object.
+        app.user_middleware.append(Middleware(SetSessionData))
+
+    # Return the factory function so that it can be used as a fixture.
+    return _set_session_data
