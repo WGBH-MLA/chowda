@@ -366,13 +366,57 @@ class BatchView(ClammerModelView):
     )
     async def download_mmif(self, request: Request, pks: List[Any]) -> str:
         """Create a new batch from the selected batch"""
+        import boto3
+        import zipfile
+        from chowda.config import MMIF_TMP_DIR, MMIF_S3_BUCKET_NAME
+
         try:
             with Session(engine) as db:
+                # Get all of the MMIF S3 locations from the database.
                 batches = db.exec(select(Batch).where(Batch.id.in_(pks))).all()
-                batch_names = [b.name for b in batches]
-                # fetch all the MMIF
-                # zip it all up
-                # respond with a download
+                all_mmif_locations = [
+                    mmif.mmif_location
+                    for batch in batches
+                    for mmif in batch.output_mmifs
+                ]
+
+            # Download files from S3
+            s3 = boto3.client('s3')
+            downloaded_mmif_files = []
+            download_errors = {}
+            for mmif_location in all_mmif_locations:
+                mmif_tmp_location = f'{MMIF_TMP_DIR}/{mmif_location.split("/")[-1]}'
+                try:
+                    s3.download_file(
+                        MMIF_S3_BUCKET_NAME, mmif_location, mmif_tmp_location
+                    )
+                    downloaded_mmif_files.append(mmif_tmp_location)
+                except Exception as ex:
+                    # TODO: log errors and notify user of them
+                    download_errors[mmif_location] = ex
+
+            # Create zip archive
+            from datetime import datetime
+            import io
+            from starlette.responses import StreamingResponse
+
+            current_datetime = datetime.now().strftime('%Y-%m-%d_%H%M%S')
+            # TODO: include batch count, or names in the download file name?
+            zip_filename = f'chowda_mmif_download.{current_datetime}.zip'
+            zip_buffer = io.BytesIO()
+            with zipfile.ZipFile(zip_buffer, 'w') as zip:
+                for downloaded_mmif_file in downloaded_mmif_files:
+                    zip.write(downloaded_mmif_file)
+
+            # Reset buffer to beginning of stream
+            zip_buffer.seek(0)
+
+            # Send download response
+            return StreamingResponse(
+                zip_buffer,
+                headers={'Content-Disposition': f'attachment; {zip_filename}'},
+                media_type='application/zip',
+            )
 
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
