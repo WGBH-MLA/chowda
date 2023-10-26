@@ -119,6 +119,7 @@ def fake_access_token() -> Type[callable]:
 app.dependency_overrides[jwt_signing_key] = fake_signing_key
 
 
+@fixture
 def set_session_data():
     # Define a factory function that can be used to set session data for testing.
     def _set_session_data(data: dict = {}) -> None:
