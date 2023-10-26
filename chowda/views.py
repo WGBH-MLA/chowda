@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Set
 
 from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
@@ -29,7 +29,7 @@ from chowda.fields import (
     SonyCiAssetThumbnail,
 )
 from chowda.models import MMIF, Batch, Collection, MediaFile
-from chowda.utils import validate_media_file_guids
+from chowda.utils import get_duplicates, validate_media_file_guids
 from templates import filters  # noqa: F401
 
 
@@ -362,7 +362,6 @@ class MediaFileView(ClammerModelView):
         'collections',
         'batches',
         'assets',
-        BaseField('mmif_json', display_template='displays/media_file_mmif_json.html'),
         'mmifs',
         'metaflow_runs',
     ]
@@ -506,8 +505,16 @@ class MMIFView(ChowdaModelView):
         try:
             data: FormData = await request.form()
             with Session(engine) as db:
-                mmifs = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
-                media_files = [mmif.media_file for mmif in mmifs]
+                mmifs: List[MMIF] = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
+                media_files: List[MediaFile] = [mmif.media_file for mmif in mmifs]
+                guids: List[str] = [media_file.guid for media_file in media_files]
+                duplicates: Set = get_duplicates(guids)
+                if duplicates:
+                    raise ActionFailed(
+                        f'{len(duplicates)} duplicate Media File{"s" if len(duplicates) > 1 else ""} found:<br>'  # noqa: E501
+                        + '<br>'.join(duplicates)
+                    )
+
                 batch = Batch(
                     name=data.get("batch_name"),
                     description=data.get("batch_description"),
@@ -540,11 +547,33 @@ class MMIFView(ChowdaModelView):
         try:
             data: FormData = await request.form()
             with Session(engine) as db:
-                mmifs = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
-                batch = db.get(Batch, data.get("batch_id"))
+                mmifs: List[MMIF] = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
+                batch: Batch = db.get(Batch, data.get("batch_id"))
                 batch.input_mmifs += mmifs
-                media_files = [mmif.media_file for mmif in mmifs]
+                media_files: List[MediaFile] = [mmif.media_file for mmif in mmifs]
+
+                # Check for duplicate Media Files in selection
+                guids: List[str] = [media_file.guid for media_file in media_files]
+                duplicates: Set = get_duplicates(guids)
+                if duplicates:
+                    raise ActionFailed(
+                        f'{len(duplicates)} duplicate Media File{"s" if len(duplicates) > 1 else ""} found in selection:<br>'  # noqa: E501
+                        + '<br>'.join(duplicates)
+                    )
+                # Check batch input_mmifs for other MMIFs linked to these MediaFiles
+                existing_batch_mmif_guids: Set[str] = {
+                    mmif.media_file.guid for mmif in batch.input_mmifs
+                }
+                existing_media_files = existing_batch_mmif_guids.intersection(guids)
+                if existing_media_files:
+                    s = 's' if len(existing_media_files) > 1 else ''
+                    raise ActionFailed(
+                        f'{len(existing_media_files)} Media File{s} already exist{"" if s else "s"} in Batch {batch.id}:<br>'  # noqa: E501
+                        + '<br>'.join(existing_media_files)
+                    )
+
                 batch.media_files += media_files
+
                 db.commit()
 
                 return f"Added {len(pks)} MMIFs to Batch {batch.id}"
