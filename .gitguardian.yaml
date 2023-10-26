@@ -1,0 +1,5 @@
+secret:
+  ignored-matches:
+  - match: 73f13c96260784cee71e44a63798a1a6716f19d6581a2ce28b391c4d8449bd19
+    name: Default jwt.io Bearer Token, for auth tests - tests/routers/test_events.py
+version: 2
