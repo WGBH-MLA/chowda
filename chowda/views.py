@@ -24,9 +24,11 @@ from chowda.fields import (
     BatchPercentSuccessful,
     BatchUnstartedGuids,
     BatchUnstartedGuidsCount,
+    FinishedField,
     MediaFileCount,
     MediaFilesGuidsField,
     SonyCiAssetThumbnail,
+    SuccessfulField,
 )
 from chowda.models import MMIF, Batch, Collection, MediaFile
 from chowda.utils import get_duplicates, validate_media_file_guids
@@ -470,6 +472,19 @@ class SonyCiAssetView(AdminModelView):
 
 class MetaflowRunView(AdminModelView):
     form_include_pk: ClassVar[bool] = True
+
+    fields: ClassVar[list[Any]] = [
+        'id',
+        'pathspec',
+        'batch',
+        'mmif',
+        'media_file',
+        'created_at',
+        FinishedField('finished'),
+        SuccessfulField('successful'),
+        'current_step',
+        'current_task',
+    ]
 
 
 class MMIFView(ChowdaModelView):

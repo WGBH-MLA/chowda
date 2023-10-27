@@ -5,6 +5,7 @@ Object.assign(render, {
       guid => `<a href="../media-file/detail/${guid}"> ${guid} </a>`
     )
   },
+
   media_file_count: function render(data, type, full, meta, fieldOptions) {
     // Render a count of media files
     return data.length
@@ -20,5 +21,31 @@ Object.assign(render, {
     return data
       ? `<img src="${data.location}" style="max-height:150px;" loading="lazy">`
       : null
+  },
+
+  finished: function render(data, type, full, meta, fieldOptions) {
+    if (data == null) return null_column();
+    data = Array.isArray(data) ? data : [data];
+    if (data.length == 0) return empty_column();
+    return `<div class="d-flex">${data
+      .map((d) =>
+        d === true
+          ? `<div class="p-1"><span class="text-center text-info"><i class="fa-solid fa-check fa-lg"></i></span></div>`
+          : `<div class="p-1"><span class="text-center text-secondary"><i class="fa-solid fa-clock fa-lg"></i></span></div>`
+      )
+      .join("")}</div>`;
+  },
+  
+  successful: function render(data, type, full, meta, fieldOptions) {
+    if (data == null) return null_column();
+    data = Array.isArray(data) ? data : [data];
+    if (data.length == 0) return empty_column();
+    return `<div class="d-flex">${data
+      .map((d) =>
+        d === true
+          ? `<div class="p-1"><span class="text-center text-success"><i class="fa-solid fa-check-circle fa-lg"></i></span></div>`
+          : `<div class="p-1"><span class="text-center text-danger"><i class="fa-solid fa-circle-xmark fa-lg"></i></span></div>`
+      )
+      .join("")}</div>`;
   },
 })

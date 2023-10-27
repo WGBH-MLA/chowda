@@ -53,7 +53,8 @@ async def event(event: dict):
             run = Run(f"{payload['flow_name']}/{payload['run_id']}")
             row.finished = run.finished
             row.finished_at = run.finished_at
-            row.successful = run.successful
+            if row.finished:
+                row.successful = run.successful
             row.current_step = payload['step_name']
             row.current_task = payload['task_id']
             db.add(row)

@@ -4,7 +4,7 @@ from typing import Any
 from starlette.datastructures import FormData
 from starlette.requests import Request
 from starlette_admin._types import RequestAction
-from starlette_admin.fields import BaseField, IntegerField, TextAreaField
+from starlette_admin.fields import BaseField, BooleanField, IntegerField, TextAreaField
 
 from chowda.models import MediaFile
 
@@ -161,3 +161,27 @@ class BatchUnstartedGuidsCount(IntegerField):
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
         return len(obj.unstarted_guids())
+
+
+@dataclass
+class FinishedField(BooleanField):
+    """A field that displays a boolean value for the 'Finished' property.
+
+        True: Green check
+    False: Grey clock"""
+
+    display_template: str = 'displays/finished.html'
+    render_function_key: str = 'finished'
+
+
+@dataclass
+class SuccessfulField(BooleanField):
+    """A field that displays a boolean value for the 'Successful' property.
+
+    True: Green check circle
+    False: Red X circle
+    None: Blank
+    """
+
+    display_template: str = 'displays/successful.html'
+    render_function_key: str = 'successful'
