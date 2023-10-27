@@ -27,6 +27,9 @@ from chowda.fields import (
     FinishedField,
     MediaFileCount,
     MediaFilesGuidsField,
+    MetaflowPathspecLinkField,
+    MetaflowStepLinkField,
+    MetaflowTaskLinkField,
     SonyCiAssetThumbnail,
     SuccessfulField,
 )
@@ -475,15 +478,15 @@ class MetaflowRunView(AdminModelView):
 
     fields: ClassVar[list[Any]] = [
         'id',
-        'pathspec',
+        MetaflowPathspecLinkField('pathspec'),
         'batch',
         'mmif',
         'media_file',
         'created_at',
         FinishedField('finished'),
         SuccessfulField('successful'),
-        'current_step',
-        'current_task',
+        MetaflowStepLinkField('current_step'),
+        MetaflowTaskLinkField('current_task'),
     ]
 
 
