@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, List, Set
 
 from pydantic import BaseModel
 from sqlalchemy.dialects.postgresql import insert
@@ -92,3 +92,17 @@ def validate_media_file_guids(request: Request, data: Dict[str, Any]):
     # to a parent object when that MediaFile is already there.
     for media_file in data['media_files']:
         request.state.session.add(media_file)
+
+
+def get_duplicates(values: List[Any]) -> Set[Any]:
+    """Return a set of duplicate values in a list, or an empty set if there are none.
+
+    NOTE: This is a fast approach that does not preserve order, but runs in O(n)"""
+    unique: Set = set()
+    duplicates: Set = set()
+    for v in values:
+        if v not in unique:
+            unique.add(v)
+        else:
+            duplicates.add(v)
+    return duplicates

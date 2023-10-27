@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Set
 
 from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
@@ -14,7 +14,7 @@ from starlette_admin import CustomView, action
 from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
-from starlette_admin.fields import BaseField
+from starlette_admin.fields import BaseField, HasMany, HasOne
 
 from chowda.auth.utils import get_oauth_user
 from chowda.db import engine
@@ -28,8 +28,8 @@ from chowda.fields import (
     MediaFilesGuidsField,
     SonyCiAssetThumbnail,
 )
-from chowda.models import Batch, Collection, MediaFile
-from chowda.utils import validate_media_file_guids
+from chowda.models import MMIF, Batch, Collection, MediaFile
+from chowda.utils import get_duplicates, validate_media_file_guids
 from templates import filters  # noqa: F401
 
 
@@ -362,7 +362,6 @@ class MediaFileView(ClammerModelView):
         'collections',
         'batches',
         'assets',
-        BaseField('mmif_json', display_template='displays/media_file_mmif_json.html'),
         'mmifs',
         'metaflow_runs',
     ]
@@ -477,9 +476,106 @@ class MMIFView(ChowdaModelView):
     label: ClassVar[str] = 'MMIFs'
     fields: ClassVar[List[Any]] = [
         'media_file',
-        'batch_inputs',
-        'batch_output',
+        HasMany('batch_inputs', identity='batch', label='Input to Batches'),
+        HasOne('batch_output', identity='batch', label='Generated from Batch'),
         'metaflow_run',
         'mmif_location',
         'created_at',
     ]
+    actions: ClassVar[List[str]] = ['add_to_new_batch', 'add_to_existing_batch']
+
+    @action(
+        name='add_to_new_batch',
+        text='Add to New Batch',
+        confirmation='Create a Batch from these MMIFs?',
+        action_btn_class='btn-ghost-primary',
+        submit_btn_text="Aye, Capt'n!",
+        form="""
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_name"
+                    placeholder="Batch Name">
+                <textarea class="form-control" name="batch_description"
+                    placeholder="Batch Description"></textarea>
+            </div>
+        </form>
+        """,
+    )
+    async def add_to_new_batch(self, request: Request, pks: List[Any]) -> str:
+        try:
+            data: FormData = await request.form()
+            with Session(engine) as db:
+                mmifs: List[MMIF] = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
+                media_files: List[MediaFile] = [mmif.media_file for mmif in mmifs]
+                guids: List[str] = [media_file.guid for media_file in media_files]
+                duplicates: Set = get_duplicates(guids)
+                if duplicates:
+                    raise ActionFailed(
+                        f'{len(duplicates)} duplicate Media File{"s" if len(duplicates) > 1 else ""} found:<br>'  # noqa: E501
+                        + '<br>'.join(duplicates)
+                    )
+
+                batch = Batch(
+                    name=data.get("batch_name"),
+                    description=data.get("batch_description"),
+                    input_mmifs=mmifs,
+                    media_files=media_files,
+                )
+                db.add(batch)
+                db.commit()
+
+            return f"Batch of {len(pks)} MMIFs created"
+        except Exception as error:
+            raise ActionFailed(f'{error!s}') from error
+
+    @action(
+        name='add_to_existing_batch',
+        text='Add to Existing Batch',
+        confirmation='Which batch should these be added to?',
+        action_btn_class='btn-ghost-primary',
+        submit_btn_text="Make it so!",
+        form="""
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_id"
+                    placeholder="Batch ID">
+            </div>
+        </form>
+        """,
+    )
+    async def add_to_existing_batch(self, request: Request, pks: List[Any]) -> str:
+        try:
+            data: FormData = await request.form()
+            with Session(engine) as db:
+                mmifs: List[MMIF] = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
+                batch: Batch = db.get(Batch, data.get("batch_id"))
+                batch.input_mmifs += mmifs
+                media_files: List[MediaFile] = [mmif.media_file for mmif in mmifs]
+
+                # Check for duplicate Media Files in selection
+                guids: List[str] = [media_file.guid for media_file in media_files]
+                duplicates: Set = get_duplicates(guids)
+                if duplicates:
+                    raise ActionFailed(
+                        f'{len(duplicates)} duplicate Media File{"s" if len(duplicates) > 1 else ""} found in selection:<br>'  # noqa: E501
+                        + '<br>'.join(duplicates)
+                    )
+                # Check batch input_mmifs for other MMIFs linked to these MediaFiles
+                existing_batch_mmif_guids: Set[str] = {
+                    mmif.media_file.guid for mmif in batch.input_mmifs
+                }
+                existing_media_files = existing_batch_mmif_guids.intersection(guids)
+                if existing_media_files:
+                    s = 's' if len(existing_media_files) > 1 else ''
+                    raise ActionFailed(
+                        f'{len(existing_media_files)} Media File{s} already exist{"" if s else "s"} in Batch {batch.id}:<br>'  # noqa: E501
+                        + '<br>'.join(existing_media_files)
+                    )
+
+                batch.media_files += media_files
+
+                db.commit()
+
+                return f"Added {len(pks)} MMIFs to Batch {batch.id}"
+        except Exception as error:
+            raise ActionFailed(f'{error!s}') from error
