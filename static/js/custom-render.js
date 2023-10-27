@@ -5,6 +5,7 @@ Object.assign(render, {
       guid => `<a href="../media-file/detail/${guid}"> ${guid} </a>`
     )
   },
+
   media_file_count: function render(data, type, full, meta, fieldOptions) {
     // Render a count of media files
     return data.length
@@ -21,11 +22,11 @@ Object.assign(render, {
       ? `<img src="${data.location}" style="max-height:150px;" loading="lazy">`
       : null
   },
+
   finished: function render(data, type, full, meta, fieldOptions) {
     if (data == null) return null_column();
-    if (Array.isArray(data) && data.length == 0) return empty_column();
-    data = Array.isArray(data) ? data : [data].map((d) => d === true);
-    if (type != "display") return data.join(",");
+    data = Array.isArray(data) ? data : [data];
+    if (data.length == 0) return empty_column();
     return `<div class="d-flex">${data
       .map((d) =>
         d === true
@@ -34,11 +35,11 @@ Object.assign(render, {
       )
       .join("")}</div>`;
   },
+  
   successful: function render(data, type, full, meta, fieldOptions) {
     if (data == null) return null_column();
-    if (Array.isArray(data) && data.length == 0) return empty_column();
-    data = Array.isArray(data) ? data : [data].map((d) => d === true);
-    if (type != "display") return data.join(",");
+    data = Array.isArray(data) ? data : [data];
+    if (data.length == 0) return empty_column();
     return `<div class="d-flex">${data
       .map((d) =>
         d === true
