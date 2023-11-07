@@ -363,6 +363,7 @@ class BatchView(ClammerModelView):
         icon_class='fa fa-download',
         submit_btn_text='Gimme the MMIF!',
         submit_btn_class='btn-outline-primary',
+        custom_response=True,
     )
     async def download_mmif(self, request: Request, pks: List[Any]) -> str:
         """Create a new batch from the selected batch"""
@@ -414,15 +415,13 @@ class BatchView(ClammerModelView):
             # Send download response
             return StreamingResponse(
                 zip_buffer,
-                headers={'Content-Disposition': f'attachment; {zip_filename}'},
+                headers={
+                    'Content-Disposition': f'attachment; filename="{zip_filename}"'
+                },
                 media_type='application/zip',
             )
-
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
-
-        # Display Success message
-        return f'Downloaded all MMIF from {", ".join(batch_names)}'
 
 
 class MediaFileView(ClammerModelView):
