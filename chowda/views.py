@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from typing import Any, ClassVar, Dict, List, Set
-
+from fastapi import status
 from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
 from metaflow.integrations import ArgoEvent
@@ -8,7 +8,7 @@ from multipart.exceptions import MultipartParseError
 from sqlmodel import Session, select
 from starlette.datastructures import FormData
 from starlette.requests import Request
-from starlette.responses import Response
+from starlette.responses import Response, RedirectResponse
 from starlette.templating import Jinja2Templates
 from starlette_admin import CustomView, action
 from starlette_admin._types import RequestAction
@@ -201,6 +201,7 @@ class BatchView(ClammerModelView):
         'duplicate_batches',
         'combine_batches',
         'download_mmif',
+        'test_custom_response_action',
     ]
 
     fields: ClassVar[list[Any]] = [
@@ -359,7 +360,7 @@ class BatchView(ClammerModelView):
     @action(
         name='download_mmif',
         text='Download MMIF',
-        confirmation='Download all MMIF JSON for this Batch?',
+        confirmation='Download all MMIF JSON for these Batches?',
         icon_class='fa fa-download',
         submit_btn_text='Gimme the MMIF!',
         submit_btn_class='btn-outline-primary',
@@ -380,6 +381,10 @@ class BatchView(ClammerModelView):
                     for batch in batches
                     for mmif in batch.output_mmifs
                 ]
+
+            # Bail early with a message if there isn't anything to download.
+            if len(all_mmif_locations) == 0:
+                raise ActionFailed('No MMIFs to download')
 
             # Download files from S3
             s3 = boto3.client('s3')
@@ -421,7 +426,10 @@ class BatchView(ClammerModelView):
                 media_type='application/zip',
             )
         except Exception as error:
-            raise ActionFailed(f'{error!s}') from error
+            return RedirectResponse(
+                request.url_for('admin:list', identity='batch'),
+                status_code=status.HTTP_303_SEE_OTHER,
+            )
 
 
 class MediaFileView(ClammerModelView):
