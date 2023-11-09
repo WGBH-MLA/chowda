@@ -201,7 +201,6 @@ class BatchView(ClammerModelView):
         'duplicate_batches',
         'combine_batches',
         'download_mmif',
-        'test_custom_response_action',
     ]
 
     fields: ClassVar[list[Any]] = [
@@ -381,10 +380,6 @@ class BatchView(ClammerModelView):
                     for batch in batches
                     for mmif in batch.output_mmifs
                 ]
-
-            # Bail early with a message if there isn't anything to download.
-            if len(all_mmif_locations) == 0:
-                raise ActionFailed('No MMIFs to download')
 
             # Download files from S3
             s3 = boto3.client('s3')
