@@ -60,7 +60,7 @@ CMD poetry run locust
 # 'production' build stage
 ############################
 FROM base as production
-RUN pip install .[production]
+RUN pdm install -G production
 
 COPY static static
 COPY templates templates
