@@ -3,7 +3,6 @@ from httpx import AsyncClient
 from typing import Type, Callable
 
 
-
 @pytest.mark.asyncio
 async def test_batch_action_download_mmif(
     async_client: AsyncClient, set_session_data: Type[Callable]
