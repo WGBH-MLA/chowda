@@ -1,10 +1,7 @@
 import pytest
-from fastapi.testclient import TestClient
 from httpx import AsyncClient
-from starlette.middleware.base import BaseHTTPMiddleware
 from typing import Type, Callable
 
-from chowda.app import app
 
 
 @pytest.mark.asyncio

@@ -420,7 +420,7 @@ class BatchView(ClammerModelView):
                 },
                 media_type='application/zip',
             )
-        except Exception as error:
+        except Exception:
             return RedirectResponse(
                 request.url_for('admin:list', identity='batch'),
                 status_code=status.HTTP_303_SEE_OTHER,

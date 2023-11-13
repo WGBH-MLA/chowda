@@ -1,3 +1,5 @@
+from json import dumps, loads
+from json.decoder import JSONDecodeError
 from os import environ, path
 from typing import List, Optional, Type
 
@@ -14,12 +16,6 @@ from chowda.config import AUTH0_API_AUDIENCE
 # the application where we need to detect whether we are running tests or not.
 environ['CHOWDA_ENV'] = 'test'
 
-from json import dumps, loads
-from json.decoder import JSONDecodeError
-from pytest import fixture
-from chowda.app import app
-from fastapi.testclient import TestClient
-from httpx import AsyncClient
 
 # This import must come *after* setting CHOWDA_ENV to 'test' above.
 from chowda.db import init_db  # noqa: E402
@@ -122,12 +118,13 @@ app.dependency_overrides[jwt_signing_key] = fake_signing_key
 @fixture
 def set_session_data():
     # Define a factory function that can be used to set session data for testing.
-    def _set_session_data(data: dict = {}) -> None:
+    def _set_session_data(data: dict) -> None:
         """Set session data for testing."""
 
-        from starlette.requests import Request
-        from starlette.middleware.base import BaseHTTPMiddleware
         from starlette.middleware import Middleware
+        from starlette.middleware.base import BaseHTTPMiddleware
+        from starlette.requests import Request
+
         from chowda.app import app
 
         class SetSessionData(BaseHTTPMiddleware):
@@ -137,13 +134,13 @@ def set_session_data():
 
             async def dispatch(self, request: Request, call_next):
                 request.session.update(data)
-                response = await call_next(request)
-                return response
+                return await call_next(request)
 
-        # Append the session-setting middleware to the end of the middleware stack rather
-        # than using the add_middleware function that prepends it to the beginning of the
-        # middleware stack. This ensures that the SessionMiddleware has already been been
-        # run, and the session is available on the request object.
+        # Append the session-setting middleware to the end of the middleware stack
+        # rather than using the add_middleware function that prepends it to the
+        # beginning of the middleware stack. This ensures that the
+        # SessionMiddleware has already been been run, and the session is
+        # available on the request object.
         app.user_middleware.append(Middleware(SetSessionData))
 
     # Return the factory function so that it can be used as a fixture.

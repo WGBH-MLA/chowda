@@ -1,5 +1,4 @@
 from fastapi.testclient import TestClient
-from chowda.app import app
 
 
 def test_get_admin_home(client: TestClient):
