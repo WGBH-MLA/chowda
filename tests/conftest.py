@@ -1,6 +1,13 @@
+from os import environ, path
+
+# Set CHOWDA_ENV env var to 'test' always. This serves as a flag for anywhere else in
+# the application where we need to detect whether we are running tests or not.
+environ['CHOWDA_ENV'] = 'test'
+
 from json import dumps, loads
 from json.decoder import JSONDecodeError
-from os import environ, path
+
+
 from typing import List, Optional, Type
 
 import jwt
@@ -11,10 +18,6 @@ from pytest import fixture
 from chowda.app import app
 from chowda.auth.utils import jwt_signing_key
 from chowda.config import AUTH0_API_AUDIENCE
-
-# Set CHOWDA_ENV env var to 'test' always. This serves as a flag for anywhere else in
-# the application where we need to detect whether we are running tests or not.
-environ['CHOWDA_ENV'] = 'test'
 
 
 # This import must come *after* setting CHOWDA_ENV to 'test' above.
