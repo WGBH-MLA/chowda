@@ -4,7 +4,13 @@ from typing import Any
 from starlette.datastructures import FormData
 from starlette.requests import Request
 from starlette_admin._types import RequestAction
-from starlette_admin.fields import BaseField, BooleanField, IntegerField, TextAreaField
+from starlette_admin.fields import (
+    BaseField,
+    BooleanField,
+    IntegerField,
+    StringField,
+    TextAreaField,
+)
 
 from chowda.models import MediaFile
 
@@ -167,7 +173,7 @@ class BatchUnstartedGuidsCount(IntegerField):
 class FinishedField(BooleanField):
     """A field that displays a boolean value for the 'Finished' property.
 
-        True: Green check
+    True: Green check
     False: Grey clock"""
 
     display_template: str = 'displays/finished.html'
@@ -185,3 +191,39 @@ class SuccessfulField(BooleanField):
 
     display_template: str = 'displays/successful.html'
     render_function_key: str = 'successful'
+
+
+@dataclass
+class MetaflowPathspecLinkField(StringField):
+    """A field that displays a link to the metaflow pathspec in Mario"""
+
+    display_template: str = 'displays/metaflow_pathspec_link_field.html'
+
+    render_function_key: str = 'metaflow_pathspec_link'
+
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        return f'https://mario.wgbh-mla.org/{obj.pathspec}'
+
+
+@dataclass
+class MetaflowLinkField(StringField):
+    """A field that displays a link to a metaflow step or task in Mario"""
+
+    display_template: str = 'displays/metaflow_link_field.html'
+    render_function_key: str = 'metaflow_link'
+
+
+@dataclass
+class MetaflowStepLinkField(MetaflowLinkField):
+    """A field that displays a link to the metaflow step in Mario"""
+
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        return f'https://mario.wgbh-mla.org/{obj.pathspec}/{obj.current_step}'
+
+
+@dataclass
+class MetaflowTaskLinkField(MetaflowLinkField):
+    """A field that displays a link to the metaflow task in Mario"""
+
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        return f'https://mario.wgbh-mla.org/{obj.pathspec}/{obj.current_step}/{obj.current_task}'
