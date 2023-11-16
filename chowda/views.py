@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from typing import Any, ClassVar, Dict, List, Set
+
 from fastapi import status
 from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
@@ -8,7 +9,7 @@ from multipart.exceptions import MultipartParseError
 from sqlmodel import Session, select
 from starlette.datastructures import FormData
 from starlette.requests import Request
-from starlette.responses import Response, RedirectResponse
+from starlette.responses import RedirectResponse, Response
 from starlette.templating import Jinja2Templates
 from starlette_admin import CustomView, action
 from starlette_admin._types import RequestAction
@@ -370,10 +371,12 @@ class BatchView(ClammerModelView):
     )
     async def download_mmif(self, request: Request, pks: List[Any]) -> str:
         """Create a new batch from the selected batch"""
-        import boto3
         import zipfile
-        from chowda.config import MMIF_S3_BUCKET_NAME
         from tempfile import TemporaryDirectory
+
+        import boto3
+
+        from chowda.config import MMIF_S3_BUCKET_NAME
 
         try:
             with Session(engine) as db:
@@ -402,8 +405,9 @@ class BatchView(ClammerModelView):
                     download_errors[mmif_location] = ex
 
             # Create zip archive
-            from datetime import datetime
             import io
+            from datetime import datetime
+
             from starlette.responses import StreamingResponse
 
             current_datetime = datetime.now().strftime('%Y-%m-%d_%H%M%S')
@@ -412,7 +416,7 @@ class BatchView(ClammerModelView):
             zip_buffer = io.BytesIO()
             with zipfile.ZipFile(zip_buffer, 'w') as zip:
                 for downloaded_mmif_file in downloaded_mmif_files:
-                    filename = downloaded_mmif_file.split("/")[-1]
+                    filename = downloaded_mmif_file.split('/')[-1]
                     zip.write(downloaded_mmif_file, arcname=filename)
 
             # Reset buffer to beginning of stream
@@ -480,14 +484,14 @@ class MediaFileView(ClammerModelView):
             ).all()
             data: FormData = await request.form()
             batch = Batch(
-                name=data.get("batch_name"),
-                description=data.get("batch_description"),
+                name=data.get('batch_name'),
+                description=data.get('batch_description'),
                 media_files=media_files,
             )
             db.add(batch)
             db.commit()
 
-        return f"Batch of {len(pks)} Media Files created"
+        return f'Batch of {len(pks)} Media Files created'
 
 
 class UserView(AdminModelView):
@@ -614,15 +618,15 @@ class MMIFView(ChowdaModelView):
                     )
 
                 batch = Batch(
-                    name=data.get("batch_name"),
-                    description=data.get("batch_description"),
+                    name=data.get('batch_name'),
+                    description=data.get('batch_description'),
                     input_mmifs=mmifs,
                     media_files=media_files,
                 )
                 db.add(batch)
                 db.commit()
 
-            return f"Batch of {len(pks)} MMIFs created"
+            return f'Batch of {len(pks)} MMIFs created'
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
 
@@ -631,7 +635,7 @@ class MMIFView(ChowdaModelView):
         text='Add to Existing Batch',
         confirmation='Which batch should these be added to?',
         action_btn_class='btn-ghost-primary',
-        submit_btn_text="Make it so!",
+        submit_btn_text='Make it so!',
         form="""
         <form>
             <div class="mt-3">
@@ -646,7 +650,7 @@ class MMIFView(ChowdaModelView):
             data: FormData = await request.form()
             with Session(engine) as db:
                 mmifs: List[MMIF] = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
-                batch: Batch = db.get(Batch, data.get("batch_id"))
+                batch: Batch = db.get(Batch, data.get('batch_id'))
                 batch.input_mmifs += mmifs
                 media_files: List[MediaFile] = [mmif.media_file for mmif in mmifs]
 
@@ -674,6 +678,6 @@ class MMIFView(ChowdaModelView):
 
                 db.commit()
 
-                return f"Added {len(pks)} MMIFs to Batch {batch.id}"
+                return f'Added {len(pks)} MMIFs to Batch {batch.id}'
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
