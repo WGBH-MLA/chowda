@@ -420,7 +420,11 @@ class BatchView(ClammerModelView):
                 },
                 media_type='application/zip',
             )
-        except Exception:
+        except Exception as error:
+            # TODO: pop 'error' out of session and display with javascript
+            # dangrerAlert() when admin/batch/list renders.
+            # See statics/js/alerts.js from starlette-admin.
+            request.session['error'] = f'{error!s}'
             return RedirectResponse(
                 request.url_for('admin:list', identity='batch'),
                 status_code=status.HTTP_303_SEE_OTHER,

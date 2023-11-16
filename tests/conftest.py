@@ -121,7 +121,7 @@ app.dependency_overrides[jwt_signing_key] = fake_signing_key
 @fixture
 def set_session_data():
     # Define a factory function that can be used to set session data for testing.
-    def _set_session_data(data: dict) -> None:
+    def _set_session_data(data: dict = None) -> None:
         """Set session data for testing."""
 
         from starlette.middleware import Middleware
@@ -129,6 +129,8 @@ def set_session_data():
         from starlette.requests import Request
 
         from chowda.app import app
+
+        data = data or {}
 
         class SetSessionData(BaseHTTPMiddleware):
             """
