@@ -1,27 +1,22 @@
 from os import environ, path
+from json.decoder import JSONDecodeError
+from typing import List, Optional, Type
+from fastapi import APIRouter
+from starlette.requests import Request
+import jwt
+from fastapi.testclient import TestClient
+from httpx import AsyncClient
+from json import loads, dumps
+from pytest import fixture
 
 # Set CHOWDA_ENV env var to 'test' always. This serves as a flag for anywhere else in
 # the application where we need to detect whether we are running tests or not.
 environ['CHOWDA_ENV'] = 'test'
 
-from json import dumps, loads
-from json.decoder import JSONDecodeError
-
-
-from typing import List, Optional, Type
-
-import jwt
-from fastapi.testclient import TestClient
-from httpx import AsyncClient
-from pytest import fixture
-
-from chowda.app import app
-from chowda.auth.utils import jwt_signing_key
-from chowda.config import AUTH0_API_AUDIENCE
+from chowda.app import app  # noqa: E402
+from chowda.auth.utils import jwt_signing_key  # noqa: E402
+from chowda.config import AUTH0_API_AUDIENCE  # noqa: E402
 from chowda.db import init_db  # noqa: E402
-
-from fastapi import APIRouter
-from starlette.requests import Request
 
 # Set CI_CONFIG to use ./test/ci.test.toml *only* if it's not already set. We need to be
 # able to set the CI_CONFIG to point to a real SonyCi account and workspace when we are
@@ -123,19 +118,19 @@ test_router = APIRouter()
 
 
 @test_router.get('/session')
-def session(request: Request):
+def get_session_data(request: Request):
     return request.session
 
 
 @test_router.post('/session')
-async def session(request: Request):
+async def add_session_data(request: Request):
     new_session_data = await request.json()
     request.session.update(new_session_data)
     return request.session
 
 
 @test_router.put('/session')
-async def session(request: Request):
+async def set_session_data(request: Request):
     new_session_data = await request.json()
     request.session = new_session_data
     return request.session

@@ -1,9 +1,6 @@
 import pytest
-from fastapi.testclient import TestClient
 from httpx import AsyncClient
-from typing import Type, Callable
 from chowda.config import AUTH0_API_AUDIENCE
-from starlette.responses import Response
 
 
 @pytest.mark.asyncio
