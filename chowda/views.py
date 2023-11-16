@@ -382,12 +382,6 @@ class BatchView(ClammerModelView):
                     for mmif in batch.output_mmifs
                 ]
 
-            # hack some mmif_locations for dev testing
-            all_mmif_locations = [
-                'cpb-aacip-0005ee05e19/app-whisper/cpb-aacip-0005ee05e19.mmif',
-                'cpb-aacip-000a5e41d01/app-whisper/cpb-aacip-000a5e41d01.mmif',
-            ]
-
             # Download files from S3
             s3 = boto3.client('s3')
             downloaded_mmif_files = []
