@@ -18,9 +18,6 @@ from pytest import fixture
 from chowda.app import app
 from chowda.auth.utils import jwt_signing_key
 from chowda.config import AUTH0_API_AUDIENCE
-
-
-# This import must come *after* setting CHOWDA_ENV to 'test' above.
 from chowda.db import init_db  # noqa: E402
 
 # Set CI_CONFIG to use ./test/ci.test.toml *only* if it's not already set. We need to be
@@ -118,35 +115,27 @@ def fake_access_token() -> Type[callable]:
 app.dependency_overrides[jwt_signing_key] = fake_signing_key
 
 
-@fixture
-def set_session_data():
-    # Define a factory function that can be used to set session data for testing.
-    def _set_session_data(data: dict = None) -> None:
-        """Set session data for testing."""
+"""Create some test routes for setting session data."""
+test_router = APIRouter()
 
-        from starlette.middleware import Middleware
-        from starlette.middleware.base import BaseHTTPMiddleware
-        from starlette.requests import Request
 
-        from chowda.app import app
+@test_router.get('/session')
+def session(request: Request):
+    return request.session
 
-        data = data or {}
 
-        class SetSessionData(BaseHTTPMiddleware):
-            """
-            A simple middleware that sets the session data to the value of the data.
-            """
+@test_router.post('/session')
+async def session(request: Request):
+    new_session_data = await request.json()
+    request.session.update(new_session_data)
+    return request.session
 
-            async def dispatch(self, request: Request, call_next):
-                request.session.update(data)
-                return await call_next(request)
 
-        # Append the session-setting middleware to the end of the middleware stack
-        # rather than using the add_middleware function that prepends it to the
-        # beginning of the middleware stack. This ensures that the
-        # SessionMiddleware has already been been run, and the session is
-        # available on the request object.
-        app.user_middleware.append(Middleware(SetSessionData))
+@test_router.put('/session')
+async def session(request: Request):
+    new_session_data = await request.json()
+    request.session = new_session_data
+    return request.session
 
-    # Return the factory function so that it can be used as a fixture.
-    return _set_session_data
+
+app.mount('/test', test_router)
