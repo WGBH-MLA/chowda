@@ -11,13 +11,7 @@ Object.assign(render, {
     return data.length
   },
 
-  sony_ci_asset_thumbnail: function render(
-    data,
-    type,
-    full,
-    meta,
-    fieldOptions
-  ) {
+  sony_ci_asset_thumbnail: function render(data, type, full, meta, fieldOptions) {
     return data
       ? `<img src="${data.location}" style="max-height:150px;" loading="lazy">`
       : null
@@ -35,7 +29,6 @@ Object.assign(render, {
       )
       .join("")}</div>`;
   },
-  
   successful: function render(data, type, full, meta, fieldOptions) {
     if (data == null) return null_column();
     data = Array.isArray(data) ? data : [data];
@@ -47,5 +40,15 @@ Object.assign(render, {
           : `<div class="p-1"><span class="text-center text-danger"><i class="fa-solid fa-circle-xmark fa-lg"></i></span></div>`
       )
       .join("")}</div>`;
+  },
+
+  metaflow_pathspec_link: function render(data, type, full, meta, fieldOptions) {
+    return `<a href="${data}">${data.split('https://mario.wgbh-mla.org/')[1]}
+    <i class="fa fa-external-link" aria-hidden="true"></i></a>`;
+  },
+
+  metaflow_link: function render(data, type, full, meta, fieldOptions) {
+    return `<a href="${data}">${data.split('/').pop()}
+    <i class="fa fa-external-link" aria-hidden="true"></i></a>`;
   },
 })
