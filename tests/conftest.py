@@ -20,6 +20,9 @@ from chowda.auth.utils import jwt_signing_key
 from chowda.config import AUTH0_API_AUDIENCE
 from chowda.db import init_db  # noqa: E402
 
+from fastapi import APIRouter
+from starlette.requests import Request
+
 # Set CI_CONFIG to use ./test/ci.test.toml *only* if it's not already set. We need to be
 # able to set the CI_CONFIG to point to a real SonyCi account and workspace when we are
 # recording our VCR cassette fixtures for testing.
