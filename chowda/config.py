@@ -23,6 +23,4 @@ AUTH0_API_AUDIENCE = environ.get(
 
 SECRET = environ.get('CHOWDA_SECRET')
 
-
-MMIF_TMP_DIR = environ.get('MMIF_TMP_DIR', '/tmp/mmif')
 MMIF_S3_BUCKET_NAME = environ.get('MMIF_S3_BUCKET_NAME', 'clams-mmif')

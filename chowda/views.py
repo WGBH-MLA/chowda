@@ -369,7 +369,8 @@ class BatchView(ClammerModelView):
         """Create a new batch from the selected batch"""
         import boto3
         import zipfile
-        from chowda.config import MMIF_TMP_DIR, MMIF_S3_BUCKET_NAME
+        from chowda.config import MMIF_S3_BUCKET_NAME
+        from tempfile import TemporaryDirectory
 
         try:
             with Session(engine) as db:
@@ -381,12 +382,19 @@ class BatchView(ClammerModelView):
                     for mmif in batch.output_mmifs
                 ]
 
+            # hack some mmif_locations for dev testing
+            all_mmif_locations = [
+                'cpb-aacip-0005ee05e19/app-whisper/cpb-aacip-0005ee05e19.mmif',
+                'cpb-aacip-000a5e41d01/app-whisper/cpb-aacip-000a5e41d01.mmif',
+            ]
+
             # Download files from S3
             s3 = boto3.client('s3')
             downloaded_mmif_files = []
+            tmp_dir = TemporaryDirectory()
             download_errors = {}
             for mmif_location in all_mmif_locations:
-                mmif_tmp_location = f'{MMIF_TMP_DIR}/{mmif_location.split("/")[-1]}'
+                mmif_tmp_location = f'{tmp_dir.name}/{mmif_location.split("/")[-1]}'
                 try:
                     s3.download_file(
                         MMIF_S3_BUCKET_NAME, mmif_location, mmif_tmp_location
@@ -407,7 +415,8 @@ class BatchView(ClammerModelView):
             zip_buffer = io.BytesIO()
             with zipfile.ZipFile(zip_buffer, 'w') as zip:
                 for downloaded_mmif_file in downloaded_mmif_files:
-                    zip.write(downloaded_mmif_file)
+                    filename = downloaded_mmif_file.split("/")[-1]
+                    zip.write(downloaded_mmif_file, arcname=filename)
 
             # Reset buffer to beginning of stream
             zip_buffer.seek(0)
