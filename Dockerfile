@@ -1,11 +1,11 @@
 ###########################
 # 'base' build stage, common to all build stages
 ###########################
-FROM python:3.11 as base
+FROM python:3.11-slim as base
 
 # Set working dir to /app, where all Chowda code lives.
 WORKDIR /app
-RUN pip install -U pip
+RUN pip install -U pip pdm
 
 # Copy app code to container
 COPY pyproject.toml pdm.lock README.md ./
@@ -20,8 +20,6 @@ COPY migrations migrations
 # 'dev' build stage
 ###########################
 FROM base as dev
-# Install PDM dependency manager
-RUN pip install pdm
 # Configure pdm to instal dependencies into ./__pypyackages__/
 RUN pdm config python.use_venv false
 # Configure python to use pep582 with local __pypyackages__
@@ -59,11 +57,24 @@ CMD poetry run locust
 ###########################
 # 'production' build stage
 ############################
-FROM base as production
-RUN pip install .[production]
+FROM base as build
+# build-essential libpq-dev python3-dev
+RUN apt update && apt install -y gcc libpq-dev git
+RUN pdm install -G production
 
-COPY static static
+FROM python:3.11-slim as production
+WORKDIR /app
+
+RUN apt update && apt install -y libpq-dev
+RUN apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=build /app/ /app/
 COPY templates templates
-ENV CHOWDA_ENV=production
+COPY static static
 
+ENV CHOWDA_ENV=production
+ENV PATH=$PATH:/app/.venv/bin/
+
+EXPOSE 8000
 CMD gunicorn chowda.app:app -b 0.0.0.0:8000 -w 2 --worker-class uvicorn.workers.UvicornWorker

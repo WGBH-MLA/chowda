@@ -5,6 +5,7 @@
 >
   <thead>
     <tr>
+      <th>Run ID</th>
       <th>GUID</th>
       <th>Metaflow Run</th>
       <th>Current step</th>
@@ -15,55 +16,58 @@
     </tr>
   </thead>
 
-  {% for media_file_row in data %}
+  {% for metaflow_run in data %}
   <tr>
+    <!-- Run ID -->
     <td>
       <a
         class="m-1 py-1 px-2 badge bg-blue-lt lead"
-        href="../../media-file/detail/{{ media_file_row.media_file_id }}"
-        >{{media_file_row.media_file_id }}
+        href="../../metaflow-run/detail/{{ metaflow_run.id }}"
+        >{{ metaflow_run.id }}
       </a>
-    </td>
+    <!-- GUID -->
     <td>
       <a
-        href="https://mario.wgbh-mla.org/{{ media_file_row.pathspec}}"
-        target="blank"
-      >
-        {{ media_file_row.pathspec }}
-        <i class="fa fa-external-link" aria-hidden="true"></i>
+        class="m-1 py-1 px-2 badge bg-blue-lt lead"
+        href="../../media-file/detail/{{ metaflow_run.media_file_id }}"
+        >{{ metaflow_run.media_file_id }}
       </a>
     </td>
+    <!-- Pathspec -->
     <td>
-      {% if media_file_row.current_task %} {{ media_file_row.current_step }} {%
-      endif %}
+      {% with data = 'https://mario.wgbh-mla.org/' + metaflow_run.pathspec %}
+        {% include 'displays/metaflow_pathspec_link_field.html' %}
+      {% endwith %}
     </td>
+    <!-- Current step -->
     <td>
-      {% if media_file_row.current_task %}
-      <a
-        href="https://mario.wgbh-mla.org/{{ media_file_row.pathspec }}/{{ media_file_row.current_step }}{{ media_file_row.current_task }}"
-        target="blank"
-      >
-        {{ media_file_row.current_task }}
-        <i class="fa fa-external-link" aria-hidden="true"></i>
-      </a>
+      {% if metaflow_run.current_step %}
+        {% with data = 'https://mario.wgbh-mla.org/' + metaflow_run.pathspec +'/' + metaflow_run.current_step %}
+          {% include 'displays/metaflow_link_field.html' %}
+        {% endwith %}
       {% endif %}
     </td>
-    <td>{{ media_file_row.finished_at }}</td>
+    <!-- Current task -->
     <td>
-      <span
-        class="text-center text-{{'success' if media_file_row.finished else 'danger'}}"
-        ><i
-          class="fa-solid fa-{{'check' if media_file_row.finished else 'times'}}-circle fa-lg"
-        ></i
-      ></span>
+      {% if metaflow_run.current_task %}
+        {% with data = 'https://mario.wgbh-mla.org/' + metaflow_run.pathspec +'/' + metaflow_run.current_step + '/' + metaflow_run.current_task %}
+          {% include 'displays/metaflow_link_field.html' %}
+        {% endwith %}
+      {% endif %}
+    </td>
+    <!-- Finished At -->
+    <td>{{ metaflow_run.finished_at }}</td>
+    <!-- Finished -->
+    <td>
+      {% with data = metaflow_run.finished %}
+        {% include 'displays/finished.html' %}
+      {% endwith %}
     </td>
     <td>
-      <span
-        class="text-center text-{{'success' if media_file_row.successful else 'danger'}}"
-        ><i
-          class="fa-solid fa-{{'check' if media_file_row.successful else 'times'}}-circle fa-lg"
-        ></i
-      ></span>
+    <!-- Successful -->
+      {% with data = metaflow_run.successful %}
+        {% include 'displays/successful.html' %}
+      {% endwith %}
     </td>
   </tr>
   {% endfor %}

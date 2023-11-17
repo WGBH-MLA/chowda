@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Any, ClassVar, Dict, List, Set
 
+from fastapi import status
 from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
 from metaflow.integrations import ArgoEvent
@@ -8,7 +9,7 @@ from multipart.exceptions import MultipartParseError
 from sqlmodel import Session, select
 from starlette.datastructures import FormData
 from starlette.requests import Request
-from starlette.responses import Response
+from starlette.responses import RedirectResponse, Response
 from starlette.templating import Jinja2Templates
 from starlette_admin import CustomView, action
 from starlette_admin._types import RequestAction
@@ -27,6 +28,9 @@ from chowda.fields import (
     FinishedField,
     MediaFileCount,
     MediaFilesGuidsField,
+    MetaflowPathspecLinkField,
+    MetaflowStepLinkField,
+    MetaflowTaskLinkField,
     SonyCiAssetThumbnail,
     SuccessfulField,
 )
@@ -200,6 +204,7 @@ class BatchView(ClammerModelView):
         'start_batches',
         'duplicate_batches',
         'combine_batches',
+        'download_mmif',
     ]
 
     fields: ClassVar[list[Any]] = [
@@ -228,6 +233,8 @@ class BatchView(ClammerModelView):
         if name == 'duplicate_batches':
             return user.is_clammer or user.is_admin
         if name == 'combine_batches':
+            return user.is_clammer or user.is_admin
+        if name == 'download_mmif':
             return user.is_clammer or user.is_admin
         return await super().is_action_allowed(request, name)
 
@@ -353,6 +360,86 @@ class BatchView(ClammerModelView):
         # Display Success message
         return f'Combined {len(pks)} Batch(es)'
 
+    @action(
+        name='download_mmif',
+        text='Download MMIF',
+        confirmation='Download all MMIF JSON for these Batches?',
+        icon_class='fa fa-download',
+        submit_btn_text='Gimme the MMIF!',
+        submit_btn_class='btn-outline-primary',
+        custom_response=True,
+    )
+    async def download_mmif(self, request: Request, pks: List[Any]) -> str:
+        """Create a new batch from the selected batch"""
+        import zipfile
+        from tempfile import TemporaryDirectory
+
+        import boto3
+
+        from chowda.config import MMIF_S3_BUCKET_NAME
+
+        try:
+            with Session(engine) as db:
+                # Get all of the MMIF S3 locations from the database.
+                batches = db.exec(select(Batch).where(Batch.id.in_(pks))).all()
+                all_mmif_locations = [
+                    mmif.mmif_location
+                    for batch in batches
+                    for mmif in batch.output_mmifs
+                ]
+
+            # Download files from S3
+            s3 = boto3.client('s3')
+            downloaded_mmif_files = []
+            tmp_dir = TemporaryDirectory()
+            download_errors = {}
+            for mmif_location in all_mmif_locations:
+                mmif_tmp_location = f'{tmp_dir.name}/{mmif_location.split("/")[-1]}'
+                try:
+                    s3.download_file(
+                        MMIF_S3_BUCKET_NAME, mmif_location, mmif_tmp_location
+                    )
+                    downloaded_mmif_files.append(mmif_tmp_location)
+                except Exception as ex:
+                    # TODO: log errors and notify user of them
+                    download_errors[mmif_location] = ex
+
+            # Create zip archive
+            import io
+            from datetime import datetime
+
+            from starlette.responses import StreamingResponse
+
+            current_datetime = datetime.now().strftime('%Y-%m-%d_%H%M%S')
+            # TODO: include batch count, or names in the download file name?
+            zip_filename = f'chowda_mmif_download.{current_datetime}.zip'
+            zip_buffer = io.BytesIO()
+            with zipfile.ZipFile(zip_buffer, 'w') as zip:
+                for downloaded_mmif_file in downloaded_mmif_files:
+                    filename = downloaded_mmif_file.split('/')[-1]
+                    zip.write(downloaded_mmif_file, arcname=filename)
+
+            # Reset buffer to beginning of stream
+            zip_buffer.seek(0)
+
+            # Send download response
+            return StreamingResponse(
+                zip_buffer,
+                headers={
+                    'Content-Disposition': f'attachment; filename="{zip_filename}"'
+                },
+                media_type='application/zip',
+            )
+        except Exception as error:
+            # TODO: pop 'error' out of session and display with javascript
+            # dangrerAlert() when admin/batch/list renders.
+            # See statics/js/alerts.js from starlette-admin.
+            request.session['error'] = f'{error!s}'
+            return RedirectResponse(
+                request.url_for('admin:list', identity='batch'),
+                status_code=status.HTTP_303_SEE_OTHER,
+            )
+
 
 class MediaFileView(ClammerModelView):
     pk_attr: str = 'guid'
@@ -397,14 +484,14 @@ class MediaFileView(ClammerModelView):
             ).all()
             data: FormData = await request.form()
             batch = Batch(
-                name=data.get("batch_name"),
-                description=data.get("batch_description"),
+                name=data.get('batch_name'),
+                description=data.get('batch_description'),
                 media_files=media_files,
             )
             db.add(batch)
             db.commit()
 
-        return f"Batch of {len(pks)} Media Files created"
+        return f'Batch of {len(pks)} Media Files created'
 
 
 class UserView(AdminModelView):
@@ -475,15 +562,15 @@ class MetaflowRunView(AdminModelView):
 
     fields: ClassVar[list[Any]] = [
         'id',
-        'pathspec',
+        MetaflowPathspecLinkField('pathspec'),
         'batch',
         'mmif',
         'media_file',
         'created_at',
         FinishedField('finished'),
         SuccessfulField('successful'),
-        'current_step',
-        'current_task',
+        MetaflowStepLinkField('current_step'),
+        MetaflowTaskLinkField('current_task'),
     ]
 
 
@@ -531,15 +618,15 @@ class MMIFView(ChowdaModelView):
                     )
 
                 batch = Batch(
-                    name=data.get("batch_name"),
-                    description=data.get("batch_description"),
+                    name=data.get('batch_name'),
+                    description=data.get('batch_description'),
                     input_mmifs=mmifs,
                     media_files=media_files,
                 )
                 db.add(batch)
                 db.commit()
 
-            return f"Batch of {len(pks)} MMIFs created"
+            return f'Batch of {len(pks)} MMIFs created'
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
 
@@ -548,7 +635,7 @@ class MMIFView(ChowdaModelView):
         text='Add to Existing Batch',
         confirmation='Which batch should these be added to?',
         action_btn_class='btn-ghost-primary',
-        submit_btn_text="Make it so!",
+        submit_btn_text='Make it so!',
         form="""
         <form>
             <div class="mt-3">
@@ -563,7 +650,7 @@ class MMIFView(ChowdaModelView):
             data: FormData = await request.form()
             with Session(engine) as db:
                 mmifs: List[MMIF] = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
-                batch: Batch = db.get(Batch, data.get("batch_id"))
+                batch: Batch = db.get(Batch, data.get('batch_id'))
                 batch.input_mmifs += mmifs
                 media_files: List[MediaFile] = [mmif.media_file for mmif in mmifs]
 
@@ -591,6 +678,6 @@ class MMIFView(ChowdaModelView):
 
                 db.commit()
 
-                return f"Added {len(pks)} MMIFs to Batch {batch.id}"
+                return f'Added {len(pks)} MMIFs to Batch {batch.id}'
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
