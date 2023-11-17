@@ -218,6 +218,13 @@ class BatchView(ClammerModelView):
         'combine_batches',
         'download_mmif',
     ]
+    row_actions: ClassVar[list[Any]] = [
+        'view',
+        'edit',
+        'duplicate_batch',
+        'start_batch',
+        'download_mmif',
+    ]
 
     fields: ClassVar[list[Any]] = [
         'id',
@@ -250,6 +257,22 @@ class BatchView(ClammerModelView):
             return user.is_clammer or user.is_admin
         return await super().is_action_allowed(request, name)
 
+    @row_action(
+        name='start_batch',
+        text='Start',
+        confirmation='This might cost money. Are you sure?',
+        icon_class='fa fa-play',
+        action_btn_class='btn-outline-success',
+        submit_btn_text=yes(),
+        submit_btn_class='btn-success',
+        form="""
+        <form>
+                <input type="checkbox" id="new_mmif" name="new_mmif">
+                <label for="new_mmif">Start from blank MMIF?</label>
+                <input type="hidden" name="_" value="">
+        </form>
+        """,
+    )
     @action(
         name='start_batches',
         text='Start',
@@ -266,8 +289,12 @@ class BatchView(ClammerModelView):
         </form>
         """,
     )
-    async def start_batches(self, request: Request, pks: List[Any]) -> str:
+    async def start_batches(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
         """Starts a Batch by sending a message to the Argo Event Bus"""
+        if not isinstance(pks, list):
+            pks = [pks]
         try:
             data: FormData = await request.form()
         except MultipartParseError as parse_error:
@@ -312,6 +339,15 @@ class BatchView(ClammerModelView):
         # Display Success message
         return f'Started {len(pks)} Batch(es)'
 
+    @row_action(
+        name='duplicate_batch',
+        text='Duplicate',
+        confirmation='Duplicate this Batch?',
+        icon_class='fa fa-copy',
+        submit_btn_text=yes(),
+        submit_btn_class='btn-outline-primary',
+        exclude_from_list=True,
+    )
     @action(
         name='duplicate_batches',
         text='Duplicate',
@@ -320,8 +356,12 @@ class BatchView(ClammerModelView):
         submit_btn_text=yes(),
         submit_btn_class='btn-outline-primary',
     )
-    async def duplicate_batches(self, request: Request, pks: List[Any]) -> str:
+    async def duplicate_batches(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
         """Create a new batch from the selected batch"""
+        if not isinstance(pks, list):
+            pks = [pks]
         try:
             with Session(engine) as db:
                 for batch_id in pks:
@@ -372,18 +412,33 @@ class BatchView(ClammerModelView):
         # Display Success message
         return f'Combined {len(pks)} Batch(es)'
 
+    @row_action(
+        name='download_mmif',
+        text='Download MMIF',
+        confirmation='Download all MMIF JSON for this Batch?',
+        icon_class='fa fa-download',
+        submit_btn_text=yes() + ' Gimme the MMIF!',
+        submit_btn_class='btn-outline-primary',
+        custom_response=True,
+        action_btn_class='btn-ghost',
+    )
     @action(
         name='download_mmif',
         text='Download MMIF',
         confirmation='Download all MMIF JSON for these Batches?',
         icon_class='fa fa-download',
-        submit_btn_text=yes() + ' Gimme the MMIF!',
+        submit_btn_text=yes() + ' Gimme ALL the MMIF!',
         submit_btn_class='btn-outline-primary',
         custom_response=True,
     )
-    async def download_mmif(self, request: Request, pks: List[Any]) -> str:
+    async def download_mmif(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
         """Create a new batch from the selected batch"""
         import zipfile
+
+        if not isinstance(pks, list):
+            pks = [pks]
         from tempfile import TemporaryDirectory
 
         import boto3
@@ -472,6 +527,23 @@ class MediaFileView(ClammerModelView):
     def can_create(self, request: Request) -> bool:
         return get_oauth_user(request).is_admin
 
+    @row_action(
+        name='create_new_batch',
+        text='Create Batch',
+        confirmation='Create a Batch from this Media File?',
+        action_btn_class='btn-ghost-primary',
+        submit_btn_text=yes(),
+        form="""
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_name"
+                    placeholder="Batch Name">
+                <textarea class="form-control" name="batch_description"
+                    placeholder="Batch Description"></textarea>
+            </div>
+        </form>
+        """,
+    )
     @action(
         name='create_new_batch',
         text='Create Batch',
@@ -489,7 +561,12 @@ class MediaFileView(ClammerModelView):
         </form>
         """,
     )
-    async def create_new_batch(self, request: Request, pks: List[Any]) -> str:
+    async def create_new_batch(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
+        """Create a new batch from the selected media files"""
+        if not isinstance(pks, list):
+            pks = [pks]
         with Session(engine) as db:
             media_files = db.exec(
                 select(MediaFile).where(MediaFile.guid.in_(pks))
@@ -598,11 +675,31 @@ class MMIFView(ChowdaModelView):
     ]
     actions: ClassVar[List[str]] = ['add_to_new_batch', 'add_to_existing_batch']
 
+    @row_action(
+        name='add_to_new_batch',
+        text='Add to New Batch',
+        confirmation='Create a Batch from this MMIF?',
+        action_btn_class='btn-ghost-primary',
+        icon_class='fa-regular fa-square-plus',
+        submit_btn_text=yes(),
+        exclude_from_list=True,
+        form="""
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_name"
+                    placeholder="Batch Name">
+                <textarea class="form-control" name="batch_description"
+                    placeholder="Batch Description"></textarea>
+            </div>
+        </form>
+        """,
+    )
     @action(
         name='add_to_new_batch',
         text='Add to New Batch',
         confirmation='Create a Batch from these MMIFs?',
         action_btn_class='btn-ghost-primary',
+        icon_class='fa-regular fa-square-plus',
         submit_btn_text=yes(),
         form="""
         <form>
@@ -615,7 +712,12 @@ class MMIFView(ChowdaModelView):
         </form>
         """,
     )
-    async def add_to_new_batch(self, request: Request, pks: List[Any]) -> str:
+    async def add_to_new_batch(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
+        """Create a new batch from the selected media files"""
+        if not isinstance(pks, list):
+            pks = [pks]
         try:
             data: FormData = await request.form()
             with Session(engine) as db:
@@ -642,11 +744,29 @@ class MMIFView(ChowdaModelView):
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
 
+    @row_action(
+        name='add_to_existing_batch',
+        text='Add to Existing Batch',
+        confirmation='Which batch should this be added to?',
+        action_btn_class='btn-ghost-primary',
+        icon_class='fa-regular fa-square-plus',
+        submit_btn_text=yes(),
+        exclude_from_list=True,
+        form="""
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_id"
+                    placeholder="Batch ID">
+            </div>
+        </form>
+        """,
+    )
     @action(
         name='add_to_existing_batch',
         text='Add to Existing Batch',
         confirmation='Which batch should these be added to?',
         action_btn_class='btn-ghost-primary',
+        icon_class='fa-regular fa-square-plus',
         submit_btn_text=yes(),
         form="""
         <form>
@@ -657,13 +777,17 @@ class MMIFView(ChowdaModelView):
         </form>
         """,
     )
-    async def add_to_existing_batch(self, request: Request, pks: List[Any]) -> str:
+    async def add_to_existing_batch(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
+        """Add MMIFs to an existing batch"""
+        if not isinstance(pks, list):
+            pks = [pks]
         try:
             data: FormData = await request.form()
             with Session(engine) as db:
                 mmifs: List[MMIF] = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
                 batch: Batch = db.get(Batch, data.get('batch_id'))
-                batch.input_mmifs += mmifs
                 media_files: List[MediaFile] = [mmif.media_file for mmif in mmifs]
 
                 # Check for duplicate Media Files in selection
@@ -685,7 +809,7 @@ class MMIFView(ChowdaModelView):
                         f'{len(existing_media_files)} Media File{s} already exist{"" if s else "s"} in Batch {batch.id}:<br>'  # noqa: E501
                         + '<br>'.join(existing_media_files)
                     )
-
+                batch.input_mmifs += mmifs
                 batch.media_files += media_files
 
                 db.commit()
