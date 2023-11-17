@@ -510,6 +510,7 @@ class MediaFileView(ClammerModelView):
     pk_attr: str = 'guid'
 
     actions: ClassVar[List[str]] = ['create_new_batch']
+    row_actions: ClassVar[List[str]] = ['view', 'edit', 'create_new_batch']
 
     fields: ClassVar[list[str]] = [
         'guid',
@@ -530,6 +531,7 @@ class MediaFileView(ClammerModelView):
         text='Create Batch',
         confirmation='Create a Batch from this Media File?',
         action_btn_class='btn-ghost-primary',
+        icon_class='fa-regular fa-square-plus',
         submit_btn_text=yes(),
         form="""
         <form>
@@ -546,6 +548,7 @@ class MediaFileView(ClammerModelView):
         name='create_new_batch',
         text='Create Batch',
         confirmation='Create a Batch from these Media Files?',
+        icon_class='fa-regular fa-square-plus',
         submit_btn_text=yes(),
         form="""
         <form>
@@ -635,6 +638,7 @@ class SonyCiAssetView(AdminModelView):
         'format',
         'media_files',
     ]
+    row_actions: ClassVar[list[Any]] = ['view', 'edit']
 
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
 
