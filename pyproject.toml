@@ -21,7 +21,7 @@ dependencies = [
     "itsdangerous~=2.1",
     "httpx~=0.25",
     "rich~=13.6",
-    "pyjwt>=2.8.0",
+    "pyjwt~=2.8",
 ]
 requires-python = '>=3.8.1,<4.0'
 readme = 'README.md'
@@ -34,7 +34,7 @@ repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project.optional-dependencies]
 production = [
-    "uvicorn[standard]~=0.23",
+    "uvicorn[standard]~=0.24",
     "gunicorn~=21.2",
 ]
 test = [
@@ -42,7 +42,7 @@ test = [
     "pytest~=7.4",
     "pytest-cov~=4.1",
     "pytest-sugar~=0.9",
-    "pytest-xdist~=3.3",
+    "pytest-xdist~=3.4",
     "httpx~=0.25",
     "nbmake~=1.4",
     "vcrpy~=5.1",
@@ -50,10 +50,10 @@ test = [
     "urllib3~=1.26",
     "pytest-mock~=3.12",
     "pytest-asyncio~=0.21",
-    "trio~=0.22",
+    "trio~=0.23",
 ]
 locust = [
-    "locust~=2.17",
+    "locust~=2.18",
     "pydantic-factories~=1.17",
 ]
 development = [
@@ -103,8 +103,8 @@ includes = []
 
 [tool.pdm.dev-dependencies]
 dev = [
-    "uvicorn~=0.23",
-    "black~=23.10",
+    "uvicorn~=0.24",
+    "black~=23.11",
     "ruff~=0.1",
     "pre-commit~=3.5",
 ]
@@ -112,8 +112,8 @@ docs = [
     "mkdocs~=1.5",
     "mkdocs-material~=9.4",
     "mkdocs-git-revision-date-localized-plugin~=1.2",
-    "mike~=1.1",
-    "mkdocstrings[python]~=0.23",
+    "mike~=2.0",
+    "mkdocstrings[python]~=0.24",
     "mkdocs-jupyter~=0.24",
 ]
 ci = [
