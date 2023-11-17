@@ -174,7 +174,6 @@ class CollectionView(ClammerModelView):
         name='create_multiple_batches',
         text='Create multiple Batches',
         confirmation='Create multiple Batches from these Collections?',
-        action_btn_class='btn-ghost-primary',
         icon_class='fa-solid fa-square-plus',
         submit_btn_text=yes(),
     )
@@ -278,7 +277,6 @@ class BatchView(ClammerModelView):
         text='Start',
         confirmation='This might cost money. Are you sure?',
         icon_class='fa fa-play',
-        action_btn_class='btn-outline-success',
         submit_btn_text=yes(),
         submit_btn_class='btn-success',
         form="""
@@ -343,6 +341,7 @@ class BatchView(ClammerModelView):
         name='duplicate_batch',
         text='Duplicate',
         confirmation='Duplicate this Batch?',
+        action_btn_class='btn-ghost',
         icon_class='fa fa-copy',
         submit_btn_text=yes(),
         submit_btn_class='btn-outline-primary',
@@ -385,7 +384,6 @@ class BatchView(ClammerModelView):
         text='Combine',
         confirmation='Combine all selected Batches into a new Batch?',
         icon_class='fa fa-compress',
-        action_btn_class='btn-ghost',
         submit_btn_text=yes(),
         submit_btn_class='btn-outline-primary',
     )
@@ -548,7 +546,6 @@ class MediaFileView(ClammerModelView):
         name='create_new_batch',
         text='Create Batch',
         confirmation='Create a Batch from these Media Files?',
-        action_btn_class='btn-ghost-primary',
         submit_btn_text=yes(),
         form="""
         <form>
@@ -698,7 +695,6 @@ class MMIFView(ChowdaModelView):
         name='add_to_new_batch',
         text='Add to New Batch',
         confirmation='Create a Batch from these MMIFs?',
-        action_btn_class='btn-ghost-primary',
         icon_class='fa-regular fa-square-plus',
         submit_btn_text=yes(),
         form="""
@@ -765,7 +761,6 @@ class MMIFView(ChowdaModelView):
         name='add_to_existing_batch',
         text='Add to Existing Batch',
         confirmation='Which batch should these be added to?',
-        action_btn_class='btn-ghost-primary',
         icon_class='fa-regular fa-square-plus',
         submit_btn_text=yes(),
         form="""
