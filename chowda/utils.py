@@ -106,3 +106,39 @@ def get_duplicates(values: List[Any]) -> Set[Any]:
         else:
             duplicates.add(v)
     return duplicates
+
+
+YES = [
+    'Yes!',
+    'Aye!',
+    'Aye aye!',
+    'Aye aye, Captain!',
+    "Aye aye, Capt'n!",
+    'YAAASS!!!',
+    'Yup!',
+    'Yuppers!',
+    'Yup yup!',
+    'Yup yup yup!',
+    'Do it!',
+    'Make it so!',
+    'Absolutley!',
+    'Sure!',
+    'Sure thing!',
+    'You bet!',
+    'You betcha!',
+    'Certainly',
+    'Of course!',
+    'Definitely!',
+    'Affirmative!',
+    'Indubitably!',
+    'Without a doubt!',
+    'By all means!',
+    'Without question!',
+]
+
+
+def yes() -> str:
+    """Return a random 'yes' string"""
+    from random import choice
+
+    return choice(YES)

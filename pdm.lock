@@ -5,7 +5,7 @@
 groups = ["default", "ci", "dev", "development", "docs", "locust", "production", "test"]
 strategy = ["cross_platform"]
 lock_version = "4.4"
-content_hash = "sha256:e4c62e1e35f16cf401d06d4c6dcb780833b8b936677e34f801955260bb830383"
+content_hash = "sha256:5709dc0797a602e0975a7f9708f16f7f82f3724c3a4b0832c410d46079ccbc3f"
 
 [[package]]
 name = "alembic"
@@ -3358,14 +3358,15 @@ files = [
 name = "starlette-admin"
 version = "0.12.2"
 requires_python = ">=3.8"
-git = "https://github.com/wgbh-mla/starlette-admin.git"
-ref = "actions-btn"
-revision = "933af3775f03ae08d6e005e91ae27d0369541e61"
 summary = "Fast, beautiful and extensible administrative interface framework for Starlette/FastApi applications"
 dependencies = [
     "jinja2<4,>=3",
     "python-multipart",
     "starlette",
+]
+files = [
+    {file = "starlette_admin-0.12.2-py3-none-any.whl", hash = "sha256:25bf5ddd2af8d2f6b3bec3e5c16c883e810274ce35eee9cc27c6242bea7a6a34"},
+    {file = "starlette_admin-0.12.2.tar.gz", hash = "sha256:b8da375ff5e2ce0f6e1407977b23f4c147e1cb69b2b4abe07f96714e4c59b7f0"},
 ]
 
 [[package]]
