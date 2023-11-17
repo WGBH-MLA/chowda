@@ -11,7 +11,7 @@ from starlette.datastructures import FormData
 from starlette.requests import Request
 from starlette.responses import RedirectResponse, Response
 from starlette.templating import Jinja2Templates
-from starlette_admin import CustomView, action
+from starlette_admin import CustomView, action, row_action
 from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
@@ -35,7 +35,7 @@ from chowda.fields import (
     SuccessfulField,
 )
 from chowda.models import MMIF, Batch, Collection, MediaFile
-from chowda.utils import get_duplicates, validate_media_file_guids
+from chowda.utils import get_duplicates, validate_media_file_guids, yes
 from templates import filters  # noqa: F401
 
 
@@ -115,7 +115,7 @@ class CollectionView(ClammerModelView):
     exclude_actions_from_detail: ClassVar[list[Any]] = ['create_multiple_batches']
 
     actions: ClassVar[list[Any]] = ['create_batch', 'create_multiple_batches']
-
+    row_actions: ClassVar[list[Any]] = ['view', 'edit', 'create_batch']
     fields: ClassVar[list[Any]] = [
         'name',
         'description',
@@ -127,15 +127,27 @@ class CollectionView(ClammerModelView):
     async def validate(self, request: Request, data: Dict[str, Any]):
         validate_media_file_guids(request, data)
 
+    @row_action(
+        name='create_batch',
+        text='Create Batch',
+        confirmation='Create a Batch from this Collection?',
+        action_btn_class='btn-ghost-primary',
+        submit_btn_text=yes(),
+        icon_class='fa-regular fa-square-plus',
+    )
     @action(
         name='create_batch',
         text='Create Batch',
         confirmation='Create a single Batch from these Collections?',
-        action_btn_class='btn-ghost-primary',
-        submit_btn_text='Yep',
+        submit_btn_text=yes(),
+        icon_class='fa-regular fa-square-plus',
     )
-    async def create_batch(self, request: Request, pks: List[Any]) -> str:
+    async def create_batch(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
         """Create a new batch from the combined collections"""
+        if not isinstance(pks, list):
+            pks = [pks]
         try:
             with Session(engine) as db:
                 collections = db.exec(
@@ -164,7 +176,7 @@ class CollectionView(ClammerModelView):
         confirmation='Create multiple Batches from these Collections?',
         action_btn_class='btn-ghost-primary',
         icon_class='fa-solid fa-square-plus',
-        submit_btn_text='Yep',
+        submit_btn_text=yes(),
     )
     async def create_multiple_batches(self, request: Request, pks: List[Any]) -> str:
         """Create multiple batches from the collections"""
@@ -244,7 +256,7 @@ class BatchView(ClammerModelView):
         confirmation='This might cost money. Are you sure?',
         icon_class='fa fa-play',
         action_btn_class='btn-outline-success',
-        submit_btn_text='Yep',
+        submit_btn_text=yes(),
         submit_btn_class='btn-success',
         form="""
         <form>
@@ -305,7 +317,7 @@ class BatchView(ClammerModelView):
         text='Duplicate',
         confirmation='Duplicate all selected Batches?',
         icon_class='fa fa-copy',
-        submit_btn_text='Indeed!',
+        submit_btn_text=yes(),
         submit_btn_class='btn-outline-primary',
     )
     async def duplicate_batches(self, request: Request, pks: List[Any]) -> str:
@@ -334,7 +346,7 @@ class BatchView(ClammerModelView):
         confirmation='Combine all selected Batches into a new Batch?',
         icon_class='fa fa-compress',
         action_btn_class='btn-ghost',
-        submit_btn_text='Heck yeah!',
+        submit_btn_text=yes(),
         submit_btn_class='btn-outline-primary',
     )
     async def combine_batches(self, request: Request, pks: List[Any]) -> str:
@@ -365,7 +377,7 @@ class BatchView(ClammerModelView):
         text='Download MMIF',
         confirmation='Download all MMIF JSON for these Batches?',
         icon_class='fa fa-download',
-        submit_btn_text='Gimme the MMIF!',
+        submit_btn_text=yes() + ' Gimme the MMIF!',
         submit_btn_class='btn-outline-primary',
         custom_response=True,
     )
@@ -465,7 +477,7 @@ class MediaFileView(ClammerModelView):
         text='Create Batch',
         confirmation='Create a Batch from these Media Files?',
         action_btn_class='btn-ghost-primary',
-        submit_btn_text='Yasss!',
+        submit_btn_text=yes(),
         form="""
         <form>
             <div class="mt-3">
@@ -591,7 +603,7 @@ class MMIFView(ChowdaModelView):
         text='Add to New Batch',
         confirmation='Create a Batch from these MMIFs?',
         action_btn_class='btn-ghost-primary',
-        submit_btn_text="Aye, Capt'n!",
+        submit_btn_text=yes(),
         form="""
         <form>
             <div class="mt-3">
@@ -635,7 +647,7 @@ class MMIFView(ChowdaModelView):
         text='Add to Existing Batch',
         confirmation='Which batch should these be added to?',
         action_btn_class='btn-ghost-primary',
-        submit_btn_text='Make it so!',
+        submit_btn_text=yes(),
         form="""
         <form>
             <div class="mt-3">
