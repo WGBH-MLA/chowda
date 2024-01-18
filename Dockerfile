@@ -77,4 +77,4 @@ ENV CHOWDA_ENV=production
 ENV PATH=$PATH:/app/.venv/bin/
 
 EXPOSE 8000
-CMD gunicorn chowda.app:app -b 0.0.0.0:8000 -w 2 --worker-class uvicorn.workers.UvicornWorker
+CMD . .venv/bin/activate && gunicorn chowda.app:app -b 0.0.0.0:8000 -w 2 --worker-class uvicorn.workers.UvicornWorker
