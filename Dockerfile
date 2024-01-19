@@ -25,7 +25,7 @@ RUN pdm config python.use_venv false
 # Configure python to use pep582 with local __pypyackages__
 ENV PYTHONPATH=/usr/local/lib/python3.11/site-packages/pdm/pep582
 # Add local packages to $PATH
-ENV PATH=$PATH:/app/__pypackages__/3.11/bin/
+ENV PATH=/app/__pypackages__/3.11/bin/:$PATH
 
 # Install dev dependencies with pdm
 RUN pdm install -G dev
@@ -74,7 +74,7 @@ COPY templates templates
 COPY static static
 
 ENV CHOWDA_ENV=production
-ENV PATH=$PATH:/app/.venv/bin/
+ENV PATH=/app/.venv/bin/:$PATH
 
 EXPOSE 8000
-CMD . .venv/bin/activate && gunicorn chowda.app:app -b 0.0.0.0:8000 -w 2 --worker-class uvicorn.workers.UvicornWorker
+CMD gunicorn chowda.app:app -b 0.0.0.0:8000 -w 2 --worker-class uvicorn.workers.UvicornWorker
