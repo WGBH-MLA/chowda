@@ -58,8 +58,10 @@ CMD poetry run locust
 # 'production' build stage
 ############################
 FROM base as build
-# build-essential libpq-dev python3-dev
 RUN apt update && apt install -y gcc libpq-dev git
+
+RUN pdm config venv.with_pip True
+
 RUN pdm install -G production
 
 FROM python:3.11-slim as production
