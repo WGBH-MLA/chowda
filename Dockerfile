@@ -55,15 +55,20 @@ CMD poetry run locust
 
 
 ###########################
-# 'production' build stage
+# 'base' build stage for production
 ############################
 FROM base as build
 RUN apt update && apt install -y gcc libpq-dev git
 
 RUN pdm config venv.with_pip True
-
 RUN pdm install -G production
 
+# Install pip into the virtual environment
+RUN /app/.venv/bin/python -m ensurepip
+
+###########################
+# 'production' final production image
+############################
 FROM python:3.11-slim as production
 WORKDIR /app
 
@@ -76,7 +81,8 @@ COPY templates templates
 COPY static static
 
 ENV CHOWDA_ENV=production
-ENV PATH=/app/.venv/bin/:$PATH
+ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE 8000
+
 CMD gunicorn chowda.app:app -b 0.0.0.0:8000 -w 2 --worker-class uvicorn.workers.UvicornWorker
