@@ -11,7 +11,7 @@ from metaflow import Run, namespace
 from pydantic.networks import AnyHttpUrl, EmailStr
 from sqlalchemy import JSON, Column, DateTime, Enum
 from sqlalchemy.dialects import postgresql
-from sqlmodel import Field, Relationship, SQLModel
+from sqlmodel import AutoString, Field, Relationship, SQLModel
 from starlette.requests import Request
 
 
@@ -59,7 +59,7 @@ class User(SQLModel, table=True):
 
     __tablename__ = 'users'
     id: Optional[int] = Field(primary_key=True)
-    email: EmailStr = Field(index=True)
+    email: EmailStr = Field(unique=True, index=True, sa_type=AutoString)
     first_name: str = Field(min_length=3, index=True)
     last_name: str = Field(min_length=3, index=True)
 
@@ -241,7 +241,7 @@ class ClamsApp(SQLModel, table=True):
     __tablename__ = 'clams_apps'
     id: Optional[int] = Field(primary_key=True, default=None)
     name: str
-    endpoint: AnyHttpUrl
+    endpoint: AnyHttpUrl = Field(index=True, sa_type=AutoString)
     description: str
     pipelines: List['Pipeline'] = Relationship(
         back_populates='clams_apps', link_model=ClamsAppPipelineLink
