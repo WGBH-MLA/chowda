@@ -2,7 +2,7 @@
 
 Main Chowda application"""
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
@@ -13,9 +13,11 @@ from chowda._version import __version__
 from chowda.admin import Admin
 from chowda.api import api
 from chowda.auth import OAuthProvider
+from chowda.auth.utils import get_admin_user, verified_access_token
 from chowda.config import SECRET, STATIC_DIR, TEMPLATES_DIR
 from chowda.db import engine
 from chowda.models import (
+    MMIF,
     Batch,
     ClamsApp,
     Collection,
@@ -33,6 +35,7 @@ from chowda.views import (
     DashboardView,
     MediaFileView,
     MetaflowRunView,
+    MMIFView,
     PipelineView,
     SonyCiAssetView,
     UserView,
@@ -51,8 +54,10 @@ app = FastAPI(
 )
 app.mount('/static', StaticFiles(directory=STATIC_DIR), name='static')
 
-app.include_router(api, prefix='/api')
-app.include_router(dashboard, prefix='/dashboard')
+app.include_router(api, prefix='/api', dependencies=[Depends(verified_access_token)])
+app.include_router(
+    dashboard, prefix='/dashboard', dependencies=[Depends(get_admin_user)]
+)
 
 
 # Create admin
@@ -70,11 +75,12 @@ admin = Admin(
 admin.add_view(MediaFileView(MediaFile, icon='fa fa-file-video'))
 admin.add_view(SonyCiAssetView(SonyCiAsset, icon='fa fa-file-video'))
 admin.add_view(CollectionView(Collection, icon='fa fa-folder'))
-admin.add_view(BatchView(Batch, icon='fa fa-folder', label='Batches'))
+admin.add_view(BatchView(Batch, icon='fa fa-folder'))
 admin.add_view(ClamsAppView(ClamsApp, icon='fa fa-box'))
 admin.add_view(PipelineView(Pipeline, icon='fa fa-boxes-stacked'))
 admin.add_view(UserView(User, icon='fa fa-users'))
 admin.add_view(MetaflowRunView(MetaflowRun, icon='fa fa-person-running'))
+admin.add_view(MMIFView(MMIF, icon='fa fa-person-running'))
 
 
 # Mount admin to app

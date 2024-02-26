@@ -1,20 +1,23 @@
 from datetime import datetime, timedelta
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Set
 
+from fastapi import status
 from metaflow import Flow
 from metaflow.exception import MetaflowNotFound
 from metaflow.integrations import ArgoEvent
+from multipart.exceptions import MultipartParseError
 from sqlmodel import Session, select
 from starlette.datastructures import FormData
 from starlette.requests import Request
-from starlette.responses import Response
+from starlette.responses import RedirectResponse, Response
 from starlette.templating import Jinja2Templates
-from starlette_admin import CustomView, action
+from starlette_admin import CustomView, action, row_action
+from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
-from starlette_admin.fields import BaseField
+from starlette_admin.fields import BaseField, HasMany, HasOne
 
-from chowda.auth.utils import get_user
+from chowda.auth.utils import get_oauth_user
 from chowda.db import engine
 from chowda.fields import (
     BatchMetaflowRunDisplayField,
@@ -22,12 +25,17 @@ from chowda.fields import (
     BatchPercentSuccessful,
     BatchUnstartedGuids,
     BatchUnstartedGuidsCount,
+    FinishedField,
     MediaFileCount,
     MediaFilesGuidsField,
+    MetaflowPathspecLinkField,
+    MetaflowStepLinkField,
+    MetaflowTaskLinkField,
     SonyCiAssetThumbnail,
+    SuccessfulField,
 )
-from chowda.models import Batch, Collection, MediaFile
-from chowda.utils import validate_media_file_guids
+from chowda.models import MMIF, Batch, Collection, MediaFile
+from chowda.utils import get_duplicates, validate_media_file_guids, yes
 from templates import filters  # noqa: F401
 
 
@@ -59,35 +67,46 @@ class ChowdaModelView(ModelView):
         'fixedHeader': True,
     }
 
+    def title(self, request: Request) -> str:
+        if request.state.action == RequestAction.LIST:
+            return self.label
+        if request.state.action == RequestAction.DETAIL:
+            return f'{self.label} - {request.path_params["pk"]}'
+        if request.state.action == RequestAction.EDIT:
+            return f'{self.label} - Edit {request.path_params["pk"]}'
+        if request.state.action == RequestAction.CREATE:
+            return f'{self.label} - Create'
+        return None
+
 
 class ClammerModelView(ChowdaModelView):
     """Base Clammer permissions for all protected views"""
 
     def can_create(self, request: Request) -> bool:
-        return get_user(request).is_clammer
+        return get_oauth_user(request).is_clammer
 
     def can_delete(self, request: Request) -> bool:
-        return get_user(request).is_clammer
+        return get_oauth_user(request).is_clammer
 
     def can_edit(self, request: Request) -> bool:
-        return get_user(request).is_clammer
+        return get_oauth_user(request).is_clammer
 
 
 class AdminModelView(ClammerModelView):
     """Base Admin permissions for all protected views"""
 
     def is_accessible(self, request: Request) -> bool:
-        user = get_user(request)
+        user = get_oauth_user(request)
         return user.is_admin or user.is_clammer
 
     def can_create(self, request: Request) -> bool:
-        return get_user(request).is_admin
+        return get_oauth_user(request).is_admin
 
     def can_delete(self, request: Request) -> bool:
-        return get_user(request).is_admin
+        return get_oauth_user(request).is_admin
 
     def can_edit(self, request: Request) -> bool:
-        return get_user(request).is_admin
+        return get_oauth_user(request).is_admin
 
 
 class CollectionView(ClammerModelView):
@@ -96,40 +115,39 @@ class CollectionView(ClammerModelView):
     exclude_actions_from_detail: ClassVar[list[Any]] = ['create_multiple_batches']
 
     actions: ClassVar[list[Any]] = ['create_batch', 'create_multiple_batches']
-
+    row_actions: ClassVar[list[Any]] = ['view', 'edit', 'create_batch']
     fields: ClassVar[list[Any]] = [
         'name',
         'description',
         MediaFileCount(),
         # 'media_files',  # default view
-        MediaFilesGuidsField(
-            'media_files',
-            id='media_file_guids',
-            label='GUIDs',
-            exclude_from_detail=True,
-        ),
-        BaseField(
-            'media_files',
-            display_template='displays/collection_media_files.html',
-            label='Media Files',
-            exclude_from_edit=True,
-            exclude_from_create=True,
-            exclude_from_list=True,
-        ),
+        MediaFilesGuidsField('media_files', label='GUIDs'),
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
         validate_media_file_guids(request, data)
 
+    @row_action(
+        name='create_batch',
+        text='Create Batch',
+        confirmation='Create a Batch from this Collection?',
+        action_btn_class='btn-ghost-primary',
+        submit_btn_text=yes(),
+        icon_class='fa-regular fa-square-plus',
+    )
     @action(
         name='create_batch',
         text='Create Batch',
         confirmation='Create a single Batch from these Collections?',
-        action_btn_class='btn-ghost-primary',
-        submit_btn_text='Yep',
+        submit_btn_text=yes(),
+        icon_class='fa-regular fa-square-plus',
     )
-    async def create_batch(self, request: Request, pks: List[Any]) -> str:
+    async def create_batch(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
         """Create a new batch from the combined collections"""
+        if not isinstance(pks, list):
+            pks = [pks]
         try:
             with Session(engine) as db:
                 collections = db.exec(
@@ -156,9 +174,8 @@ class CollectionView(ClammerModelView):
         name='create_multiple_batches',
         text='Create multiple Batches',
         confirmation='Create multiple Batches from these Collections?',
-        action_btn_class='btn-ghost-primary',
         icon_class='fa-solid fa-square-plus',
-        submit_btn_text='Yep',
+        submit_btn_text=yes(),
     )
     async def create_multiple_batches(self, request: Request, pks: List[Any]) -> str:
         """Create multiple batches from the collections"""
@@ -185,6 +202,7 @@ class CollectionView(ClammerModelView):
 
 
 class BatchView(ClammerModelView):
+    label: ClassVar[str] = 'Batches'
     exclude_fields_from_create: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
@@ -197,6 +215,14 @@ class BatchView(ClammerModelView):
         'start_batches',
         'duplicate_batches',
         'combine_batches',
+        'download_mmif',
+    ]
+    row_actions: ClassVar[list[Any]] = [
+        'view',
+        'edit',
+        'duplicate_batch',
+        'start_batch',
+        'download_mmif',
     ]
 
     fields: ClassVar[list[Any]] = [
@@ -208,40 +234,71 @@ class BatchView(ClammerModelView):
         BatchPercentCompleted(),
         BatchPercentSuccessful(),
         BatchUnstartedGuidsCount(),
-        BatchUnstartedGuids(),
-        MediaFilesGuidsField(
-            'media_files',
-            id='media_file_guids',
-            label='GUIDs',
-            exclude_from_detail=True,
-        ),
+        'input_mmifs',
+        BatchUnstartedGuids('media_files'),
+        MediaFilesGuidsField('media_files', exclude_from_detail=True),
         BatchMetaflowRunDisplayField(),
+        'output_mmifs',
     ]
 
     async def validate(self, request: Request, data: Dict[str, Any]):
         validate_media_file_guids(request, data)
 
     async def is_action_allowed(self, request: Request, name: str) -> bool:
-        user = get_user(request)
+        user = get_oauth_user(request)
         if name == 'start_batches':
             return user.is_clammer
         if name == 'duplicate_batches':
             return user.is_clammer or user.is_admin
         if name == 'combine_batches':
             return user.is_clammer or user.is_admin
+        if name == 'download_mmif':
+            return user.is_clammer or user.is_admin
         return await super().is_action_allowed(request, name)
 
+    @row_action(
+        name='start_batch',
+        text='Start',
+        confirmation='This might cost money. Are you sure?',
+        icon_class='fa fa-play',
+        action_btn_class='btn-outline-success',
+        submit_btn_text=yes(),
+        submit_btn_class='btn-success',
+        form="""
+        <form>
+                <input type="checkbox" id="new_mmif" name="new_mmif">
+                <label for="new_mmif">Start from blank MMIF?</label>
+                <input type="hidden" name="_" value="">
+        </form>
+        """,
+    )
     @action(
         name='start_batches',
         text='Start',
         confirmation='This might cost money. Are you sure?',
         icon_class='fa fa-play',
-        action_btn_class='btn-outline-success',
-        submit_btn_text='Yep',
+        submit_btn_text=yes(),
         submit_btn_class='btn-success',
+        form="""
+        <form>
+                <input type="checkbox" id="new_mmif" name="new_mmif">
+                <label for="new_mmif">Start from blank MMIF?</label>
+                <input type="hidden" name="_" value="">
+        </form>
+        """,
     )
-    async def start_batches(self, request: Request, pks: List[Any]) -> str:
+    async def start_batches(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
         """Starts a Batch by sending a message to the Argo Event Bus"""
+        if not isinstance(pks, list):
+            pks = [pks]
+        try:
+            data: FormData = await request.form()
+        except MultipartParseError as parse_error:
+            raise ActionFailed('Error parsing form') from parse_error
+
+        new_mmif = data.get('new_mmif') == 'on'
         try:
             with Session(engine) as db:
                 for batch_id in pks:
@@ -249,15 +306,30 @@ class BatchView(ClammerModelView):
                     pipeline = ','.join(
                         [app.endpoint for app in batch.pipeline.clams_apps]
                     )
+                    mmifs = {
+                        mmif.media_file_id: mmif.mmif_location
+                        for mmif in batch.input_mmifs
+                    }
+                    mmif_guids = set(mmifs.keys())
                     for media_file in batch.media_files:
-                        ArgoEvent(
-                            'pipeline',
-                            payload={
-                                'batch_id': batch_id,
-                                'guid': media_file.guid,
-                                'pipeline': pipeline,
-                            },
-                        ).publish(ignore_errors=False)
+                        payload = {
+                            'batch_id': batch_id,
+                            'guid': media_file.guid,
+                            'pipeline': pipeline,
+                        }
+                        if new_mmif:
+                            payload['mmif_location'] = ''
+                        elif media_file.guid in mmif_guids:
+                            # Prefer the Batch's MMIF if specified
+                            payload['mmif_location'] = mmifs[media_file.guid]
+                        elif media_file.mmifs:
+                            # If there is an MMIF in the MediaFile's MMIFs
+                            payload['mmif_location'] = media_file.mmifs[
+                                -1
+                            ].mmif_location
+                        ArgoEvent('pipeline', payload=payload).publish(
+                            ignore_errors=False
+                        )
 
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
@@ -265,16 +337,30 @@ class BatchView(ClammerModelView):
         # Display Success message
         return f'Started {len(pks)} Batch(es)'
 
+    @row_action(
+        name='duplicate_batch',
+        text='Duplicate',
+        confirmation='Duplicate this Batch?',
+        action_btn_class='btn-ghost',
+        icon_class='fa fa-copy',
+        submit_btn_text=yes(),
+        submit_btn_class='btn-outline-primary',
+        exclude_from_list=True,
+    )
     @action(
         name='duplicate_batches',
         text='Duplicate',
         confirmation='Duplicate all selected Batches?',
         icon_class='fa fa-copy',
-        submit_btn_text='Indeed!',
+        submit_btn_text=yes(),
         submit_btn_class='btn-outline-primary',
     )
-    async def duplicate_batches(self, request: Request, pks: List[Any]) -> str:
+    async def duplicate_batches(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
         """Create a new batch from the selected batch"""
+        if not isinstance(pks, list):
+            pks = [pks]
         try:
             with Session(engine) as db:
                 for batch_id in pks:
@@ -298,8 +384,7 @@ class BatchView(ClammerModelView):
         text='Combine',
         confirmation='Combine all selected Batches into a new Batch?',
         icon_class='fa fa-compress',
-        action_btn_class='btn-ghost',
-        submit_btn_text='Heck yeah!',
+        submit_btn_text=yes(),
         submit_btn_class='btn-outline-primary',
     )
     async def combine_batches(self, request: Request, pks: List[Any]) -> str:
@@ -325,31 +410,129 @@ class BatchView(ClammerModelView):
         # Display Success message
         return f'Combined {len(pks)} Batch(es)'
 
+    @row_action(
+        name='download_mmif',
+        text='Download MMIF',
+        confirmation='Download all MMIF JSON for this Batch?',
+        icon_class='fa fa-download',
+        submit_btn_text=yes() + ' Gimme the MMIF!',
+        submit_btn_class='btn-outline-primary',
+        custom_response=True,
+        action_btn_class='btn-ghost',
+    )
+    @action(
+        name='download_mmif',
+        text='Download MMIF',
+        confirmation='Download all MMIF JSON for these Batches?',
+        icon_class='fa fa-download',
+        submit_btn_text=yes() + ' Gimme ALL the MMIF!',
+        submit_btn_class='btn-outline-primary',
+        custom_response=True,
+    )
+    async def download_mmif(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
+        """Create a new batch from the selected batch"""
+        import zipfile
+
+        if not isinstance(pks, list):
+            pks = [pks]
+        from tempfile import TemporaryDirectory
+
+        import boto3
+
+        from chowda.config import MMIF_S3_BUCKET_NAME
+
+        try:
+            with Session(engine) as db:
+                # Get all of the MMIF S3 locations from the database.
+                batches = db.exec(select(Batch).where(Batch.id.in_(pks))).all()
+                all_mmif_locations = [
+                    mmif.mmif_location
+                    for batch in batches
+                    for mmif in batch.output_mmifs
+                ]
+
+            # Download files from S3
+            s3 = boto3.client('s3')
+            downloaded_mmif_files = []
+            tmp_dir = TemporaryDirectory()
+            download_errors = {}
+            for mmif_location in all_mmif_locations:
+                mmif_tmp_location = f'{tmp_dir.name}/{mmif_location.split("/")[-1]}'
+                try:
+                    s3.download_file(
+                        MMIF_S3_BUCKET_NAME, mmif_location, mmif_tmp_location
+                    )
+                    downloaded_mmif_files.append(mmif_tmp_location)
+                except Exception as ex:
+                    # TODO: log errors and notify user of them
+                    download_errors[mmif_location] = ex
+
+            # Create zip archive
+            import io
+            from datetime import datetime
+
+            from starlette.responses import StreamingResponse
+
+            current_datetime = datetime.now().strftime('%Y-%m-%d_%H%M%S')
+            # TODO: include batch count, or names in the download file name?
+            zip_filename = f'chowda_mmif_download.{current_datetime}.zip'
+            zip_buffer = io.BytesIO()
+            with zipfile.ZipFile(zip_buffer, 'w') as zip:
+                for downloaded_mmif_file in downloaded_mmif_files:
+                    filename = downloaded_mmif_file.split('/')[-1]
+                    zip.write(downloaded_mmif_file, arcname=filename)
+
+            # Reset buffer to beginning of stream
+            zip_buffer.seek(0)
+
+            # Send download response
+            return StreamingResponse(
+                zip_buffer,
+                headers={
+                    'Content-Disposition': f'attachment; filename="{zip_filename}"'
+                },
+                media_type='application/zip',
+            )
+        except Exception as error:
+            # TODO: pop 'error' out of session and display with javascript
+            # dangrerAlert() when admin/batch/list renders.
+            # See statics/js/alerts.js from starlette-admin.
+            request.session['error'] = f'{error!s}'
+            return RedirectResponse(
+                request.url_for('admin:list', identity='batch'),
+                status_code=status.HTTP_303_SEE_OTHER,
+            )
+
 
 class MediaFileView(ClammerModelView):
     pk_attr: str = 'guid'
 
     actions: ClassVar[List[str]] = ['create_new_batch']
+    row_actions: ClassVar[List[str]] = ['view', 'edit', 'create_new_batch']
 
     fields: ClassVar[list[str]] = [
         'guid',
         'collections',
         'batches',
         'assets',
-        BaseField('mmif_json', display_template='displays/media_file_mmif_json.html'),
+        'mmifs',
+        'metaflow_runs',
     ]
-    exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json']
+    exclude_fields_from_list: ClassVar[list[str]] = ['mmif_json', 'mmifs']
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
 
     def can_create(self, request: Request) -> bool:
-        return get_user(request).is_admin
+        return get_oauth_user(request).is_admin
 
-    @action(
+    @row_action(
         name='create_new_batch',
         text='Create Batch',
-        confirmation='Create a Batch from these Media Files?',
+        confirmation='Create a Batch from this Media File?',
         action_btn_class='btn-ghost-primary',
-        submit_btn_text='Yasss!',
+        icon_class='fa-regular fa-square-plus',
+        submit_btn_text=yes(),
         form="""
         <form>
             <div class="mt-3">
@@ -361,21 +544,43 @@ class MediaFileView(ClammerModelView):
         </form>
         """,
     )
-    async def create_new_batch(self, request: Request, pks: List[Any]) -> str:
+    @action(
+        name='create_new_batch',
+        text='Create Batch',
+        confirmation='Create a Batch from these Media Files?',
+        icon_class='fa-regular fa-square-plus',
+        submit_btn_text=yes(),
+        form="""
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_name"
+                    placeholder="Batch Name">
+                <textarea class="form-control" name="batch_description"
+                    placeholder="Batch Description"></textarea>
+            </div>
+        </form>
+        """,
+    )
+    async def create_new_batch(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
+        """Create a new batch from the selected media files"""
+        if not isinstance(pks, list):
+            pks = [pks]
         with Session(engine) as db:
             media_files = db.exec(
                 select(MediaFile).where(MediaFile.guid.in_(pks))
             ).all()
             data: FormData = await request.form()
             batch = Batch(
-                name=data.get("batch_name"),
-                description=data.get("batch_description"),
+                name=data.get('batch_name'),
+                description=data.get('batch_description'),
                 media_files=media_files,
             )
             db.add(batch)
             db.commit()
 
-        return f"Batch of {len(pks)} Media Files created"
+        return f'Batch of {len(pks)} Media Files created'
 
 
 class UserView(AdminModelView):
@@ -386,7 +591,7 @@ class ClamsAppView(ClammerModelView):
     fields: ClassVar[list[Any]] = ['name', 'endpoint', 'description', 'pipelines']
 
 
-class PipelineView(AdminModelView):
+class PipelineView(ClammerModelView):
     fields: ClassVar[list[Any]] = ['name', 'description', 'clams_apps']
 
     def is_accessible(self, request: Request) -> bool:
@@ -405,13 +610,15 @@ class DashboardView(CustomView):
 
     async def render(self, request: Request, templates: Jinja2Templates) -> Response:
         history = self.sync_history()
-        user = get_user(request)
+        user = get_oauth_user(request)
         sync_disabled = datetime.now() - history[0]['created_at'] < timedelta(
             minutes=15
         )
+        title = self.title(request)
         return templates.TemplateResponse(
             'dashboard.html',
             {
+                'title' if title else None: title,
                 'request': request,
                 'user': user,
                 'sync_history': history,
@@ -431,6 +638,7 @@ class SonyCiAssetView(AdminModelView):
         'format',
         'media_files',
     ]
+    row_actions: ClassVar[list[Any]] = ['view', 'edit']
 
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
 
@@ -441,3 +649,170 @@ class SonyCiAssetView(AdminModelView):
 
 class MetaflowRunView(AdminModelView):
     form_include_pk: ClassVar[bool] = True
+
+    fields: ClassVar[list[Any]] = [
+        'id',
+        MetaflowPathspecLinkField('pathspec'),
+        'batch',
+        'mmif',
+        'media_file',
+        'created_at',
+        FinishedField('finished'),
+        SuccessfulField('successful'),
+        MetaflowStepLinkField('current_step'),
+        MetaflowTaskLinkField('current_task'),
+    ]
+
+
+class MMIFView(ChowdaModelView):
+    label: ClassVar[str] = 'MMIFs'
+    fields: ClassVar[List[Any]] = [
+        'media_file',
+        HasMany('batch_inputs', identity='batch', label='Input to Batches'),
+        HasOne('batch_output', identity='batch', label='Generated from Batch'),
+        'metaflow_run',
+        'mmif_location',
+        'created_at',
+    ]
+    actions: ClassVar[List[str]] = ['add_to_new_batch', 'add_to_existing_batch']
+
+    @row_action(
+        name='add_to_new_batch',
+        text='Add to New Batch',
+        confirmation='Create a Batch from this MMIF?',
+        action_btn_class='btn-ghost-primary',
+        icon_class='fa-regular fa-square-plus',
+        submit_btn_text=yes(),
+        exclude_from_list=True,
+        form="""
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_name"
+                    placeholder="Batch Name">
+                <textarea class="form-control" name="batch_description"
+                    placeholder="Batch Description"></textarea>
+            </div>
+        </form>
+        """,
+    )
+    @action(
+        name='add_to_new_batch',
+        text='Add to New Batch',
+        confirmation='Create a Batch from these MMIFs?',
+        icon_class='fa-regular fa-square-plus',
+        submit_btn_text=yes(),
+        form="""
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_name"
+                    placeholder="Batch Name">
+                <textarea class="form-control" name="batch_description"
+                    placeholder="Batch Description"></textarea>
+            </div>
+        </form>
+        """,
+    )
+    async def add_to_new_batch(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
+        """Create a new batch from the selected media files"""
+        if not isinstance(pks, list):
+            pks = [pks]
+        try:
+            data: FormData = await request.form()
+            with Session(engine) as db:
+                mmifs: List[MMIF] = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
+                media_files: List[MediaFile] = [mmif.media_file for mmif in mmifs]
+                guids: List[str] = [media_file.guid for media_file in media_files]
+                duplicates: Set = get_duplicates(guids)
+                if duplicates:
+                    raise ActionFailed(
+                        f'{len(duplicates)} duplicate Media File{"s" if len(duplicates) > 1 else ""} found:<br>'  # noqa: E501
+                        + '<br>'.join(duplicates)
+                    )
+
+                batch = Batch(
+                    name=data.get('batch_name'),
+                    description=data.get('batch_description'),
+                    input_mmifs=mmifs,
+                    media_files=media_files,
+                )
+                db.add(batch)
+                db.commit()
+
+            return f'Batch of {len(pks)} MMIFs created'
+        except Exception as error:
+            raise ActionFailed(f'{error!s}') from error
+
+    @row_action(
+        name='add_to_existing_batch',
+        text='Add to Existing Batch',
+        confirmation='Which batch should this be added to?',
+        action_btn_class='btn-ghost-primary',
+        icon_class='fa-regular fa-square-plus',
+        submit_btn_text=yes(),
+        exclude_from_list=True,
+        form="""
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_id"
+                    placeholder="Batch ID">
+            </div>
+        </form>
+        """,
+    )
+    @action(
+        name='add_to_existing_batch',
+        text='Add to Existing Batch',
+        confirmation='Which batch should these be added to?',
+        icon_class='fa-regular fa-square-plus',
+        submit_btn_text=yes(),
+        form="""
+        <form>
+            <div class="mt-3">
+                <input type="text" class="form-control" name="batch_id"
+                    placeholder="Batch ID">
+            </div>
+        </form>
+        """,
+    )
+    async def add_to_existing_batch(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
+        """Add MMIFs to an existing batch"""
+        if not isinstance(pks, list):
+            pks = [pks]
+        try:
+            data: FormData = await request.form()
+            with Session(engine) as db:
+                mmifs: List[MMIF] = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
+                batch: Batch = db.get(Batch, data.get('batch_id'))
+                media_files: List[MediaFile] = [mmif.media_file for mmif in mmifs]
+
+                # Check for duplicate Media Files in selection
+                guids: List[str] = [media_file.guid for media_file in media_files]
+                duplicates: Set = get_duplicates(guids)
+                if duplicates:
+                    raise ActionFailed(
+                        f'{len(duplicates)} duplicate Media File{"s" if len(duplicates) > 1 else ""} found in selection:<br>'  # noqa: E501
+                        + '<br>'.join(duplicates)
+                    )
+                # Check batch input_mmifs for other MMIFs linked to these MediaFiles
+                existing_batch_mmif_guids: Set[str] = {
+                    mmif.media_file.guid for mmif in batch.input_mmifs
+                }
+                existing_media_files = existing_batch_mmif_guids.intersection(guids)
+                if existing_media_files:
+                    s = 's' if len(existing_media_files) > 1 else ''
+                    raise ActionFailed(
+                        f'{len(existing_media_files)} Media File{s} already exist{"" if s else "s"} in Batch {batch.id}:<br>'  # noqa: E501
+                        + '<br>'.join(existing_media_files)
+                    )
+                batch.input_mmifs += mmifs
+                batch.media_files += media_files
+
+                db.commit()
+
+                return f'Added {len(pks)} MMIFs to Batch {batch.id}'
+        except Exception as error:
+            raise ActionFailed(f'{error!s}') from error

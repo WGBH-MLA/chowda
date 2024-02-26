@@ -19,20 +19,6 @@
       "justMyCode": false
     },
     {
-      "name": "Chowda: tests",
-      "type": "python",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "module": "pytest",
-      "args": [
-        "-v",
-        "-n",
-        "auto"
-      ],
-      "jinja": false,
-      "justMyCode": false
-    },
-    {
       "name": "Metaflow: Run",
       "type": "python",
       "request": "launch",

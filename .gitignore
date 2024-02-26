@@ -24,3 +24,8 @@ ci.toml
 # Metaflow generated files
 metaflow.s3.*
 .metaflow
+
+.cache_ggshield
+
+.env.*
+!.env.sample

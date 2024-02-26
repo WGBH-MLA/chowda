@@ -1,6 +1,9 @@
 from metaflow import FlowSpec, secrets, step, trigger
 
 from chowda.log import log
+from chowda.models import MediaType
+
+media_types = {MediaType('Video'), MediaType('Audio')}
 
 
 @trigger(event='sync')
@@ -66,32 +69,35 @@ class IngestFlow(FlowSpec):
         from chowda.models import MediaFile, SonyCiAsset
         from chowda.utils import upsert
 
-        with Session(engine) as session:
-            batch = self.get_batch(n)
-            media = [SonyCiAsset(**asset) for asset in batch]
-            results = []
+        batch = self.get_batch(n)
+        media = [SonyCiAsset(**asset) for asset in batch]
+        results = []
+
+        with Session(engine) as db:
             for asset in media:
-                results.append(session.execute(upsert(SonyCiAsset, asset, ['id'])))
-                # If it's a GUID
-                if search('^cpb-aacip-', asset.name):
+                results.append(db.execute(upsert(SonyCiAsset, asset, ['id'])))
+                # If it's a video or audio, and starts with cpb-aacip-*
+                if asset.type in media_types and search('^cpb-aacip-', asset.name):
+                    # It's a MediaFile!
                     # Extract the GUID name
                     guid = split(r'_|\.|-dupe', asset.name)[0]
                     # Check for existing MediaFile
-                    media_file = session.exec(
+                    media_file = db.exec(
                         select(MediaFile).where(MediaFile.guid == guid)
                     ).first()
                     if not media_file:
                         # Create a new MediaFile with the new guid
                         media_file = MediaFile(guid=guid)
-                    ci_asset = session.get(SonyCiAsset, asset.id)
+                    # Get the SonyCiAsset we just saved to the db
+                    ci_asset = db.get(SonyCiAsset, asset.id)
                     # Add the asset to the existing MediaFile
                     media_file.assets.append(ci_asset)
-                    session.add(media_file)
+                    db.add(media_file)
 
             result = sum([r.rowcount for r in results])
-            session.commit()
-            log.success(f'Ingested page {n} with {result} assets')
-            return result
+            db.commit()
+        log.success(f'Ingested page {n} with {result} assets')
+        return result
 
 
 if __name__ == '__main__':

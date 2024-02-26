@@ -4,17 +4,30 @@ from typing import Any
 from starlette.datastructures import FormData
 from starlette.requests import Request
 from starlette_admin._types import RequestAction
-from starlette_admin.fields import BaseField, IntegerField, TextAreaField
+from starlette_admin.fields import (
+    BaseField,
+    BooleanField,
+    IntegerField,
+    StringField,
+    TextAreaField,
+)
 
 from chowda.models import MediaFile
 
 
 @dataclass
 class MediaFilesGuidsField(TextAreaField):
-    """A field that displays a list of MediaFile GUIDs as html links"""
+    """A field that displays a list of MediaFile GUIDs
+    Edit view: Textarea with GUIDs as strings
+    List view: Comma separated list of GUID Links
+    Detail view: Datatable with GUID links
+    """
 
-    render_function_key: str = 'media_file_guid_links'
+    id = 'media_file_guids'
+    label: str = 'Media Files'
+    display_template: str = 'displays/collection_media_files.html'
     form_template: str = 'forms/media_file_guids_textarea.html'
+    render_function_key: str = 'media_file_guid_links'
 
     async def parse_form_data(
         self, request: Request, form_data: FormData, action: RequestAction
@@ -26,7 +39,9 @@ class MediaFilesGuidsField(TextAreaField):
         self, request: Request, value: Any, action: RequestAction
     ) -> Any:
         """Maps a Collection's MediaFile objects to a list of GUIDs"""
-        return [media_file.guid for media_file in value]
+        if request.state.action in (RequestAction.EDIT, RequestAction.LIST):
+            return [media_file.guid for media_file in value]
+        return value
 
 
 @dataclass
@@ -80,12 +95,12 @@ class BatchMetaflowRunDisplayField(BaseField):
         return [
             {
                 **run,
-                'finished_at': run['finished_at'].isoformat()
-                if run.get('finished_at')
-                else None,
-                'created_at': run['created_at'].isoformat()
-                if run.get('created_at')
-                else None,
+                'finished_at': (
+                    run['finished_at'].isoformat() if run.get('finished_at') else None
+                ),
+                'created_at': (
+                    run['created_at'].isoformat() if run.get('created_at') else None
+                ),
             }
             for run in value
         ]
@@ -102,7 +117,7 @@ class BatchPercentCompleted(BaseField):
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
         runs = [run.finished for run in obj.metaflow_runs]
-        if runs:
+        if runs and obj.media_files:
             return f'{runs.count(True) / len(obj.media_files):.1%}'
         return None
 
@@ -118,7 +133,7 @@ class BatchPercentSuccessful(BaseField):
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
         runs = [run.successful for run in obj.metaflow_runs]
-        if runs:
+        if runs and obj.media_files:
             return f'{runs.count(True) / len(obj.media_files):.1%}'
         return None
 
@@ -127,7 +142,7 @@ class BatchPercentSuccessful(BaseField):
 class BatchUnstartedGuids(BaseField):
     """GUIDs in a batch that have not yet started"""
 
-    name: str = 'batch_unstarted_guids'
+    id: str = 'batch_unstarted_guids'
     read_only: bool = True
     label: str = 'Unstarted GUIDs'
     exclude_from_create: bool = True
@@ -152,3 +167,63 @@ class BatchUnstartedGuidsCount(IntegerField):
 
     async def parse_obj(self, request: Request, obj: Any) -> Any:
         return len(obj.unstarted_guids())
+
+
+@dataclass
+class FinishedField(BooleanField):
+    """A field that displays a boolean value for the 'Finished' property.
+
+    True: Green check
+    False: Grey clock"""
+
+    display_template: str = 'displays/finished.html'
+    render_function_key: str = 'finished'
+
+
+@dataclass
+class SuccessfulField(BooleanField):
+    """A field that displays a boolean value for the 'Successful' property.
+
+    True: Green check circle
+    False: Red X circle
+    None: Blank
+    """
+
+    display_template: str = 'displays/successful.html'
+    render_function_key: str = 'successful'
+
+
+@dataclass
+class MetaflowPathspecLinkField(StringField):
+    """A field that displays a link to the metaflow pathspec in Mario"""
+
+    display_template: str = 'displays/metaflow_pathspec_link_field.html'
+
+    render_function_key: str = 'metaflow_pathspec_link'
+
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        return f'https://mario.wgbh-mla.org/{obj.pathspec}'
+
+
+@dataclass
+class MetaflowLinkField(StringField):
+    """A field that displays a link to a metaflow step or task in Mario"""
+
+    display_template: str = 'displays/metaflow_link_field.html'
+    render_function_key: str = 'metaflow_link'
+
+
+@dataclass
+class MetaflowStepLinkField(MetaflowLinkField):
+    """A field that displays a link to the metaflow step in Mario"""
+
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        return f'https://mario.wgbh-mla.org/{obj.pathspec}/{obj.current_step}'
+
+
+@dataclass
+class MetaflowTaskLinkField(MetaflowLinkField):
+    """A field that displays a link to the metaflow task in Mario"""
+
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        return f'https://mario.wgbh-mla.org/{obj.pathspec}/{obj.current_step}/{obj.current_task}'
