@@ -11,8 +11,8 @@ dependencies = [
     "fastapi~=0.104",
     "starlette-admin~=0.12",
     "sqlmodel~=0.0",
-    "pydantic[email]~=1.10",
-    "sonyci~=0.1",
+    "pydantic[email]~=2.6",
+    "sonyci~=0.2",
     "psycopg2~=2.9",
     "metaflow~=2.10",
     "alembic~=1.12",
@@ -33,10 +33,7 @@ documentation = 'https://WGBH-MLA.github.io/chowda/'
 repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project.optional-dependencies]
-production = [
-    "uvicorn[standard]~=0.24",
-    "gunicorn~=21.2",
-]
+production = ["uvicorn[standard]~=0.24", "gunicorn~=21.2"]
 test = [
     "factory-boy~=3.3",
     "pytest~=7.4",
@@ -52,13 +49,8 @@ test = [
     "pytest-asyncio~=0.21",
     "trio~=0.23",
 ]
-locust = [
-    "locust~=2.18",
-    "pydantic-factories~=1.17",
-]
-development = [
-    "kubernetes~=28.1",
-]
+locust = ["locust~=2.18", "pydantic-factories~=1.17"]
+development = ["kubernetes~=28.1"]
 
 [tool.black]
 extend-exclude = 'migrations'
@@ -102,12 +94,7 @@ version = { source = 'file', path = 'chowda/_version.py' }
 includes = []
 
 [tool.pdm.dev-dependencies]
-dev = [
-    "uvicorn~=0.24",
-    "black~=23.11",
-    "ruff~=0.1",
-    "pre-commit~=3.5",
-]
+dev = ["uvicorn~=0.24", "black~=23.11", "ruff~=0.1", "pre-commit~=3.5"]
 docs = [
     "mkdocs~=1.5",
     "mkdocs-material~=9.4",
@@ -116,6 +103,4 @@ docs = [
     "mkdocstrings[python]~=0.24",
     "mkdocs-jupyter~=0.24",
 ]
-ci = [
-    "setuptools~=68.2",
-]
+ci = ["setuptools~=68.2"]
