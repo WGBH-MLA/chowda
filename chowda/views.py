@@ -2,9 +2,6 @@ from datetime import datetime, timedelta
 from typing import Any, ClassVar, Dict, List, Set
 
 from fastapi import status
-from metaflow import Flow
-from metaflow.exception import MetaflowNotFound
-from metaflow.integrations import ArgoEvent
 from multipart.exceptions import MultipartParseError
 from sqlmodel import Session, select
 from starlette.datastructures import FormData
@@ -35,6 +32,7 @@ from chowda.fields import (
     SuccessfulField,
 )
 from chowda.models import MMIF, Batch, Collection, MediaFile
+from chowda.routers.sony_ci import sync_history
 from chowda.utils import get_duplicates, validate_media_file_guids, yes
 from templates import filters  # noqa: F401
 
@@ -599,21 +597,15 @@ class PipelineView(ClammerModelView):
 
 
 class DashboardView(CustomView):
-    def sync_history(self) -> Dict[str, Any]:
-        try:
-            return [
-                {'created_at': sync_run.created_at, 'successful': sync_run.successful}
-                for sync_run in list(Flow('IngestFlow'))[:5]
-            ]
-        except MetaflowNotFound:
-            return []
 
     async def render(self, request: Request, templates: Jinja2Templates) -> Response:
-        history = self.sync_history()
+        history = await sync_history()
         user = get_oauth_user(request)
-        sync_disabled = datetime.now() - history[0]['created_at'] < timedelta(
-            minutes=15
-        )
+        if history:
+            last_sync = history[0]['created_at']
+            sync_disabled = datetime.now(last_sync.tzinfo) - last_sync < timedelta(
+                minutes=15
+            )
         title = self.title(request)
         return templates.TemplateResponse(
             'dashboard.html',

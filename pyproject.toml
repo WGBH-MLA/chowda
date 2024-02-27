@@ -22,6 +22,7 @@ dependencies = [
     "httpx~=0.27",
     "rich~=13.7",
     "pyjwt~=2.8",
+    "fastapi-cache2>=0.2.1",
 ]
 requires-python = '>=3.8.1,<4.0'
 readme = 'README.md'
