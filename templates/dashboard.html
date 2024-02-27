@@ -63,7 +63,7 @@
                     {% if user.is_admin %}
                     <div class="card-footer text-black">
                         <div class="btn-list ms-auto justify-content-end">
-                            <button type="submit" name="_add_another" class="btn" {{ 'disabled' if sync_disabled }}>
+                            <button type="submit" name="_add_another" class="btn btn-secondary" {{ 'disabled' if sync_disabled }} onclick="clickSyncButton(this)">
                                 <i class="fa-solid fa-rotate me-2">
                                 </i>
                                 {{ _("Sync Now")}}
@@ -82,4 +82,10 @@
 {% endblock %}
 {% block script %}
 {{ super() }}
+<script>
+function clickSyncButton(element) {
+    element.classList.add('disabled')
+    element.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Syncing...'
+}
+</script>
 {% endblock %}
