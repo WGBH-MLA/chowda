@@ -1,6 +1,11 @@
+from psycopg2.extensions import register_adapter
+from pydantic_core import Url
 from sqlalchemy import create_engine
 
 from chowda.config import DB_URL, DEBUG
+from chowda.utils import adapt_url
+
+register_adapter(Url, adapt_url)
 
 engine = create_engine(DB_URL, echo=DEBUG)
 
