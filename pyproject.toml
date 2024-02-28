@@ -1,12 +1,16 @@
-[build-system]
-requires = ['pdm-backend']
-build-backend = 'pdm.backend'
+[project.urls]
+homepage = 'https://github.com/WGBH-MLA/chowda'
+documentation = 'https://WGBH-MLA.github.io/chowda/'
+repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project]
 name = 'chowda'
 dynamic = ['version']
 description = 'A CLAMS processing application'
 authors = [{ name = 'WGBH-MLA', email = 'ryan_harbert@wgbh.org' }]
+requires-python = '>=3.8.1,<4.0'
+readme = 'README.md'
+license = { text = 'MIT' }
 dependencies = [
     "fastapi~=0.110",
     "starlette-admin~=0.13",
@@ -24,20 +28,9 @@ dependencies = [
     "pyjwt~=2.8",
     "fastapi-cache2>=0.2.1",
 ]
-requires-python = '>=3.8.1,<4.0'
-readme = 'README.md'
-license = { text = 'MIT' }
-
-[project.urls]
-homepage = 'https://github.com/WGBH-MLA/chowda'
-documentation = 'https://WGBH-MLA.github.io/chowda/'
-repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project.optional-dependencies]
-production = [
-    "uvicorn[standard]~=0.27",
-    "gunicorn~=21.2",
-]
+production = ["uvicorn[standard]~=0.27", "gunicorn~=21.2"]
 test = [
     "factory-boy~=3.3",
     "pytest~=8.0",
@@ -53,13 +46,20 @@ test = [
     "pytest-asyncio~=0.23",
     "trio~=0.24",
 ]
-locust = [
-    "locust~=2.23",
-    "pydantic-factories~=1.17",
+locust = ["locust~=2.23", "pydantic-factories~=1.17"]
+development = ["kubernetes~=29.0"]
+
+[tool.pdm.dev-dependencies]
+dev = ["uvicorn~=0.27", "black~=24.2", "ruff~=0.2", "pre-commit~=3.5"]
+docs = [
+    "mkdocs~=1.5",
+    "mkdocs-material~=9.5",
+    "mkdocs-git-revision-date-localized-plugin~=1.2",
+    "mike~=2.0",
+    "mkdocstrings[python]~=0.24",
+    "mkdocs-jupyter~=0.24",
 ]
-development = [
-    "kubernetes~=29.0",
-]
+ci = ["setuptools~=69.1"]
 
 [tool.black]
 extend-exclude = 'migrations'
@@ -72,6 +72,8 @@ testpaths = ['tests', 'docs']
 
 [tool.ruff]
 extend-exclude = ['migrations']
+
+[tool.ruff.lint]
 ignore = ['Q000']
 select = [
     'B', # flake8-bugbear
@@ -80,7 +82,7 @@ select = [
     'E', # pycodestyle errors
     'ERA', # eradicate
     'F', # pyflakes
-    # 'I', # isort
+    'I', # isort
     'INT', # flake8-gettext
     'N', # pep8-naming
     'PIE', # flake8-pie,
@@ -102,21 +104,6 @@ version = { source = 'file', path = 'chowda/_version.py' }
 [tool.pdm.build]
 includes = []
 
-[tool.pdm.dev-dependencies]
-dev = [
-    "uvicorn~=0.27",
-    "black~=24.2",
-    "ruff~=0.2",
-    "pre-commit~=3.5",
-]
-docs = [
-    "mkdocs~=1.5",
-    "mkdocs-material~=9.5",
-    "mkdocs-git-revision-date-localized-plugin~=1.2",
-    "mike~=2.0",
-    "mkdocstrings[python]~=0.24",
-    "mkdocs-jupyter~=0.24",
-]
-ci = [
-    "setuptools~=69.1",
-]
+[build-system]
+requires = ['pdm-backend']
+build-backend = 'pdm.backend'

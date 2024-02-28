@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from typing import Any, ClassVar, Dict, List, Set
 
 from fastapi import status
+from metaflow.integrations import ArgoEvent
 from multipart.exceptions import MultipartParseError
 from sqlmodel import Session, select
 from starlette.datastructures import FormData
@@ -603,9 +604,8 @@ class DashboardView(CustomView):
         user = get_oauth_user(request)
         if history:
             last_sync = history[0]['created_at']
-            sync_disabled = datetime.now(last_sync.tzinfo) - last_sync < timedelta(
-                minutes=15
-            )
+            delta = datetime.now(last_sync.tzinfo) - last_sync
+            sync_disabled = delta < timedelta(minutes=15)
         title = self.title(request)
         return templates.TemplateResponse(
             'dashboard.html',
