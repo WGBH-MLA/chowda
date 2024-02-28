@@ -11,6 +11,7 @@ from metaflow.integrations import ArgoEvent
 from pydantic import BaseModel
 
 from chowda.auth.utils import permissions
+from chowda.config import MARIO_URL
 
 sony_ci = APIRouter()
 
@@ -28,7 +29,12 @@ async def lifespan():
 async def sync_history(n: int = 3) -> Dict[str, Any]:
     try:
         return [
-            {'created_at': sync_run.created_at, 'successful': sync_run.successful}
+            {
+                'created_at': sync_run.created_at,
+                'successful': sync_run.successful,
+                'finished': sync_run.finished,
+                'link': MARIO_URL + sync_run.pathspec,
+            }
             for sync_run in list(Flow('IngestFlow'))[:n]
         ]
     except MetaflowNotFound:

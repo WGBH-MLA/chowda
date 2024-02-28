@@ -22,56 +22,84 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <form action="/dashboard/sync" method="POST">
-                    <div class="card-header">
-                        <div class="container-fluid">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h3 class="card-title">Sync History</h3>
-                            </div>
+                <div class="card-header">
+                    <div class="container-fluid">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="card-title">Sync History</h3>
                         </div>
                     </div>
-                    <div class="card-body border-bottom py-3">
-                        <div class="mb-3">
-                            {% if sync_history|length==0 %}
+                </div>
+                <div class="card-body border-bottom py-3">
+                    <div class="mb-3">
+                        {% if sync_history|length==0 %}
                             <h4>No sync history was found</h4>
-                            {% else %}
-                            <div class="table-responsive">
-                                <table class="table table-vcenter">
-                                    <thead>
-                                        <tr>
-                                            <th>Date / Time</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for sync in sync_history %}
-                                        <tr>
-                                            <td>
-                                                {{ sync['created_at'].strftime('%Y-%m-%d %I:%M:%S %p') }}
-                                            </td>
-                                            <td>
-                                                {{ 'Success' if sync['successful'] else 'Failed'}}
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                            {% endif %}
+                        {% else %}
+                        <div class="table-responsive">
+                            <table class="table table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th>Date / Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for sync in sync_history %}
+                                        {% if not sync['finished'] %}
+                                            <tr class="table-warning">
+                                                <td>
+                                                    {{ sync['created_at'].strftime('%Y-%m-%d %I:%M:%S %p') }}
+                                                </td>
+                                                <td>
+                                                    {% with data = False %}
+                                                        {% include 'displays/finished.html' %}
+                                                    {% endwith %}
+                                                </td>
+                                            </tr>
+                                        {% elif sync['successful'] %}
+                                            <tr class="table-success">
+                                                <td>
+                                                    {% with link = sync['link'] %}
+                                                        {% include 'displays/external_link_field.html' %}
+                                                    {% endwith %}
+                                                </td>
+                                                <td>
+                                                    {% with data = True %}
+                                                        {% include 'displays/finished.html' %}
+                                                    {% endwith %}
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr class="table-danger">
+                                                <td>
+                                                    {{ sync['created_at'].strftime('%Y-%m-%d %I:%M:%S %p') }}
+                                                </td>
+                                                <td>
+                                                    {% with data = False %}
+                                                        {% include 'displays/finished.html' %}
+                                                    {% endwith %}
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
+                        {% endif %}
                     </div>
-                    {% if user.is_admin %}
-                    <div class="card-footer text-black">
-                        <div class="btn-list ms-auto justify-content-end">
-                            <button type="submit" name="_add_another" class="btn btn-secondary" {{ 'disabled' if sync_disabled }} onclick="clickSyncButton(this)">
-                                <i class="fa-solid fa-rotate me-2">
-                                </i>
-                                {{ _("Sync Now")}}
-                            </button>
-                        </div>
+                </div>
+                {% if user.is_admin %}
+                <div class="card-footer text-black">
+                    <form action="/dashboard/sync" method="POST">
+                    <div class="btn-list ms-auto justify-content-end">
+                        <button type="submit" name="_add_another" class="btn btn-secondary" {{ 'disabled' if sync_disabled }} onclick="clickSyncButton(this)">
+                            <i class="fa-solid fa-rotate me-2">
+                            </i>
+                            {{ _("Sync Now")}}
+                        </button>
+                    </form>
                     </div>
-                    {% endif %}
-                </form>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
