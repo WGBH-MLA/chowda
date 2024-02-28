@@ -38,48 +38,28 @@
                             <table class="table table-vcenter">
                                 <thead>
                                     <tr>
+                                        <th>Run ID</th>
                                         <th>Date / Time</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for sync in sync_history %}
-                                        {% if not sync['finished'] %}
-                                            <tr class="table-warning">
-                                                <td>
-                                                    {{ sync['created_at'].strftime('%Y-%m-%d %I:%M:%S %p') }}
-                                                </td>
-                                                <td>
-                                                    {% with data = False %}
-                                                        {% include 'displays/finished.html' %}
-                                                    {% endwith %}
-                                                </td>
-                                            </tr>
-                                        {% elif sync['successful'] %}
-                                            <tr class="table-success">
-                                                <td>
-                                                    {% with link = sync['link'] %}
-                                                        {% include 'displays/external_link_field.html' %}
-                                                    {% endwith %}
-                                                </td>
-                                                <td>
-                                                    {% with data = True %}
-                                                        {% include 'displays/finished.html' %}
-                                                    {% endwith %}
-                                                </td>
-                                            </tr>
-                                        {% else %}
-                                            <tr class="table-danger">
-                                                <td>
-                                                    {{ sync['created_at'].strftime('%Y-%m-%d %I:%M:%S %p') }}
-                                                </td>
-                                                <td>
-                                                    {% with data = False %}
-                                                        {% include 'displays/finished.html' %}
-                                                    {% endwith %}
-                                                </td>
-                                            </tr>
-                                        {% endif %}
+                                        {% set color = 'warning' if not sync['finished'] else 'success' if sync['successful'] else 'danger' %}
+                                        <tr class="table-{{ color }}">
+                                            <td>
+                                                {% with link = sync['link'] %}
+                                                    {% include 'displays/external_link_field.html' %}
+                                                {% endwith %}
+                                            <td>
+                                                {{ sync['created_at'].strftime('%Y-%m-%d %I:%M:%S %p') }}
+                                            </td>
+                                            <td>
+                                                {% with data = sync['successful'] %}
+                                                    {% include 'displays/finished.html' %}
+                                                {% endwith %}
+                                            </td>
+                                        </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
