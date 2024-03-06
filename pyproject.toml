@@ -53,7 +53,7 @@ test = [
     "trio~=0.24",
 ]
 locust = [
-    "locust~=2.23",
+    "locust~=2.24",
     "pydantic-factories~=1.17",
 ]
 development = [
@@ -105,7 +105,7 @@ includes = []
 dev = [
     "uvicorn~=0.27",
     "black~=24.2",
-    "ruff~=0.2",
+    "ruff~=0.3",
     "pre-commit~=3.5",
 ]
 docs = [
