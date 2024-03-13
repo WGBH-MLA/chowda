@@ -34,12 +34,12 @@ repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project.optional-dependencies]
 production = [
-    "uvicorn[standard]~=0.27",
+    "uvicorn[standard]~=0.28",
     "gunicorn~=21.2",
 ]
 test = [
     "factory-boy~=3.3",
-    "pytest~=8.0",
+    "pytest~=8.1",
     "pytest-cov~=4.1",
     "pytest-sugar~=1.0",
     "pytest-xdist~=3.5",
@@ -103,7 +103,7 @@ includes = []
 
 [tool.pdm.dev-dependencies]
 dev = [
-    "uvicorn~=0.27",
+    "uvicorn~=0.28",
     "black~=24.2",
     "ruff~=0.3",
     "pre-commit~=3.5",
@@ -117,5 +117,5 @@ docs = [
     "mkdocs-jupyter~=0.24",
 ]
 ci = [
-    "setuptools~=69.1",
+    "setuptools~=69.2",
 ]
