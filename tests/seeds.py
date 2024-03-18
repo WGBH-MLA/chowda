@@ -1,7 +1,8 @@
 from random import choice, randint, sample
 
 from chowda.models import AppStatus
-from tests.factories import (
+
+from .factories import (
     BatchFactory,
     ClamsAppFactory,
     CLAMSProvider,
