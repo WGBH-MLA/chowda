@@ -103,5 +103,5 @@ docs = [
     "mkdocs-jupyter~=0.24",
 ]
 
-[tool.setuptools]
-packages = ['chowda', 'tests']
+[tool.setuptools.packages.find]
+include = ['chowda', 'tests']
