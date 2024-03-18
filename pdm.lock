@@ -2,10 +2,10 @@
 # It is not intended for manual editing.
 
 [metadata]
-groups = ["default", "ci", "dev", "development", "docs", "locust", "production", "test"]
+groups = ["default", "dev", "development", "docs", "locust", "production", "test"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:f8f64d5f0fdc4062b338dcfa7281baac33901ca0d2b16596369699fa712e0887"
+content_hash = "sha256:ab13a501c5ff69f6a1b8262bb1f57ba9009b243604938723fd7855b39f97f65b"
 
 [[package]]
 name = "alembic"
@@ -1873,7 +1873,7 @@ files = [
 name = "mergedeep"
 version = "1.3.4"
 requires_python = ">=3.6"
-summary = "A deep merge function for 🐍."
+summary = "A deep merge function for ðŸ��."
 groups = ["docs"]
 files = [
     {file = "mergedeep-1.3.4-py3-none-any.whl", hash = "sha256:70775750742b25c0d8f36c55aed03d24c3384d17c951b3175d898bd778ef0307"},
@@ -3489,7 +3489,7 @@ name = "setuptools"
 version = "69.2.0"
 requires_python = ">=3.8"
 summary = "Easily download, build, install, upgrade, and uninstall Python packages"
-groups = ["ci", "dev", "locust"]
+groups = ["dev", "locust"]
 files = [
     {file = "setuptools-69.2.0-py3-none-any.whl", hash = "sha256:c21c49fb1042386df081cb5d86759792ab89efca84cf114889191cd09aacc80c"},
     {file = "setuptools-69.2.0.tar.gz", hash = "sha256:0ff4183f8f42cd8fa3acea16c45205521a4ef28f73c6391d8a25e92893134f2e"},
