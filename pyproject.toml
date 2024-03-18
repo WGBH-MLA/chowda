@@ -104,4 +104,4 @@ docs = [
 ]
 
 [tool.setuptools]
-packages = ['chowda']
+packages = ['chowda', 'tests']
