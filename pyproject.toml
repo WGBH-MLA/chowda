@@ -30,7 +30,10 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-production = ["uvicorn[standard]~=0.28", "gunicorn~=21.2"]
+production = [
+    "uvicorn[standard]~=0.29",
+    "gunicorn~=21.2",
+]
 test = [
     "factory-boy~=3.3",
     "pytest~=8.1",
@@ -44,10 +47,12 @@ test = [
     "urllib3~=1.26",
     "pytest-mock~=3.12",
     "pytest-asyncio~=0.23",
-    "trio~=0.24",
+    "trio~=0.25",
 ]
-locust = ["locust~=2.24", "pydantic-factories~=1.17"]
-development = ["kubernetes~=29.0"]
+locust = [
+    "locust~=2.24",
+    "pydantic-factories~=1.17",
+]
 
 [tool.black]
 extend-exclude = 'migrations'
@@ -83,7 +88,6 @@ select = [
     'SIM', # flake8-simplify
     'UP', # pyupgrade
     'W', # pycodestyle warnings
-
 ]
 
 [tool.pdm]
@@ -93,7 +97,12 @@ version = { source = 'file', path = 'chowda/_version.py' }
 includes = []
 
 [tool.pdm.dev-dependencies]
-dev = ["uvicorn~=0.28", "black~=24.2", "ruff~=0.3", "pre-commit~=3.5"]
+dev = [
+    "uvicorn~=0.29",
+    "black~=24.3",
+    "ruff~=0.3",
+    "pre-commit~=3.5",
+]
 docs = [
     "mkdocs~=1.5",
     "mkdocs-material~=9.5",
