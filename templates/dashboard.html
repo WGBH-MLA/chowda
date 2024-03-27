@@ -39,12 +39,14 @@
                                 <thead>
                                     <tr>
                                         <th>Run ID</th>
-                                        <th>Date / Time</th>
+                                        <th>Started</th>
+                                        <th>Finished</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for sync in sync_history %}
+                                        {% set status = 'in_progress' if not sync['finished'] else 'successful' if sync['successful'] else 'failed' %}
                                         {% set color = 'warning' if not sync['finished'] else 'success' if sync['successful'] else 'danger' %}
                                         <tr class="table-{{ color }}">
                                             <td>
@@ -55,9 +57,18 @@
                                                 {{ sync['created_at'].strftime('%Y-%m-%d %I:%M:%S %p') }}
                                             </td>
                                             <td>
-                                                {% with data = sync['successful'] %}
-                                                    {% include 'displays/finished.html' %}
-                                                {% endwith %}
+                                                {% if sync['finished_at'] %}
+                                                    {{ sync['finished_at'].strftime('%Y-%m-%d %I:%M:%S %p') }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if status == 'successful' %}
+                                                    {% include 'icons/successful.html' %}
+                                                {% elif status == 'in_progress' %}
+                                                    {% include 'icons/in_progress.html' %}
+                                                {% else %}
+                                                    {% include 'icons/failed.html' %}
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}

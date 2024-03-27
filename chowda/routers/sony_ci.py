@@ -25,14 +25,15 @@ async def lifespan():
     await sync_history()
 
 
-@cache(namespace='sonyci', expire=60 * 60)
+@cache(namespace='sonyci', expire=15 * 60)
 async def sync_history(n: int = 3) -> Dict[str, Any]:
     try:
         return [
             {
                 'created_at': sync_run.created_at,
-                'successful': sync_run.successful,
                 'finished': sync_run.finished,
+                'finished_at': sync_run.finished_at,
+                'successful': sync_run.successful,
                 'link': MARIO_URL + sync_run.pathspec,
             }
             for sync_run in list(Flow('IngestFlow'))[:n]
