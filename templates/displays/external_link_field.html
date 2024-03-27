@@ -1,0 +1,4 @@
+<a href="{{ link }}" target="blank">
+  {{ text if text else link.split('/') | last }}
+  <i class="fa fa-external-link" aria-hidden="true"></i>
+</a>
