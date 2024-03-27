@@ -47,7 +47,7 @@
                                 <tbody>
                                     {% for sync in sync_history %}
                                         {% set status = 'in_progress' if not sync['finished'] else 'successful' if sync['successful'] else 'failed' %}
-                                        {% set color = 'warning' if not sync['finished'] else 'success' if sync['successful'] else 'danger' %}
+                                        {% set color = 'warning' if status == 'in_progress' else 'success' if status == 'successful' else 'danger' %}
                                         <tr class="table-{{ color }}">
                                             <td>
                                                 {% with link = sync['link'] %}
