@@ -71,6 +71,11 @@ testpaths = ['tests', 'docs']
 
 [tool.ruff]
 extend-exclude = ['migrations']
+
+[tool.ruff.format]
+quote-style = 'single'
+
+[tool.lint]
 ignore = ['Q000']
 select = [
     'B', # flake8-bugbear
