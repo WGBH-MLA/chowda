@@ -151,10 +151,15 @@ def yes() -> str:
     return choice(YES)
 
 
-async def download_mmif(pks: list[str]) -> StreamingResponse | FileResponse:
+from tempfile import TemporaryDirectory
+
+
+tmp_dir = TemporaryDirectory()
+
+
+def download_mmif(pks: list[str]) -> StreamingResponse | FileResponse:
     """Download MMIF files from S3 and return a zip archive of them."""
     import zipfile
-    from tempfile import TemporaryDirectory
 
     import boto3
     from sqlmodel import Session, select
@@ -165,7 +170,6 @@ async def download_mmif(pks: list[str]) -> StreamingResponse | FileResponse:
 
     s3 = boto3.client('s3')
     downloaded_mmif_files = []
-    tmp_dir = TemporaryDirectory()
     download_errors = {}
     with Session(engine) as db:
         mmifs = db.exec(select(MMIF).where(MMIF.id.in_(pks)))
@@ -183,7 +187,11 @@ async def download_mmif(pks: list[str]) -> StreamingResponse | FileResponse:
 
     if len(pks) == 1:
         # If only one batch was downloaded, return the file directly
-        return FileResponse(downloaded_mmif_files[0])
+        return FileResponse(
+            downloaded_mmif_files[0],
+            media_type='application/octet-stream',
+            filename=downloaded_mmif_files[0].split('/')[-1],
+        )
 
     # Create zip archive
     import io

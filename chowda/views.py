@@ -788,4 +788,4 @@ class MMIFView(ChowdaModelView):
     ) -> str:
         if not isinstance(pks, list):
             pks = [pks]
-        return await download_mmif(pks)
+        return download_mmif(pks)
