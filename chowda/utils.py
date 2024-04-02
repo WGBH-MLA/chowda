@@ -1,3 +1,4 @@
+from tempfile import TemporaryDirectory
 from typing import Any, Dict, List, Set
 
 from psycopg2.extensions import QuotedString
@@ -5,6 +6,10 @@ from pydantic import BaseModel
 from sqlalchemy.dialects.postgresql import insert
 from starlette.requests import Request
 from starlette.responses import FileResponse, StreamingResponse
+
+# This should belong inside `download_mmif` function, but the download fails
+# unless the temporary directory is created outside of the function.
+tmp_dir = TemporaryDirectory()
 
 
 def adapt_url(url):
@@ -149,12 +154,6 @@ def yes() -> str:
     from random import choice
 
     return choice(YES)
-
-
-from tempfile import TemporaryDirectory
-
-
-tmp_dir = TemporaryDirectory()
 
 
 def download_mmif(pks: list[str]) -> StreamingResponse | FileResponse:
