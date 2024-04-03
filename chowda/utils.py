@@ -183,7 +183,10 @@ def download_mmif(pks: list[str]) -> StreamingResponse | FileResponse:
             except Exception as ex:
                 # TODO: log errors and notify user of them
                 download_errors[mmif.mmif_location] = ex
+    if download_errors:
+        from chowda.exceptions import DownloadException
 
+        raise DownloadException(download_errors)
     if len(pks) == 1:
         # If only one batch was downloaded, return the file directly
         return FileResponse(

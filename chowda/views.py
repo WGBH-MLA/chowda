@@ -622,7 +622,11 @@ class MMIFView(ChowdaModelView):
         'mmif_location',
         'created_at',
     ]
-    actions: ClassVar[List[str]] = ['add_to_new_batch', 'add_to_existing_batch']
+    actions: ClassVar[List[str]] = [
+        'add_to_new_batch',
+        'add_to_existing_batch',
+        'download_mmif',
+    ]
 
     @row_action(
         name='add_to_new_batch',
@@ -766,16 +770,16 @@ class MMIFView(ChowdaModelView):
             raise ActionFailed(f'{error!s}') from error
 
     @action(
-        name='download mmif',
+        name='download_mmif',
         text='Download MMIF',
-        confirmation='Download MMIF JSON for this MMIF?',
+        confirmation='Download MMIF JSON for all these MMIFs?',
         icon_class='fa fa-download',
         submit_btn_text=yes(),
         submit_btn_class='btn-outline-primary',
         custom_response=True,
     )
     @row_action(
-        name='download mmif',
+        name='download_mmif',
         text='Download MMIF',
         confirmation='Download MMIF JSON for this MMIF?',
         icon_class='fa fa-download',
