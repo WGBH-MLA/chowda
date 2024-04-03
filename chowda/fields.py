@@ -176,7 +176,7 @@ class FinishedField(BooleanField):
     True: Green check
     False: Grey clock"""
 
-    display_template: str = 'displays/finished.html'
+    display_template: str = 'icons/finished.html'
     render_function_key: str = 'finished'
 
 

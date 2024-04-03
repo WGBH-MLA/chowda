@@ -40,7 +40,7 @@ class OAuthProvider(AuthProvider):
         user = request.state.user
         return AdminUser(
             username=user['name'],
-            photo_url=user['picture'],
+            photo_url=user.get('picture'),
         )
 
     async def render_login(self, request: Request, admin: BaseAdmin):
