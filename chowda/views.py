@@ -439,7 +439,7 @@ class BatchView(ClammerModelView):
             batches = db.exec(select(Batch).where(Batch.id.in_(pks))).all()
             all_mmif_pks = [mmif.id for batch in batches for mmif in batch.output_mmifs]
         try:
-            return await download_mmif(all_mmif_pks)
+            return download_mmif(all_mmif_pks)
         except Exception as error:
             # TODO: pop 'error' out of session and display with javascript
             # dangrerAlert() when admin/batch/list renders.
