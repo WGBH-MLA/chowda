@@ -1,9 +1,15 @@
+from tempfile import TemporaryDirectory
 from typing import Any, Dict, List, Set
 
 from psycopg2.extensions import QuotedString
 from pydantic import BaseModel
 from sqlalchemy.dialects.postgresql import insert
 from starlette.requests import Request
+from starlette.responses import FileResponse, StreamingResponse
+
+# This should belong inside `download_mmif` function, but the download fails
+# unless the temporary directory is created outside of the function.
+tmp_dir = TemporaryDirectory()
 
 
 def adapt_url(url):
@@ -148,3 +154,66 @@ def yes() -> str:
     from random import choice
 
     return choice(YES)
+
+
+def download_mmif(pks: list[str]) -> StreamingResponse | FileResponse:
+    """Download MMIF files from S3 and return a zip archive of them."""
+    import zipfile
+
+    import boto3
+    from sqlmodel import Session, select
+
+    from chowda.config import MMIF_S3_BUCKET_NAME
+    from chowda.db import engine
+    from chowda.models import MMIF
+
+    s3 = boto3.client('s3')
+    downloaded_mmif_files = []
+    download_errors = {}
+    with Session(engine) as db:
+        mmifs = db.exec(select(MMIF).where(MMIF.id.in_(pks)))
+
+        for mmif in mmifs:
+            mmif_tmp_location = f'{tmp_dir.name}/{mmif.mmif_location.split("/")[-1]}'
+            try:
+                s3.download_file(
+                    MMIF_S3_BUCKET_NAME, mmif.mmif_location, mmif_tmp_location
+                )
+                downloaded_mmif_files.append(mmif_tmp_location)
+            except Exception as ex:
+                # TODO: log errors and notify user of them
+                download_errors[mmif.mmif_location] = ex
+    if download_errors:
+        from chowda.exceptions import DownloadException
+
+        raise DownloadException(download_errors)
+    if len(pks) == 1:
+        # If only one batch was downloaded, return the file directly
+        return FileResponse(
+            downloaded_mmif_files[0],
+            media_type='application/octet-stream',
+            filename=downloaded_mmif_files[0].split('/')[-1],
+        )
+
+    # Create zip archive
+    import io
+    from datetime import datetime
+
+    current_datetime = datetime.now().strftime('%Y-%m-%d_%H%M%S')
+    # TODO: include batch count, or names in the download file name?
+    zip_filename = f'chowda_mmif_download.{current_datetime}.zip'
+    zip_buffer = io.BytesIO()
+    with zipfile.ZipFile(zip_buffer, 'w') as zip:
+        for downloaded_mmif_file in downloaded_mmif_files:
+            filename = downloaded_mmif_file.split('/')[-1]
+            zip.write(downloaded_mmif_file, arcname=filename)
+
+    # Reset buffer to beginning of stream
+    zip_buffer.seek(0)
+
+    # Send download response
+    return StreamingResponse(
+        zip_buffer,
+        headers={'Content-Disposition': f'attachment; filename="{zip_filename}"'},
+        media_type='application/zip',
+    )

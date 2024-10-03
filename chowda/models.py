@@ -313,6 +313,7 @@ class MMIF(SQLModel, table=True):
         metaflow_run: MetaflowRun
         batch_output: Batch that generated this MMIF
         batch_inputs: Batch that uses this as an input
+        mmif_location: S3 URL of the mmif
     """
 
     __tablename__ = 'mmifs'
