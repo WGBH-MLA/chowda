@@ -1119,6 +1119,17 @@
             </div>
           </td>
         </tr>
+        <tr>
+          <td><code><span title="chowda.models.MMIF.mmif_location">mmif_location</span></code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[str]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>S3 URL of the mmif</p>
+            </div>
+          </td>
+        </tr>
     </tbody>
   </table>
 
@@ -1176,7 +1187,8 @@
 <span class="normal">353</span>
 <span class="normal">354</span>
 <span class="normal">355</span>
-<span class="normal">356</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MMIF</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="normal">356</span>
+<span class="normal">357</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MMIF</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;MMIF model</span>
 
 <span class="sd">    Attributes:</span>
@@ -1188,6 +1200,7 @@
 <span class="sd">        metaflow_run: MetaflowRun</span>
 <span class="sd">        batch_output: Batch that generated this MMIF</span>
 <span class="sd">        batch_inputs: Batch that uses this as an input</span>
+<span class="sd">        mmif_location: S3 URL of the mmif</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;mmifs&#39;</span>
