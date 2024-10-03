@@ -33,7 +33,7 @@ documentation = 'https://WGBH-MLA.github.io/chowda/'
 repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project.optional-dependencies]
-production = ["uvicorn[standard]~=0.31", "gunicorn~=23.0"]
+production = ["uvicorn[standard]<0.31", "gunicorn~=23.0"]
 test = [
     "factory-boy~=3.3",
     "pytest~=8.3",
@@ -99,7 +99,7 @@ version = { source = 'file', path = 'chowda/_version.py' }
 includes = []
 
 [tool.pdm.dev-dependencies]
-dev = ["uvicorn~=0.31", "black~=24.8", "ruff~=0.6", "pre-commit~=3.5"]
+dev = ["uvicorn<0.31", "black~=24.8", "ruff~=0.6", "pre-commit~=3.5"]
 docs = [
     "mkdocs~=1.6",
     "mkdocs-material~=9.5",
