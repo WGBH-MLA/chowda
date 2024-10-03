@@ -25,7 +25,7 @@ async def lifespan():
     await sync_history()
 
 
-@cache(namespace='sonyci', expire=15 * 60)
+@cache(namespace='sonyci', expire=30)
 async def sync_history(n: int = 3) -> Dict[str, Any]:
     try:
         return [
