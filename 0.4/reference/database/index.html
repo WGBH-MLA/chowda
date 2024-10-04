@@ -14,7 +14,7 @@
         <link rel="prev" href="../app/">
       
       
-        <link rel="next" href="../models/">
+        <link rel="next" href="../deploy/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -265,7 +265,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../examples/__init__/" class="md-tabs__link">
+        <a href="../../examples/Argo/" class="md-tabs__link">
           
   
     
@@ -412,6 +412,8 @@
       
         
       
+        
+      
     
     
       
@@ -446,6 +448,27 @@
             Examples
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/Argo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Argo Events
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -572,6 +595,8 @@
       
         
           
+        
+      
         
       
         
@@ -757,6 +782,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../deploy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deploy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../models/" class="md-nav__link">
         
   
@@ -802,27 +848,30 @@
 <h3 id="creating-migrations">Creating migrations</h3>
 <p>Chowda's models inherit from <code>SQLModel</code> and if the <code>table=True</code> parameter is passed, then the model is for representing data stored in a database table. For these models to work correctly, the underlying table needs to match the <code>SQLModel</code> definition in python code, and this is where migrations come in.</p>
 <p>Alembic can detect the differences between Chowda's models and the underlying databse schema and then generate a migration script to change the database to match the model.</p>
-<p>After you have made the changes to your model classes, run the following command from the command line:
+<p>After you have made the changes to your model classes, run the following command from the command line:</p>
 <div class="highlight"><pre><span></span><code>alembic<span class="w"> </span>revision<span class="w"> </span>--autogenerate<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;short_desc_of_model_changes&quot;</span>
 </code></pre></div>
-This will generate a migration script under <code>migrations/revision</code>. The script name will be an random ID for the revision followed by the value of the <code>-m</code> flag, e.g.  <code>480b8fe17026_short_desc_of_db_change.py</code>.</p>
-<p>NOTE: After a migration is run, the revision ID in the file name is stored in the <code>alembic_version</code> table that is added to the database when Alembic is first installed. This table is what tells Alembic whether there are migrations to run or not.</p>
+<p>This will generate a migration script under <code>migrations/revision</code>. The script name will be an random ID for the revision followed by the value of the <code>-m</code> flag, e.g. <code>480b8fe17026_short_desc_of_db_change.py</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Migration files</p>
+<p>After a migration is run, the revision ID in the file name is stored in the <code>alembic_version</code> table that is added to the database when Alembic is first installed. This table is what tells Alembic whether there are migrations to run or not.</p>
+</div>
 <h3 id="checking-to-see-if-there-are-any-migrations-to-run">Checking to see if there are any migrations to run</h3>
-<p>From the command line run:
+<p>From the command line run:</p>
 <div class="highlight"><pre><span></span><code>alembic<span class="w"> </span>check
 </code></pre></div>
-If there are no migrations to run, you should see:
+<p>If there are no migrations to run, you should see:</p>
 <div class="highlight"><pre><span></span><code>No<span class="w"> </span>new<span class="w"> </span>upgrade<span class="w"> </span>operations<span class="w"> </span>detected.
 </code></pre></div>
-If there are migrations to run, you should see:
+<p>If there are migrations to run, you should see:</p>
 <div class="highlight"><pre><span></span><code>ERROR<span class="w"> </span><span class="o">[</span>alembic.util.messaging<span class="o">]</span><span class="w"> </span>Target<span class="w"> </span>database<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>up<span class="w"> </span>to<span class="w"> </span>date.
 <span class="w">  </span>FAILED:<span class="w"> </span>Target<span class="w"> </span>database<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>up<span class="w"> </span>to<span class="w"> </span>date.
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="run-migrations">Run migrations</h3>
-<p>From the command line run:
+<p>From the command line run:</p>
 <div class="highlight"><pre><span></span><code>alembic<span class="w"> </span>upgrade<span class="w"> </span>head
 </code></pre></div>
-This will run all migrations that haven't yet been run. If there were no migrations that needed to run, nothing will happen.</p>
+<p>This will run all migrations that haven't yet been run. If there were no migrations that needed to run, nothing will happen.</p>
 
 
 
