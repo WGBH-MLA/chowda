@@ -97,6 +97,15 @@ class MMIFBatchInputLink(SQLModel, table=True):
     )
 
 
+class MediaFileTranscriptLink(SQLModel, table=True):
+    media_file_id: Optional[str] = Field(
+        default=None, foreign_key='media_files.guid', primary_key=True, index=True
+    )
+    transcript_id: Optional[int] = Field(
+        default=None, foreign_key='transcripts.id', primary_key=True, index=True
+    )
+
+
 class MediaFile(SQLModel, table=True):
     """Media file model
 
@@ -107,6 +116,7 @@ class MediaFile(SQLModel, table=True):
         batches: List of Batches
         metaflow_runs: List of MetaflowRuns
         mmifs: List of MMIFs
+        transcripts: List of Transcripts
     """
 
     __tablename__ = 'media_files'
@@ -120,6 +130,7 @@ class MediaFile(SQLModel, table=True):
         back_populates='media_files', link_model=MediaFileBatchLink
     )
     metaflow_runs: List['MetaflowRun'] = Relationship(back_populates='media_file')
+    transcripts: List['Transcript'] = Relationship(back_populates='media_file')
 
     def metaflow_runs_for_batch(self, batch_id: int):
         return [
@@ -355,3 +366,30 @@ class MMIF(SQLModel, table=True):
             else self.id
         )
         return f'<span>{text}</span>'
+
+
+class Transcript(SQLModel, table=True):
+    """Transcript model
+
+    Attributes:
+        id: Primary key
+        created_at: Creation timestamp
+        media_file_id: GUID
+        media_file: MediaFile
+    """
+
+    __tablename__ = 'transcripts'
+    id: Optional[int] = Field(primary_key=True, default=None, index=True)
+    created_at: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), default=datetime.utcnow)
+    )
+    media_file_id: Optional[str] = Field(
+        default=None, foreign_key='media_files.guid', index=True
+    )
+    media_file: Optional[MediaFile] = Relationship(back_populates='transcripts')
+
+    async def __admin_repr__(self, request: Request):
+        return self.id
+
+    async def __admin_select2_repr__(self, request: Request) -> str:
+        return f'<span>{self.id}</span>'
