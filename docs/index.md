@@ -4,7 +4,7 @@ A CLAMS processing app
 
 ## Install
 
-Install instructions can be found on the [install page](install)
+Install instructions can be found on the [install page](install.md)
 
 ## Reference
 

@@ -1,14 +1,15 @@
 # Install
 
-
-### Clone the repository::
+### Clone the repository
 
 ```shell
 git clone https://github.com/WGBH-MLA/chowda.git
 cd chowda
 ```
 
-### Install with PDM (Recommended)
+### Install Chowda
+
+#### Option 1: Install with PDM (Recommended)
 
 [PDM](https://pdm.fming.dev/) is used as the packaging manager. It can be installed with `pip install pdm`.
 
@@ -24,9 +25,19 @@ Activate your virtual environment
 $(pdm venv activate)
 ```
 
-**Note**: `pdm venv activate` outputs the command needed to activate your virtual environment. The `$()` wrapper evaluates it in your current shell context.
+???+ info "$() wrapper"
 
-### Install with venv
+    **Note**: `pdm venv activate` outputs the command needed to activate your virtual environment. The `$()` wrapper evaluates it in your current shell context.
+
+???+ info "Deactivate the virtual environment"
+
+    To return to your normal shell environment, run:
+
+    ```shell
+    deactivate
+    ```
+
+#### Option 2: Install with pip
 
 If PDM is not available, it can also be installed with pip. It is recommeneded to install to a virtual environment using `venv`:
 
@@ -41,7 +52,8 @@ Install the package
 pip install .
 ```
 
-### Create PostgreSQL database and start the database server
+### Create database
+
 Chowda needs to have a PostgreSQL server running and database named `chowda-development` (tests use a database `chowda-test`).
 
 There are many ways to do this, but an easy way is to use docker. After starting Docker on your local machine, the following command will start a container using the `postgres` image in Dockerhub.
@@ -49,40 +61,51 @@ There are many ways to do this, but an easy way is to use docker. After starting
 ```shell
 docker run --rm --name pg -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=chowda-development postgres
 ```
+
 #### Command explained
-* `docker run` runs a docker container
-* `--rm` option will remove the docker container once it exits.
-* `--name pg` will name the running container `pg` so it can be identified when listing running containers.
-* `-p 5432:5432` forwards port 5432 on your local machine to port 5432 (default postgres port) on the running container.
-* `-e POSTGRES_USER=postgres` sets ENV var on container for the postgres username
-* `-e POSTGRES_PASSWORD=postgres` sets ENV var on container for postgres password
-   
-    !!! note
 
-        Not a secure password, but that's ok for test and development environments.
+- `docker run` runs a docker container
+- `--rm` option will remove the docker container once it exits.
+- `--name pg` will name the running container `pg` so it can be identified when listing running containers.
+- `-p 5432:5432` forwards port 5432 on your local machine to port 5432 (default postgres port) on the running container.
+- `-e POSTGRES_USER=postgres` sets ENV var on container for the postgres username
 
-* `-e POSTGRES_DB=chowda-development` sets ENV var on container for the name of postgres database to use
-   
-    !!! note
+!!! note inline end "Security"
 
-        The `postgres` image will create the database when starting the container.
+    Not a secure password, but that's ok for test and development environments.
 
-* `postgres` is the name of the Docker image to use when starting the container.
+- `-e POSTGRES_PASSWORD=postgres` sets ENV var on container for postgres password
 
-!!! note
+!!! note inline end "`DB_URL` environment variable"
 
     the environment variables values in the command must match the values that are part of the `DB_URL` environment variable specified in `.env.development`.
 
+- `-e POSTGRES_DB=chowda-development` sets ENV var on container for the name of postgres database to use
 
-## Run database migrations with Alembic
+!!! note inline end "Database creation in docker"
+
+    The `postgres` image will create the database when starting the container.
+
+- `postgres` is the name of the Docker image to use when starting the container.
+
+## Apply database migrations
+
 ```shell
 alembic upgrade head
 ```
 
 ## Run the application
 
+The development server can be run with
+
 ```shell
-uvicorn chowda:app --reload
+pdm dev
+```
+
+Which is a shortcut for:
+
+```shell
+uvicorn chowda.app:app --reload
 ```
 
 Visit: [localhost:8000](http://localhost:8000/)
@@ -97,27 +120,24 @@ python tests/seeds.py
 
 **Optional:** Customize the number of records created by changing the `num_*` variables in the `seed` function.
 
-
 ## Running tests
-Chowda uses `pytest` for testing.
+
+Chowda uses `pytest` for testing. Simply run:
+
+```shell
+pdm test
+```
+
+Which is the same as running:
+
+```shell
+pytest
+```
 
 ### Creating the test database and running a postgres server
-This is done the same way as in the development environment (see above), only the database name is changed.
-```shell
-docker run --rm --name pg -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=chowda-development postgres
-```
 
-
-### Running the tests from terminal
-```shell
-pytest --vcr-record=none --nbmake
-```
-
-
-## Deactivate the virtual environment
-
-Run the `deactivate` command to return to your normal shell environment.
+For the tests to run successfully, it needs a dedicated test database. This can be done with docker, with the following command:
 
 ```shell
-deactivate
+docker run --rm --name pg -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=chowda-test postgres
 ```
