@@ -1,7 +1,8 @@
 from sqlmodel import SQLModel
 
 from chowda.models import Batch, ClamsApp, MediaFile
-from tests.factories import (
+
+from .factories import (
     BatchFactory,
     ClamsAppFactory,
     CollectionFactory,

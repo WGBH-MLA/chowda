@@ -1,15 +1,12 @@
 from datetime import datetime, timedelta
 from typing import Any, ClassVar, Dict, List, Set
 
-from fastapi import status
-from metaflow import Flow
-from metaflow.exception import MetaflowNotFound
 from metaflow.integrations import ArgoEvent
 from multipart.exceptions import MultipartParseError
 from sqlmodel import Session, select
 from starlette.datastructures import FormData
 from starlette.requests import Request
-from starlette.responses import RedirectResponse, Response
+from starlette.responses import Response
 from starlette.templating import Jinja2Templates
 from starlette_admin import CustomView, action, row_action
 from starlette_admin._types import RequestAction
@@ -35,7 +32,8 @@ from chowda.fields import (
     SuccessfulField,
 )
 from chowda.models import MMIF, Batch, Collection, MediaFile
-from chowda.utils import get_duplicates, validate_media_file_guids, yes
+from chowda.routers.sony_ci import sync_history
+from chowda.utils import download_mmif, get_duplicates, validate_media_file_guids, yes
 from templates import filters  # noqa: F401
 
 
@@ -432,76 +430,25 @@ class BatchView(ClammerModelView):
     async def download_mmif(
         self, request: Request, pks: list[int | str] | int | str
     ) -> str:
-        """Create a new batch from the selected batch"""
-        import zipfile
-
         if not isinstance(pks, list):
             pks = [pks]
-        from tempfile import TemporaryDirectory
 
-        import boto3
-
-        from chowda.config import MMIF_S3_BUCKET_NAME
-
+        with Session(engine) as db:
+            # Get all of the MMIF S3 locations from the database.
+            batches = db.exec(select(Batch).where(Batch.id.in_(pks))).all()
+            all_mmif_pks = [mmif.id for batch in batches for mmif in batch.output_mmifs]
         try:
-            with Session(engine) as db:
-                # Get all of the MMIF S3 locations from the database.
-                batches = db.exec(select(Batch).where(Batch.id.in_(pks))).all()
-                all_mmif_locations = [
-                    mmif.mmif_location
-                    for batch in batches
-                    for mmif in batch.output_mmifs
-                ]
-
-            # Download files from S3
-            s3 = boto3.client('s3')
-            downloaded_mmif_files = []
-            tmp_dir = TemporaryDirectory()
-            download_errors = {}
-            for mmif_location in all_mmif_locations:
-                mmif_tmp_location = f'{tmp_dir.name}/{mmif_location.split("/")[-1]}'
-                try:
-                    s3.download_file(
-                        MMIF_S3_BUCKET_NAME, mmif_location, mmif_tmp_location
-                    )
-                    downloaded_mmif_files.append(mmif_tmp_location)
-                except Exception as ex:
-                    # TODO: log errors and notify user of them
-                    download_errors[mmif_location] = ex
-
-            # Create zip archive
-            import io
-            from datetime import datetime
-
-            from starlette.responses import StreamingResponse
-
-            current_datetime = datetime.now().strftime('%Y-%m-%d_%H%M%S')
-            # TODO: include batch count, or names in the download file name?
-            zip_filename = f'chowda_mmif_download.{current_datetime}.zip'
-            zip_buffer = io.BytesIO()
-            with zipfile.ZipFile(zip_buffer, 'w') as zip:
-                for downloaded_mmif_file in downloaded_mmif_files:
-                    filename = downloaded_mmif_file.split('/')[-1]
-                    zip.write(downloaded_mmif_file, arcname=filename)
-
-            # Reset buffer to beginning of stream
-            zip_buffer.seek(0)
-
-            # Send download response
-            return StreamingResponse(
-                zip_buffer,
-                headers={
-                    'Content-Disposition': f'attachment; filename="{zip_filename}"'
-                },
-                media_type='application/zip',
-            )
+            return download_mmif(all_mmif_pks)
         except Exception as error:
             # TODO: pop 'error' out of session and display with javascript
             # dangrerAlert() when admin/batch/list renders.
             # See statics/js/alerts.js from starlette-admin.
+            from fastapi import status
+            from starlette.responses import RedirectResponse
+
             request.session['error'] = f'{error!s}'
             return RedirectResponse(
-                request.url_for('admin:list', identity='batch'),
+                request.url_for('admin:list', identity=request.path_params['identity']),
                 status_code=status.HTTP_303_SEE_OTHER,
             )
 
@@ -599,21 +546,14 @@ class PipelineView(ClammerModelView):
 
 
 class DashboardView(CustomView):
-    def sync_history(self) -> Dict[str, Any]:
-        try:
-            return [
-                {'created_at': sync_run.created_at, 'successful': sync_run.successful}
-                for sync_run in list(Flow('IngestFlow'))[:5]
-            ]
-        except MetaflowNotFound:
-            return []
 
     async def render(self, request: Request, templates: Jinja2Templates) -> Response:
-        history = self.sync_history()
+        history = await sync_history()
         user = get_oauth_user(request)
-        sync_disabled = datetime.now() - history[0]['created_at'] < timedelta(
-            minutes=15
-        )
+        if history:
+            last_sync = history[0]['created_at']
+            delta = datetime.now(last_sync.tzinfo) - last_sync
+            sync_disabled = delta < timedelta(minutes=15)
         title = self.title(request)
         return templates.TemplateResponse(
             'dashboard.html',
@@ -674,7 +614,11 @@ class MMIFView(ChowdaModelView):
         'mmif_location',
         'created_at',
     ]
-    actions: ClassVar[List[str]] = ['add_to_new_batch', 'add_to_existing_batch']
+    actions: ClassVar[List[str]] = [
+        'add_to_new_batch',
+        'add_to_existing_batch',
+        'download_mmif',
+    ]
 
     @row_action(
         name='add_to_new_batch',
@@ -816,3 +760,28 @@ class MMIFView(ChowdaModelView):
                 return f'Added {len(pks)} MMIFs to Batch {batch.id}'
         except Exception as error:
             raise ActionFailed(f'{error!s}') from error
+
+    @action(
+        name='download_mmif',
+        text='Download MMIF',
+        confirmation='Download MMIF JSON for all these MMIFs?',
+        icon_class='fa fa-download',
+        submit_btn_text=yes(),
+        submit_btn_class='btn-outline-primary',
+        custom_response=True,
+    )
+    @row_action(
+        name='download_mmif',
+        text='Download MMIF',
+        confirmation='Download MMIF JSON for this MMIF?',
+        icon_class='fa fa-download',
+        submit_btn_text=yes(),
+        submit_btn_class='btn-outline-primary',
+        custom_response=True,
+    )
+    async def download_mmif(
+        self, request: Request, pks: list[int | str] | int | str
+    ) -> str:
+        if not isinstance(pks, list):
+            pks = [pks]
+        return download_mmif(pks)

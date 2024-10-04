@@ -1,13 +1,14 @@
-from locust import HttpUser, task
 from random import choice, randint
+
 from factories import (
-    UserFactory,
-    MediaFileFactory,
-    CollectionFactory,
-    ClamsAppFactory,
-    PipelineFactory,
     BatchFactory,
+    ClamsAppFactory,
+    CollectionFactory,
+    MediaFileFactory,
+    PipelineFactory,
+    UserFactory,
 )
+from locust import HttpUser, task
 
 models = {
     'user': UserFactory,

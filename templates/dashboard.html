@@ -22,56 +22,75 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <form action="/dashboard/sync" method="POST">
-                    <div class="card-header">
-                        <div class="container-fluid">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h3 class="card-title">Sync History</h3>
-                            </div>
+                <div class="card-header">
+                    <div class="container-fluid">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="card-title">Sync History</h3>
                         </div>
                     </div>
-                    <div class="card-body border-bottom py-3">
-                        <div class="mb-3">
-                            {% if sync_history|length==0 %}
+                </div>
+                <div class="card-body border-bottom py-3">
+                    <div class="mb-3">
+                        {% if sync_history|length==0 %}
                             <h4>No sync history was found</h4>
-                            {% else %}
-                            <div class="table-responsive">
-                                <table class="table table-vcenter">
-                                    <thead>
-                                        <tr>
-                                            <th>Date / Time</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for sync in sync_history %}
-                                        <tr>
+                        {% else %}
+                        <div class="table-responsive">
+                            <table class="table table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th>Run ID</th>
+                                        <th>Started</th>
+                                        <th>Finished</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for sync in sync_history %}
+                                        {% set status = 'in_progress' if not sync['finished'] else 'successful' if sync['successful'] else 'failed' %}
+                                        {% set color = 'warning' if status == 'in_progress' else 'success' if status == 'successful' else 'danger' %}
+                                        <tr class="table-{{ color }}">
+                                            <td>
+                                                {% with link = sync['link'] %}
+                                                    {% include 'displays/external_link_field.html' %}
+                                                {% endwith %}
                                             <td>
                                                 {{ sync['created_at'].strftime('%Y-%m-%d %I:%M:%S %p') }}
                                             </td>
                                             <td>
-                                                {{ 'Success' if sync['successful'] else 'Failed'}}
+                                                {% if sync['finished_at'] %}
+                                                    {{ sync['finished_at'].strftime('%Y-%m-%d %I:%M:%S %p') }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if status == 'successful' %}
+                                                    {% include 'icons/successful.html' %}
+                                                {% elif status == 'in_progress' %}
+                                                    {% include 'icons/in_progress.html' %}
+                                                {% else %}
+                                                    {% include 'icons/failed.html' %}
+                                                {% endif %}
                                             </td>
                                         </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                            {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
+                        {% endif %}
                     </div>
-                    {% if user.is_admin %}
-                    <div class="card-footer text-black">
-                        <div class="btn-list ms-auto justify-content-end">
-                            <button type="submit" name="_add_another" class="btn" {{ 'disabled' if sync_disabled }}>
-                                <i class="fa-solid fa-rotate me-2">
-                                </i>
-                                {{ _("Sync Now")}}
-                            </button>
-                        </div>
+                </div>
+                {% if user.is_admin %}
+                <div class="card-footer text-black">
+                    <form action="/dashboard/sync" method="POST">
+                    <div class="btn-list ms-auto justify-content-end">
+                        <button type="submit" name="_add_another" class="btn btn-secondary" {{ 'disabled' if sync_disabled }} onclick="clickSyncButton(this)">
+                            <i class="fa-solid fa-rotate me-2">
+                            </i>
+                            {{ _("Sync Now")}}
+                        </button>
+                    </form>
                     </div>
-                    {% endif %}
-                </form>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -82,4 +101,10 @@
 {% endblock %}
 {% block script %}
 {{ super() }}
+<script>
+function clickSyncButton(element) {
+    element.classList.add('disabled')
+    element.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Syncing...'
+}
+</script>
 {% endblock %}
