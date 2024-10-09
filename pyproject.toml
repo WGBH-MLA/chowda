@@ -24,13 +24,16 @@ dependencies = [
     "authlib~=1.3",
     "itsdangerous~=2.2",
     "httpx~=0.27",
-    "fastapi-cache2>=0.2.1",
+    "fastapi-cache2~=0.2",
     "rich~=13.9",
     "pyjwt~=2.9",
 ]
 
 [project.optional-dependencies]
-production = ["uvicorn[standard]<0.31", "gunicorn~=23.0"]
+production = [
+    "uvicorn[standard]<0.31",
+    "gunicorn~=23.0",
+]
 test = [
     "factory-boy~=3.3",
     "pytest~=8.3",
@@ -46,7 +49,10 @@ test = [
     "pytest-asyncio~=0.24",
     "trio~=0.26",
 ]
-locust = ["locust~=2.25", "pydantic-factories~=1.17"]
+locust = [
+    "locust~=2.25",
+    "pydantic-factories~=1.17",
+]
 development = ["kubernetes~=31.0"]
 
 [tool.black]
@@ -96,7 +102,12 @@ version = { source = 'file', path = 'chowda/_version.py' }
 includes = []
 
 [tool.pdm.dev-dependencies]
-dev = ["uvicorn<0.31", "black~=24.8", "ruff~=0.6", "pre-commit~=3.5"]
+dev = [
+    "uvicorn<0.31",
+    "black~=24.8",
+    "ruff~=0.6",
+    "pre-commit~=3.5",
+]
 docs = [
     "mkdocs~=1.6",
     "mkdocs-material~=9.5",
