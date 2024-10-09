@@ -31,7 +31,7 @@ dependencies = [
 
 [project.optional-dependencies]
 production = [
-    "uvicorn[standard]~=0.31",
+    "uvicorn[standard]<0.31",
     "gunicorn~=23.0",
 ]
 test = [
@@ -103,7 +103,7 @@ includes = []
 
 [tool.pdm.dev-dependencies]
 dev = [
-    "uvicorn~=0.31",
+    "uvicorn<0.31",
     "black~=24.8",
     "ruff~=0.6",
     "pre-commit~=3.5",
