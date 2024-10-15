@@ -121,7 +121,7 @@ docs = [
 dev = 'uvicorn chowda.app:app --reload'
 docs = 'mkdocs serve'
 format = 'black -S .'
-lint = 'ruff .'
+lint = 'ruff check --fix .'
 makemigrations = { shell = 'read -p "Briefly describe this migration: " MESSAGE ; alembic revision --autogenerate -m "$MESSAGE"' }
 migrate = 'alembic upgrade head'
 seed = 'python tests/seeds.py'
