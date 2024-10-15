@@ -31,7 +31,7 @@ from chowda.fields import (
     SonyCiAssetThumbnail,
     SuccessfulField,
 )
-from chowda.models import MMIF, Batch, Collection, MediaFile
+from chowda.models import MMIF, Batch, Collection, MediaFile, Transcript
 from chowda.routers.sony_ci import sync_history
 from chowda.utils import download_mmif, get_duplicates, validate_media_file_guids, yes
 from templates import filters  # noqa: F401
@@ -785,3 +785,10 @@ class MMIFView(ChowdaModelView):
         if not isinstance(pks, list):
             pks = [pks]
         return download_mmif(pks)
+
+
+class TranscriptView(ClammerModelView):
+    fields: ClassVar[List[Any]] = [
+        'media_file',
+        'created_at',
+    ]

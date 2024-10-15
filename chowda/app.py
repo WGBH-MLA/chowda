@@ -26,6 +26,7 @@ from chowda.models import (
     Pipeline,
     SonyCiAsset,
     User,
+    Transcript,
 )
 from chowda.routers.dashboard import dashboard
 from chowda.views import (
@@ -39,6 +40,7 @@ from chowda.views import (
     PipelineView,
     SonyCiAssetView,
     UserView,
+    TranscriptView,
 )
 
 app = FastAPI(
@@ -81,6 +83,7 @@ admin.add_view(PipelineView(Pipeline, icon='fa fa-boxes-stacked'))
 admin.add_view(UserView(User, icon='fa fa-users'))
 admin.add_view(MetaflowRunView(MetaflowRun, icon='fa fa-person-running'))
 admin.add_view(MMIFView(MMIF, icon='fa fa-person-running'))
+admin.add_view(TranscriptView(Transcript, icon='fa fa-person-running'))
 
 
 # Mount admin to app
