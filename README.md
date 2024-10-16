@@ -6,6 +6,10 @@
 
 CLAMS processing app
 
+## App
+
+Application available at [chowda.wgbh-mla.org](https://chowda.wgbh-mla.org/)
+
 ## Documentation
 
 Visit the [documentation](https://wgbh-mla.github.io/chowda/) for install and usage instructions.
