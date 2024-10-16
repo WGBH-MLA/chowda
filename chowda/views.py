@@ -785,3 +785,10 @@ class MMIFView(ChowdaModelView):
         if not isinstance(pks, list):
             pks = [pks]
         return download_mmif(pks)
+
+
+class TranscriptView(ClammerModelView):
+    fields: ClassVar[List[Any]] = [
+        'media_file',
+        'created_at',
+    ]
