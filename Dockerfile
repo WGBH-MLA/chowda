@@ -23,7 +23,7 @@ FROM base as dev
 # Sync dependencies
 RUN uv sync
 # Start dev server.
-CMD uvicorn chowda.app:app --host 0.0.0.0 --reload --log-level debug
+CMD uv run uvicorn chowda.app:app --host 0.0.0.0 --reload --log-level debug
 
 
 ###########################
@@ -35,14 +35,14 @@ COPY tests tests
 # Install test dependencies
 RUN uv sync -G test
 # Run the tests
-CMD pytest -v -n auto
+CMD uv run pytest -v -n auto
 
 
 ###########################
 # 'locust' build stage for load testing
 ############################
 FROM test as locust
-RUN uv sync -G locust
+RUN uv sync --extra locust
 CMD uv run locust
 
 
@@ -53,7 +53,7 @@ FROM base as build
 RUN apt update && apt install -y gcc libpq-dev git
 
 # Sync production dependencies and install them into a virtual environment
-RUN uv sync -G production --no-dev
+RUN uv sync --extra production --no-dev
 
 ###########################
 # 'production' final production image
