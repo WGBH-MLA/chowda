@@ -82,7 +82,7 @@ def unverified_access_token(request: Request) -> str:
 
 
 def jwt_signing_key(
-    unverified_access_token: Annotated[str, Depends(unverified_access_token)]
+    unverified_access_token: Annotated[str, Depends(unverified_access_token)],
 ) -> str:
     """Get the JWT signing key from the JWKS URL."""
     from jwt import PyJWKClient
