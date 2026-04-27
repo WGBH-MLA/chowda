@@ -10,7 +10,7 @@ description = 'A CLAMS processing application'
 authors = [{ name = 'WGBH-MLA', email = 'ryan_harbert@wgbh.org' }]
 requires-python = '>=3.10,<4.0'
 readme = 'README.md'
-license = { text = 'MIT' }
+license = "MIT"
 dependencies = [
     "fastapi~=0.115",
     "starlette-admin~=0.14",
@@ -65,6 +65,7 @@ docs = [
 locust = ["locust~=2.25", "pydantic-factories~=1.17"]
 development = ["kubernetes~=35.0"]
 
+
 [tool.black]
 extend-exclude = 'migrations'
 
@@ -114,5 +115,9 @@ select = [
 # migrate = 'alembic upgrade head'
 # test = 'pytest'
 
-[tool.setuptools.packages.find]
-include = ['chowda', 'tests']
+[build-system]
+requires = ["uv_build>=0.9.11,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = ""
