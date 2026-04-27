@@ -5,7 +5,7 @@ repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project]
 name = 'chowda'
-dynamic = ['version']
+version = "0.6.0"
 description = 'A CLAMS processing application'
 authors = [{ name = 'WGBH-MLA', email = 'ryan_harbert@wgbh.org' }]
 requires-python = '>=3.10,<4.0'
@@ -21,14 +21,20 @@ dependencies = [
     "metaflow~=2.19",
     "alembic~=1.13",
     "python-dotenv~=1.0",
-    "authlib~=1.3",
     "itsdangerous~=2.2",
     "httpx~=0.27",
     "fastapi-cache2~=0.2",
-    "rich~=14.3",
     "pyjwt~=2.9",
+    "authlib>=1.7.0",
 ]
-
+[dependency-groups]
+dev = [
+    "uvicorn~=0.32",
+    "black>=26.3.1",
+    "ruff>=0.15.12",
+    "pre-commit>=4.6.0",
+    "rich>=15.0.0",
+]
 [project.optional-dependencies]
 production = ["uvicorn[standard]~=0.32", "gunicorn~=25.0"]
 test = [
@@ -46,6 +52,16 @@ test = [
     "pytest-asyncio~=1.3",
     "trio~=0.26",
 ]
+
+docs = [
+    "mkdocs~=1.6",
+    "mkdocs-material~=9.5",
+    "mkdocs-git-revision-date-localized-plugin~=1.2",
+    "mike~=2.1",
+    "mkdocstrings[python]~=0.26",
+    "mkdocs-jupyter~=0.24",
+]
+
 locust = ["locust~=2.25", "pydantic-factories~=1.17"]
 development = ["kubernetes~=35.0"]
 
@@ -89,30 +105,14 @@ select = [
 
 ]
 
-[tool.pdm]
-version = { source = 'file', path = 'chowda/_version.py' }
 
-[tool.pdm.build]
-includes = []
-
-[tool.pdm.dev-dependencies]
-dev = ["uvicorn~=0.32", "black~=24.8", "ruff~=0.6", "pre-commit~=3.5"]
-docs = [
-    "mkdocs~=1.6",
-    "mkdocs-material~=9.5",
-    "mkdocs-git-revision-date-localized-plugin~=1.2",
-    "mike~=2.1",
-    "mkdocstrings[python]~=0.26",
-    "mkdocs-jupyter~=0.24",
-]
-
-[tool.pdm.scripts]
-dev = 'uvicorn chowda.app:app --reload'
-docs = 'mkdocs serve'
-format = 'black -S .'
-lint = 'ruff .'
-migrate = 'alembic upgrade head'
-test = 'pytest'
+[project.scripts]
+# dev = 'uvicorn chowda.app:app --reload'
+# docs = 'mkdocs serve'
+# format = 'black -S .'
+# lint = 'ruff .'
+# migrate = 'alembic upgrade head'
+# test = 'pytest'
 
 [tool.setuptools.packages.find]
 include = ['chowda', 'tests']
