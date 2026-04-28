@@ -550,16 +550,17 @@ class DashboardView(CustomView):
     async def render(self, request: Request, templates: Jinja2Templates) -> Response:
         history = await sync_history()
         user = get_oauth_user(request)
+        sync_disabled = False
         if history:
             last_sync = history[0]['created_at']
             delta = datetime.now(last_sync.tzinfo) - last_sync
             sync_disabled = delta < timedelta(minutes=15)
         title = self.title(request)
         return templates.TemplateResponse(
-            'dashboard.html',
-            {
-                'title' if title else None: title,
-                'request': request,
+            request,
+            name='dashboard.html',
+            context={
+                'title': title,
                 'user': user,
                 'sync_history': history,
                 'sync_disabled': sync_disabled,

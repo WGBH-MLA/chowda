@@ -1,0 +1,2 @@
+#!/bin/bash
+podman run --rm --name pg -itp 5432:5432 -e POSTGRES_DB=$POSTGRES_DB -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker.io/postgres:16-alpine

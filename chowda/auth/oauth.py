@@ -10,22 +10,28 @@ from starlette_admin import BaseAdmin
 from starlette_admin.auth import AdminUser, AuthMiddleware, AuthProvider
 
 from chowda.config import (
-    AUTH0_API_AUDIENCE,
-    AUTH0_CLIENT_ID,
-    AUTH0_CLIENT_SECRET,
-    AUTH0_DOMAIN,
+    AUTH_API_AUDIENCE,
+    AUTH_CLIENT_ID,
+    AUTH_CLIENT_SECRET,
+    AUTH_DOMAIN,
+    AUTH_METADATA_CONFIG,
+    AUTH_ACCESS_TOKEN_PATH,
+    AUTH_AUTHORIZATION_PATH,
+    AUTH_LOGOUT_PATH,
 )
 
 oauth = OAuth()
 oauth.register(
-    'auth0',
-    client_id=AUTH0_CLIENT_ID,
-    client_secret=AUTH0_CLIENT_SECRET,
+    'authentik',
+    client_id=AUTH_CLIENT_ID,
+    client_secret=AUTH_CLIENT_SECRET,
+    access_token_url=f'{AUTH_DOMAIN}/{AUTH_ACCESS_TOKEN_PATH}',
     client_kwargs={
         'scope': 'openid profile email',
     },
-    server_metadata_url=f'https://{AUTH0_DOMAIN}/.well-known/openid-configuration',
-    authorize_params={'audience': AUTH0_API_AUDIENCE},
+    server_metadata_url=f'{AUTH_DOMAIN}/{AUTH_METADATA_CONFIG}',
+    authorize_params={'audience': AUTH_API_AUDIENCE},
+    authorize_url=f'{AUTH_DOMAIN}/{AUTH_AUTHORIZATION_PATH}',
 )
 
 
@@ -45,25 +51,25 @@ class OAuthProvider(AuthProvider):
 
     async def render_login(self, request: Request, admin: BaseAdmin):
         """Override the default login behavior to implement custom logic."""
-        auth0 = oauth.create_client('auth0')
+        auth = oauth.authentik
         redirect_uri = request.url_for(
-            admin.route_name + ':authorize_auth0'
+            admin.route_name + ':authorize_auth'
         ).include_query_params(next=request.query_params.get('next'))
-        return await auth0.authorize_redirect(request, str(redirect_uri))
+        return await auth.authorize_redirect(request, str(redirect_uri))
 
     async def render_logout(self, request: Request, admin: BaseAdmin) -> Response:
         """Override the default logout to implement custom logic"""
         request.session.clear()
         return RedirectResponse(
-            url=URL(f'https://{AUTH0_DOMAIN}/v2/logout').include_query_params(
+            url=URL(f'{AUTH_DOMAIN}/{AUTH_LOGOUT_PATH}').include_query_params(
                 returnTo=request.url_for(admin.route_name + ':index'),
-                client_id=AUTH0_CLIENT_ID,
+                client_id=AUTH_CLIENT_ID,
             )
         )
 
     async def handle_auth_callback(self, request: Request):
-        auth0 = oauth.create_client('auth0')
-        token = await auth0.authorize_access_token(request)
+        auth = oauth.authentik
+        token = await auth.authorize_access_token(request)
         request.session.update({'user': token['userinfo']})
         return RedirectResponse(request.query_params.get('next'))
 
@@ -72,14 +78,14 @@ class OAuthProvider(AuthProvider):
         """add custom authentication callback route"""
         admin.routes.append(
             Route(
-                '/auth0/authorize',
+                '/auth/authorize',
                 self.handle_auth_callback,
                 methods=['GET'],
-                name='authorize_auth0',
+                name='authorize_auth',
             )
         )
 
     def get_middleware(self, admin: BaseAdmin) -> Middleware:
         return Middleware(
-            AuthMiddleware, provider=self, allow_paths=['/auth0/authorize']
+            AuthMiddleware, provider=self, allow_paths=['/auth/authorize']
         )

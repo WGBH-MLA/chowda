@@ -16,7 +16,7 @@ environ['CHOWDA_ENV'] = 'test'
 
 from chowda.app import app  # noqa: E402
 from chowda.auth.utils import jwt_signing_key  # noqa: E402
-from chowda.config import AUTH0_API_AUDIENCE  # noqa: E402
+from chowda.config import AUTH_API_AUDIENCE  # noqa: E402
 from chowda.db import init_db  # noqa: E402
 
 # Set CI_CONFIG to use ./test/ci.test.toml *only* if it's not already set. We need to be
@@ -96,7 +96,7 @@ def fake_access_token() -> Type[callable]:
             permissions = []
         jwt_decoded = {
             'permissions': permissions,
-            'aud': AUTH0_API_AUDIENCE,
+            'aud': AUTH_API_AUDIENCE,
             'sub': 'fake-api-subject',
         }
         return jwt.encode(jwt_decoded, fake_signing_key(), algorithm=algorithm)

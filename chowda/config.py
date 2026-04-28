@@ -13,12 +13,18 @@ DEBUG = bool(environ.get('DEBUG'))
 TEMPLATES_DIR = environ.get('TEMPLATES_DIR', 'templates')
 STATIC_DIR = environ.get('STATIC_DIR', 'static')
 
-AUTH0_CLIENT_ID = environ.get('AUTH0_CLIENT_ID')
-AUTH0_CLIENT_SECRET = environ.get('AUTH0_CLIENT_SECRET')
-AUTH0_DOMAIN = environ.get('AUTH0_DOMAIN')
-AUTH0_JWKS_URL = f'https://{AUTH0_DOMAIN}/.well-known/jwks.json'
-AUTH0_API_AUDIENCE = environ.get(
-    'AUTH0_API_AUDIENCE', 'https://chowda.wgbh-mla.org/api'
+AUTH_CLIENT_ID = environ.get('AUTH_CLIENT_ID')
+AUTH_CLIENT_SECRET = environ.get('AUTH_CLIENT_SECRET')
+AUTH_DOMAIN = environ.get('AUTH_DOMAIN')
+AUTH_JWKS_URL = f'https://{AUTH_DOMAIN}/.well-known/jwks.json'
+AUTH_API_AUDIENCE = environ.get('AUTH_API_AUDIENCE', 'https://chowda.wgbh-mla.org/api')
+AUTH_METADATA_CONFIG = environ.get(
+    'AUTH_METADATA_CONFIG', '.well-known/openid-configuration'
+)
+AUTH_LOGOUT_PATH = environ.get('AUTH_LOGOUT_PATH', 'v2/logout')
+AUTH_ACCESS_TOKEN_PATH = environ.get('AUTH_ACCESS_TOKEN_PATH', 'oauth/token')
+AUTH_AUTHORIZATION_PATH = environ.get(
+    'AUTH_AUTHORIZATION_PATH', '/login/oauth/authorize'
 )
 
 SECRET = environ.get('CHOWDA_SECRET')
