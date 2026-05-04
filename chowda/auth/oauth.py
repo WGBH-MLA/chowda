@@ -1,8 +1,6 @@
 from typing import Optional
-from urllib import request
 
 from authlib.integrations.starlette_client import OAuth
-from starlette.datastructures import URL
 from starlette.middleware import Middleware
 from starlette.requests import Request
 from starlette.responses import RedirectResponse, Response

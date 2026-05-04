@@ -5,7 +5,7 @@ on: [push, pull_request, merge_group, workflow_dispatch]
 jobs:
   tests:
     name: ⚗️ Application Tests
-    uses: WGBH-MLA/.github/.github/workflows/pytest.yml@v1
+    uses: WGBH-MLA/.github/.github/workflows/pytest-with-postgres.yml@v1
     secrets: inherit
     with:
       uv_args: --no-dev --extra test
