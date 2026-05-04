@@ -9,11 +9,12 @@
       "module": "uvicorn",
       "args": [
         "chowda.app:app",
-        "--reload",
         "--host",
         "0.0.0.0",
         "--log-level",
-        "debug"
+        "debug",
+        "--env-file",
+        ".env"
       ],
       "jinja": false,
       "justMyCode": false

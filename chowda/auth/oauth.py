@@ -1,4 +1,5 @@
 from typing import Optional
+from urllib import request
 
 from authlib.integrations.starlette_client import OAuth
 from starlette.datastructures import URL
@@ -10,14 +11,9 @@ from starlette_admin import BaseAdmin
 from starlette_admin.auth import AdminUser, AuthMiddleware, AuthProvider
 
 from chowda.config import (
-    AUTH_API_AUDIENCE,
     AUTH_CLIENT_ID,
     AUTH_CLIENT_SECRET,
-    AUTH_DOMAIN,
-    AUTH_METADATA_CONFIG,
-    AUTH_ACCESS_TOKEN_PATH,
-    AUTH_AUTHORIZATION_PATH,
-    AUTH_LOGOUT_PATH,
+    AUTH_OPENID_URL,
 )
 
 oauth = OAuth()
@@ -25,13 +21,10 @@ oauth.register(
     'authentik',
     client_id=AUTH_CLIENT_ID,
     client_secret=AUTH_CLIENT_SECRET,
-    access_token_url=f'{AUTH_DOMAIN}/{AUTH_ACCESS_TOKEN_PATH}',
     client_kwargs={
         'scope': 'openid profile email',
     },
-    server_metadata_url=f'{AUTH_DOMAIN}/{AUTH_METADATA_CONFIG}',
-    authorize_params={'audience': AUTH_API_AUDIENCE},
-    authorize_url=f'{AUTH_DOMAIN}/{AUTH_AUTHORIZATION_PATH}',
+    server_metadata_url=AUTH_OPENID_URL,
 )
 
 
@@ -60,11 +53,13 @@ class OAuthProvider(AuthProvider):
     async def render_logout(self, request: Request, admin: BaseAdmin) -> Response:
         """Override the default logout to implement custom logic"""
         request.session.clear()
-        return RedirectResponse(
-            url=URL(f'{AUTH_DOMAIN}/{AUTH_LOGOUT_PATH}').include_query_params(
-                returnTo=request.url_for(admin.route_name + ':index'),
-                client_id=AUTH_CLIENT_ID,
-            )
+        auth = oauth.authentik
+        id_token = request.session.pop('id_token', None)
+        # redirect_uri = request.url_for('index')
+        return await auth.logout_redirect(
+            request,
+            post_logout_redirect_uri='/',
+            id_token_hint=id_token,
         )
 
     async def handle_auth_callback(self, request: Request):

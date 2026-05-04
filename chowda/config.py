@@ -15,17 +15,10 @@ STATIC_DIR = environ.get('STATIC_DIR', 'static')
 
 AUTH_CLIENT_ID = environ.get('AUTH_CLIENT_ID')
 AUTH_CLIENT_SECRET = environ.get('AUTH_CLIENT_SECRET')
-AUTH_DOMAIN = environ.get('AUTH_DOMAIN')
-AUTH_JWKS_URL = f'https://{AUTH_DOMAIN}/.well-known/jwks.json'
 AUTH_API_AUDIENCE = environ.get('AUTH_API_AUDIENCE', 'https://chowda.wgbh-mla.org/api')
-AUTH_METADATA_CONFIG = environ.get(
-    'AUTH_METADATA_CONFIG', '.well-known/openid-configuration'
-)
-AUTH_LOGOUT_PATH = environ.get('AUTH_LOGOUT_PATH', 'v2/logout')
-AUTH_ACCESS_TOKEN_PATH = environ.get('AUTH_ACCESS_TOKEN_PATH', 'oauth/token')
-AUTH_AUTHORIZATION_PATH = environ.get(
-    'AUTH_AUTHORIZATION_PATH', '/login/oauth/authorize'
-)
+AUTH_JWKS_URL = environ.get('AUTH_JWKS_URL')
+AUTH_OPENID_URL = environ.get('AUTH_OPENID_URL', '.well-known/openid-configuration')
+
 
 SECRET = environ.get('CHOWDA_SECRET')
 

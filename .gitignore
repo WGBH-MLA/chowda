@@ -3,9 +3,6 @@ __pycache__
 # Development sqlite db
 *.sqlite
 
-# Local pdm config
-.pdm-python
-
 # PEP 582 local files
 __pypackages__/
 
@@ -27,5 +24,5 @@ metaflow.s3.*
 
 .cache_ggshield
 
-.env.*
+.env*
 !.env.sample
