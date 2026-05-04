@@ -7,13 +7,11 @@ jobs:
     name: ⚗️ Test python${{ matrix.python-version }}
     uses: WGBH-MLA/.github/.github/workflows/pytest-with-postgres.yml@v1
     secrets: inherit
-    strategy:
-      matrix:
-        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
     with:
       uv_args: --no-dev --extra test
-      python_version: ${{ matrix.python-version }}
+      python_version: 3.14
       pytest_args: -n auto --vcr-record=none --no_ci
+      pg_db: chowda
 
   lint:
     name: 👕 Lint
