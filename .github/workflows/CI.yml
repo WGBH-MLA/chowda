@@ -10,7 +10,7 @@ jobs:
     with:
       uv_args: --no-dev --extra test
       python_version: 3.14
-      pytest_args: -n auto --vcr-record=none --no_ci
+      pytest_args: -n auto --vcr-record=none
       pg_db: chowda
 
   lint:
