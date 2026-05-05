@@ -18,7 +18,7 @@ AUTH_CLIENT_SECRET = environ.get('AUTH_CLIENT_SECRET')
 AUTH_API_AUDIENCE = environ.get('AUTH_API_AUDIENCE', 'https://chowda.wgbh-mla.org/api')
 AUTH_JWKS_URL = environ.get('AUTH_JWKS_URL')
 AUTH_OPENID_URL = environ.get('AUTH_OPENID_URL', '.well-known/openid-configuration')
-
+AUTH_SCOPE = environ.get('AUTH_SCOPE', 'openid profile email entitlements')
 
 SECRET = environ.get('CHOWDA_SECRET')
 

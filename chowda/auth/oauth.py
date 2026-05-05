@@ -12,6 +12,7 @@ from chowda.config import (
     AUTH_CLIENT_ID,
     AUTH_CLIENT_SECRET,
     AUTH_OPENID_URL,
+    AUTH_SCOPE,
 )
 
 oauth = OAuth()
@@ -20,7 +21,7 @@ oauth.register(
     client_id=AUTH_CLIENT_ID,
     client_secret=AUTH_CLIENT_SECRET,
     client_kwargs={
-        'scope': 'openid profile email',
+        'scope': AUTH_SCOPE,
     },
     server_metadata_url=AUTH_OPENID_URL,
 )
