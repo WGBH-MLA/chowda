@@ -69,6 +69,7 @@ admin = Admin(
     auth_provider=OAuthProvider(),
     base_url='/admin',
     index_view=DashboardView(label='Dashboard', icon='fa fa-gauge', path='/'),
+    logo_url='/static/logo/chowda-logo-wide.png',
 )
 
 # Add views
