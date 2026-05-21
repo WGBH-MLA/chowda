@@ -6,7 +6,7 @@ from typing import List, Optional, Type
 import jwt
 from fastapi import APIRouter
 from fastapi.testclient import TestClient
-from httpx import AsyncClient
+from httpx import AsyncClient, ASGITransport
 from pytest import fixture
 from starlette.requests import Request
 
@@ -65,7 +65,7 @@ def vcr_config(request):
 
 @fixture
 def async_client(request):
-    return AsyncClient(app=app, base_url='http://test')
+    return AsyncClient(transport=ASGITransport(app=app), base_url='http://test')
 
 
 @fixture
