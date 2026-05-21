@@ -1,9 +1,9 @@
 from typing import Annotated, List, Set
 
 from fastapi import Depends, HTTPException, Request, status
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-from chowda.config import AUTH_API_AUDIENCE, AUTH_JWKS_URL
+from chowda.config import AUTH_JWKS_URL
 
 unauthorized_redirect = HTTPException(
     status_code=status.HTTP_303_SEE_OTHER,
