@@ -1,7 +1,7 @@
 ###########################
 # 'base' build stage, common to all build stages
 ###########################
-FROM python:3.14-slim as base
+FROM python:3.14-slim AS base
 
 # Set working dir to /app, where all Chowda code lives.
 WORKDIR /app
@@ -19,37 +19,43 @@ COPY migrations migrations
 ###########################
 # 'dev' build stage
 ###########################
-FROM base as dev
+FROM base AS dev
 # Sync dependencies
 RUN uv sync
+
 # Start dev server.
-CMD uv run uvicorn chowda.app:app --host 0.0.0.0 --reload --log-level debug
+COPY entrypoints/dev.sh .
+CMD ["dev.sh"]
 
 
 ###########################
 # 'test' build stage
 ###########################
-FROM base as test
+FROM base AS test
 # Copy the test code
 COPY tests tests
 # Install test dependencies
 RUN uv sync -G test
+
 # Run the tests
-CMD uv run pytest -v -n auto
+COPY entrypoints/test.sh .
+CMD ["test.sh"]
 
 
 ###########################
 # 'locust' build stage for load testing
 ############################
-FROM test as locust
+FROM test AS locust
 RUN uv sync --extra locust
-CMD uv run locust
+
+COPY entrypoints/locust.sh .
+CMD ["locust.sh"]
 
 
 ###########################
 # 'base' build stage for production
 ############################
-FROM base as build
+FROM base AS build
 RUN apt update && apt install -y gcc libpq-dev git
 
 # Sync production dependencies and install them into a virtual environment
@@ -58,7 +64,7 @@ RUN uv sync --extra production --no-dev
 ###########################
 # 'production' final production image
 ############################
-FROM python:3.14-slim as production
+FROM python:3.14-slim AS production
 WORKDIR /app
 
 RUN apt update && apt install -y libpq-dev
@@ -74,4 +80,6 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE 8000
 
-CMD gunicorn chowda.app:app -b 0.0.0.0:8000 -w 2 --worker-class uvicorn.workers.UvicornWorker --forwarded-allow-ips='*' --proxy-protocol
+COPY entrypoints/production.sh .
+
+CMD ["production.sh"]
