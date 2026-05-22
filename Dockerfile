@@ -25,7 +25,7 @@ RUN uv sync
 
 # Start dev server.
 COPY entrypoints/dev.sh .
-CMD ["dev.sh"]
+CMD ["./dev.sh"]
 
 
 ###########################
@@ -39,7 +39,7 @@ RUN uv sync -G test
 
 # Run the tests
 COPY entrypoints/test.sh .
-CMD ["test.sh"]
+CMD ["./test.sh"]
 
 
 ###########################
@@ -49,7 +49,7 @@ FROM test AS locust
 RUN uv sync --extra locust
 
 COPY entrypoints/locust.sh .
-CMD ["locust.sh"]
+CMD ["./locust.sh"]
 
 
 ###########################
@@ -82,4 +82,4 @@ EXPOSE 8000
 
 COPY entrypoints/production.sh .
 
-CMD ["production.sh"]
+CMD ["./production.sh"]
