@@ -5,4 +5,7 @@ gunicorn chowda.app:app \
     -w 2 \
     --worker-class uvicorn.workers.UvicornWorker \
     --forwarded-allow-ips='*' \
-    --proxy-protocol
+    --proxy-protocol v2 \
+    --proxy-allow-from='*' \
+    --access-logfile - \
+    --error-logfile -

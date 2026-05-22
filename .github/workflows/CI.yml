@@ -6,6 +6,7 @@ jobs:
   tests:
     name: ⚗️ Test python${{ matrix.python-version }}
     uses: WGBH-MLA/.github/.github/workflows/pytest-with-postgres.yml@v1
+    permissions: read-all
     secrets: inherit
     with:
       uv_args: --no-dev --extra test
@@ -16,7 +17,9 @@ jobs:
   lint:
     name: 👕 Lint
     uses: WGBH-MLA/.github/.github/workflows/lint.yml@v1
+    permissions: read-all
 
   black:
     name: 🖤 Black
     uses: WGBH-MLA/.github/.github/workflows/black.yml@v1
+    permissions: read-all
