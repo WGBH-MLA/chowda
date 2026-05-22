@@ -8,6 +8,9 @@ from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import HTMLResponse
 from starlette.routing import Route
+from contextlib import asynccontextmanager
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.inmemory import InMemoryBackend
 
 from chowda._version import __version__
 from chowda.admin import Admin
@@ -41,8 +44,16 @@ from chowda.views import (
     UserView,
 )
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    FastAPICache.init(InMemoryBackend())
+    yield
+
+
 app = FastAPI(
     title='Chowda',
+    lifespan=lifespan,
     version=__version__,
     routes=[
         Route(

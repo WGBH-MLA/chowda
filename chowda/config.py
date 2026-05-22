@@ -24,4 +24,4 @@ SECRET = environ.get('CHOWDA_SECRET')
 
 MMIF_S3_BUCKET_NAME = environ.get('MMIF_S3_BUCKET_NAME', 'clams-mmif')
 
-MARIO_URL = environ.get('MARIO_URL', 'https://mario.wgbh-mla.org/')
+METAFLOW_URL = environ.get('METAFLOW_URL', 'https://metaflow.dev.wgbh-mla.org')
