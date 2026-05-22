@@ -13,7 +13,7 @@ def event():
 
 
 @pytest.mark.asyncio
-async def test_events(event: dict, async_client: AsyncClient, fake_access_token: str):
+async def test_events(event: dict, async_client: AsyncClient, fake_access_token):
     async with async_client as ac:
         bearer_token = fake_access_token(permissions=["create:event"])
         response = await ac.post(
@@ -89,7 +89,7 @@ async def test_events_valid_unauthorized_bearer_token(
 
 @pytest.mark.asyncio
 async def test_events_without_permission(
-    event: dict, async_client: AsyncClient, fake_access_token: str
+    event: dict, async_client: AsyncClient, fake_access_token
 ):
     async with async_client as ac:
         response = await ac.post(

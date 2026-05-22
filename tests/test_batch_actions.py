@@ -1,8 +1,6 @@
 import pytest
 from httpx import AsyncClient
 
-from chowda.config import AUTH_API_AUDIENCE
-
 
 @pytest.mark.asyncio
 async def test_download_mmif_as_clammer(async_client: AsyncClient):
@@ -12,7 +10,7 @@ async def test_download_mmif_as_clammer(async_client: AsyncClient):
             json={
                 "user": {
                     "name": "test user",
-                    f"{AUTH_API_AUDIENCE}/roles": ["clammer"],
+                    "roles": ["clammer"],
                 }
             },
         )
@@ -31,7 +29,7 @@ async def test_download_mmif_as_admin(async_client: AsyncClient):
             json={
                 "user": {
                     "name": "test user",
-                    f"{AUTH_API_AUDIENCE}/roles": ["admin"],
+                    "roles": ["admin"],
                 }
             },
         )
@@ -61,7 +59,7 @@ async def test_download_mmif_insufficient_role(async_client: AsyncClient):
             json={
                 "user": {
                     "name": "test user",
-                    f"{AUTH_API_AUDIENCE}/roles": ["peon"],
+                    "roles": ["peon"],
                 }
             },
         )
