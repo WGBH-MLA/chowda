@@ -48,11 +48,10 @@ async def test_sony_ci_sync_no_permission(
 async def test_sony_ci_sync_fail(
     mocker: MockerFixture, async_client: AsyncClient, fake_access_token: Type[callable]
 ):
-    # Mock ArgoEvent to raise an exception when publish is called
-    mock_argo = mocker.MagicMock()
-    mock_argo.publish.side_effect = ArgoEventException('Mocked exception')
-    mocker.patch('chowda.routers.sony_ci.ArgoEvent', return_value=mock_argo)
-
+    mocker.patch(
+        'metaflow.integrations.ArgoEvent.publish',
+        side_effect=ArgoEventException('Mocked exception'),
+    )
     async with async_client as ac:
         bearer_token = fake_access_token(permissions=['sync:sonyci'])
         response = await ac.post(
