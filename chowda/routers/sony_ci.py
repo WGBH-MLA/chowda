@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict
 
 
@@ -44,6 +44,6 @@ async def sony_ci_sync() -> SyncResponse:
     try:
         ArgoEvent('sync').publish(ignore_errors=False)
         await FastAPICache.clear(namespace='sonyci')
-        return SyncResponse(started_at=datetime.utcnow())
+        return SyncResponse(started_at=datetime.now(timezone.utc))
     except Exception as error:
         raise HTTPException(status_code=500, detail={'error': str(error)}) from error

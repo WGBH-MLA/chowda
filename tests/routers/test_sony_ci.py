@@ -12,8 +12,8 @@ from chowda.routers.sony_ci import SyncResponse
 async def test_sony_ci_sync(
     mocker: MockerFixture, async_client: AsyncClient, fake_access_token: Type[callable]
 ):
-    mocker.patch('chowda.routers.sony_ci.ArgoEvent')
-    mocker.patch('chowda.routers.sony_ci.FastAPICache.clear')
+    mocker.patch('metaflow.integrations.ArgoEvent.publish')
+    mocker.patch('fastapi_cache.FastAPICache.clear')
 
     async with async_client as ac:
         bearer_token = fake_access_token(permissions=['sync:sonyci'])
@@ -29,10 +29,8 @@ async def test_sony_ci_sync(
 
 @pytest.mark.asyncio
 async def test_sony_ci_sync_no_permission(
-    mocker: MockerFixture, async_client: AsyncClient, fake_access_token: Type[callable]
+    async_client: AsyncClient, fake_access_token: Type[callable]
 ):
-    mocker.patch('chowda.routers.sony_ci.ArgoEvent')
-
     async with async_client as ac:
         bearer_token = fake_access_token(permissions=['wrong_permission:sonyci'])
         response = await ac.post(
