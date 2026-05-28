@@ -560,7 +560,6 @@ class DashboardView(CustomView):
             last_sync = None
             sync_disabled = True
         user = get_oauth_user(request)
-        sync_disabled = False
         title = self.title(request)
         return templates.TemplateResponse(
             request,
