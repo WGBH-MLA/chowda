@@ -34,8 +34,23 @@ class MediaType(enum.Enum):
     Therefore, we need to Capatalize the name to make it match the db value.
     """
 
-    Video = 'Video'
     Audio = 'Audio'
+    Video = 'Video'
+
+
+class AssetType(enum.Enum):
+    """Asset type enum
+    Type of SonyCi asset: audio, video, or document.
+
+    This is not the same as the `MediaType` of the asset (Audio or Video).
+    """
+
+    Audio = 'Audio'
+    Video = 'Video'
+    Image = 'Image'
+    Document = 'Document'
+    TimedText = 'TimedText'
+    Other = 'Other'
 
 
 class ThumbnailType(enum.Enum):
@@ -158,7 +173,7 @@ class SonyCiAsset(SQLModel, table=True):
     id: Optional[str] = Field(primary_key=True, index=True, default=None)
     name: str = Field(index=True)
     size: int = Field(sa_column=Column(postgresql.BIGINT))
-    type: MediaType = Field(sa_column=Column(Enum(MediaType)))
+    type: AssetType = Field(sa_column=Column(Enum(AssetType)))
     format: Optional[str] = Field(default=None, index=True)
     thumbnails: Optional[List[Dict[str, Any]]] = Field(
         sa_column=Column(postgresql.ARRAY(JSON)), default=None
