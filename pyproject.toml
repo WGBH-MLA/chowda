@@ -63,7 +63,7 @@ docs = [
 ]
 
 locust = ["locust~=2.25", "pydantic-factories~=1.17"]
-development = ["kubernetes~=35.0"]
+development = ["kubernetes>=35,<37"]
 
 
 [tool.black]
