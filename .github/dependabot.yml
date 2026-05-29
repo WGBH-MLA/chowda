@@ -12,7 +12,6 @@ updates:
     prefix: ⬆
   cooldown:
     default-days: 1
-    semver-major-days: 3
   labels:
   - maintenance 🔧
 
@@ -28,6 +27,7 @@ updates:
     prefix: ⬆
   cooldown:
     default-days: 3
+    semver-major-days: 7
   labels:
   - maintenance 🔧
   groups:
