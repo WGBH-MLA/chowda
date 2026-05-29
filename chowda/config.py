@@ -13,16 +13,15 @@ DEBUG = bool(environ.get('DEBUG'))
 TEMPLATES_DIR = environ.get('TEMPLATES_DIR', 'templates')
 STATIC_DIR = environ.get('STATIC_DIR', 'static')
 
-AUTH0_CLIENT_ID = environ.get('AUTH0_CLIENT_ID')
-AUTH0_CLIENT_SECRET = environ.get('AUTH0_CLIENT_SECRET')
-AUTH0_DOMAIN = environ.get('AUTH0_DOMAIN')
-AUTH0_JWKS_URL = f'https://{AUTH0_DOMAIN}/.well-known/jwks.json'
-AUTH0_API_AUDIENCE = environ.get(
-    'AUTH0_API_AUDIENCE', 'https://chowda.wgbh-mla.org/api'
-)
+AUTH_CLIENT_ID = environ.get('AUTH_CLIENT_ID')
+AUTH_CLIENT_SECRET = environ.get('AUTH_CLIENT_SECRET')
+AUTH_API_AUDIENCE = environ.get('AUTH_API_AUDIENCE', 'https://chowda.wgbh-mla.org/api')
+AUTH_JWKS_URL = environ.get('AUTH_JWKS_URL')
+AUTH_OPENID_URL = environ.get('AUTH_OPENID_URL', '.well-known/openid-configuration')
+AUTH_SCOPE = environ.get('AUTH_SCOPE', 'openid profile email entitlements')
 
 SECRET = environ.get('CHOWDA_SECRET')
 
 MMIF_S3_BUCKET_NAME = environ.get('MMIF_S3_BUCKET_NAME', 'clams-mmif')
 
-MARIO_URL = environ.get('MARIO_URL', 'https://mario.wgbh-mla.org/')
+METAFLOW_URL = environ.get('METAFLOW_URL', 'https://metaflow.dev.wgbh-mla.org')

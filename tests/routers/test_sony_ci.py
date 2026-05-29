@@ -12,11 +12,8 @@ from chowda.routers.sony_ci import SyncResponse
 async def test_sony_ci_sync(
     mocker: MockerFixture, async_client: AsyncClient, fake_access_token: Type[callable]
 ):
-    mocker.patch(
-        'metaflow.integrations.ArgoEvent.publish',
-        autospec=True,
-        return_value=True,
-    )
+    mocker.patch('metaflow.integrations.ArgoEvent.publish')
+    mocker.patch('fastapi_cache.FastAPICache.clear')
 
     async with async_client as ac:
         bearer_token = fake_access_token(permissions=['sync:sonyci'])
@@ -26,19 +23,14 @@ async def test_sony_ci_sync(
         )
 
     assert response.status_code == 200
-    assert SyncResponse(**response.json())
+    sync_response = SyncResponse(**response.json())
+    assert sync_response.started_at is not None
 
 
 @pytest.mark.asyncio
 async def test_sony_ci_sync_no_permission(
-    mocker: MockerFixture, async_client: AsyncClient, fake_access_token: Type[callable]
+    async_client: AsyncClient, fake_access_token: Type[callable]
 ):
-    mocker.patch(
-        'metaflow.integrations.ArgoEvent.publish',
-        autospec=True,
-        side_effect=ArgoEventException('Mocked exception'),
-    )
-
     async with async_client as ac:
         bearer_token = fake_access_token(permissions=['wrong_permission:sonyci'])
         response = await ac.post(
@@ -58,10 +50,8 @@ async def test_sony_ci_sync_fail(
 ):
     mocker.patch(
         'metaflow.integrations.ArgoEvent.publish',
-        autospec=True,
         side_effect=ArgoEventException('Mocked exception'),
     )
-
     async with async_client as ac:
         bearer_token = fake_access_token(permissions=['sync:sonyci'])
         response = await ac.post(

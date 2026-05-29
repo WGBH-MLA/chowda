@@ -31,6 +31,7 @@ from chowda.fields import (
     SonyCiAssetThumbnail,
     SuccessfulField,
 )
+from chowda.log import log
 from chowda.models import MMIF, Batch, Collection, MediaFile
 from chowda.routers.sony_ci import sync_history
 from chowda.utils import download_mmif, get_duplicates, validate_media_file_guids, yes
@@ -548,18 +549,23 @@ class PipelineView(ClammerModelView):
 class DashboardView(CustomView):
 
     async def render(self, request: Request, templates: Jinja2Templates) -> Response:
-        history = await sync_history()
-        user = get_oauth_user(request)
-        if history:
+        try:
+            history = await sync_history()
             last_sync = history[0]['created_at']
             delta = datetime.now(last_sync.tzinfo) - last_sync
             sync_disabled = delta < timedelta(minutes=15)
+        except Exception as e:
+            log.error(f'Error fetching sync history: {e!s}')
+            history = []
+            last_sync = None
+            sync_disabled = True
+        user = get_oauth_user(request)
         title = self.title(request)
         return templates.TemplateResponse(
-            'dashboard.html',
-            {
-                'title' if title else None: title,
-                'request': request,
+            request,
+            name='dashboard.html',
+            context={
+                'title': title,
                 'user': user,
                 'sync_history': history,
                 'sync_disabled': sync_disabled,

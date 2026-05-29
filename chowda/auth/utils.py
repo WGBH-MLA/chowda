@@ -1,9 +1,9 @@
 from typing import Annotated, List, Set
 
 from fastapi import Depends, HTTPException, Request, status
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-from chowda.config import AUTH0_API_AUDIENCE, AUTH0_JWKS_URL
+from chowda.config import AUTH_JWKS_URL
 
 unauthorized_redirect = HTTPException(
     status_code=status.HTTP_303_SEE_OTHER,
@@ -29,17 +29,18 @@ class OAuthUser(BaseModel):
 
     name: str
     email: str | None = None
-    roles: set[str] = Field(set(), alias=f'{AUTH0_API_AUDIENCE}/roles')
+    roles: set[str] | None = None
+    entitlements: set[str] | None = None
 
     @property
     def is_admin(self) -> bool:
         """Check if the user has the admin role."""
-        return 'admin' in self.roles
+        return 'admin' in self.roles if self.roles else False
 
     @property
     def is_clammer(self) -> bool:
         """Check if the user has the clammer role."""
-        return 'clammer' in self.roles
+        return 'clammer' in self.roles if self.roles else False
 
 
 def get_oauth_user(request: Request) -> OAuthUser:
@@ -82,12 +83,12 @@ def unverified_access_token(request: Request) -> str:
 
 
 def jwt_signing_key(
-    unverified_access_token: Annotated[str, Depends(unverified_access_token)]
+    unverified_access_token: Annotated[str, Depends(unverified_access_token)],
 ) -> str:
     """Get the JWT signing key from the JWKS URL."""
     from jwt import PyJWKClient
 
-    jwks_client = PyJWKClient(AUTH0_JWKS_URL)
+    jwks_client = PyJWKClient(AUTH_JWKS_URL)
     try:
         signing_key = jwks_client.get_signing_key_from_jwt(unverified_access_token)
         return signing_key.key

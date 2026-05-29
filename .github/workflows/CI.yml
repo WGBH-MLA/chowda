@@ -4,18 +4,22 @@ on: [push, pull_request, merge_group, workflow_dispatch]
 
 jobs:
   tests:
-    name: ⚗️ Application Tests
-    uses: WGBH-MLA/.github/.github/workflows/pytest-with-postgres.yml@main
+    name: ⚗️ Test python${{ matrix.python-version }}
+    uses: WGBH-MLA/.github/.github/workflows/pytest-with-postgres.yml@v1
+    permissions: read-all
     secrets: inherit
     with:
-      pdm_args: -G test
-      pytest_args: -n auto --nbmake -ra -s
+      uv_args: --no-dev --extra test
+      python_version: 3.14
+      pytest_args: -n auto --vcr-record=none
       pg_db: chowda
 
   lint:
     name: 👕 Lint
-    uses: WGBH-MLA/.github/.github/workflows/lint.yml@main
+    uses: WGBH-MLA/.github/.github/workflows/lint.yml@v1
+    permissions: read-all
 
   black:
     name: 🖤 Black
-    uses: WGBH-MLA/.github/.github/workflows/black.yml@main
+    uses: WGBH-MLA/.github/.github/workflows/black.yml@v1
+    permissions: read-all

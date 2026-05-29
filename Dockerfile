@@ -1,14 +1,14 @@
 ###########################
 # 'base' build stage, common to all build stages
 ###########################
-FROM python:3.11-slim as base
+FROM python:3.14-slim AS base
 
 # Set working dir to /app, where all Chowda code lives.
 WORKDIR /app
-RUN pip install -U pip pdm
+RUN pip install uv
 
 # Copy app code to container
-COPY pyproject.toml pdm.lock README.md ./
+COPY pyproject.toml uv.lock README.md ./
 COPY chowda chowda
 
 # Copy migration files
@@ -19,57 +19,52 @@ COPY migrations migrations
 ###########################
 # 'dev' build stage
 ###########################
-FROM base as dev
-# Configure pdm to instal dependencies into ./__pypyackages__/
-RUN pdm config python.use_venv false
-# Configure python to use pep582 with local __pypyackages__
-ENV PYTHONPATH=/usr/local/lib/python3.11/site-packages/pdm/pep582
-# Add local packages to $PATH
-ENV PATH=/app/__pypackages__/3.11/bin/:$PATH
+FROM base AS dev
+# Sync dependencies
+RUN uv sync
 
-# Install dev dependencies with pdm
-RUN pdm install -G dev
 # Start dev server.
-CMD uvicorn chowda.app:app --host 0.0.0.0 --reload --log-level debug
+COPY entrypoints/dev.sh .
+CMD ["./dev.sh"]
 
 
 ###########################
 # 'test' build stage
 ###########################
-FROM base as test
-# Install test requiremens with poetry
+FROM base AS test
 # Copy the test code
 COPY tests tests
 # Install test dependencies
-RUN pip install .[test]
+RUN uv sync -G test
+
 # Run the tests
-CMD pytest -v -n auto
+COPY entrypoints/test.sh .
+CMD ["./test.sh"]
 
 
 ###########################
 # 'locust' build stage for load testing
 ############################
-FROM test as locust
-RUN pip install .[locust]
-CMD poetry run locust
+FROM test AS locust
+RUN uv sync --extra locust
+
+COPY entrypoints/locust.sh .
+CMD ["./locust.sh"]
 
 
 ###########################
 # 'base' build stage for production
 ############################
-FROM base as build
+FROM base AS build
 RUN apt update && apt install -y gcc libpq-dev git
 
-RUN pdm config venv.with_pip True
-RUN pdm install -G production
-
-# Install pip into the virtual environment
-RUN /app/.venv/bin/python -m ensurepip
+# Sync production dependencies and install them into a virtual environment
+RUN uv sync --extra production --no-dev
 
 ###########################
 # 'production' final production image
 ############################
-FROM python:3.11-slim as production
+FROM python:3.14-slim AS production
 WORKDIR /app
 
 RUN apt update && apt install -y libpq-dev
@@ -85,4 +80,6 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE 8000
 
-CMD gunicorn chowda.app:app -b 0.0.0.0:8000 -w 2 --worker-class uvicorn.workers.UvicornWorker
+COPY entrypoints/production.sh .
+
+CMD ["./production.sh"]
