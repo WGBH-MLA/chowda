@@ -11,10 +11,10 @@
       
       
       
-        <link rel="prev" href="../events/">
+        <link rel="prev" href="../__init__/">
       
       
-        <link rel="next" href="../session/">
+        <link rel="next" href="../events/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Resolve filenames to GUIDs - Chowda</title>
+        <title>Authentication - Chowda</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#resolve-filenames-to-guids" class="md-skip">
+        <a href="#authentication" class="md-skip">
           Skip to content
         </a>
       
@@ -130,7 +130,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Resolve filenames to GUIDs
+              Authentication
             
           </span>
         </div>
@@ -553,10 +553,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../auth/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -572,6 +581,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -609,37 +619,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Resolve filenames to GUIDs
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../guids/" class="md-nav__link">
         
   
   
@@ -655,59 +638,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Steps
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#check-the-list" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Check the list
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#insert-mediafiles" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Insert MediaFiles
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -986,7 +916,7 @@
               <article class="md-content__inner md-typeset">
                 
 
-    <a href="guids.ipynb" title="Download Notebook" class="md-content__button md-icon">
+    <a href="auth.ipynb" title="Download Notebook" class="md-content__button md-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"/></svg>
     </a>
 
@@ -1717,34 +1647,23 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </style>
 <!-- End of mermaid configuration --><div class="jupyter-wrapper">
 <div class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2ef30d29">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="resolve-filenames-to-guids">Resolve filenames to GUIDs<a class="anchor-link" href="#resolve-filenames-to-guids">¶</a></h1><p>In order to address MediaFiles by GUIDs, we need to extract the GUID from the <code>SonyCiAsset.name</code> field.</p>
-<h2 id="steps">Steps<a class="anchor-link" href="#steps">¶</a></h2><ol>
-<li>Get the list of assets from the DB</li>
-<li>Filter out any name that does not start with <code>cpb-aacip-</code></li>
-<li>Split the name on any of:<ul>
-<li><code>_</code> underscore</li>
-<li><code>.</code> period</li>
-<li><code>-dupe</code></li>
-</ul>
-</li>
-</ol>
-<p>There are 8 records with <code>-dupe</code> in the name. All other records are correctly filtered with <code>_</code> and <code>.</code>.</p>
+<h1 id="authentication">Authentication<a class="anchor-link" href="#authentication">¶</a></h1><p>This example shows how to connect and authenticate using OAuth and Authentik.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=04cde41a">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
@@ -1757,69 +1676,41 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">chowda.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">engine</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">chowda.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">SonyCiAsset</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sqlmodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">select</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">re</span><span class="w"> </span><span class="kn">import</span> <span class="n">search</span><span class="p">,</span> <span class="n">split</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">authlib.integrations.requests_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">OAuth2Session</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">environ</span> <span class="k">as</span> <span class="n">env</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
 
-
-<span class="k">def</span><span class="w"> </span><span class="nf">get_asset</span><span class="p">():</span>
-    <span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-        <span class="n">statement</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">SonyCiAsset</span><span class="p">)</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="p">[</span>
-            <span class="p">(</span><span class="n">asset</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">split</span><span class="p">(</span><span class="s1">'_|\.|-dupe'</span><span class="p">,</span> <span class="n">asset</span><span class="o">.</span><span class="n">name</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">search</span><span class="p">(</span><span class="s1">'^cpb-aacip-'</span><span class="p">,</span> <span class="n">asset</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="p">]</span>
-
-
-<span class="c1"># assets = get_asset()</span>
+<span class="n">load_dotenv</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-1">from chowda.db import engine
-from chowda.models import SonyCiAsset
-from sqlmodel import Session, select
-from re import search, split
+<div class="clipboard-copy-txt" id="cell-1">from authlib.integrations.requests_client import OAuth2Session
+from os import environ as env
+from dotenv import load_dotenv
 
-
-def get_asset():
-    with Session(engine) as session:
-        statement = select(SonyCiAsset)
-        results = session.exec(statement)
-
-        return [
-            (asset.id, split('_|\.|-dupe', asset.name)[0])
-            for asset in results.all()
-            if search('^cpb-aacip-', asset.name)
-        ]
-
-
-# assets = get_asset()
+load_dotenv()</div>
 </div>
 </div>
 </div>
 </div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>True</pre>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="check-the-list">Check the list<a class="anchor-link" href="#check-the-list">¶</a></h2><p>If needed, write the guid list to a file and check it manually.</p>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=14ef123c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-2">
@@ -1832,53 +1723,31 @@ def get_asset():
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># len(assets)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">write_assets</span><span class="p">():</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'guids.txt'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">assets</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">asset</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">OAuth2Session</span><span class="p">(</span>
+    <span class="n">client_id</span><span class="o">=</span><span class="n">env</span><span class="p">[</span><span class="s2">"AUTH_CLIENT_ID"</span><span class="p">],</span>
+    <span class="n">client_secret</span><span class="o">=</span><span class="n">env</span><span class="p">[</span><span class="s2">"AUTH_CLIENT_SECRET"</span><span class="p">],</span>
+    <span class="n">scope</span><span class="o">=</span><span class="s2">"openid profile email"</span><span class="p">,</span>
+    <span class="n">redirect_uri</span><span class="o">=</span><span class="s2">"http://localhost:8000/callback"</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-2"># len(assets)
-
-
-def write_assets():
-    with open('guids.txt', 'w') as f:
-        for asset in assets:
-            f.write(f'{asset[1]}\n')</div>
+<div class="clipboard-copy-txt" id="cell-2">client = OAuth2Session(
+    client_id=env["AUTH_CLIENT_ID"],
+    client_secret=env["AUTH_CLIENT_SECRET"],
+    scope="openid profile email",
+    redirect_uri="http://localhost:8000/callback",
+)</div>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="insert-mediafiles">Insert MediaFiles<a class="anchor-link" href="#insert-mediafiles">¶</a></h2><p>Iterate through the list of assets:</p>
-<ul>
-<li>Split the GUID from the filename.</li>
-<li>Search the database for a matching MediaFile object.<ul>
-<li>Insert a new MediaFile object if it does not already exist.</li>
-</ul>
-</li>
-<li>Find the SonyCiAsset object in the database.</li>
-<li>Link the MediaFile object to the SonyCiAsset object.</li>
-</ul>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=1f15c311">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
@@ -1891,51 +1760,22 @@ def write_assets():
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">chowda.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">MediaFile</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">insert_media_files</span><span class="p">():</span>
-    <span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">assets</span><span class="p">:</span>
-            <span class="c1"># Extract the GUID name</span>
-            <span class="n">guid</span> <span class="o">=</span> <span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s1">'_|\.|-dupe'</span><span class="p">,</span> <span class="n">asset</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="c1"># media_file = session.get(MediaFile, guid)</span>
-            <span class="n">media_file</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span>
-                <span class="n">select</span><span class="p">(</span><span class="n">MediaFile</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">MediaFile</span><span class="o">.</span><span class="n">guid</span> <span class="o">==</span> <span class="n">guid</span><span class="p">)</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">media_file</span><span class="p">:</span>
-                <span class="c1"># Create a new MediaFile with the new guid</span>
-                <span class="n">media_file</span> <span class="o">=</span> <span class="n">MediaFile</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">)</span>
-                <span class="c1"># session.add(media_file)</span>
-            <span class="n">ci_asset</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">SonyCiAsset</span><span class="p">,</span> <span class="n">asset</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="c1"># Add the asset to the existing MediaFile</span>
-            <span class="n">media_file</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ci_asset</span><span class="p">)</span>
-            <span class="c1"># asset.media_files.append(media_file)</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">media_file</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">create_authorization_url</span><span class="p">(</span><span class="s2">"http://localhost:8000/authorize"</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-3">from chowda.models import MediaFile
-
-
-def insert_media_files():
-    with Session(engine) as session:
-        for asset in assets:
-            # Extract the GUID name
-            guid = split(r'_|\.|-dupe', asset[1])[0]
-            # media_file = session.get(MediaFile, guid)
-            media_file = session.exec(
-                select(MediaFile).where(MediaFile.guid == guid)
-            ).first()
-            if not media_file:
-                # Create a new MediaFile with the new guid
-                media_file = MediaFile(guid=guid)
-                # session.add(media_file)
-            ci_asset = session.get(SonyCiAsset, asset[0])
-            # Add the asset to the existing MediaFile
-            media_file.assets.append(ci_asset)
-            # asset.media_files.append(media_file)
-            session.add(media_file)
-        session.commit()</div>
+<div class="clipboard-copy-txt" id="cell-3">client.create_authorization_url("http://localhost:8000/authorize")</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>('http://localhost:8000/authorize?response_type=code&amp;client_id=mHT1TQrrgW2nySGhVRj2mqZC2BYAVJgVY9hhsExq&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fcallback&amp;scope=openid+profile+email&amp;state=vCUYl6kI4RHUdODXybolekX19o0Lkg',
+ 'vCUYl6kI4RHUdODXybolekX19o0Lkg')</pre>
 </div>
 </div>
 </div>
