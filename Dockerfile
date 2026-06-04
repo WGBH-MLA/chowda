@@ -67,16 +67,17 @@ RUN uv sync --extra production --no-dev
 FROM python:3.14-slim AS production
 WORKDIR /app
 
-RUN apt update && apt install -y libpq-dev
+RUN apt update && apt install -y libpq-dev git
 RUN apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=build /app/ /app/
 COPY templates templates
 COPY static static
+RUN pip install .[production]
 
 ENV CHOWDA_ENV=production
-ENV PATH="/app/.venv/bin:$PATH"
+# ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE 8000
 

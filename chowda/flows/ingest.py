@@ -1,4 +1,4 @@
-from metaflow import FlowSpec, step, trigger, secrets, kubernetes
+from metaflow import FlowSpec, step, trigger, secrets
 
 from chowda.log import log
 from chowda.models import AssetType
