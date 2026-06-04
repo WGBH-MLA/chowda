@@ -63,7 +63,7 @@ docs = [
 ]
 
 locust = ["locust~=2.25", "pydantic-factories~=1.17"]
-development = ["kubernetes~=35.0"]
+k8s = ["kubernetes~=35.0"]
 
 
 [tool.black]
@@ -121,3 +121,7 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-root = ""
+
+[tool.uv.sources]
+# metaflow = { path = "../metaflow", editable = true }
+metaflow = { git = "https://github.com/WGBH-MLA/metaflow", branch = "copilot/extend-aws-secrets-manager-client" }

@@ -542,9 +542,6 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
-development = [
-    { name = "kubernetes" },
-]
 docs = [
     { name = "mike" },
     { name = "mkdocs" },
@@ -552,6 +549,9 @@ docs = [
     { name = "mkdocs-jupyter" },
     { name = "mkdocs-material" },
     { name = "mkdocstrings", extra = ["python"] },
+]
+k8s = [
+    { name = "kubernetes" },
 ]
 locust = [
     { name = "locust" },
@@ -597,7 +597,7 @@ requires-dist = [
     { name = "httpx", specifier = "~=0.27" },
     { name = "httpx", marker = "extra == 'test'", specifier = "~=0.27" },
     { name = "itsdangerous", specifier = "~=2.2" },
-    { name = "kubernetes", marker = "extra == 'development'", specifier = "~=35.0" },
+    { name = "kubernetes", marker = "extra == 'k8s'", specifier = "~=35.0" },
     { name = "locust", marker = "extra == 'locust'", specifier = "~=2.25" },
     { name = "metaflow", specifier = "~=2.19" },
     { name = "mike", marker = "extra == 'docs'", specifier = "~=2.1" },
@@ -627,7 +627,7 @@ requires-dist = [
     { name = "uvicorn", extras = ["standard"], marker = "extra == 'production'", specifier = "~=0.32" },
     { name = "vcrpy", marker = "extra == 'test'", specifier = "~=8.0" },
 ]
-provides-extras = ["production", "test", "docs", "locust", "development"]
+provides-extras = ["production", "test", "docs", "locust", "k8s"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -1924,15 +1924,15 @@ wheels = [
 
 [[package]]
 name = "metaflow"
-version = "2.19.22"
+version = "2.19.31"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "boto3" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/7f/f5/55d0553414f036da2cda08b719e13702cc085555e9be2d0d8885c417adaa/metaflow-2.19.22.tar.gz", hash = "sha256:44bfa1dad1753ae8e610c1dc681bc7b6bbca031e71c819ab58e7bca2bac73466", size = 1571077, upload-time = "2026-03-20T22:45:27.804Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/de/a2/5de7c7f7b805afbbdb2023264c5721ac659410a37ffd5818940e26ef900e/metaflow-2.19.31.tar.gz", hash = "sha256:a1df00117efb87521f9913b6e673c1c65fc6d3aed83108706e92ed514e878f68", size = 1610466, upload-time = "2026-06-01T01:51:14.737Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/91/b5/32fb5d21570ae34f76846751c259b707344fb746e94fdb77a2d245374ad6/metaflow-2.19.22-py2.py3-none-any.whl", hash = "sha256:4bcaa95d94144706db9fd6c45d474207fbceb514079a2aaaf6590f598253ede8", size = 1753840, upload-time = "2026-03-20T22:45:25.891Z" },
+    { url = "https://files.pythonhosted.org/packages/2f/08/7bbb84256f538bce500eb52970bb3d611eca2a05a1975d1ab12d08ad9c5b/metaflow-2.19.31-py2.py3-none-any.whl", hash = "sha256:4827bc9097feb19ce2ce560eeb5371067f1d131cec38d65b3e3ddf6df8f74100", size = 1806897, upload-time = "2026-06-01T01:51:12.846Z" },
 ]
 
 [[package]]
