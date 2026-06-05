@@ -18,7 +18,7 @@ dependencies = [
     "pydantic[email]~=2.12",
     "sonyci~=0.6",
     "psycopg2-binary~=2.9",
-    "metaflow~=2.19",
+    "metaflow @ git+https://github.com/WGBH-MLA/metaflow@90342209e0646907e0057cdfdb5f97c0abc86811",
     "alembic~=1.13",
     "python-dotenv~=1.0",
     "itsdangerous~=2.2",
@@ -122,6 +122,6 @@ build-backend = "uv_build"
 [tool.uv.build-backend]
 module-root = ""
 
-[tool.uv.sources]
+# [tool.uv.sources]
 # metaflow = { path = "../metaflow", editable = true }
-metaflow = { git = "https://github.com/WGBH-MLA/metaflow", branch = "copilot/extend-aws-secrets-manager-client" }
+# metaflow = { git = "https://github.com/WGBH-MLA/metaflow", branch = "copilot/extend-aws-secrets-manager-client" }
