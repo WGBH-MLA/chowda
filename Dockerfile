@@ -64,7 +64,7 @@ RUN uv sync --extra production --no-dev
 ###########################
 # 'production' final production image
 ############################
-FROM python:3.14-slim AS production
+FROM python:3.14 AS production
 WORKDIR /app
 
 RUN apt update && apt install -y libpq-dev git
