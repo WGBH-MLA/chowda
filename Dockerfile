@@ -60,7 +60,6 @@ RUN apt update && apt install -y gcc libpq-dev git
 
 # Sync production dependencies and install them into a virtual environment
 RUN uv sync --extra production --no-dev
-RUN .venv/bin/python -m ensurepip
 
 ###########################
 # 'production' final production image
@@ -75,6 +74,7 @@ RUN apt update && apt install -y libpq-dev git
 COPY --from=build /app/ /app/
 COPY templates templates
 COPY static static
+RUN rm -r .venv
 RUN pip install .[production]
 
 ENV CHOWDA_ENV=production
