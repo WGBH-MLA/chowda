@@ -66,8 +66,10 @@ class IngestFlow(FlowSpec):
         """Report results"""
         log.success(f'Successfully ingested {sum(self.updated)} assets')
         log.debug(self.updated)
-        if self.errors:
-            log.error(f'Encountered {len(self.errors)} errors: {self.errors}')
+        if sum(self.errors):
+            log.error(f'Encountered {sum(self.errors)} errors: {self.errors}')
+        else:
+            log.success('No errors encountered!')
 
     def get_batch(self, n):
         return self.ci.get(
