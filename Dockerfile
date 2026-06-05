@@ -58,10 +58,9 @@ CMD ["./locust.sh"]
 FROM base AS build
 RUN apt update && apt install -y gcc libpq-dev git
 
-RUN uv venv --seed pip
-
 # Sync production dependencies and install them into a virtual environment
 RUN uv sync --extra production --no-dev
+RUN .venv/bin/python -m ensurepip
 
 ###########################
 # 'production' final production image
