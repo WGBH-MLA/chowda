@@ -64,13 +64,13 @@ RUN uv sync --extra production --no-dev
 ###########################
 # 'production' final production image
 ############################
-FROM python:3.14 AS production
+FROM python:3.14-slim AS production
 WORKDIR /app
 
 RUN apt update && apt install -y libpq-dev git
-# RUN apt-get autoremove -y \
-#     && apt-get clean -y \
-#     && rm -rf /var/lib/apt/lists/*
+RUN apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
 COPY --from=build /app/ /app/
 COPY templates templates
 COPY static static
