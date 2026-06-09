@@ -599,7 +599,7 @@ requires-dist = [
     { name = "itsdangerous", specifier = "~=2.2" },
     { name = "kubernetes", marker = "extra == 'k8s'", specifier = "~=35.0" },
     { name = "locust", marker = "extra == 'locust'", specifier = "~=2.25" },
-    { name = "metaflow", git = "https://github.com/WGBH-MLA/metaflow?rev=b87c5bf771b8b908e53da2a490c8d444552b52b5" },
+    { name = "metaflow", git = "https://github.com/WGBH-MLA/metaflow?rev=1870b102db5dc2659b6430c8651f79350fd436be" },
     { name = "mike", marker = "extra == 'docs'", specifier = "~=2.1" },
     { name = "mkdocs", marker = "extra == 'docs'", specifier = "~=1.6" },
     { name = "mkdocs-git-revision-date-localized-plugin", marker = "extra == 'docs'", specifier = "~=1.2" },
@@ -1925,7 +1925,7 @@ wheels = [
 [[package]]
 name = "metaflow"
 version = "2.19.31"
-source = { git = "https://github.com/WGBH-MLA/metaflow?rev=b87c5bf771b8b908e53da2a490c8d444552b52b5#b87c5bf771b8b908e53da2a490c8d444552b52b5" }
+source = { git = "https://github.com/WGBH-MLA/metaflow?rev=1870b102db5dc2659b6430c8651f79350fd436be#1870b102db5dc2659b6430c8651f79350fd436be" }
 dependencies = [
     { name = "boto3" },
     { name = "requests" },

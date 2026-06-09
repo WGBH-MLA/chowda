@@ -18,7 +18,7 @@ dependencies = [
     "pydantic[email]~=2.12",
     "sonyci~=0.6",
     "psycopg2-binary~=2.9",
-    "metaflow @ git+https://github.com/WGBH-MLA/metaflow@b87c5bf771b8b908e53da2a490c8d444552b52b5",
+    "metaflow @ git+https://github.com/WGBH-MLA/metaflow@1870b102db5dc2659b6430c8651f79350fd436be",
     "alembic~=1.13",
     "python-dotenv~=1.0",
     "itsdangerous~=2.2",
