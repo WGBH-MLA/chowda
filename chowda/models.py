@@ -169,14 +169,110 @@ class SonyCiAssetThumbnail(SQLModel):
     width: int
     height: int
 
+class SonyCiAssetStatus(enum.Enum):
+    """SonyCi Asset status
+    Status of SonyCi asset
+    
+    ## Typical statuses
+    Created - The asset record has been created in our database.
+    Waiting - Once uploaded the asset's status will transition to Waiting to indicate it is waiting for backend processing jobs to begin (thumbnails, preview proxies, calculating MD5 checksum, extract technical metadata, check for viruses, etc.).
+    Processing - Once those jobs begin its status moves to Processing.
+    Complete - The status will go to Complete when all applicable thumbnails and preview proxies are finished (note: other jobs like calculating MD5 checksum, gathering technical metadata, and performing other verifications may not be completed even though the status is Complete).
+    Failed - If a failure happens during upload the status will go to Failed.
+    
+    ## Other statuses
+    Limited - There were problems generating thumbnails and/or preview proxies, The source file is still available for download.
+    Virus Detected - A virus was found and the file is not downloadable and generally cannot be used in our system.
+    Executable Detected - An executable file was found and the file is not downloadable and generally cannot be used in our system.
+    Deleted - The file has been deleted.
+    """
+    
+    Created = 'Created'
+    Waiting = 'Waiting'
+    Processing = 'Processing'
+    Complete = 'Complete'
+    Failed = 'Failed'
+    Limited = 'Limited'
+    VirusDetected = 'Virus Detected'
+    ExecutableDetected = 'Executable Detected'
+    Deleted = 'Deleted'
 
+class SonyCiArchiveStatus(enum.Enum):
+    """SonyCi archive status
+
+    Accepted values:
+    - Not archived
+    - Archive in progress
+    - Archived
+    - Restore in progress
+    - Restored
+    """
+    
+    NotArchived = 'Not archived'
+    ArchiveInProgress = 'Archive in progress'
+    Archived = 'Archived'
+    RestoreInProgress = 'Restore in progress'
+    Restored = 'Restored'
+
+class SonyCiRestoreStatus(enum.Enum):
+    """SonyCi restore status
+
+    Accepted values:
+     - Not restored
+     - Restore in progress
+     - Restore failed
+     - Restored
+    """
+    
+    NotRestored = 'Not restored'
+    RestoreInProgress = 'Restore in progress'
+    RestoreFailed = 'Restore failed'
+    Restored = 'Restored'
+    
+class SonyCiUploadTransferType(enum.Enum):
+    """SonyCi upload transfer type
+    Indicates how the asset was uploaded. 
+    
+    Valid values are:
+    
+    - SinglepartHttp
+    - MultipartHttp
+    - Aspera
+    - Copy
+    - FTP
+    - WorkspaceSend
+    """
+
+    SinglepartHttp = 'SinglepartHttp'
+    MultipartHttp = 'MultipartHttp'
+    Aspera = 'Aspera'
+    Copy = 'Copy'
+    FTP = 'FTP'
+    WorkspaceSend = 'WorkspaceSend'
+    
 class SonyCiAsset(SQLModel, table=True):
+    """SonyCiAsset model"""
     __tablename__ = 'sonyci_assets'
     id: Optional[str] = Field(primary_key=True, index=True, default=None)
     name: str = Field(index=True)
     size: int = Field(sa_column=Column(postgresql.BIGINT))
+    createdOn: Optional[datetime] = Field(default=None, index=True)
+    modifiedOn: Optional[datetime] = Field(default=None, index=True)
     type: Optional[AssetType] = Field(sa_column=Column(Enum(AssetType), default=None))
     format: Optional[str] = Field(default=None, index=True)
+    folder: Optional[str] = Field(default=None, index=True)
+    md5Checksum: Optional[str] = Field(default=None, index=True)
+    status: Optional[SonyCiAssetStatus] = Field(sa_column=Column(Enum(SonyCiAssetStatus), default=None))
+    archive_status: Optional[SonyCiArchiveStatus] = Field(sa_column=Column(Enum(SonyCiArchiveStatus), default=None))
+    restore_status: Optional[SonyCiRestoreStatus] = Field(sa_column=Column(Enum(SonyCiRestoreStatus), default=None))
+    isDeleted: Optional[bool] = Field(default=None, index=True)
+    isTrashed: Optional[bool] = Field(default=None, index=True)
+    runtime: Optional[float] = Field(default=None, index=True)
+    lastActivityOn: Optional[datetime] = Field(default=None, index=True)
+    uploadCompleteDate: Optional[datetime] = Field(default=None, index=True)
+    uploadTransferType: Optional[SonyCiUploadTransferType] = Field(sa_column=Column(Enum(SonyCiUploadTransferType), default=None))
+    hasPlayableProxies: Optional[bool] = Field(default=None, index=True)
+    generatingPlayableProxies: Optional[bool] = Field(default=None, index=True)
     thumbnails: Optional[List[Dict[str, Any]]] = Field(
         sa_column=Column(postgresql.ARRAY(JSON)), default=None
     )

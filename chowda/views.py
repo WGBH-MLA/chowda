@@ -32,7 +32,7 @@ from chowda.fields import (
     SuccessfulField,
 )
 from chowda.log import log
-from chowda.models import MMIF, Batch, Collection, MediaFile
+from chowda.models import MMIF, Batch, Collection, MediaFile, SonyCiAsset
 from chowda.routers.sony_ci import sync_history
 from chowda.utils import download_mmif, get_duplicates, validate_media_file_guids, yes
 from templates import filters  # noqa: F401
@@ -578,11 +578,7 @@ class DashboardView(CustomView):
 class SonyCiAssetView(AdminModelView):
     fields: ClassVar[list[Any]] = [
         SonyCiAssetThumbnail(),
-        'name',
-        'size',
-        'type',
-        'format',
-        'media_files',
+        *SonyCiAsset.model_fields
     ]
     row_actions: ClassVar[list[Any]] = ['view', 'edit']
 

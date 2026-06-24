@@ -34,6 +34,7 @@ dev = [
     "ruff>=0.15.12",
     "pre-commit>=4.6.0",
     "rich>=15.0.0",
+    "alembic-postgresql-enum>=1.10.0",
 ]
 [project.optional-dependencies]
 production = ["uvicorn[standard]~=0.32", "gunicorn~=25.0"]
@@ -64,6 +65,9 @@ docs = [
 
 locust = ["locust~=2.25", "pydantic-factories~=1.17"]
 k8s = ["kubernetes~=35.0"]
+cli = [
+    "typer>=0.26.7",
+]
 
 
 [tool.black]
@@ -121,3 +125,6 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-root = ""
+
+[tool.uv.sources]
+metaflow = { path = "../metaflow", editable = true }

@@ -7,6 +7,7 @@ from chowda.config import DB_URL
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
+import alembic_postgresql_enum
 from alembic import context
 from alembic.config import Config
 

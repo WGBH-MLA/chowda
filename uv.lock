@@ -22,6 +22,19 @@ wheels = [
 ]
 
 [[package]]
+name = "alembic-postgresql-enum"
+version = "1.10.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "alembic" },
+    { name = "sqlalchemy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/63/cf/b5147b926441e7cdc12f306465dac488ff22364b1467a09a5d43743b8cfc/alembic_postgresql_enum-1.10.0.tar.gz", hash = "sha256:ea23481de3d6a00d68d369f92a46ff4fa27b2575e39c583145f1e23ea9c7511d", size = 18557, upload-time = "2026-02-23T16:15:04.148Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/58/8a/4db3821584824ac68df00a6ca27331d3f41f40105f22a8dc1b30b1ec83af/alembic_postgresql_enum-1.10.0-py3-none-any.whl", hash = "sha256:39297cb5dc0e71a3e08df1feeab9ffcc1b6aac0be02bf578748d74c442cd3fbf", size = 27774, upload-time = "2026-02-23T16:15:02.789Z" },
+]
+
+[[package]]
 name = "annotated-doc"
 version = "0.0.4"
 source = { registry = "https://pypi.org/simple" }
@@ -542,6 +555,9 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
+cli = [
+    { name = "typer" },
+]
 docs = [
     { name = "mike" },
     { name = "mkdocs" },
@@ -579,6 +595,7 @@ test = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "alembic-postgresql-enum" },
     { name = "black" },
     { name = "pre-commit" },
     { name = "rich" },
@@ -599,7 +616,7 @@ requires-dist = [
     { name = "itsdangerous", specifier = "~=2.2" },
     { name = "kubernetes", marker = "extra == 'k8s'", specifier = "~=35.0" },
     { name = "locust", marker = "extra == 'locust'", specifier = "~=2.25" },
-    { name = "metaflow", git = "https://github.com/WGBH-MLA/metaflow?rev=1870b102db5dc2659b6430c8651f79350fd436be" },
+    { name = "metaflow", editable = "../metaflow" },
     { name = "mike", marker = "extra == 'docs'", specifier = "~=2.1" },
     { name = "mkdocs", marker = "extra == 'docs'", specifier = "~=1.6" },
     { name = "mkdocs-git-revision-date-localized-plugin", marker = "extra == 'docs'", specifier = "~=1.2" },
@@ -623,14 +640,16 @@ requires-dist = [
     { name = "sqlmodel", specifier = "~=0.0" },
     { name = "starlette-admin", specifier = "~=0.14" },
     { name = "trio", marker = "extra == 'test'", specifier = "~=0.26" },
+    { name = "typer", marker = "extra == 'cli'", specifier = ">=0.26.7" },
     { name = "urllib3", marker = "extra == 'test'", specifier = "~=2.6" },
     { name = "uvicorn", extras = ["standard"], marker = "extra == 'production'", specifier = "~=0.32" },
     { name = "vcrpy", marker = "extra == 'test'", specifier = "~=8.0" },
 ]
-provides-extras = ["production", "test", "docs", "locust", "k8s"]
+provides-extras = ["production", "test", "docs", "locust", "k8s", "cli"]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "alembic-postgresql-enum", specifier = ">=1.10.0" },
     { name = "black", specifier = ">=26.3.1" },
     { name = "pre-commit", specifier = ">=4.6.0" },
     { name = "rich", specifier = ">=15.0.0" },
@@ -1925,11 +1944,28 @@ wheels = [
 [[package]]
 name = "metaflow"
 version = "2.19.31"
-source = { git = "https://github.com/WGBH-MLA/metaflow?rev=1870b102db5dc2659b6430c8651f79350fd436be#1870b102db5dc2659b6430c8651f79350fd436be" }
+source = { editable = "../metaflow" }
 dependencies = [
     { name = "boto3" },
     { name = "requests" },
 ]
+
+[package.metadata]
+requires-dist = [
+    { name = "boto3" },
+    { name = "kubernetes", marker = "extra == 'dev'" },
+    { name = "localbatch", marker = "extra == 'dev'" },
+    { name = "metaflow-stubs", marker = "extra == 'stubs'", specifier = "==2.19.31" },
+    { name = "omegaconf", marker = "extra == 'dev'" },
+    { name = "pytest", marker = "extra == 'dev'" },
+    { name = "pytest-cov", marker = "extra == 'dev'" },
+    { name = "pytest-mock", marker = "extra == 'dev'" },
+    { name = "pytest-rerunfailures", marker = "extra == 'dev'" },
+    { name = "pytest-timeout", marker = "extra == 'dev'" },
+    { name = "pytest-xdist", marker = "extra == 'dev'" },
+    { name = "requests" },
+]
+provides-extras = ["stubs", "dev"]
 
 [[package]]
 name = "mike"
@@ -3399,6 +3435,15 @@ wheels = [
 ]
 
 [[package]]
+name = "shellingham"
+version = "1.5.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/58/15/8b3609fd3830ef7b27b655beb4b4e9c62313a4e8da8c676e142cc210d58e/shellingham-1.5.4.tar.gz", hash = "sha256:8dbca0739d487e5bd35ab3ca4b36e11c4078f3a234bfce294b0a0291363404de", size = 10310, upload-time = "2023-10-24T04:13:40.426Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e0/f9/0595336914c5619e5f28a1fb793285925a8cd4b432c9da0a987836c7f822/shellingham-1.5.4-py2.py3-none-any.whl", hash = "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686", size = 9755, upload-time = "2023-10-24T04:13:38.866Z" },
+]
+
+[[package]]
 name = "simple-websocket"
 version = "1.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -3701,6 +3746,21 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/52/b6/c744031c6f89b18b3f5f4f7338603ab381d740a7f45938c4607b2302481f/trio-0.33.0.tar.gz", hash = "sha256:a29b92b73f09d4b48ed249acd91073281a7f1063f09caba5dc70465b5c7aa970", size = 605109, upload-time = "2026-02-14T18:40:55.386Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/1c/93/dab25dc87ac48da0fe0f6419e07d0bfd98799bed4e05e7b9e0f85a1a4b4b/trio-0.33.0-py3-none-any.whl", hash = "sha256:3bd5d87f781d9b0192d592aef28691f8951d6c2e41b7e1da4c25cde6c180ae9b", size = 510294, upload-time = "2026-02-14T18:40:53.313Z" },
+]
+
+[[package]]
+name = "typer"
+version = "0.26.7"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "annotated-doc" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "rich" },
+    { name = "shellingham" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5e/ed/ef06584ccdd5c410df0837951ecd7e15d9a6144ea1bd4c73cecab1a89891/typer-0.26.7.tar.gz", hash = "sha256:e314a34c617e419c091b2830dda3ea1f257134ff593061a8f5b9717ab8dddb3a", size = 201709, upload-time = "2026-06-03T07:18:06.843Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/24/25/2201973529af2c954de0bb725323c3aaed6d7f0ceee8f550dec9185df013/typer-0.26.7-py3-none-any.whl", hash = "sha256:5c87cfbc5d34491c5346ebf49c23e18d56ccb863268d3a8d592b26087c2f5e58", size = 122456, upload-time = "2026-06-03T07:18:05.732Z" },
 ]
 
 [[package]]
