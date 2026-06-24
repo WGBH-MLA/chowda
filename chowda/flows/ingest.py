@@ -44,7 +44,7 @@ class IngestFlow(FlowSpec):
         self.updated: int = sum([r.get('updated', 0) for r in page_results])
         self.errors: list = [r.get('errors', []) for r in page_results]
         self.errors = [
-            e for sublist in self.errors for e in sublist
+            1 for sublist in self.errors for e in sublist
         ]  # Flatten list of lists
         if sum(self.errors) > 0:
             log.error(
@@ -94,26 +94,26 @@ class IngestFlow(FlowSpec):
             for asset in media:
                 try:
                     results.append(db.exec(upsert(SonyCiAsset, asset, ['id'])))
-
-                    # If it's a video or audio, and starts with cpb-aacip-*
-                    if asset.type in asset_types and search(
-                        '^cpb[-_/]aacip[-_/]', asset.name
-                    ):
-                        # It's a MediaFile!
-                        # Extract the GUID name
-                        guid = split(r'_|\.|-dupe', asset.name)[0]
-                        # Check for existing MediaFile
-                        media_file = db.exec(
-                            select(MediaFile).where(MediaFile.guid == guid)
-                        ).first()
-                        if not media_file:
-                            # Create a new MediaFile with the new guid
-                            media_file = MediaFile(guid=guid)
-                        # Get the SonyCiAsset we just saved to the db
-                        ci_asset = db.get(SonyCiAsset, asset.id)
-                        # Add the asset to the existing MediaFile
-                        media_file.assets.append(ci_asset)
-                        db.add(media_file)
+                    # If the name doesn't start with cpb-aacip-*
+                    if not search('^cpb[-_/]aacip[-_/]', asset.name):
+                        log.error('Non-guid filename: ', asset.id, asset.name)
+                        errors.append(('non-guid', asset.id, asset.name))
+                        continue
+                    # It's a MediaFile!
+                    # Extract the GUID name
+                    guid = split(r'_|\.|-dupe', asset.name)[0]
+                    # Check for existing MediaFile
+                    media_file = db.exec(
+                        select(MediaFile).where(MediaFile.guid == guid)
+                    ).first()
+                    if not media_file:
+                        # Create a new MediaFile with the new guid
+                        media_file = MediaFile(guid=guid)
+                    # Get the SonyCiAsset we just saved to the db
+                    ci_asset = db.get(SonyCiAsset, asset.id)
+                    # Add the asset to the existing MediaFile
+                    media_file.assets.append(ci_asset)
+                    db.add(media_file)
                 except Exception as e:
                     log.error(f'Error ingesting asset {asset.id}: {e}')
                     errors.append((asset, e))

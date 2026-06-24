@@ -40,9 +40,11 @@ class MediaType(enum.Enum):
 
 class AssetType(enum.Enum):
     """Asset type enum
-    Type of SonyCi asset: audio, video, or document.
+    Type of SonyCi asset: audio, video, or document / other.
 
     This is not the same as the `MediaType` of the asset (Audio or Video).
+
+    Note: Assets with "status: Uploading" have no type
     """
 
     Audio = 'Audio'
@@ -173,7 +175,7 @@ class SonyCiAsset(SQLModel, table=True):
     id: Optional[str] = Field(primary_key=True, index=True, default=None)
     name: str = Field(index=True)
     size: int = Field(sa_column=Column(postgresql.BIGINT))
-    type: AssetType = Field(sa_column=Column(Enum(AssetType)))
+    type: Optional[AssetType] = Field(sa_column=Column(Enum(AssetType), default=None))
     format: Optional[str] = Field(default=None, index=True)
     thumbnails: Optional[List[Dict[str, Any]]] = Field(
         sa_column=Column(postgresql.ARRAY(JSON)), default=None

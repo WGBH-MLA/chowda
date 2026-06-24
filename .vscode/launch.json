@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "Chowda: app",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "module": "uvicorn",
@@ -21,14 +21,16 @@
     },
     {
       "name": "Metaflow: Run",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "${file}",
       "args": [
         "run"
       ],
       "subProcess": true,
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      // "envFile": "${workspaceFolder}/.env.metaflow",
+      "justMyCode": false
     }
   ]
 }
