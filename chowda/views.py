@@ -576,10 +576,7 @@ class DashboardView(CustomView):
 
 
 class SonyCiAssetView(AdminModelView):
-    fields: ClassVar[list[Any]] = [
-        SonyCiAssetThumbnail(),
-        *SonyCiAsset.model_fields
-    ]
+    fields: ClassVar[list[Any]] = [SonyCiAssetThumbnail(), *SonyCiAsset.model_fields]
     row_actions: ClassVar[list[Any]] = ['view', 'edit']
 
     page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
