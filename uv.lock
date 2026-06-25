@@ -616,7 +616,7 @@ requires-dist = [
     { name = "itsdangerous", specifier = "~=2.2" },
     { name = "kubernetes", marker = "extra == 'k8s'", specifier = "~=35.0" },
     { name = "locust", marker = "extra == 'locust'", specifier = "~=2.25" },
-    { name = "metaflow", editable = "../metaflow" },
+    { name = "metaflow", git = "https://github.com/WGBH-MLA/metaflow?rev=1870b102db5dc2659b6430c8651f79350fd436be" },
     { name = "mike", marker = "extra == 'docs'", specifier = "~=2.1" },
     { name = "mkdocs", marker = "extra == 'docs'", specifier = "~=1.6" },
     { name = "mkdocs-git-revision-date-localized-plugin", marker = "extra == 'docs'", specifier = "~=1.2" },
@@ -1944,28 +1944,11 @@ wheels = [
 [[package]]
 name = "metaflow"
 version = "2.19.31"
-source = { editable = "../metaflow" }
+source = { git = "https://github.com/WGBH-MLA/metaflow?rev=1870b102db5dc2659b6430c8651f79350fd436be#1870b102db5dc2659b6430c8651f79350fd436be" }
 dependencies = [
     { name = "boto3" },
     { name = "requests" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "boto3" },
-    { name = "kubernetes", marker = "extra == 'dev'" },
-    { name = "localbatch", marker = "extra == 'dev'" },
-    { name = "metaflow-stubs", marker = "extra == 'stubs'", specifier = "==2.19.31" },
-    { name = "omegaconf", marker = "extra == 'dev'" },
-    { name = "pytest", marker = "extra == 'dev'" },
-    { name = "pytest-cov", marker = "extra == 'dev'" },
-    { name = "pytest-mock", marker = "extra == 'dev'" },
-    { name = "pytest-rerunfailures", marker = "extra == 'dev'" },
-    { name = "pytest-timeout", marker = "extra == 'dev'" },
-    { name = "pytest-xdist", marker = "extra == 'dev'" },
-    { name = "requests" },
-]
-provides-extras = ["stubs", "dev"]
 
 [[package]]
 name = "mike"

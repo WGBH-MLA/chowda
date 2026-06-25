@@ -65,9 +65,7 @@ docs = [
 
 locust = ["locust~=2.25", "pydantic-factories~=1.17"]
 k8s = ["kubernetes~=35.0"]
-cli = [
-    "typer>=0.26.7",
-]
+cli = ["typer>=0.26.7"]
 
 
 [tool.black]
@@ -126,5 +124,5 @@ build-backend = "uv_build"
 [tool.uv.build-backend]
 module-root = ""
 
-[tool.uv.sources]
-metaflow = { path = "../metaflow", editable = true }
+# [tool.uv.sources]
+# metaflow = { path = "../metaflow", editable = true }
