@@ -1,8 +1,8 @@
-"""Adds more SonyCiAsset fields and types
+"""Adds other SonyCiAsset fields
 
-Revision ID: 758afdcc3311
+Revision ID: 3b40432bd201
 Revises: 74800f24a8cf
-Create Date: 2026-06-24 15:07:56.177326
+Create Date: 2026-06-25 09:07:47.446825
 
 """
 from alembic import op
@@ -12,7 +12,7 @@ from alembic_postgresql_enum import TableReference
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '758afdcc3311'
+revision = '3b40432bd201'
 down_revision = '74800f24a8cf'
 branch_labels = None
 depends_on = None
@@ -23,12 +23,12 @@ def upgrade() -> None:
     sa.Enum('SinglepartHttp', 'MultipartHttp', 'Aspera', 'Copy', 'FTP', 'WorkspaceSend', name='sonyciuploadtransfertype').create(op.get_bind())
     sa.Enum('NotRestored', 'RestoreInProgress', 'RestoreFailed', 'Restored', name='sonycirestorestatus').create(op.get_bind())
     sa.Enum('NotArchived', 'ArchiveInProgress', 'Archived', 'RestoreInProgress', 'Restored', name='sonyciarchivestatus').create(op.get_bind())
-    sa.Enum('Created', 'Waiting', 'Processing', 'Complete', 'Failed', 'Limited', 'VirusDetected', 'ExecutableDetected', 'Deleted', name='sonyciassetstatus').create(op.get_bind())
+    sa.Enum('Created', 'Complete', 'Deleted', 'ExecutableDetected', 'Failed', 'Limited', 'Processing', 'Uploading', 'VirusDetected', 'Waiting', name='sonyciassetstatus').create(op.get_bind())
     op.add_column('sonyci_assets', sa.Column('createdOn', sa.DateTime(), nullable=True))
     op.add_column('sonyci_assets', sa.Column('modifiedOn', sa.DateTime(), nullable=True))
-    op.add_column('sonyci_assets', sa.Column('folder', sqlmodel.sql.sqltypes.AutoString(), nullable=True))
+    op.add_column('sonyci_assets', sa.Column('folder', sa.JSON(), nullable=True))
     op.add_column('sonyci_assets', sa.Column('md5Checksum', sqlmodel.sql.sqltypes.AutoString(), nullable=True))
-    op.add_column('sonyci_assets', sa.Column('status', postgresql.ENUM('Created', 'Waiting', 'Processing', 'Complete', 'Failed', 'Limited', 'VirusDetected', 'ExecutableDetected', 'Deleted', name='sonyciassetstatus', create_type=False), nullable=True))
+    op.add_column('sonyci_assets', sa.Column('status', postgresql.ENUM('Created', 'Complete', 'Deleted', 'ExecutableDetected', 'Failed', 'Limited', 'Processing', 'Uploading', 'VirusDetected', 'Waiting', name='sonyciassetstatus', create_type=False), nullable=True))
     op.add_column('sonyci_assets', sa.Column('archive_status', postgresql.ENUM('NotArchived', 'ArchiveInProgress', 'Archived', 'RestoreInProgress', 'Restored', name='sonyciarchivestatus', create_type=False), nullable=True))
     op.add_column('sonyci_assets', sa.Column('restore_status', postgresql.ENUM('NotRestored', 'RestoreInProgress', 'RestoreFailed', 'Restored', name='sonycirestorestatus', create_type=False), nullable=True))
     op.add_column('sonyci_assets', sa.Column('isDeleted', sa.Boolean(), nullable=True))
@@ -39,8 +39,12 @@ def upgrade() -> None:
     op.add_column('sonyci_assets', sa.Column('uploadTransferType', postgresql.ENUM('SinglepartHttp', 'MultipartHttp', 'Aspera', 'Copy', 'FTP', 'WorkspaceSend', name='sonyciuploadtransfertype', create_type=False), nullable=True))
     op.add_column('sonyci_assets', sa.Column('hasPlayableProxies', sa.Boolean(), nullable=True))
     op.add_column('sonyci_assets', sa.Column('generatingPlayableProxies', sa.Boolean(), nullable=True))
+    op.add_column('sonyci_assets', sa.Column('proxies', postgresql.ARRAY(sa.JSON()), nullable=True))
+    op.add_column('sonyci_assets', sa.Column('filmstrips', postgresql.ARRAY(sa.JSON()), nullable=True))
+    op.add_column('sonyci_assets', sa.Column('technicalMetadata', sa.JSON(), nullable=True))
+    op.add_column('sonyci_assets', sa.Column('technicalMetadataUpdates', sa.JSON(), nullable=True))
+    op.add_column('sonyci_assets', sa.Column('waveforms', postgresql.ARRAY(sa.JSON()), nullable=True))
     op.create_index(op.f('ix_sonyci_assets_createdOn'), 'sonyci_assets', ['createdOn'], unique=False)
-    op.create_index(op.f('ix_sonyci_assets_folder'), 'sonyci_assets', ['folder'], unique=False)
     op.create_index(op.f('ix_sonyci_assets_generatingPlayableProxies'), 'sonyci_assets', ['generatingPlayableProxies'], unique=False)
     op.create_index(op.f('ix_sonyci_assets_hasPlayableProxies'), 'sonyci_assets', ['hasPlayableProxies'], unique=False)
     op.create_index(op.f('ix_sonyci_assets_isDeleted'), 'sonyci_assets', ['isDeleted'], unique=False)
@@ -78,8 +82,12 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_sonyci_assets_isDeleted'), table_name='sonyci_assets')
     op.drop_index(op.f('ix_sonyci_assets_hasPlayableProxies'), table_name='sonyci_assets')
     op.drop_index(op.f('ix_sonyci_assets_generatingPlayableProxies'), table_name='sonyci_assets')
-    op.drop_index(op.f('ix_sonyci_assets_folder'), table_name='sonyci_assets')
     op.drop_index(op.f('ix_sonyci_assets_createdOn'), table_name='sonyci_assets')
+    op.drop_column('sonyci_assets', 'waveforms')
+    op.drop_column('sonyci_assets', 'technicalMetadataUpdates')
+    op.drop_column('sonyci_assets', 'technicalMetadata')
+    op.drop_column('sonyci_assets', 'filmstrips')
+    op.drop_column('sonyci_assets', 'proxies')
     op.drop_column('sonyci_assets', 'generatingPlayableProxies')
     op.drop_column('sonyci_assets', 'hasPlayableProxies')
     op.drop_column('sonyci_assets', 'uploadTransferType')
@@ -95,7 +103,7 @@ def downgrade() -> None:
     op.drop_column('sonyci_assets', 'folder')
     op.drop_column('sonyci_assets', 'modifiedOn')
     op.drop_column('sonyci_assets', 'createdOn')
-    sa.Enum('Created', 'Waiting', 'Processing', 'Complete', 'Failed', 'Limited', 'VirusDetected', 'ExecutableDetected', 'Deleted', name='sonyciassetstatus').drop(op.get_bind())
+    sa.Enum('Created', 'Complete', 'Deleted', 'ExecutableDetected', 'Failed', 'Limited', 'Processing', 'Uploading', 'VirusDetected', 'Waiting', name='sonyciassetstatus').drop(op.get_bind())
     sa.Enum('NotArchived', 'ArchiveInProgress', 'Archived', 'RestoreInProgress', 'Restored', name='sonyciarchivestatus').drop(op.get_bind())
     sa.Enum('NotRestored', 'RestoreInProgress', 'RestoreFailed', 'Restored', name='sonycirestorestatus').drop(op.get_bind())
     sa.Enum('SinglepartHttp', 'MultipartHttp', 'Aspera', 'Copy', 'FTP', 'WorkspaceSend', name='sonyciuploadtransfertype').drop(op.get_bind())

@@ -73,7 +73,7 @@ class IngestFlow(FlowSpec):
 
     def get_batch(self, n):
         return self.ci.get(
-            f'workspaces/{self.ci.workspace_id}/contents?kind=asset&limit=100&fields=id,name,type,size,thumbnails,format&offset={n*100}'
+            f'workspaces/{self.ci.workspace_id}/contents?kind=asset&limit=100&offset={n*100}'
         )['items']
 
     def batch_ingest_page(self, n):
@@ -89,15 +89,16 @@ class IngestFlow(FlowSpec):
         media = [SonyCiAsset(**asset) for asset in batch]
         results: list = []
         errors: list = []
+        warnings: list = []
 
         with Session(engine) as db:
             for asset in media:
                 try:
                     results.append(db.exec(upsert(SonyCiAsset, asset, ['id'])))
                     # If the name doesn't start with cpb-aacip-*
-                    if not search('^cpb[-_/]aacip[-_/]', asset.name):
-                        log.error('Non-guid filename: ', asset.id, asset.name)
-                        errors.append(('non-guid', asset.id, asset.name))
+                    if not search('^cpb[-_/]aacip[-_/][0-9a-z-]*\.mp[34]', asset.name):
+                        log.warning('Non-guid filename: ', asset.id, asset.name)
+                        warnings.append(('non-guid', asset.id, asset.name))
                         continue
                     # It's a MediaFile!
                     # Extract the GUID name
@@ -120,6 +121,8 @@ class IngestFlow(FlowSpec):
             updated: int = sum([r.rowcount for r in results])
             if errors:
                 log.error(f'{len(errors)} errors ingesting page {n}: {errors}')
+            if warnings:
+                log.warning(f'{len(warnings)} warnings ingesting page {n}: {warnings}')
 
             db.commit()
         log.success(f'Ingested page {n} with {updated} assets')
