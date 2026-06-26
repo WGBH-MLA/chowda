@@ -20,6 +20,7 @@ dependencies = [
     "psycopg2-binary~=2.9",
     "metaflow @ git+https://github.com/WGBH-MLA/metaflow@1870b102db5dc2659b6430c8651f79350fd436be",
     "alembic~=1.13",
+    "alembic-postgresql-enum>=1.10.0",
     "python-dotenv~=1.0",
     "itsdangerous~=2.2",
     "httpx~=0.27",
@@ -34,7 +35,6 @@ dev = [
     "ruff>=0.15.12",
     "pre-commit>=4.6.0",
     "rich>=15.0.0",
-    "alembic-postgresql-enum>=1.10.0",
 ]
 [project.optional-dependencies]
 production = ["uvicorn[standard]~=0.32", "gunicorn~=25.0"]

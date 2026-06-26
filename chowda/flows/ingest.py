@@ -95,14 +95,31 @@ class IngestFlow(FlowSpec):
             for asset in media:
                 try:
                     results.append(db.exec(upsert(SonyCiAsset, asset, ['id'])))
-                    # If the name doesn't start with cpb-aacip-*
-                    if not search('^cpb[-_/]aacip[-_/][0-9a-z-]*\.mp[34]', asset.name):
+                    # If the asset type is not Video or Audio, skip it
+                    if AssetType(asset.type) not in asset_types:
+                        log.debug('Skipping non-media asset: ', asset.id, asset.name, asset.type)
+                        continue
+                    # If the name doesn't end with .mp3 or .mp4, skip
+                    if not search(r'\.mp[34]$', asset.name):
+                        log.debug('Skipping non mp3/mp4 asset: ', asset.id, asset.name, asset.type)
+                        continue
+                    # If the name doesn't match the guid pattern, log a warning and skip it
+                    if not search(r'^cpb[-_/]aacip[-_/].*\.mp[34]$', asset.name):
                         log.warning('Non-guid filename: ', asset.id, asset.name)
                         warnings.append(('non-guid', asset.id, asset.name))
                         continue
                     # It's a MediaFile!
-                    # Extract the GUID name
-                    guid = split(r'_|\.|-dupe', asset.name)[0]
+                    # Replace '_' and '/' with '-' in the name, and remove '-dupe' if present
+                    name = asset.name[10:-4]
+                    ext = asset.name[-4:]
+                    # if search(r'[_/]', name[:5]):
+                    #     log.warning('replacing _ or / with - in guid portion of filename: ', asset.id, asset.name)
+                    #     pos = search(r'[_/]', name[:5]).start()
+                    #     name = name[:pos] + '-' + name[pos+1:]
+                    name = name.replace('-dupe', '').replace('.mp4', '').replace('.mp3', '')
+                    name = split(r"_|\.", name)[0]
+                    # Should be just a the ID now
+                    guid = f'cpb-aacip-{name}'
                     # Check for existing MediaFile
                     media_file = db.exec(
                         select(MediaFile).where(MediaFile.guid == guid)

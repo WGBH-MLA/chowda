@@ -53,6 +53,7 @@ class AssetType(enum.Enum):
     Document = 'Document'
     TimedText = 'TimedText'
     Other = 'Other'
+    NoneType = None
 
 
 class ThumbnailType(enum.Enum):
