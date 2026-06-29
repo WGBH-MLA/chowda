@@ -98,15 +98,18 @@ class IngestFlow(FlowSpec):
                     # If the asset type is not Video or Audio, skip it
                     if AssetType(asset.type) not in asset_types:
                         log.debug('Skipping non-media asset: ', asset.id, asset.name, asset.type)
+                        db.commit()
                         continue
                     # If the name doesn't end with .mp3 or .mp4, skip
                     if not search(r'\.mp[34]$', asset.name):
                         log.debug('Skipping non mp3/mp4 asset: ', asset.id, asset.name, asset.type)
+                        db.commit()
                         continue
                     # If the name doesn't match the guid pattern, log a warning and skip it
                     if not search(r'^cpb[-_/]aacip[-_/].*\.mp[34]$', asset.name):
                         log.warning('Non-guid filename: ', asset.id, asset.name)
                         warnings.append(('non-guid', asset.id, asset.name))
+                        db.commit()
                         continue
                     # It's a MediaFile!
                     # Replace '_' and '/' with '-' in the name, and remove '-dupe' if present
@@ -132,6 +135,7 @@ class IngestFlow(FlowSpec):
                     # Add the asset to the existing MediaFile
                     media_file.assets.append(ci_asset)
                     db.add(media_file)
+                    db.commit()
                 except Exception as e:
                     log.error(f'Error ingesting asset {asset.id}: {e}')
                     errors.append((asset, e))
@@ -141,7 +145,6 @@ class IngestFlow(FlowSpec):
             if warnings:
                 log.warning(f'{len(warnings)} warnings ingesting page {n}: {warnings}')
 
-            db.commit()
         log.success(f'Ingested page {n} with {updated} assets')
         return {'updated': updated, 'errors': errors}
 
