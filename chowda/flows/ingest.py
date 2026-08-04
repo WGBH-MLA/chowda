@@ -21,7 +21,7 @@ class IngestFlow(FlowSpec):
         self.ci = SonyCi(**SonyCi.from_env())
         self.ci.login()
         # Asset ingest
-        self.asset_count = self.get_asset_count() // 10000
+        self.asset_count = self.get_asset_count()
         log.success(f'Get asset count: {self.asset_count}')
         # With this worker scaling, 300k assets would use 34 workers with 89 pages each
         # 1M assets would use 62 workers with 161 pages each.
@@ -61,6 +61,10 @@ class IngestFlow(FlowSpec):
         self.updated = [i.updated for i in inputs]
         self.errors = [len(i.errors) for i in inputs]
         log.success(f'Joined {len(self.updated)} threads')
+        if sum(self.errors):
+            log.error(f'Encountered {sum(self.errors)} errors: {self.errors}')
+        else:
+            log.success('No errors encountered!')
         self.next(self.trashbin_start)
 
     @secrets(sources=['CLAMS-SonyCi-API'])
@@ -90,7 +94,9 @@ class IngestFlow(FlowSpec):
         from chowda.models import SonyCiTrashbin, SonyCiAsset
         from chowda.utils import upsert
         from sqlmodel import Session
+        self.ingested = 0
         self.trashed = 0
+        self.errors = []
         for page in self.input:
             log.info(f'Ingesting trashbin page {page}')
             
@@ -98,31 +104,48 @@ class IngestFlow(FlowSpec):
             log.info(f'Ingesting {len(trashbin)} trashbin items')
             with Session(engine) as db:
                 for item in trashbin:
-                    db.exec(upsert(SonyCiTrashbin, SonyCiTrashbin(**item), ['id']))
-                    # If the item is an existing SonyCiAsset, remove it from the SonyCiAsset table
-                    if db.get(SonyCiAsset, item['id']):
-                        db.delete(db.get(SonyCiAsset, item['id']))
-                        self.trashed += 1
-                db.commit()
-        log.success(f'Ingested {len(trashbin)} trashbin items, trashed {self.trashed} assets')
+                    try:
+                        db.exec(upsert(SonyCiTrashbin, SonyCiTrashbin(**item), ['id']))
+                        self.ingested += 1
+                        # If the item is an existing SonyCiAsset, remove it from the SonyCiAsset table
+                        if db.get(SonyCiAsset, item['id']):
+                            db.delete(db.get(SonyCiAsset, item['id']))
+                            self.trashed += 1
+                        db.commit()
+                    except Exception as e:
+                        log.error(f'Error ingesting trashbin item {item["id"]}: {e}')
+                        self.errors.append((item['id'], e))
+        log.success(f'Ingested {self.ingested} trashbin items, trashed {self.trashed} assets')
         self.next(self.join_trashbin)
 
     @step
     def join_trashbin(self, inputs):
         """Join all trashbin threads."""
-        self.trashed = sum(i.trashed for i in inputs)
+        self.ingested = [i.ingested for i in inputs]
+        self.trashed = [i.trashed for i in inputs]
+        self.errors = [len(i.errors) for i in inputs]
+        if sum(self.errors):
+            log.error(f'Encountered {sum(self.errors)} errors')
+            log.debug(self.errors)
+        else:
+            log.success('No errors encountered!')
         self.next(self.end)
     @step
     def end(self):
         """Report results"""
-        log.success(f'Successfully ingested {sum(self.updated)} assets')
-        log.debug(self.updated)
+        log.debug(f'ingested: {self.ingested}')
+        if sum(self.ingested):
+            log.success(f'Successfully ingested {sum(self.ingested)} trashbin items')
+        log.debug(f'trashed: {self.trashed}')
+        if sum(self.trashed):
+            log.success(f'Successfully trashed {sum(self.trashed)} assets')
+        log.debug(f'errors: {self.errors}')
         if sum(self.errors):
-            log.error(f'Encountered {sum(self.errors)} errors: {self.errors}')
+            log.warning(f'Encountered {sum(self.errors)} errors')
         else:
             log.success('No errors encountered!')
 
-    def get_asset_count(self, path='contents'):
+    def get_asset_count(self, path='contents') -> int:
         return self.ci.get(
             f'workspaces/{self.ci.workspace_id}/{path}?kind=asset&limit=1'
         )['count']
