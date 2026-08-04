@@ -19,9 +19,9 @@ class IngestFlow(FlowSpec):
         from chowda.utils import chunks_sequential
 
         self.ci = SonyCi(**SonyCi.from_env())
-        self.asset_count = self.ci.get(
-            f'workspaces/{self.ci.workspace_id}/contents?kind=asset&limit=1'
-        )['count']
+        self.ci.login()
+        # Asset ingest
+        self.asset_count = self.get_asset_count() // 10000
         log.success(f'Get asset count: {self.asset_count}')
         # With this worker scaling, 300k assets would use 34 workers with 89 pages each
         # 1M assets would use 62 workers with 161 pages each.
@@ -31,16 +31,18 @@ class IngestFlow(FlowSpec):
             list(chunk)
             for chunk in chunks_sequential(range(self.asset_count // 100 + 1), workers)
         ]
-        self.next(self.ingest_pages, foreach='chunks')
+        self.next(self.ingest_assets, foreach='chunks')
 
-    @secrets(sources=['CLAMS-SonyCi-API', 'CLAMS-chowda-secret'])
+    @secrets(sources=['CLAMS-SonyCi-API', 
+                    #   'CLAMS-chowda-secret'
+                      ])
     @step
-    def ingest_pages(self):
+    def ingest_assets(self):
         """Ingest a batch of asset pages"""
         log.info(f'Ingest pages {self.input}')
         page_results = []
         for page in self.input:
-            page_results.append(self.batch_ingest_page(page))
+            page_results.append(self.batch_ingest_assets_page(page))
         self.updated: int = sum([r.get('updated', 0) for r in page_results])
         self.errors: list = [r.get('errors', []) for r in page_results]
         self.errors = [
@@ -51,16 +53,65 @@ class IngestFlow(FlowSpec):
                 f'Encountered {len(self.errors)} errors ingesting batch {self.input}'
             )
         log.success(f'Ingested batch {self.input} with {self.updated} assets')
-        self.next(self.join)
+        self.next(self.join_assets)
 
     @step
-    def join(self, inputs):
+    def join_assets(self, inputs):
         """Join all threads."""
         self.updated = [i.updated for i in inputs]
         self.errors = [len(i.errors) for i in inputs]
         log.success(f'Joined {len(self.updated)} threads')
-        self.next(self.end)
+        self.next(self.trashbin_start)
 
+    @secrets(sources=['CLAMS-SonyCi-API'])
+    @step
+    def trashbin_start(self):
+        from chowda.utils import chunks_sequential
+        from sonyci import SonyCi
+        
+        self.ci = SonyCi(**SonyCi.from_env())
+        self.ci.login()
+
+        # Trashbin ingest
+        trashbin_count = self.get_asset_count('trashbin')
+        log.success(f'Get trashbin count: {trashbin_count}')
+        workers = int(trashbin_count**0.5 // 16 + 1)
+        log.info(f'Using {workers} workers to ingest {trashbin_count} trashbin items')
+        self.trashbin_chunks = [
+            list(chunk)
+            for chunk in chunks_sequential(range(trashbin_count // 100 + 1), workers)
+        ]
+        self.next(self.ingest_trashbin_batch, foreach='trashbin_chunks')
+
+    @step
+    def ingest_trashbin_batch(self):
+        """Ingest a batch of trashbin items"""
+        from chowda.db import engine
+        from chowda.models import SonyCiTrashbin, SonyCiAsset
+        from chowda.utils import upsert
+        from sqlmodel import Session
+        self.trashed = 0
+        for page in self.input:
+            log.info(f'Ingesting trashbin page {page}')
+            
+            trashbin = self.get_page(page, path='trashbin')
+            log.info(f'Ingesting {len(trashbin)} trashbin items')
+            with Session(engine) as db:
+                for item in trashbin:
+                    db.exec(upsert(SonyCiTrashbin, SonyCiTrashbin(**item), ['id']))
+                    # If the item is an existing SonyCiAsset, remove it from the SonyCiAsset table
+                    if db.get(SonyCiAsset, item['id']):
+                        db.delete(db.get(SonyCiAsset, item['id']))
+                        self.trashed += 1
+                db.commit()
+        log.success(f'Ingested {len(trashbin)} trashbin items, trashed {self.trashed} assets')
+        self.next(self.join_trashbin)
+
+    @step
+    def join_trashbin(self, inputs):
+        """Join all trashbin threads."""
+        self.trashed = sum(i.trashed for i in inputs)
+        self.next(self.end)
     @step
     def end(self):
         """Report results"""
@@ -71,12 +122,17 @@ class IngestFlow(FlowSpec):
         else:
             log.success('No errors encountered!')
 
-    def get_batch(self, n):
+    def get_asset_count(self, path='contents'):
         return self.ci.get(
-            f'workspaces/{self.ci.workspace_id}/contents?kind=asset&limit=100&offset={n*100}'
+            f'workspaces/{self.ci.workspace_id}/{path}?kind=asset&limit=1'
+        )['count']
+
+    def get_page(self, page, path='contents', limit=100):
+        return self.ci.get(
+            f'workspaces/{self.ci.workspace_id}/{path}?kind=asset&limit={limit}&offset={page*limit}'
         )['items']
 
-    def batch_ingest_page(self, n):
+    def batch_ingest_assets_page(self, n):
         from re import search, split
 
         from sqlmodel import Session, select
@@ -85,7 +141,7 @@ class IngestFlow(FlowSpec):
         from chowda.models import MediaFile, SonyCiAsset
         from chowda.utils import upsert
 
-        batch = self.get_batch(n)
+        batch = self.get_page(n)
         media = [SonyCiAsset(**asset) for asset in batch]
         results: list = []
         errors: list = []
@@ -119,7 +175,6 @@ class IngestFlow(FlowSpec):
                     #     log.warning('replacing _ or / with - in guid portion of filename: ', asset.id, asset.name)
                     #     pos = search(r'[_/]', name[:5]).start()
                     #     name = name[:pos] + '-' + name[pos+1:]
-                    name = name.replace('-dupe', '').replace('.mp4', '').replace('.mp3', '')
                     name = split(r"_|\.", name)[0]
                     # Should be just a the ID now
                     guid = f'cpb-aacip-{name}'

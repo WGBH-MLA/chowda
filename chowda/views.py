@@ -32,7 +32,14 @@ from chowda.fields import (
     SuccessfulField,
 )
 from chowda.log import log
-from chowda.models import MMIF, Batch, Collection, MediaFile, SonyCiAsset
+from chowda.models import (
+    MMIF,
+    Batch,
+    Collection,
+    MediaFile,
+    SonyCiAsset,
+    SonyCiTrashbin,
+)
 from chowda.routers.sony_ci import sync_history
 from chowda.utils import download_mmif, get_duplicates, validate_media_file_guids, yes
 from templates import filters  # noqa: F401
@@ -583,6 +590,21 @@ class SonyCiAssetView(AdminModelView):
 
     def can_create(self, request: Request) -> bool:
         """Sony Ci Assets are ingested from Sony Ci API, not created from the UI."""
+        return False
+
+
+class SonyCiTrashbinView(AdminModelView):
+    fields: ClassVar[list[Any]] = [
+        SonyCiAssetThumbnail(),
+        'media_files',
+        *SonyCiTrashbin.model_fields,
+    ]
+    row_actions: ClassVar[list[Any]] = ['view', 'edit']
+
+    page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
+
+    def can_create(self, request: Request) -> bool:
+        """Trashbin entries are ingested from Sony Ci API, not created from the UI."""
         return False
 
 

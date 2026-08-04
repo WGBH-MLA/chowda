@@ -131,6 +131,7 @@ class MediaFile(SQLModel, table=True):
     guid: Optional[str] = Field(primary_key=True, default=None, index=True)
     mmifs: List['MMIF'] = Relationship(back_populates='media_file')
     assets: List['SonyCiAsset'] = Relationship(back_populates='media_files')
+    trashbin: List['SonyCiTrashbin'] = Relationship(back_populates='media_files')
     collections: List['Collection'] = Relationship(
         back_populates='media_files', link_model=MediaFileCollectionLink
     )
@@ -257,60 +258,66 @@ class SonyCiUploadTransferType(enum.Enum):
     WorkspaceSend = 'WorkspaceSend'
 
 
-class SonyCiAsset(SQLModel, table=True):
-    """SonyCiAsset model"""
+class SonyCiAssetBase(SQLModel):
+    """Shared columns for SonyCi assets and trashbin entries.
 
-    __tablename__ = 'sonyci_assets'
+    Non-table base mixin. Uses ``sa_type`` (not ``sa_column``) so each concrete
+    table subclass gets its own Column instances. Relationships are declared on
+    the subclasses, since a Column/relationship belongs to a single mapper.
+    """
+
     id: Optional[str] = Field(primary_key=True, index=True, default=None)
     name: str = Field(index=True)
-    size: int = Field(sa_column=Column(postgresql.BIGINT))
+    size: int = Field(sa_type=postgresql.BIGINT)
     createdOn: Optional[datetime] = Field(default=None, index=True)
+    createdBy: Optional[Dict[str, Any]] = Field(default=None, sa_type=JSON)
     modifiedOn: Optional[datetime] = Field(default=None, index=True)
-    type: Optional[AssetType] = Field(sa_column=Column(Enum(AssetType), default=None))
+    lastActivityOn: Optional[datetime] = Field(default=None, index=True)
+    acquisitionSource: Optional[Dict[str, Any]] = Field(default=None, sa_type=JSON)
+    type: Optional[AssetType] = Field(default=None, sa_type=Enum(AssetType))
     format: Optional[str] = Field(default=None, index=True)
-    folder: Optional[Dict[str, Any]] = Field(default=None, sa_column=Column(JSON))
+    folder: Optional[Dict[str, Any]] = Field(default=None, sa_type=JSON)
     md5Checksum: Optional[str] = Field(default=None, index=True)
     status: Optional[SonyCiAssetStatus] = Field(
-        sa_column=Column(Enum(SonyCiAssetStatus), default=None)
+        default=None, sa_type=Enum(SonyCiAssetStatus)
     )
-    archive_status: Optional[SonyCiArchiveStatus] = Field(
-        sa_column=Column(Enum(SonyCiArchiveStatus), default=None)
+    archiveStatus: Optional[SonyCiArchiveStatus] = Field(
+        default=None, sa_type=Enum(SonyCiArchiveStatus)
     )
-    restore_status: Optional[SonyCiRestoreStatus] = Field(
-        sa_column=Column(Enum(SonyCiRestoreStatus), default=None)
+    restoreStatus: Optional[SonyCiRestoreStatus] = Field(
+        default=None, sa_type=Enum(SonyCiRestoreStatus)
     )
-    isDeleted: Optional[bool] = Field(default=None, index=True)
     isTrashed: Optional[bool] = Field(default=None, index=True)
     runtime: Optional[float] = Field(default=None, index=True)
-    lastActivityOn: Optional[datetime] = Field(default=None, index=True)
+    totalFolderCount: Optional[int] = Field(default=None, index=True)
+    asset_metadata: Optional[List[Dict[str, Any]]] = Field(
+        default=None, sa_type=postgresql.ARRAY(JSON)
+    )
     uploadCompleteDate: Optional[datetime] = Field(default=None, index=True)
     uploadTransferType: Optional[SonyCiUploadTransferType] = Field(
-        sa_column=Column(Enum(SonyCiUploadTransferType), default=None)
+        default=None, sa_type=Enum(SonyCiUploadTransferType)
     )
     hasPlayableProxies: Optional[bool] = Field(default=None, index=True)
     generatingPlayableProxies: Optional[bool] = Field(default=None, index=True)
     thumbnails: Optional[List[Dict[str, Any]]] = Field(
-        sa_column=Column(postgresql.ARRAY(JSON)), default=None
+        default=None, sa_type=postgresql.ARRAY(JSON)
     )
     proxies: Optional[List[Dict[str, Any]]] = Field(
-        sa_column=Column(postgresql.ARRAY(JSON)), default=None
+        default=None, sa_type=postgresql.ARRAY(JSON)
     )
     filmstrips: Optional[List[Dict[str, Any]]] = Field(
-        sa_column=Column(postgresql.ARRAY(JSON)), default=None
+        default=None, sa_type=postgresql.ARRAY(JSON)
     )
-    technicalMetadata: Optional[Dict[str, Any]] = Field(
-        sa_column=Column(JSON), default=None
-    )
+    technicalMetadata: Optional[Dict[str, Any]] = Field(default=None, sa_type=JSON)
     technicalMetadataUpdates: Optional[Dict[str, Any]] = Field(
-        sa_column=Column(JSON), default=None
+        default=None, sa_type=JSON
     )
     waveforms: Optional[List[Dict[str, Any]]] = Field(
-        sa_column=Column(postgresql.ARRAY(JSON)), default=None
+        default=None, sa_type=postgresql.ARRAY(JSON)
     )
     media_file_id: Optional[str] = Field(
         default=None, foreign_key='media_files.guid', index=True
     )
-    media_files: Optional[MediaFile] = Relationship(back_populates='assets')
 
     @property
     def thumbnails_by_type(self):
@@ -318,6 +325,26 @@ class SonyCiAsset(SQLModel, table=True):
 
     async def __admin_repr__(self, request: Request):
         return self.name
+
+
+class SonyCiAsset(SonyCiAssetBase, table=True):
+    """SonyCiAsset model"""
+
+    __tablename__ = 'sonyci_assets'
+
+    media_files: Optional[MediaFile] = Relationship(back_populates='assets')
+
+
+class SonyCiTrashbin(SonyCiAssetBase, table=True):
+    """A SonyCiAsset that has been trashed in SonyCi."""
+
+    __tablename__ = 'sonyci_trashbin'
+
+    statusDescription: Optional[Dict[str, Any]] = Field(default=None, sa_type=JSON)
+    trashedOn: Optional[datetime] = Field(default=None, index=True)
+
+    media_files: Optional[MediaFile] = Relationship(back_populates='trashbin')
+
 
 
 class Collection(SQLModel, table=True):
