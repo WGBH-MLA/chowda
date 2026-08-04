@@ -248,6 +248,7 @@ class SonyCiUploadTransferType(enum.Enum):
     - Copy
     - FTP
     - WorkspaceSend
+    - ClipFromSource
     """
 
     SinglepartHttp = 'SinglepartHttp'
@@ -256,6 +257,12 @@ class SonyCiUploadTransferType(enum.Enum):
     Copy = 'Copy'
     FTP = 'FTP'
     WorkspaceSend = 'WorkspaceSend'
+    ClipFromSource = 'ClipFromSource'
+
+
+def _enum_values(enum_cls):
+    """Store enum values (not member names) in the DB enum type."""
+    return [member.value for member in enum_cls]
 
 
 class SonyCiAssetBase(SQLModel):
@@ -278,14 +285,17 @@ class SonyCiAssetBase(SQLModel):
     format: Optional[str] = Field(default=None, index=True)
     folder: Optional[Dict[str, Any]] = Field(default=None, sa_type=JSON)
     md5Checksum: Optional[str] = Field(default=None, index=True)
+    # SonyCi returns the enum *values* (e.g. 'Not archived'); table models skip
+    # validation, so those raw strings are stored as-is. values_callable makes
+    # the DB enum store values instead of member names so they round-trip.
     status: Optional[SonyCiAssetStatus] = Field(
-        default=None, sa_type=Enum(SonyCiAssetStatus)
+        default=None, sa_type=Enum(SonyCiAssetStatus, values_callable=_enum_values)
     )
     archiveStatus: Optional[SonyCiArchiveStatus] = Field(
-        default=None, sa_type=Enum(SonyCiArchiveStatus)
+        default=None, sa_type=Enum(SonyCiArchiveStatus, values_callable=_enum_values)
     )
     restoreStatus: Optional[SonyCiRestoreStatus] = Field(
-        default=None, sa_type=Enum(SonyCiRestoreStatus)
+        default=None, sa_type=Enum(SonyCiRestoreStatus, values_callable=_enum_values)
     )
     isTrashed: Optional[bool] = Field(default=None, index=True)
     runtime: Optional[float] = Field(default=None, index=True)
