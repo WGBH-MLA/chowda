@@ -16,7 +16,7 @@ dependencies = [
     "starlette-admin~=0.14",
     "sqlmodel~=0.0",
     "pydantic[email]~=2.12",
-    "sonyci~=0.6",
+    "sonyci~=0.7",
     "psycopg2-binary~=2.9",
     "metaflow @ git+https://github.com/WGBH-MLA/metaflow@1870b102db5dc2659b6430c8651f79350fd436be",
     "alembic~=1.13",
@@ -123,6 +123,3 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-root = ""
-
-# [tool.uv.sources]
-# metaflow = { path = "../metaflow", editable = true }
