@@ -16,7 +16,7 @@ dependencies = [
     "starlette-admin~=0.14",
     "sqlmodel~=0.0",
     "pydantic[email]~=2.12",
-    "sonyci @ git+https://github.com/WGBH-MLA/sonyci@12a066238cf4b6af0c828ba1bf65d05244874c86",
+    "sonyci @ git+https://github.com/WGBH-MLA/sonyci@ae89c6c4e7db41b8681a593f8df58b5a68167975",
     "psycopg2-binary~=2.9",
     "metaflow @ git+https://github.com/WGBH-MLA/metaflow@4958cc781dc27cbb65873c03378e04a18a110808",
     "alembic~=1.13",

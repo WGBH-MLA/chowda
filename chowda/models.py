@@ -356,7 +356,6 @@ class SonyCiTrashbin(SonyCiAssetBase, table=True):
     media_files: Optional[MediaFile] = Relationship(back_populates='trashbin')
 
 
-
 class Collection(SQLModel, table=True):
     __tablename__ = 'collections'
     id: Optional[int] = Field(primary_key=True, default=None)

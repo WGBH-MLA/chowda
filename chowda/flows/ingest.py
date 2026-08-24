@@ -25,7 +25,7 @@ class IngestFlow(FlowSpec):
         log.success(f'Get asset count: {self.asset_count}')
         # With this worker scaling, 300k assets would use 34 workers with 89 pages each
         # 1M assets would use 62 workers with 161 pages each.
-        workers = int(self.asset_count**0.5 // 16 + 1)
+        workers = int(self.asset_count**0.5 // 20 + 1)
         log.info(f'Using {workers} workers to ingest {self.asset_count} assets')
         self.chunks = [
             list(chunk)
@@ -33,9 +33,7 @@ class IngestFlow(FlowSpec):
         ]
         self.next(self.ingest_assets, foreach='chunks')
 
-    @secrets(sources=['CLAMS-SonyCi-API', 
-                      'CLAMS-chowda-secret'
-                      ])
+    @secrets(sources=['CLAMS-SonyCi-API', 'CLAMS-chowda-secret'])
     @step
     def ingest_assets(self):
         """Ingest a batch of asset pages"""
@@ -60,7 +58,8 @@ class IngestFlow(FlowSpec):
         """Join all threads."""
         self.updated = [i.updated for i in inputs]
         self.errors = [len(i.errors) for i in inputs]
-        log.success(f'Joined {len(self.updated)} threads')
+        log.info(f'Joined {len(self.updated)} threads')
+        log.success(f'Successfully ingested {sum(self.updated)} assets')
         if sum(self.errors):
             log.error(f'Encountered {sum(self.errors)} errors: {self.errors}')
         else:
@@ -72,7 +71,7 @@ class IngestFlow(FlowSpec):
     def trashbin_start(self):
         from chowda.utils import chunks_sequential
         from sonyci import SonyCi
-        
+
         self.ci = SonyCi(**SonyCi.from_env())
         self.ci.login()
 
@@ -87,9 +86,7 @@ class IngestFlow(FlowSpec):
         ]
         self.next(self.ingest_trashbin_batch, foreach='trashbin_chunks')
 
-    @secrets(sources=['CLAMS-SonyCi-API', 
-                      'CLAMS-chowda-secret'
-                      ])
+    @secrets(sources=['CLAMS-SonyCi-API', 'CLAMS-chowda-secret'])
     @step
     def ingest_trashbin_batch(self):
         """Ingest a batch of trashbin items"""
@@ -97,12 +94,13 @@ class IngestFlow(FlowSpec):
         from chowda.models import SonyCiTrashbin, SonyCiAsset
         from chowda.utils import upsert
         from sqlmodel import Session
+
         self.ingested = 0
         self.trashed = 0
         self.errors = []
         for page in self.input:
             log.info(f'Ingesting trashbin page {page}')
-            
+
             trashbin = self.get_page(page, path='trashbin')
             log.info(f'Ingesting {len(trashbin)} trashbin items')
             with Session(engine) as db:
@@ -118,7 +116,9 @@ class IngestFlow(FlowSpec):
                     except Exception as e:
                         log.error(f'Error ingesting trashbin item {item["id"]}: {e}')
                         self.errors.append((item['id'], e))
-        log.success(f'Ingested {self.ingested} trashbin items, trashed {self.trashed} assets')
+        log.success(
+            f'Ingested {self.ingested} trashbin items, trashed {self.trashed} assets'
+        )
         self.next(self.join_trashbin)
 
     @step
@@ -133,6 +133,7 @@ class IngestFlow(FlowSpec):
         else:
             log.success('No errors encountered!')
         self.next(self.end)
+
     @step
     def end(self):
         """Report results"""
@@ -179,12 +180,22 @@ class IngestFlow(FlowSpec):
                     results.append(db.exec(upsert(SonyCiAsset, asset, ['id'])))
                     # If the asset type is not Video or Audio, skip it
                     if AssetType(asset.type) not in asset_types:
-                        log.debug('Skipping non-media asset: ', asset.id, asset.name, asset.type)
+                        log.debug(
+                            'Skipping non-media asset: ',
+                            asset.id,
+                            asset.name,
+                            asset.type,
+                        )
                         db.commit()
                         continue
                     # If the name doesn't end with .mp3 or .mp4, skip
                     if not search(r'\.mp[34]$', asset.name):
-                        log.debug('Skipping non mp3/mp4 asset: ', asset.id, asset.name, asset.type)
+                        log.debug(
+                            'Skipping non mp3/mp4 asset: ',
+                            asset.id,
+                            asset.name,
+                            asset.type,
+                        )
                         db.commit()
                         continue
                     # SonyCi filenames sometimes carry a leading BOM (U+FEFF), which
@@ -199,7 +210,7 @@ class IngestFlow(FlowSpec):
                     # It's a MediaFile!
                     # Replace '_' and '/' with '-' in the name, and remove '-dupe' if present
                     name = filename[10:-4]
-                    ext = filename[-4:]
+                    # ext = filename[-4:]
                     # if search(r'[_/]', name[:5]):
                     #     log.warning('replacing _ or / with - in guid portion of filename: ', asset.id, asset.name)
                     #     pos = search(r'[_/]', name[:5]).start()
