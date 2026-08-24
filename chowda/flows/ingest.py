@@ -187,16 +187,19 @@ class IngestFlow(FlowSpec):
                         log.debug('Skipping non mp3/mp4 asset: ', asset.id, asset.name, asset.type)
                         db.commit()
                         continue
+                    # SonyCi filenames sometimes carry a leading BOM (U+FEFF), which
+                    # breaks the anchored guid match and the fixed-index slice below.
+                    filename = asset.name.replace('\ufeff', '').strip()
                     # If the name doesn't match the guid pattern, log a warning and skip it
-                    if not search(r'^cpb[-_/]aacip[-_/].*\.mp[34]$', asset.name):
+                    if not search(r'^cpb[-_/]aacip[-_/].*\.mp[34]$', filename):
                         log.warning('Non-guid filename: ', asset.id, asset.name)
                         warnings.append(('non-guid', asset.id, asset.name))
                         db.commit()
                         continue
                     # It's a MediaFile!
                     # Replace '_' and '/' with '-' in the name, and remove '-dupe' if present
-                    name = asset.name[10:-4]
-                    ext = asset.name[-4:]
+                    name = filename[10:-4]
+                    ext = filename[-4:]
                     # if search(r'[_/]', name[:5]):
                     #     log.warning('replacing _ or / with - in guid portion of filename: ', asset.id, asset.name)
                     #     pos = search(r'[_/]', name[:5]).start()
