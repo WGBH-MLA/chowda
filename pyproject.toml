@@ -5,20 +5,20 @@ repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project]
 name = 'chowda'
-version = "0.6.0"
+version = "0.7.0"
 description = 'A CLAMS processing application'
 authors = [{ name = 'WGBH-MLA', email = 'ryan_harbert@wgbh.org' }]
 requires-python = '>=3.10,<4.0'
 readme = 'README.md'
 license = "MIT"
 dependencies = [
-    "fastapi~=0.115",
+    "fastapi>=0.141.1",
     "starlette-admin~=0.14",
     "sqlmodel~=0.0",
     "pydantic[email]~=2.12",
-    "sonyci @ git+https://github.com/WGBH-MLA/sonyci@ae89c6c4e7db41b8681a593f8df58b5a68167975",
+    "sonyci>=0.8.0,<0.9",
     "psycopg2-binary~=2.9",
-    "metaflow @ git+https://github.com/WGBH-MLA/metaflow@4958cc781dc27cbb65873c03378e04a18a110808",
+    "metaflow>=2.19.31,<2.20",
     "alembic~=1.13",
     "alembic-postgresql-enum>=1.10.0",
     "python-dotenv~=1.0",
@@ -44,7 +44,6 @@ test = [
     "pytest-cov~=7.0",
     "pytest-sugar~=1.0",
     "pytest-xdist~=3.6",
-    "httpx~=0.27",
     "nbmake~=1.5",
     "vcrpy~=8.0",
     "pytest-vcr~=1.0",
@@ -118,7 +117,7 @@ select = [
 # test = 'pytest'
 
 [build-system]
-requires = ["uv_build>=0.11.8,<0.12.0"]
+requires = ["uv_build>=0.12.5,<0.13"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]

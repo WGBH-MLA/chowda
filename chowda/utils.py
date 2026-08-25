@@ -1,5 +1,5 @@
 from tempfile import TemporaryDirectory
-from typing import Any, Dict, List, Set
+from typing import Any
 
 from psycopg2.extensions import QuotedString
 from pydantic import BaseModel
@@ -49,12 +49,12 @@ def chunks_sequential(lst, n):
     """Yield n number of sequential chunks from lst."""
     d, r = divmod(len(lst), n)
     for i in range(n):
-        si = (d + 1) * (i if i < r else r) + d * (0 if i < r else i - r)
+        si = (d + 1) * (min(r, i)) + d * (0 if i < r else i - r)
         yield lst[si : si + (d + 1 if i < r else d)]
 
 
 # def validate_media_files(view: ModelView, request: Request, data: Dict[str, Any]):
-def validate_media_file_guids(request: Request, data: Dict[str, Any]):
+def validate_media_file_guids(request: Request, data: dict[str, Any]):
     """
     1) Validates MediaFile GUIDs by fetching the MediaFile objects from the database,
     2) Replaces the GUID strings with the found objects in the `data` dict
@@ -106,12 +106,12 @@ def validate_media_file_guids(request: Request, data: Dict[str, Any]):
         request.state.session.add(media_file)
 
 
-def get_duplicates(values: List[Any]) -> Set[Any]:
+def get_duplicates(values: list[Any]) -> set[Any]:
     """Return a set of duplicate values in a list, or an empty set if there are none.
 
     NOTE: This is a fast approach that does not preserve order, but runs in O(n)"""
-    unique: Set = set()
-    duplicates: Set = set()
+    unique: set = set()
+    duplicates: set = set()
     for v in values:
         if v not in unique:
             unique.add(v)
@@ -180,7 +180,7 @@ def download_mmif(pks: list[str]) -> StreamingResponse | FileResponse:
                     MMIF_S3_BUCKET_NAME, mmif.mmif_location, mmif_tmp_location
                 )
                 downloaded_mmif_files.append(mmif_tmp_location)
-            except Exception as ex:
+            except Exception as ex:  # NOQA BLE001
                 # TODO: log errors and notify user of them
                 download_errors[mmif.mmif_location] = ex
     if download_errors:
@@ -197,9 +197,9 @@ def download_mmif(pks: list[str]) -> StreamingResponse | FileResponse:
 
     # Create zip archive
     import io
-    from datetime import datetime
+    from datetime import datetime, timezone
 
-    current_datetime = datetime.now().strftime('%Y-%m-%d_%H%M%S')
+    current_datetime = datetime.now(timezone.utc).strftime('%Y-%m-%d_%H%M%S')
     # TODO: include batch count, or names in the download file name?
     zip_filename = f'chowda_mmif_download.{current_datetime}.zip'
     zip_buffer = io.BytesIO()

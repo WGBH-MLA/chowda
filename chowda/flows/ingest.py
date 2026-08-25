@@ -1,4 +1,4 @@
-from metaflow import FlowSpec, step, trigger, secrets
+from metaflow import FlowSpec, secrets, step, trigger
 
 from chowda.log import log
 from chowda.models import AssetType
@@ -69,8 +69,9 @@ class IngestFlow(FlowSpec):
     @secrets(sources=['CLAMS-SonyCi-API'])
     @step
     def trashbin_start(self):
-        from chowda.utils import chunks_sequential
         from sonyci import SonyCi
+
+        from chowda.utils import chunks_sequential
 
         self.ci = SonyCi(**SonyCi.from_env())
         self.ci.login()
@@ -90,10 +91,11 @@ class IngestFlow(FlowSpec):
     @step
     def ingest_trashbin_batch(self):
         """Ingest a batch of trashbin items"""
-        from chowda.db import engine
-        from chowda.models import SonyCiTrashbin, SonyCiAsset
-        from chowda.utils import upsert
         from sqlmodel import Session
+
+        from chowda.db import engine
+        from chowda.models import SonyCiAsset, SonyCiTrashbin
+        from chowda.utils import upsert
 
         self.ingested = 0
         self.trashed = 0
@@ -113,7 +115,7 @@ class IngestFlow(FlowSpec):
                             db.delete(db.get(SonyCiAsset, item['id']))
                             self.trashed += 1
                         db.commit()
-                    except Exception as e:
+                    except Exception as e:  # NOQA BLE001
                         log.error(f'Error ingesting trashbin item {item["id"]}: {e}')
                         self.errors.append((item['id'], e))
         log.success(
@@ -231,7 +233,7 @@ class IngestFlow(FlowSpec):
                     media_file.assets.append(ci_asset)
                     db.add(media_file)
                     db.commit()
-                except Exception as e:
+                except Exception as e:  # NOQA BLE001
                     log.error(f'Error ingesting asset {asset.id}: {e}')
                     errors.append((asset, e))
             updated: int = sum([r.rowcount for r in results])

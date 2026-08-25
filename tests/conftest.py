@@ -1,12 +1,11 @@
 from json import dumps, loads
 from json.decoder import JSONDecodeError
 from os import environ, path
-from typing import List, Optional, Type
 
 import jwt
 from fastapi import APIRouter
 from fastapi.testclient import TestClient
-from httpx import AsyncClient, ASGITransport
+from httpx import ASGITransport, AsyncClient
 from pytest import fixture
 from starlette.requests import Request
 
@@ -14,10 +13,10 @@ from starlette.requests import Request
 # the application where we need to detect whether we are running tests or not.
 environ['CHOWDA_ENV'] = 'test'
 
-from chowda.app import app  # noqa: E402
-from chowda.auth.utils import jwt_signing_key  # noqa: E402
-from chowda.config import AUTH_API_AUDIENCE  # noqa: E402
-from chowda.db import init_db  # noqa: E402
+from chowda.app import app
+from chowda.auth.utils import jwt_signing_key
+from chowda.config import AUTH_API_AUDIENCE
+from chowda.db import init_db
 
 # Set CI_CONFIG to use ./test/ci.test.toml *only* if it's not already set. We need to be
 # able to set the CI_CONFIG to point to a real SonyCi account and workspace when we are
@@ -84,13 +83,13 @@ def fake_signing_key() -> str:
 
 
 @fixture
-def fake_access_token() -> Type[callable]:
+def fake_access_token() -> type[callable]:
     """
     Returns a factory for generating fake access tokens for testing.
     """
 
     def _fake_access_token(
-        permissions: Optional[List[str]] = None, algorithm: str = 'HS256'
+        permissions: list[str] | None = None, algorithm: str = 'HS256'
     ) -> str:
         if permissions is None:
             permissions = []

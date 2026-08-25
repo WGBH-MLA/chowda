@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
-from typing import Any, Dict
-
+from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_cache import FastAPICache
@@ -18,7 +17,7 @@ sony_ci = APIRouter(tags=['sony-ci'])
 
 
 @cache(namespace='sonyci', expire=30)
-async def sync_history(n: int = 3) -> list[Dict[str, Any]]:
+async def sync_history(n: int = 3) -> list[dict[str, Any]]:
     try:
         flow = Flow('IngestFlow')
 

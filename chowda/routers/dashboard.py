@@ -16,6 +16,6 @@ def sync_now(request: Request) -> Response:
             f'{admin_url}',
             status_code=status.HTTP_303_SEE_OTHER,
         )
-    except Exception as error:
+    except Exception as error:  # NOQA BLE001
         request.session['error'] = str(error)
         return RedirectResponse(f'{admin_url}', status_code=status.HTTP_303_SEE_OTHER)

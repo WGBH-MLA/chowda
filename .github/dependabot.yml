@@ -31,6 +31,18 @@ updates:
   labels:
   - maintenance 🔧
   groups:
+    core:
+      patterns:
+      - fastapi
+      - starlette-admin
+      - pydantic*
+      - sonyci
+      - metaflow
+    database:
+      patterns:
+      - psycopg2*
+      - alembic*
+      - sqlmodel
     dev:
       patterns:
       - black
@@ -49,6 +61,10 @@ updates:
       - pytest*
       - urllib3
       - vcrpy*
+      - factory-boy
+      - nbmake
+      - urllib3
+      - trio
     production:
       patterns:
       - boto3
@@ -57,3 +73,17 @@ updates:
       - kubernetes
       - metaflow
       - uvicorn*
+    utilities:
+      patterns:
+      - python-dotenv
+      - itsdangerous
+      - httpx
+      - fastapi-cache2
+      - pyjwt
+      - authlib
+      - kubernetes
+      - pydantic-factories
+      - locust
+    cli:
+      patterns:
+      - typer

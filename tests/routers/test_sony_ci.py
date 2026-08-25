@@ -1,5 +1,3 @@
-from typing import Type
-
 import pytest
 from httpx import AsyncClient
 from metaflow.plugins.argo.argo_events import ArgoEventException
@@ -10,7 +8,7 @@ from chowda.routers.sony_ci import SyncResponse
 
 @pytest.mark.asyncio
 async def test_sony_ci_sync(
-    mocker: MockerFixture, async_client: AsyncClient, fake_access_token: Type[callable]
+    mocker: MockerFixture, async_client: AsyncClient, fake_access_token: type[callable]
 ):
     mocker.patch('metaflow.integrations.ArgoEvent.publish')
     mocker.patch('fastapi_cache.FastAPICache.clear')
@@ -29,7 +27,7 @@ async def test_sony_ci_sync(
 
 @pytest.mark.asyncio
 async def test_sony_ci_sync_no_permission(
-    async_client: AsyncClient, fake_access_token: Type[callable]
+    async_client: AsyncClient, fake_access_token: type[callable]
 ):
     async with async_client as ac:
         bearer_token = fake_access_token(permissions=['wrong_permission:sonyci'])
@@ -46,7 +44,7 @@ async def test_sony_ci_sync_no_permission(
 
 @pytest.mark.asyncio
 async def test_sony_ci_sync_fail(
-    mocker: MockerFixture, async_client: AsyncClient, fake_access_token: Type[callable]
+    mocker: MockerFixture, async_client: AsyncClient, fake_access_token: type[callable]
 ):
     mocker.patch(
         'metaflow.integrations.ArgoEvent.publish',
