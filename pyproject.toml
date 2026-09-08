@@ -18,7 +18,7 @@ dependencies = [
     "pydantic[email]~=2.12",
     "sonyci>=0.8.0,<0.9",
     "psycopg2-binary~=2.9",
-    "metaflow>=2.19.31,<2.20",
+    "metaflow @ git+https://github.com/WGBH-MLA/metaflow@4958cc781dc27cbb65873c03378e04a18a110808",
     "alembic~=1.13",
     "alembic-postgresql-enum>=1.10.0",
     "python-dotenv~=1.0",
