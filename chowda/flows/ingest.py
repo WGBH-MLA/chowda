@@ -33,7 +33,7 @@ class IngestFlow(FlowSpec):
         ]
         self.next(self.ingest_assets, foreach='chunks')
 
-    @secrets(sources=['CLAMS-SonyCi-API', 'CLAMS-chowda-secret'])
+    @secrets(sources=['CLAMS-SonyCi-API', 'prod/chowda/db'])
     @step
     def ingest_assets(self):
         """Ingest a batch of asset pages"""
@@ -87,7 +87,7 @@ class IngestFlow(FlowSpec):
         ]
         self.next(self.ingest_trashbin_batch, foreach='trashbin_chunks')
 
-    @secrets(sources=['CLAMS-SonyCi-API', 'CLAMS-chowda-secret'])
+    @secrets(sources=['CLAMS-SonyCi-API', 'prod/chowda/db'])
     @step
     def ingest_trashbin_batch(self):
         """Ingest a batch of trashbin items"""
