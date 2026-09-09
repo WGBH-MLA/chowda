@@ -98,11 +98,13 @@ def sony_ci_ids(request) -> dict[str, str]:
     clean()
 
 
-def sony_ci_event(ids: dict[str, str], type: str = 'AssetProcessingFinished') -> dict:
+def sony_ci_event(
+    ids: dict[str, str], event_type: str = 'AssetProcessingFinished'
+) -> dict:
     """A SonyCi webhook event, as sent by the SonyCi notification API."""
     return {
         'id': ids['event'],
-        'type': type,
+        'type': event_type,
         'createdOn': '2026-01-02T00:00:00.000Z',
         'createdBy': {
             'id': 'c460dfc1447f4240b14b2f32ce8d4a5f',
@@ -260,7 +262,7 @@ async def test_sony_ci_event_trash_asset(
     response = await post_event(
         async_client,
         fake_access_token(permissions=['create:event']),
-        sony_ci_event(sony_ci_ids, type='TrashAsset'),
+        sony_ci_event(sony_ci_ids, event_type='TrashAsset'),
     )
 
     assert response.status_code == 200
@@ -290,7 +292,7 @@ async def test_sony_ci_event_delete_asset(
     response = await post_event(
         async_client,
         fake_access_token(permissions=['create:event']),
-        sony_ci_event(sony_ci_ids, type='DeleteAsset'),
+        sony_ci_event(sony_ci_ids, event_type='DeleteAsset'),
     )
 
     assert response.status_code == 200
@@ -335,7 +337,7 @@ async def test_sony_ci_event_unknown_type(
     response = await post_event(
         async_client,
         fake_access_token(permissions=['create:event']),
-        sony_ci_event(sony_ci_ids, type='NotAnEvent'),
+        sony_ci_event(sony_ci_ids, event_type='NotAnEvent'),
     )
 
     assert response.status_code == 422
