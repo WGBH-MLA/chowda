@@ -1,0 +1,3 @@
+#!/bin/bash
+# This script migrates the database to the latest Alembic migration. It will apply all pending migrations in order.
+exec alembic upgrade head

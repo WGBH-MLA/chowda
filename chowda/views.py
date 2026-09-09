@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Any, ClassVar, Dict, List, Set
+from typing import Any, ClassVar
 
 from metaflow.integrations import ArgoEvent
 from multipart.exceptions import MultipartParseError
@@ -32,7 +32,14 @@ from chowda.fields import (
     SuccessfulField,
 )
 from chowda.log import log
-from chowda.models import MMIF, Batch, Collection, MediaFile
+from chowda.models import (
+    MMIF,
+    Batch,
+    Collection,
+    MediaFile,
+    SonyCiAsset,
+    SonyCiTrashbin,
+)
 from chowda.routers.sony_ci import sync_history
 from chowda.utils import download_mmif, get_duplicates, validate_media_file_guids, yes
 from templates import filters  # noqa: F401
@@ -49,11 +56,11 @@ class ChowdaModelView(ModelView):
     additional_css_links: ClassVar[list[str]] = [
         '/static/css/datatables-extensions.min.css',
     ]
-    datatables_options: ClassVar[Dict[str, Any]] = {
+    datatables_options: ClassVar[dict[str, Any]] = {
         # Customize the dom to put the pagination controls above the table.
         # https://datatables.net/reference/option/dom
         # <processing/> <card-header> <info/> <pagination/> </card-header> <table/>
-        'dom': "r<'card-header d-flex align-items-center'<'m-0'i><'m-0 ms-auto'p>><'table-responsive't>",  # noqa E501
+        'dom': "r<'card-header d-flex align-items-center'<'m-0'i><'m-0 ms-auto'p>><'table-responsive't>",
         # Use the bootstrap input plugin for pagination controls.
         # Includes First/Last, Next/Previous, and page number input.
         'pagingType': 'bootstrap_input',
@@ -123,7 +130,7 @@ class CollectionView(ClammerModelView):
         MediaFilesGuidsField('media_files', label='GUIDs'),
     ]
 
-    async def validate(self, request: Request, data: Dict[str, Any]):
+    async def validate(self, request: Request, data: dict[str, Any]):
         validate_media_file_guids(request, data)
 
     @row_action(
@@ -176,7 +183,7 @@ class CollectionView(ClammerModelView):
         icon_class='fa-solid fa-square-plus',
         submit_btn_text=yes(),
     )
-    async def create_multiple_batches(self, request: Request, pks: List[Any]) -> str:
+    async def create_multiple_batches(self, request: Request, pks: list[Any]) -> str:
         """Create multiple batches from the collections"""
         try:
             with Session(engine) as db:
@@ -240,7 +247,7 @@ class BatchView(ClammerModelView):
         'output_mmifs',
     ]
 
-    async def validate(self, request: Request, data: Dict[str, Any]):
+    async def validate(self, request: Request, data: dict[str, Any]):
         validate_media_file_guids(request, data)
 
     async def is_action_allowed(self, request: Request, name: str) -> bool:
@@ -386,7 +393,7 @@ class BatchView(ClammerModelView):
         submit_btn_text=yes(),
         submit_btn_class='btn-outline-primary',
     )
-    async def combine_batches(self, request: Request, pks: List[Any]) -> str:
+    async def combine_batches(self, request: Request, pks: list[Any]) -> str:
         """Merge multiple batches into a new batch"""
         try:
             with Session(engine) as db:
@@ -440,7 +447,7 @@ class BatchView(ClammerModelView):
             all_mmif_pks = [mmif.id for batch in batches for mmif in batch.output_mmifs]
         try:
             return download_mmif(all_mmif_pks)
-        except Exception as error:
+        except Exception as error:  # NOQA BLE001
             # TODO: pop 'error' out of session and display with javascript
             # dangrerAlert() when admin/batch/list renders.
             # See statics/js/alerts.js from starlette-admin.
@@ -457,8 +464,8 @@ class BatchView(ClammerModelView):
 class MediaFileView(ClammerModelView):
     pk_attr: str = 'guid'
 
-    actions: ClassVar[List[str]] = ['create_new_batch']
-    row_actions: ClassVar[List[str]] = ['view', 'edit', 'create_new_batch']
+    actions: ClassVar[list[str]] = ['create_new_batch']
+    row_actions: ClassVar[list[str]] = ['view', 'edit', 'create_new_batch']
 
     fields: ClassVar[list[str]] = [
         'guid',
@@ -554,7 +561,7 @@ class DashboardView(CustomView):
             last_sync = history[0]['created_at']
             delta = datetime.now(last_sync.tzinfo) - last_sync
             sync_disabled = delta < timedelta(minutes=15)
-        except Exception as e:
+        except Exception as e:  # NOQA BLE001
             log.error(f'Error fetching sync history: {e!s}')
             history = []
             last_sync = None
@@ -578,11 +585,8 @@ class DashboardView(CustomView):
 class SonyCiAssetView(AdminModelView):
     fields: ClassVar[list[Any]] = [
         SonyCiAssetThumbnail(),
-        'name',
-        'size',
-        'type',
-        'format',
         'media_files',
+        *SonyCiAsset.model_fields,
     ]
     row_actions: ClassVar[list[Any]] = ['view', 'edit']
 
@@ -590,6 +594,21 @@ class SonyCiAssetView(AdminModelView):
 
     def can_create(self, request: Request) -> bool:
         """Sony Ci Assets are ingested from Sony Ci API, not created from the UI."""
+        return False
+
+
+class SonyCiTrashbinView(AdminModelView):
+    fields: ClassVar[list[Any]] = [
+        SonyCiAssetThumbnail(),
+        'media_files',
+        *SonyCiTrashbin.model_fields,
+    ]
+    row_actions: ClassVar[list[Any]] = ['view', 'edit']
+
+    page_size_options: ClassVar[list[int]] = [10, 25, 100, 500, 2000, 10000]
+
+    def can_create(self, request: Request) -> bool:
+        """Trashbin entries are ingested from Sony Ci API, not created from the UI."""
         return False
 
 
@@ -612,7 +631,7 @@ class MetaflowRunView(AdminModelView):
 
 class MMIFView(ChowdaModelView):
     label: ClassVar[str] = 'MMIFs'
-    fields: ClassVar[List[Any]] = [
+    fields: ClassVar[list[Any]] = [
         'media_file',
         HasMany('batch_inputs', identity='batch', label='Input to Batches'),
         HasOne('batch_output', identity='batch', label='Generated from Batch'),
@@ -620,7 +639,7 @@ class MMIFView(ChowdaModelView):
         'mmif_location',
         'created_at',
     ]
-    actions: ClassVar[List[str]] = [
+    actions: ClassVar[list[str]] = [
         'add_to_new_batch',
         'add_to_existing_batch',
         'download_mmif',
@@ -671,13 +690,13 @@ class MMIFView(ChowdaModelView):
         try:
             data: FormData = await request.form()
             with Session(engine) as db:
-                mmifs: List[MMIF] = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
-                media_files: List[MediaFile] = [mmif.media_file for mmif in mmifs]
-                guids: List[str] = [media_file.guid for media_file in media_files]
-                duplicates: Set = get_duplicates(guids)
+                mmifs: list[MMIF] = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
+                media_files: list[MediaFile] = [mmif.media_file for mmif in mmifs]
+                guids: list[str] = [media_file.guid for media_file in media_files]
+                duplicates: set = get_duplicates(guids)
                 if duplicates:
                     raise ActionFailed(
-                        f'{len(duplicates)} duplicate Media File{"s" if len(duplicates) > 1 else ""} found:<br>'  # noqa: E501
+                        f'{len(duplicates)} duplicate Media File{"s" if len(duplicates) > 1 else ""} found:<br>'
                         + '<br>'.join(duplicates)
                     )
 
@@ -735,27 +754,27 @@ class MMIFView(ChowdaModelView):
         try:
             data: FormData = await request.form()
             with Session(engine) as db:
-                mmifs: List[MMIF] = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
+                mmifs: list[MMIF] = db.exec(select(MMIF).where(MMIF.id.in_(pks))).all()
                 batch: Batch = db.get(Batch, data.get('batch_id'))
-                media_files: List[MediaFile] = [mmif.media_file for mmif in mmifs]
+                media_files: list[MediaFile] = [mmif.media_file for mmif in mmifs]
 
                 # Check for duplicate Media Files in selection
-                guids: List[str] = [media_file.guid for media_file in media_files]
-                duplicates: Set = get_duplicates(guids)
+                guids: list[str] = [media_file.guid for media_file in media_files]
+                duplicates: set = get_duplicates(guids)
                 if duplicates:
                     raise ActionFailed(
-                        f'{len(duplicates)} duplicate Media File{"s" if len(duplicates) > 1 else ""} found in selection:<br>'  # noqa: E501
+                        f'{len(duplicates)} duplicate Media File{"s" if len(duplicates) > 1 else ""} found in selection:<br>'
                         + '<br>'.join(duplicates)
                     )
                 # Check batch input_mmifs for other MMIFs linked to these MediaFiles
-                existing_batch_mmif_guids: Set[str] = {
+                existing_batch_mmif_guids: set[str] = {
                     mmif.media_file.guid for mmif in batch.input_mmifs
                 }
                 existing_media_files = existing_batch_mmif_guids.intersection(guids)
                 if existing_media_files:
                     s = 's' if len(existing_media_files) > 1 else ''
                     raise ActionFailed(
-                        f'{len(existing_media_files)} Media File{s} already exist{"" if s else "s"} in Batch {batch.id}:<br>'  # noqa: E501
+                        f'{len(existing_media_files)} Media File{s} already exist{"" if s else "s"} in Batch {batch.id}:<br>'
                         + '<br>'.join(existing_media_files)
                     )
                 batch.input_mmifs += mmifs

@@ -1,4 +1,4 @@
-from typing import Annotated, List, Set
+from typing import Annotated
 
 from fastapi import Depends, HTTPException, Request, status
 from pydantic import BaseModel
@@ -21,7 +21,7 @@ class OAuthAccessToken(BaseModel):
     """OAuth Authorization token"""
 
     sub: str
-    permissions: List[str] = []
+    permissions: list[str] = []
 
 
 class OAuthUser(BaseModel):
@@ -123,7 +123,7 @@ def verified_access_token(
         ) from exc
 
 
-def permissions(permissions: str | List[str] | Set[str]) -> None:
+def permissions(permissions: str | list[str] | set[str]) -> None:
     """Dependency function to check if token has required permissions.
 
     Args:

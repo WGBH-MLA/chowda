@@ -10,6 +10,8 @@ updates:
     timezone: US/Eastern
   commit-message:
     prefix: ⬆
+  cooldown:
+    default-days: 1
   labels:
   - maintenance 🔧
 
@@ -23,23 +25,65 @@ updates:
     timezone: US/Eastern
   commit-message:
     prefix: ⬆
+  cooldown:
+    default-days: 3
+    semver-major-days: 7
   labels:
   - maintenance 🔧
   groups:
+    core:
+      patterns:
+      - fastapi
+      - starlette-admin
+      - pydantic*
+      - sonyci
+      - metaflow
+    database:
+      patterns:
+      - psycopg2*
+      - alembic*
+      - sqlmodel
     dev:
       patterns:
-      - uv
       - black
       - pre-commit
+      - rich
       - ruff
       - trogon
       - typer
+      - uv
+    docs:
+      patterns:
+      - mkdocs*
+      - mike*
     tests:
       patterns:
       - pytest*
       - urllib3
       - vcrpy*
-    docs:
+      - factory-boy
+      - nbmake
+      - urllib3
+      - trio
+    production:
       patterns:
-      - mkdocs*
-      - mike*
+      - boto3
+      - botocore
+      - gunicorn
+      - kubernetes
+      - metaflow
+      - uvicorn*
+    utilities:
+      patterns:
+      - python-dotenv
+      - itsdangerous
+      - httpx
+      - fastapi-cache2
+      - pyjwt
+      - authlib
+      - kubernetes
+      - pydantic-factories
+      - locust
+    cli:
+      patterns:
+      - typer

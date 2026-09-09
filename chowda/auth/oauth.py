@@ -1,5 +1,3 @@
-from typing import Optional
-
 from authlib.integrations.starlette_client import OAuth
 from starlette.middleware import Middleware
 from starlette.requests import Request
@@ -34,7 +32,7 @@ class OAuthProvider(AuthProvider):
             return True
         return False
 
-    def get_admin_user(self, request: Request) -> Optional[AdminUser]:
+    def get_admin_user(self, request: Request) -> AdminUser | None:
         user = request.state.user
         return AdminUser(
             username=user['name'],
