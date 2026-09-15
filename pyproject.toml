@@ -37,7 +37,7 @@ dev = [
     "rich>=15.0.0",
 ]
 [project.optional-dependencies]
-production = ["uvicorn[standard]~=0.32", "gunicorn~=25.0"]
+production = ["uvicorn[standard]~=0.32", "gunicorn>=25,<27"]
 test = [
     "factory-boy~=3.3",
     "pytest~=9.0",
@@ -63,7 +63,7 @@ docs = [
 ]
 
 locust = ["locust~=2.25", "pydantic-factories~=1.17"]
-k8s = ["kubernetes~=35.0"]
+k8s = ["kubernetes>=35,<37"]
 cli = ["typer>=0.26.7"]
 
 
