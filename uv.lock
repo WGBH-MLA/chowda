@@ -338,7 +338,7 @@ resolution-markers = [
     "python_full_version >= '3.11'",
 ]
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.12'" },
+    { name = "typing-extensions", marker = "python_full_version == '3.11.*'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/16/fd/edb3e88392853aa0e4b84c6ce44b0040ac79ba1e299ed689a9cb762c22b3/bidict-0.24.0.tar.gz", hash = "sha256:3ac3ed76ed1875bd23a5253daa34e7816e7786570d6df8c900c0c64c28634b39", size = 30211, upload-time = "2026-08-25T01:33:09.167Z" }
 wheels = [
@@ -806,7 +806,7 @@ wheels = [
 
 [[package]]
 name = "chowda"
-version = "0.7.0"
+version = "0.8.0"
 source = { editable = "." }
 dependencies = [
     { name = "alembic" },
@@ -907,7 +907,7 @@ requires-dist = [
     { name = "pytest-vcr", marker = "extra == 'test'", specifier = "~=1.0" },
     { name = "pytest-xdist", marker = "extra == 'test'", specifier = "~=3.6" },
     { name = "python-dotenv", specifier = "~=1.0" },
-    { name = "sonyci", specifier = ">=0.8.1" },
+    { name = "sonyci", specifier = ">=0.8.2" },
     { name = "sqlmodel", specifier = "~=0.0" },
     { name = "starlette-admin", specifier = "~=0.14" },
     { name = "trio", marker = "extra == 'test'", specifier = "~=0.26" },
@@ -1248,7 +1248,7 @@ name = "exceptiongroup"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/50/79/66800aadf48771f6b62f7eb014e352e5d06856655206165d775e675a02c9/exceptiongroup-1.3.1.tar.gz", hash = "sha256:8b412432c6055b0b7d14c310000ae93352ed6754f70fa8f7c34141f91c4e3219", size = 30371, upload-time = "2025-11-21T23:01:54.787Z" }
 wheels = [
@@ -1532,10 +1532,10 @@ resolution-markers = [
     "python_full_version < '3.11'",
 ]
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation == 'CPython' and sys_platform == 'win32'" },
-    { name = "greenlet", marker = "platform_python_implementation == 'CPython'" },
-    { name = "zope-event" },
-    { name = "zope-interface" },
+    { name = "cffi", marker = "python_full_version < '3.11' and platform_python_implementation == 'CPython' and sys_platform == 'win32'" },
+    { name = "greenlet", marker = "python_full_version < '3.11' and platform_python_implementation == 'CPython'" },
+    { name = "zope-event", marker = "python_full_version < '3.11'" },
+    { name = "zope-interface", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9e/48/b3ef2673ffb940f980966694e40d6d32560f3ffa284ecaeb5ea3a90a6d3f/gevent-25.9.1.tar.gz", hash = "sha256:adf9cd552de44a4e6754c51ff2e78d9193b7fa6eab123db9578a210e657235dd", size = 5059025, upload-time = "2025-09-17T16:15:34.528Z" }
 wheels = [
@@ -1587,10 +1587,10 @@ resolution-markers = [
     "python_full_version >= '3.11'",
 ]
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation == 'CPython' and sys_platform == 'win32'" },
-    { name = "greenlet", marker = "platform_python_implementation == 'CPython'" },
-    { name = "zope-event" },
-    { name = "zope-interface" },
+    { name = "cffi", marker = "python_full_version >= '3.11' and platform_python_implementation == 'CPython' and sys_platform == 'win32'" },
+    { name = "greenlet", marker = "python_full_version >= '3.11' and platform_python_implementation == 'CPython'" },
+    { name = "zope-event", marker = "python_full_version >= '3.11'" },
+    { name = "zope-interface", marker = "python_full_version >= '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b8/eb/5f2db8013f1a4a6df2c23201f384a066f13ff5764a9f62a608c8a50ac8cc/gevent-26.8.0.tar.gz", hash = "sha256:96039f41bbde6dcd72559e5ffbd408a04f46774b47d991d4cf032da8fa79e5a0", size = 6625998, upload-time = "2026-08-10T18:02:28.038Z" }
 wheels = [
@@ -2011,17 +2011,17 @@ resolution-markers = [
     "python_full_version < '3.11'",
 ]
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32'" },
-    { name = "decorator" },
-    { name = "exceptiongroup" },
-    { name = "jedi" },
-    { name = "matplotlib-inline" },
-    { name = "pexpect", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
-    { name = "prompt-toolkit" },
-    { name = "pygments" },
-    { name = "stack-data" },
-    { name = "traitlets" },
-    { name = "typing-extensions" },
+    { name = "colorama", marker = "python_full_version < '3.11' and sys_platform == 'win32'" },
+    { name = "decorator", marker = "python_full_version < '3.11'" },
+    { name = "exceptiongroup", marker = "python_full_version < '3.11'" },
+    { name = "jedi", marker = "python_full_version < '3.11'" },
+    { name = "matplotlib-inline", marker = "python_full_version < '3.11'" },
+    { name = "pexpect", marker = "python_full_version < '3.11' and sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "prompt-toolkit", marker = "python_full_version < '3.11'" },
+    { name = "pygments", marker = "python_full_version < '3.11'" },
+    { name = "stack-data", marker = "python_full_version < '3.11'" },
+    { name = "traitlets", marker = "python_full_version < '3.11'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/40/18/f8598d287006885e7136451fdea0755af4ebcbfe342836f24deefaed1164/ipython-8.39.0.tar.gz", hash = "sha256:4110ae96012c379b8b6db898a07e186c40a2a1ef5d57a7fa83166047d9da7624", size = 5513971, upload-time = "2026-03-27T10:02:13.94Z" }
 wheels = [
@@ -2036,17 +2036,17 @@ resolution-markers = [
     "python_full_version >= '3.11'",
 ]
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32'" },
-    { name = "ipython-pygments-lexers" },
-    { name = "jedi" },
-    { name = "matplotlib-inline" },
-    { name = "pexpect", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
-    { name = "prompt-toolkit" },
-    { name = "psutil", marker = "sys_platform != 'cygwin' and sys_platform != 'emscripten'" },
-    { name = "pygments" },
-    { name = "stack-data" },
-    { name = "traitlets" },
-    { name = "typing-extensions", marker = "python_full_version < '3.12'" },
+    { name = "colorama", marker = "python_full_version >= '3.11' and sys_platform == 'win32'" },
+    { name = "ipython-pygments-lexers", marker = "python_full_version >= '3.11'" },
+    { name = "jedi", marker = "python_full_version >= '3.11'" },
+    { name = "matplotlib-inline", marker = "python_full_version >= '3.11'" },
+    { name = "pexpect", marker = "python_full_version >= '3.11' and sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "prompt-toolkit", marker = "python_full_version >= '3.11'" },
+    { name = "psutil", marker = "python_full_version >= '3.11' and sys_platform != 'cygwin' and sys_platform != 'emscripten'" },
+    { name = "pygments", marker = "python_full_version >= '3.11'" },
+    { name = "stack-data", marker = "python_full_version >= '3.11'" },
+    { name = "traitlets", marker = "python_full_version >= '3.11'" },
+    { name = "typing-extensions", marker = "python_full_version == '3.11.*'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/06/96/b150fe7e25a5a29ae9ac1374e71488639605d39a1ea4abb74c9ce33af235/ipython-9.16.1.tar.gz", hash = "sha256:5a3d1f9a47ff216d6cf9cf863124f6a2c1a198d1354c546a4d24a370a283b64c", size = 4515302, upload-time = "2026-08-03T08:36:15.571Z" }
 wheels = [
@@ -2058,7 +2058,7 @@ name = "ipython-pygments-lexers"
 version = "1.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pygments" },
+    { name = "pygments", marker = "python_full_version >= '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ef/4c/5dd1d8af08107f88c7f741ead7a40854b8ac24ddf9ae850afbcf698aa552/ipython_pygments_lexers-1.1.1.tar.gz", hash = "sha256:09c0138009e56b6854f9535736f4171d855c8c08a563a0dcd8022f78355c7e81", size = 8393, upload-time = "2025-01-17T11:24:34.505Z" }
 wheels = [
@@ -2246,23 +2246,23 @@ resolution-markers = [
     "python_full_version < '3.11'",
 ]
 dependencies = [
-    { name = "configargparse" },
-    { name = "flask" },
-    { name = "flask-cors" },
-    { name = "flask-login" },
-    { name = "gevent", version = "25.9.1", source = { registry = "https://pypi.org/simple" } },
-    { name = "geventhttpclient" },
-    { name = "msgpack" },
-    { name = "psutil" },
-    { name = "pytest" },
-    { name = "python-engineio" },
-    { name = "python-socketio", extra = ["client"] },
-    { name = "pywin32", marker = "sys_platform == 'win32'" },
-    { name = "pyzmq" },
-    { name = "requests" },
-    { name = "tomli" },
-    { name = "typing-extensions" },
-    { name = "werkzeug" },
+    { name = "configargparse", marker = "python_full_version < '3.11'" },
+    { name = "flask", marker = "python_full_version < '3.11'" },
+    { name = "flask-cors", marker = "python_full_version < '3.11'" },
+    { name = "flask-login", marker = "python_full_version < '3.11'" },
+    { name = "gevent", version = "25.9.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "geventhttpclient", marker = "python_full_version < '3.11'" },
+    { name = "msgpack", marker = "python_full_version < '3.11'" },
+    { name = "psutil", marker = "python_full_version < '3.11'" },
+    { name = "pytest", marker = "python_full_version < '3.11'" },
+    { name = "python-engineio", marker = "python_full_version < '3.11'" },
+    { name = "python-socketio", extra = ["client"], marker = "python_full_version < '3.11'" },
+    { name = "pywin32", marker = "python_full_version < '3.11' and sys_platform == 'win32'" },
+    { name = "pyzmq", marker = "python_full_version < '3.11'" },
+    { name = "requests", marker = "python_full_version < '3.11'" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
+    { name = "werkzeug", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f1/8f/54b1dce68ba31c86e6d4b3e0e43580ea4729d2b2de80a76eeea8232fcce5/locust-2.46.0.tar.gz", hash = "sha256:59629035d26cc70a1d8a94085cf71f115bb80785a1577931b44ed9999305713f", size = 1478125, upload-time = "2026-07-19T14:48:30.865Z" }
 wheels = [
@@ -2277,22 +2277,22 @@ resolution-markers = [
     "python_full_version >= '3.11'",
 ]
 dependencies = [
-    { name = "configargparse" },
-    { name = "flask" },
-    { name = "flask-cors" },
-    { name = "flask-login" },
-    { name = "gevent", version = "26.8.0", source = { registry = "https://pypi.org/simple" } },
-    { name = "geventhttpclient" },
-    { name = "msgpack" },
-    { name = "psutil" },
-    { name = "pytest" },
-    { name = "python-engineio" },
-    { name = "python-socketio", extra = ["client"] },
-    { name = "pywin32", marker = "sys_platform == 'win32'" },
-    { name = "pyzmq" },
-    { name = "requests" },
-    { name = "typing-extensions", marker = "python_full_version < '3.12'" },
-    { name = "werkzeug" },
+    { name = "configargparse", marker = "python_full_version >= '3.11'" },
+    { name = "flask", marker = "python_full_version >= '3.11'" },
+    { name = "flask-cors", marker = "python_full_version >= '3.11'" },
+    { name = "flask-login", marker = "python_full_version >= '3.11'" },
+    { name = "gevent", version = "26.8.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "geventhttpclient", marker = "python_full_version >= '3.11'" },
+    { name = "msgpack", marker = "python_full_version >= '3.11'" },
+    { name = "psutil", marker = "python_full_version >= '3.11'" },
+    { name = "pytest", marker = "python_full_version >= '3.11'" },
+    { name = "python-engineio", marker = "python_full_version >= '3.11'" },
+    { name = "python-socketio", extra = ["client"], marker = "python_full_version >= '3.11'" },
+    { name = "pywin32", marker = "python_full_version >= '3.11' and sys_platform == 'win32'" },
+    { name = "pyzmq", marker = "python_full_version >= '3.11'" },
+    { name = "requests", marker = "python_full_version >= '3.11'" },
+    { name = "typing-extensions", marker = "python_full_version == '3.11.*'" },
+    { name = "werkzeug", marker = "python_full_version >= '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/77/a1/6e2e204a14048fb49fcd4ff36ef7477f9188029f791a6d9b1d0905944e6a/locust-2.46.4.tar.gz", hash = "sha256:a5a5daf041bcd807053bfd86d8062740c76530beb47a6e28a43b9701a3effab9", size = 1478486, upload-time = "2026-08-24T09:03:45.43Z" }
 wheels = [
@@ -4463,16 +4463,16 @@ wheels = [
 
 [[package]]
 name = "sonyci"
-version = "0.8.1"
+version = "0.8.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "loguru" },
     { name = "pydantic" },
     { name = "requests-oauth2client" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/be/6c/cec69d9d8edac2339fbf726e6176f8876794a7bad2c0e1aaad27b17cb455/sonyci-0.8.1.tar.gz", hash = "sha256:4bcdba86bb125227786fdb8a00787a49507f32800f6a322ee594d6b558143ca0", size = 8721, upload-time = "2026-09-08T20:55:05.736Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/57/c5/e79a35c7ed9b0593d83682646e5be6b24850522dc7e8b969e9283232196e/sonyci-0.8.2.tar.gz", hash = "sha256:fdaa2b6e117308edca8cd5f96ceddc02bd878820704624eca6ccf080304df593", size = 8725, upload-time = "2026-09-16T15:52:36.47Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d6/37/4abd209cc594d1e065b71f57b6f104809781ae11597bd36f11537034c822/sonyci-0.8.1-py3-none-any.whl", hash = "sha256:8c3e743769f00e3d4dc3c9a719950d3d0c465197e8e81a718e26533be4bee2a8", size = 10763, upload-time = "2026-09-08T20:55:04.609Z" },
+    { url = "https://files.pythonhosted.org/packages/f0/f6/dd5613c98cc4dd7ecd5b3209e68f34a6a02ab6eefca1d9daad5e95b318df/sonyci-0.8.2-py3-none-any.whl", hash = "sha256:49a27366b8c77719dad2cd5d2d26157f635768e823caa4049b4f4d322cb179b2", size = 10767, upload-time = "2026-09-16T15:52:35.372Z" },
 ]
 
 [[package]]
