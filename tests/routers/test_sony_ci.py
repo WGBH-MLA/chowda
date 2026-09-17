@@ -108,8 +108,8 @@ def sony_ci_event(
         'createdOn': '2026-01-02T00:00:00.000Z',
         'createdBy': {
             'id': 'c460dfc1447f4240b14b2f32ce8d4a5f',
-            'name': 'John Smith',
-            'email': 'johnsmith@example.com',
+            'name': 'Julia Child',
+            'email': 'juliachild@wgbh.org',
         },
         'assets': [{'id': ids['asset'], 'name': 'cpb-aacip-1234.mp4'}],
     }
@@ -167,8 +167,8 @@ async def test_sony_ci_event(
     with Session(engine) as db:
         event = db.get(SonyCiEvent, sony_ci_ids['event'])
         assert event.type == SonyCiEventType.AssetProcessingFinished
-        assert event.createdOn == datetime(2026, 1, 2)
-        assert event.createdBy['email'] == 'johnsmith@example.com'
+        assert event.createdOn == datetime(2026, 1, 2, tzinfo=datetime.tz.UTC)
+        assert event.createdBy['email'] == 'juliachild@wgbh.org'
         assert event.payload['assets'] == [
             {'id': sony_ci_ids['asset'], 'name': 'cpb-aacip-1234.mp4'}
         ]
@@ -271,7 +271,7 @@ async def test_sony_ci_event_trash_asset(
         trashed = db.get(SonyCiTrashbin, sony_ci_ids['asset'])
         assert trashed.name == 'cpb-aacip-1234.mp4'
         assert trashed.isTrashed
-        assert trashed.trashedOn == datetime(2026, 1, 2)
+        assert trashed.trashedOn == datetime(2026, 1, 2, tzinfo=datetime.tz.UTC)
 
 
 @pytest.mark.asyncio
