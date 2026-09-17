@@ -1,17 +1,17 @@
 from json import JSONDecodeError, loads
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 from metaflow import Run, namespace
 from sqlmodel import Session
 
-from chowda.auth.utils import permissions
 from chowda.db import engine
 from chowda.models import MetaflowRun
+from chowda.routers.sony_ci import sony_ci_events
 
-events = APIRouter()
+events = APIRouter(tags=['event'])
 
 
-@events.post('/', dependencies=[Depends(permissions('create:event'))])
+@events.post('/')
 async def event(event: dict):
     """Receive an event from Argo Events."""
     print('Chowda event received', event)
@@ -62,3 +62,7 @@ async def event(event: dict):
             print('Successfully updated MetaflowRun row!', row)
             return None
     return 'Event successfully processed, but did not match known event'
+
+
+# Webhook events sent by the SonyCi notification API.
+events.include_router(sony_ci_events)

@@ -4,6 +4,7 @@ from json import dumps
 import pytest
 from fastapi import status
 from httpx import AsyncClient
+from pytest_mock import MockerFixture
 
 
 @pytest.fixture
@@ -13,92 +14,67 @@ def event():
 
 
 @pytest.mark.asyncio
-async def test_events(event: dict, async_client: AsyncClient, fake_access_token):
+async def test_events(
+    event: dict, async_client: AsyncClient, events_api_credentials: tuple[str, str]
+):
     async with async_client as ac:
-        bearer_token = fake_access_token(permissions=["create:event"])
-        response = await ac.post(
-            '/api/event/',
-            json=event,
-            follow_redirects=True,
-            headers={'Authorization': f'Bearer {bearer_token}'},
-        )
+        response = await ac.post('/events/', json=event, auth=events_api_credentials)
 
     assert response.status_code == 200
 
 
 @pytest.mark.asyncio
-async def test_events_missing_auth_header(event: dict, async_client: AsyncClient):
+async def test_events_missing_credentials(
+    event: dict, async_client: AsyncClient, events_api_credentials: tuple[str, str]
+):
     async with async_client as ac:
-        response = await ac.post('/api/event/', json=event, follow_redirects=True)
+        response = await ac.post('/events/', json=event)
 
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
-    error = json.loads(response.text)
-    assert error['detail'] == 'Missing Authorization header'
+    assert response.headers['WWW-Authenticate'] == 'Basic'
 
 
 @pytest.mark.asyncio
-async def test_events_malformed_auth_header(event: dict, async_client: AsyncClient):
-    async with async_client as ac:
-        response = await ac.post(
-            '/api/event/',
-            json=event,
-            follow_redirects=True,
-            headers={'Authorization': 'not a bearer token'},
-        )
-
-    assert response.status_code == status.HTTP_401_UNAUTHORIZED
-    error = json.loads(response.text)
-    assert (
-        error['detail'] == 'Bearer token malformed or missing in Authorization header'
-    )
-
-
-@pytest.mark.asyncio
-async def test_events_invalid_bearer_token(event: dict, async_client: AsyncClient):
-    async with async_client as ac:
-        response = await ac.post(
-            '/api/event/',
-            json=event,
-            follow_redirects=True,
-            headers={'Authorization': 'Bearer N0t.AR3al.TOKeN'},
-        )
-
-    assert response.status_code == status.HTTP_401_UNAUTHORIZED
-    error = json.loads(response.text)
-    assert 'Invalid header string' in error['detail']
-
-
-@pytest.mark.asyncio
-async def test_events_valid_unauthorized_bearer_token(
-    event: dict, async_client: AsyncClient
+async def test_events_wrong_username(
+    event: dict, async_client: AsyncClient, events_api_credentials: tuple[str, str]
 ):
     async with async_client as ac:
         response = await ac.post(
-            '/api/event/',
-            json=event,
-            follow_redirects=True,
-            headers={
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-            },
+            '/events/', json=event, auth=('wrong', events_api_credentials[1])
+        )
+
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    assert response.headers['WWW-Authenticate'] == 'Basic'
+    error = json.loads(response.text)
+    assert error['detail'] == 'Invalid credentials'
+
+
+@pytest.mark.asyncio
+async def test_events_wrong_password(
+    event: dict, async_client: AsyncClient, events_api_credentials: tuple[str, str]
+):
+    async with async_client as ac:
+        response = await ac.post(
+            '/events/', json=event, auth=(events_api_credentials[0], 'wrong')
         )
 
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
     error = json.loads(response.text)
-    assert error['detail'] == 'Signature verification failed'
+    assert error['detail'] == 'Invalid credentials'
 
 
 @pytest.mark.asyncio
-async def test_events_without_permission(
-    event: dict, async_client: AsyncClient, fake_access_token
+async def test_events_unconfigured_credentials(
+    event: dict, async_client: AsyncClient, mocker: MockerFixture
 ):
-    async with async_client as ac:
-        response = await ac.post(
-            '/api/event/',
-            json=event,
-            follow_redirects=True,
-            headers={
-                'Authorization': f'Bearer {fake_access_token(permissions=["wrong"])}'
-            },
-        )
+    """Without credentials in the environment, the events API rejects everything,
+    rather than letting anyone in."""
+    mocker.patch('chowda.auth.utils.EVENTS_API_USERNAME', None)
+    mocker.patch('chowda.auth.utils.EVENTS_API_PASSWORD', None)
 
-    assert response.status_code == status.HTTP_403_FORBIDDEN
+    async with async_client as ac:
+        response = await ac.post('/events/', json=event, auth=('', ''))
+
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    error = json.loads(response.text)
+    assert error['detail'] == 'Invalid credentials'

@@ -23,6 +23,7 @@ from chowda.models import (
 from chowda.utils import upsert
 
 sony_ci = APIRouter(tags=['sony-ci'])
+sony_ci_events = APIRouter(tags=['sony-ci', 'event'])
 
 
 @cache(namespace='sonyci', expire=30)
@@ -164,9 +165,7 @@ def delete_asset(db: Session, asset_id: str) -> bool:
     return bool(rows)
 
 
-@sony_ci.post(
-    '/event', tags=['event'], dependencies=[Depends(permissions('create:event'))]
-)
+@sony_ci_events.post('/sonyci')
 def sony_ci_event(event: EventRequest) -> EventResponse:
     """Receive a webhook event from SonyCi.
 

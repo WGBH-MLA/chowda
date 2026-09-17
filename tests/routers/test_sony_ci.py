@@ -27,7 +27,7 @@ async def test_sony_ci_sync(
     async with async_client as ac:
         bearer_token = fake_access_token(permissions=['sync:sonyci'])
         response = await ac.post(
-            '/api/sony_ci/sync',
+            '/api/sonyci/sync',
             headers={'Authorization': f'Bearer {bearer_token}'},
         )
 
@@ -43,7 +43,7 @@ async def test_sony_ci_sync_no_permission(
     async with async_client as ac:
         bearer_token = fake_access_token(permissions=['wrong_permission:sonyci'])
         response = await ac.post(
-            '/api/sony_ci/sync', headers={'Authorization': f'Bearer {bearer_token}'}
+            '/api/sonyci/sync', headers={'Authorization': f'Bearer {bearer_token}'}
         )
 
     assert response.status_code == 403
@@ -64,7 +64,7 @@ async def test_sony_ci_sync_fail(
     async with async_client as ac:
         bearer_token = fake_access_token(permissions=['sync:sonyci'])
         response = await ac.post(
-            '/api/sony_ci/sync',
+            '/api/sonyci/sync',
             headers={
                 'Authorization': f'Bearer {bearer_token}',
             },
@@ -128,21 +128,19 @@ def sony_ci_asset(ids: dict[str, str]) -> dict:
 
 async def post_event(
     async_client: AsyncClient,
-    bearer_token: str,
+    credentials: tuple[str, str],
     event: dict,
-    url: str = '/api/sonyci/event',
+    url: str = '/events/sonyci',
 ):
     async with async_client as ac:
-        return await ac.post(
-            url, json=event, headers={'Authorization': f'Bearer {bearer_token}'}
-        )
+        return await ac.post(url, json=event, auth=credentials)
 
 
 @pytest.mark.asyncio
 async def test_sony_ci_event(
     mocker: MockerFixture,
     async_client: AsyncClient,
-    fake_access_token: type[callable],
+    events_api_credentials: tuple[str, str],
     sony_ci_ids: dict[str, str],
 ):
     """The event is stored, and the assets it references are updated."""
@@ -151,7 +149,7 @@ async def test_sony_ci_event(
 
     response = await post_event(
         async_client,
-        fake_access_token(permissions=['create:event']),
+        events_api_credentials,
         sony_ci_event(sony_ci_ids),
     )
 
@@ -183,7 +181,7 @@ async def test_sony_ci_event(
 async def test_sony_ci_event_keeps_media_file(
     mocker: MockerFixture,
     async_client: AsyncClient,
-    fake_access_token: type[callable],
+    events_api_credentials: tuple[str, str],
     sony_ci_ids: dict[str, str],
 ):
     """Updating an asset does not drop the MediaFile it is linked to, since SonyCi
@@ -202,7 +200,7 @@ async def test_sony_ci_event_keeps_media_file(
 
     response = await post_event(
         async_client,
-        fake_access_token(permissions=['create:event']),
+        events_api_credentials,
         sony_ci_event(sony_ci_ids),
     )
 
@@ -222,19 +220,19 @@ async def test_sony_ci_event_keeps_media_file(
 async def test_sony_ci_event_is_not_duplicated(
     mocker: MockerFixture,
     async_client: AsyncClient,
-    fake_access_token: type[callable],
+    events_api_credentials: tuple[str, str],
     sony_ci_ids: dict[str, str],
 ):
     """SonyCi retries events, so receiving the same event twice updates it."""
     client = mocker.patch('chowda.routers.sony_ci.sony_ci_client').return_value
     client.asset.return_value = sony_ci_asset(sony_ci_ids)
     event = sony_ci_event(sony_ci_ids)
-    bearer_token = fake_access_token(permissions=['create:event'])
 
     async with async_client as ac:
-        headers = {'Authorization': f'Bearer {bearer_token}'}
-        first = await ac.post('/api/sonyci/event', json=event, headers=headers)
-        second = await ac.post('/api/sonyci/event', json=event, headers=headers)
+        first = await ac.post('/events/sonyci', json=event, auth=events_api_credentials)
+        second = await ac.post(
+            '/events/sonyci', json=event, auth=events_api_credentials
+        )
 
     assert first.status_code == 200
     assert second.status_code == 200
@@ -250,7 +248,7 @@ async def test_sony_ci_event_is_not_duplicated(
 async def test_sony_ci_event_trash_asset(
     mocker: MockerFixture,
     async_client: AsyncClient,
-    fake_access_token: type[callable],
+    events_api_credentials: tuple[str, str],
     sony_ci_ids: dict[str, str],
 ):
     """A TrashAsset event moves the asset into the trashbin."""
@@ -261,7 +259,7 @@ async def test_sony_ci_event_trash_asset(
 
     response = await post_event(
         async_client,
-        fake_access_token(permissions=['create:event']),
+        events_api_credentials,
         sony_ci_event(sony_ci_ids, event_type='TrashAsset'),
     )
 
@@ -280,7 +278,7 @@ async def test_sony_ci_event_trash_asset(
 async def test_sony_ci_event_delete_asset(
     mocker: MockerFixture,
     async_client: AsyncClient,
-    fake_access_token: type[callable],
+    events_api_credentials: tuple[str, str],
     sony_ci_ids: dict[str, str],
 ):
     """A DeleteAsset event removes the asset from the database."""
@@ -291,7 +289,7 @@ async def test_sony_ci_event_delete_asset(
 
     response = await post_event(
         async_client,
-        fake_access_token(permissions=['create:event']),
+        events_api_credentials,
         sony_ci_event(sony_ci_ids, event_type='DeleteAsset'),
     )
 
@@ -306,7 +304,7 @@ async def test_sony_ci_event_delete_asset(
 async def test_sony_ci_event_asset_error(
     mocker: MockerFixture,
     async_client: AsyncClient,
-    fake_access_token: type[callable],
+    events_api_credentials: tuple[str, str],
     sony_ci_ids: dict[str, str],
 ):
     """Asset errors are reported, but the event is still stored, and SonyCi is not
@@ -316,7 +314,7 @@ async def test_sony_ci_event_asset_error(
 
     response = await post_event(
         async_client,
-        fake_access_token(permissions=['create:event']),
+        events_api_credentials,
         sony_ci_event(sony_ci_ids),
     )
 
@@ -330,13 +328,13 @@ async def test_sony_ci_event_asset_error(
 @pytest.mark.asyncio
 async def test_sony_ci_event_unknown_type(
     async_client: AsyncClient,
-    fake_access_token: type[callable],
+    events_api_credentials: tuple[str, str],
     sony_ci_ids: dict[str, str],
 ):
     """Events that SonyCi does not document are rejected."""
     response = await post_event(
         async_client,
-        fake_access_token(permissions=['create:event']),
+        events_api_credentials,
         sony_ci_event(sony_ci_ids, event_type='NotAnEvent'),
     )
 
@@ -346,18 +344,19 @@ async def test_sony_ci_event_unknown_type(
 
 
 @pytest.mark.asyncio
-async def test_sony_ci_event_no_permission(
+async def test_sony_ci_event_wrong_credentials(
     async_client: AsyncClient,
-    fake_access_token: type[callable],
+    events_api_credentials: tuple[str, str],
     sony_ci_ids: dict[str, str],
 ):
+    """The events API is only open to clients with the right credentials."""
     response = await post_event(
         async_client,
-        fake_access_token(permissions=['wrong_permission:event']),
+        (events_api_credentials[0], 'wrong'),
         sony_ci_event(sony_ci_ids),
     )
 
-    assert response.status_code == 403
-    assert "{'create:event'}" in response.json()['detail']
+    assert response.status_code == 401
+    assert response.json()['detail'] == 'Invalid credentials'
     with Session(engine) as db:
         assert db.get(SonyCiEvent, sony_ci_ids['event']) is None

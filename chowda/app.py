@@ -17,7 +17,7 @@ from chowda._version import __version__
 from chowda.admin import Admin
 from chowda.api import api
 from chowda.auth import OAuthProvider
-from chowda.auth.utils import get_admin_user, verified_access_token
+from chowda.auth.utils import basic_auth, get_admin_user, verified_access_token
 from chowda.config import SECRET, STATIC_DIR, TEMPLATES_DIR
 from chowda.db import engine
 from chowda.models import (
@@ -34,6 +34,7 @@ from chowda.models import (
     User,
 )
 from chowda.routers.dashboard import dashboard
+from chowda.routers.events import events
 from chowda.views import (
     BatchView,
     ClamsAppView,
@@ -71,6 +72,7 @@ app = FastAPI(
 app.mount('/static', StaticFiles(directory=STATIC_DIR), name='static')
 
 app.include_router(api, prefix='/api', dependencies=[Depends(verified_access_token)])
+app.include_router(events, prefix='/events', dependencies=[Depends(basic_auth)])
 app.include_router(
     dashboard, prefix='/dashboard', dependencies=[Depends(get_admin_user)]
 )
