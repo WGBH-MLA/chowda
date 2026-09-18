@@ -10,7 +10,7 @@ from metaflow.integrations import ArgoEvent
 from pydantic import BaseModel, ConfigDict
 from sqlmodel import Session
 
-from chowda.auth.utils import permissions, GUID_REGEX
+from chowda.auth.utils import permissions
 from chowda.config import METAFLOW_URL
 from chowda.db import engine
 from chowda.log import log
@@ -20,8 +20,7 @@ from chowda.models import (
     SonyCiEventType,
     SonyCiTrashbin,
 )
-from chowda.utils import upsert
-import re
+from chowda.utils import find_media_file, upsert
 
 sony_ci = APIRouter(tags=['sony-ci'])
 sony_ci_events = APIRouter(tags=['sony-ci', 'event'])
@@ -132,15 +131,10 @@ def sync_asset(db: Session, client, ci_event: SonyCiEvent, asset_id: str) -> Non
         # we already have.
         asset.media_file_id = existing.media_file_id
     else:
-        # This is a new asset. Check if is is MediaFile and set the link accordingly.
-        if re.search(GUID_REGEX, asset.name):
-            name = re.split(r"_|\.", asset.name[10:-4])[0]
-            guid = f'cpb-aacip-{name}'
-            media_file = db.exec(
-                select(MediaFile).where(MediaFile.guid == guid)
-            ).first()
-            if media_file:
-                asset.media_file_id = media_file.id
+        # This is a new asset. Check if it is a MediaFile and set the link accordingly.
+        media_file = find_media_file(db, asset.name)
+        if media_file:
+            asset.media_file_id = media_file.id
 
     db.exec(upsert(SonyCiAsset, asset, ['id']))
     db.commit()
