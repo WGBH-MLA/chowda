@@ -33,8 +33,8 @@ from chowda.models import (
     SonyCiTrashbin,
     User,
 )
-from chowda.routers.dashboard import dashboard
 from chowda.routers import sony_ci_events
+from chowda.routers.dashboard import dashboard
 from chowda.views import (
     BatchView,
     ClamsAppView,
