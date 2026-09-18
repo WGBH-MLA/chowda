@@ -20,6 +20,9 @@ AUTH_JWKS_URL = environ.get('AUTH_JWKS_URL')
 AUTH_OPENID_URL = environ.get('AUTH_OPENID_URL', '.well-known/openid-configuration')
 AUTH_SCOPE = environ.get('AUTH_SCOPE', 'openid profile email entitlements')
 
+EVENTS_API_USERNAME = environ.get('EVENTS_API_USERNAME')
+EVENTS_API_PASSWORD = environ.get('EVENTS_API_PASSWORD')
+
 SECRET = environ.get('CHOWDA_SECRET')
 
 MMIF_S3_BUCKET_NAME = environ.get('MMIF_S3_BUCKET_NAME', 'clams-mmif')
