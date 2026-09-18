@@ -2,6 +2,7 @@ from metaflow import FlowSpec, secrets, step, trigger
 
 from chowda.log import log
 from chowda.models import AssetType
+from chowda.utils import GUID_REGEX
 
 asset_types = {AssetType('Video'), AssetType('Audio')}
 
@@ -204,7 +205,7 @@ class IngestFlow(FlowSpec):
                     # breaks the anchored guid match and the fixed-index slice below.
                     filename = asset.name.replace('\ufeff', '').strip()
                     # If the name doesn't match the guid pattern, log a warning and skip it
-                    if not search(r'^cpb[-_/]aacip[-_/].*\.mp[34]$', filename):
+                    if not search(GUID_REGEX, filename):
                         log.warning('Non-guid filename: ', asset.id, asset.name)
                         warnings.append(('non-guid', asset.id, asset.name))
                         db.commit()

@@ -7,6 +7,14 @@ from sqlalchemy.dialects.postgresql import insert
 from starlette.requests import Request
 from starlette.responses import FileResponse, StreamingResponse
 
+"""Regular expression to match MediaFile GUIDs.
+Must:
+- start with "cpb-aacip-" (or `_` or `/` for archaic seperators)
+- end with ".mp3" or ".mp4"
+- have 1 or more characters between the prefix and the file extension
+"""
+GUID_REGEX = r'^cpb[-_/]aacip[-_/].*\.mp[34]$'
+
 # This should belong inside `download_mmif` function, but the download fails
 # unless the temporary directory is created outside of the function.
 tmp_dir = TemporaryDirectory()
