@@ -78,7 +78,9 @@ def guid_from_filename(filename: str | None) -> str | None:
     return f'cpb-aacip-{name}'
 
 
-def find_media_file(db, filename: str | None, create: bool = False) -> 'MediaFile | None':
+def find_media_file(
+    db, filename: str | None, create: bool = False
+) -> 'MediaFile | None': # noqa F821
     """Return the MediaFile for a SonyCi filename.
 
     Returns None if the filename is not a GUID filename, or if no MediaFile exists
