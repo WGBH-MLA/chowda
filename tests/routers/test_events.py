@@ -6,7 +6,10 @@ from fastapi import status
 from httpx import AsyncClient
 from pytest_mock import MockerFixture
 
-pytestmark = pytest.mark.skip(reason="Skip Argo events tests until Argo events router is reconnected")
+pytestmark = pytest.mark.skip(
+    reason="Skip Argo events tests until Argo events router is reconnected"
+)
+
 
 @pytest.fixture
 def event():
