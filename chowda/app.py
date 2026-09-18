@@ -34,7 +34,7 @@ from chowda.models import (
     User,
 )
 from chowda.routers.dashboard import dashboard
-from chowda.routers.events import events
+from chowda.routers import sony_ci_events
 from chowda.views import (
     BatchView,
     ClamsAppView,
@@ -72,7 +72,7 @@ app = FastAPI(
 app.mount('/static', StaticFiles(directory=STATIC_DIR), name='static')
 
 app.include_router(api, prefix='/api', dependencies=[Depends(verified_access_token)])
-app.include_router(events, prefix='/events', dependencies=[Depends(basic_auth)])
+app.include_router(sony_ci_events, prefix='/events', dependencies=[Depends(basic_auth)])
 app.include_router(
     dashboard, prefix='/dashboard', dependencies=[Depends(get_admin_user)]
 )
