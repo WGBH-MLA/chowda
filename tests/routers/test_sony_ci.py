@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime
 
 import pytest
 from httpx import AsyncClient
@@ -167,7 +167,7 @@ async def test_sony_ci_event(
     with Session(engine) as db:
         event = db.get(SonyCiEvent, sony_ci_ids['event'])
         assert event.type == SonyCiEventType.AssetProcessingFinished
-        assert event.createdOn == datetime(2026, 1, 2, tzinfo=timezone.utc)
+        assert event.createdOn == datetime(2026, 1, 2, 0, 0) # noqa DTZ001
         assert event.createdBy['email'] == 'juliachild@wgbh.org'
         assert event.payload['assets'] == [
             {'id': sony_ci_ids['asset'], 'name': 'cpb-aacip-1234.mp4'}
@@ -271,7 +271,7 @@ async def test_sony_ci_event_trash_asset(
         trashed = db.get(SonyCiTrashbin, sony_ci_ids['asset'])
         assert trashed.name == 'cpb-aacip-1234.mp4'
         assert trashed.isTrashed
-        assert trashed.trashedOn == datetime(2026, 1, 2, tzinfo=timezone.utc)
+        assert trashed.trashedOn == datetime(2026, 1, 2, 0, 0) # noqa DTZ001
 
 
 @pytest.mark.asyncio
