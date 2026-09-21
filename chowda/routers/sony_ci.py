@@ -126,15 +126,13 @@ def sync_asset(db: Session, client, ci_event: SonyCiEvent, asset_id: str) -> Non
     event."""
     asset = SonyCiAsset(**client.asset(asset_id))
     existing = db.get(SonyCiAsset, asset_id)
-    if existing:
-        # The MediaFile link is not part of the SonyCi response, so keep the one
-        # we already have.
-        asset.media_file_id = existing.media_file_id
-    else:
-        # This is a new asset. Check if it is a MediaFile and set the link accordingly.
+    # The MediaFile link is not part of the SonyCi response, so keep the one we
+    # already have, and otherwise link the asset by its filename.
+    asset.media_file_id = existing.media_file_id if existing else None
+    if not asset.media_file_id:
         media_file = find_media_file(db, asset.name)
         if media_file:
-            asset.media_file_id = media_file.id
+            asset.media_file_id = media_file.guid
 
     db.exec(upsert(SonyCiAsset, asset, ['id']))
     db.commit()

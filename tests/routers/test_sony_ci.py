@@ -217,6 +217,41 @@ async def test_sony_ci_event_keeps_media_file(
 
 
 @pytest.mark.asyncio
+async def test_sony_ci_event_links_media_file(
+    mocker: MockerFixture,
+    async_client: AsyncClient,
+    events_api_credentials: tuple[str, str],
+    sony_ci_ids: dict[str, str],
+):
+    """An asset that is not yet linked to a MediaFile is linked by its filename,
+    even when the asset is already in the database."""
+    client = mocker.patch('chowda.routers.sony_ci.sony_ci_client').return_value
+    client.asset.return_value = sony_ci_asset(sony_ci_ids)
+    guid = 'cpb-aacip-1234'
+    with Session(engine) as db:
+        db.merge(MediaFile(guid=guid))
+        db.add(SonyCiAsset(**{**sony_ci_asset(sony_ci_ids), 'name': 'old name'}))
+        db.commit()
+
+    response = await post_event(
+        async_client,
+        events_api_credentials,
+        sony_ci_event(sony_ci_ids, event_type='MoveAsset'),
+    )
+
+    assert response.status_code == 200
+    assert response.json()['errors'] == {}
+    with Session(engine) as db:
+        asset = db.get(SonyCiAsset, sony_ci_ids['asset'])
+        assert asset.media_file_id == guid
+        db.delete(db.get(SonyCiEvent, sony_ci_ids['event']))
+        db.delete(asset)
+        db.commit()
+        db.delete(db.get(MediaFile, guid))
+        db.commit()
+
+
+@pytest.mark.asyncio
 async def test_sony_ci_event_is_not_duplicated(
     mocker: MockerFixture,
     async_client: AsyncClient,
