@@ -16,6 +16,7 @@ from chowda.db import engine
 from chowda.log import log
 from chowda.models import (
     SonyCiAsset,
+    SonyCiAssetBase,
     SonyCiEvent,
     SonyCiEventType,
     SonyCiTrashbin,
@@ -124,7 +125,9 @@ def save_event(db: Session, event: EventRequest) -> SonyCiEvent:
 def sync_asset(db: Session, client, ci_event: SonyCiEvent, asset_id: str) -> None:
     """Fetch an asset from SonyCi, update it in the database, and link it to the
     event."""
-    asset = SonyCiAsset(**client.asset(asset_id))
+    # Table models skip validation, so the non-table base model is used to coerce the
+    # JSON strings SonyCi sends into the datetimes and enums the columns expect.
+    asset = SonyCiAssetBase.model_validate(client.asset(asset_id))
     existing = db.get(SonyCiAsset, asset_id)
     # The MediaFile link is not part of the SonyCi response, so keep the one we
     # already have, and otherwise link the asset by its filename.

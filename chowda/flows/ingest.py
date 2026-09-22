@@ -167,18 +167,21 @@ class IngestFlow(FlowSpec):
         from sqlmodel import Session
 
         from chowda.db import engine
-        from chowda.models import SonyCiAsset
+        from chowda.models import SonyCiAsset, SonyCiAssetBase
         from chowda.utils import find_media_file, upsert
 
         batch = self.get_page(n)
-        media = [SonyCiAsset(**asset) for asset in batch]
         results: list = []
         errors: list = []
         warnings: list = []
 
         with Session(engine) as db:
-            for asset in media:
+            for item in batch:
                 try:
+                    # Table models skip validation, so the non-table base model is
+                    # used to coerce the JSON strings SonyCi sends into the datetimes
+                    # and enums the columns expect.
+                    asset = SonyCiAssetBase.model_validate(item)
                     results.append(db.exec(upsert(SonyCiAsset, asset, ['id'])))
                     # If the asset type is not Video or Audio, skip it
                     if AssetType(asset.type) not in asset_types:
@@ -215,8 +218,8 @@ class IngestFlow(FlowSpec):
                     db.add(media_file)
                     db.commit()
                 except Exception as e:  # NOQA BLE001
-                    log.error(f'Error ingesting asset {asset.id}: {e}')
-                    errors.append((asset, e))
+                    log.error(f'Error ingesting asset {item["id"]}: {e}')
+                    errors.append((item['id'], e))
             updated: int = sum([r.rowcount for r in results])
             if errors:
                 log.error(f'{len(errors)} errors ingesting page {n}: {errors}')

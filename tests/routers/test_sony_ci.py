@@ -230,6 +230,9 @@ async def test_sony_ci_event_keeps_media_file(
 
 
 @pytest.mark.asyncio
+# A pydantic serializer warning means raw JSON strings are being sent to the
+# database instead of the datetimes and enums the columns expect.
+@pytest.mark.filterwarnings('error::UserWarning')
 async def test_sony_ci_event_creates_asset(
     mocker: MockerFixture,
     async_client: AsyncClient,
