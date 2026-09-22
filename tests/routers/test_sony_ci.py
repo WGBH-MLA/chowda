@@ -1,4 +1,6 @@
+import json
 from datetime import datetime
+from pathlib import Path
 
 import pytest
 from httpx import AsyncClient
@@ -8,11 +10,15 @@ from sqlmodel import Session, select
 
 from chowda.db import engine
 from chowda.models import (
+    AssetType,
     MediaFile,
+    SonyCiArchiveStatus,
     SonyCiAsset,
+    SonyCiAssetStatus,
     SonyCiEvent,
     SonyCiEventType,
     SonyCiTrashbin,
+    SonyCiUploadTransferType,
 )
 from chowda.routers.sony_ci import SyncResponse
 
@@ -126,6 +132,13 @@ def sony_ci_asset(ids: dict[str, str]) -> dict:
     }
 
 
+def complete_sony_ci_asset(ids: dict[str, str]) -> dict:
+    """A complete asset response, captured from the SonyCi asset API."""
+    asset = json.loads((Path(__file__).parent / 'asset.json').read_text())
+    asset['id'] = ids['asset']
+    return asset
+
+
 async def post_event(
     async_client: AsyncClient,
     credentials: tuple[str, str],
@@ -217,6 +230,44 @@ async def test_sony_ci_event_keeps_media_file(
 
 
 @pytest.mark.asyncio
+async def test_sony_ci_event_creates_asset(
+    mocker: MockerFixture,
+    async_client: AsyncClient,
+    events_api_credentials: tuple[str, str],
+    sony_ci_ids: dict[str, str],
+):
+    """Every field of a complete SonyCi asset response is stored."""
+    asset = complete_sony_ci_asset(sony_ci_ids)
+    client = mocker.patch('chowda.routers.sony_ci.sony_ci_client').return_value
+    client.asset.return_value = asset
+    event = sony_ci_event(sony_ci_ids)
+    event['assets'][0]['name'] = asset['name']
+
+    response = await post_event(async_client, events_api_credentials, event)
+
+    assert response.status_code == 200
+    assert response.json()['errors'] == {}
+    assert response.json()['updated'] == [sony_ci_ids['asset']]
+    with Session(engine) as db:
+        stored = db.get(SonyCiAsset, sony_ci_ids['asset'])
+        assert stored is not None
+        assert stored.name == 'Amex_604_barcode326978.mp4'
+        assert stored.size == 107390168
+        assert stored.type == AssetType.Video
+        assert stored.status == SonyCiAssetStatus.Complete
+        assert stored.archiveStatus == SonyCiArchiveStatus.NotArchived
+        assert stored.uploadTransferType == SonyCiUploadTransferType.MultipartHttp
+        assert stored.createdOn == datetime(
+            2026, 9, 22, 18, 33, 50, 465000
+        )  # noqa DTZ001
+        assert stored.folder['name'] == 'Staff_File_Sharing_Delete_When_Done'
+        assert len(stored.thumbnails) == 4
+        assert stored.runtime == 1230.229
+        # The filename is not a GUID, so the asset is not linked to a MediaFile.
+        assert stored.media_file_id is None
+
+
+@pytest.mark.asyncio
 async def test_sony_ci_event_links_media_file(
     mocker: MockerFixture,
     async_client: AsyncClient,
@@ -225,27 +276,26 @@ async def test_sony_ci_event_links_media_file(
 ):
     """An asset that is not yet linked to a MediaFile is linked by its filename,
     even when the asset is already in the database."""
+    guid = 'cpb-aacip-chowda-test-link'
+    asset = {**sony_ci_asset(sony_ci_ids), 'name': f'{guid}.mp4'}
     client = mocker.patch('chowda.routers.sony_ci.sony_ci_client').return_value
-    client.asset.return_value = sony_ci_asset(sony_ci_ids)
-    guid = 'cpb-aacip-1234'
+    client.asset.return_value = asset
     with Session(engine) as db:
-        db.merge(MediaFile(guid=guid))
-        db.add(SonyCiAsset(**{**sony_ci_asset(sony_ci_ids), 'name': 'old name'}))
+        db.add(MediaFile(guid=guid))
+        db.add(SonyCiAsset(**{**asset, 'name': 'old name'}))
         db.commit()
 
-    response = await post_event(
-        async_client,
-        events_api_credentials,
-        sony_ci_event(sony_ci_ids, event_type='MoveAsset'),
-    )
+    event = sony_ci_event(sony_ci_ids, event_type='MoveAsset')
+    event['assets'][0]['name'] = asset['name']
+    response = await post_event(async_client, events_api_credentials, event)
 
     assert response.status_code == 200
     assert response.json()['errors'] == {}
     with Session(engine) as db:
-        asset = db.get(SonyCiAsset, sony_ci_ids['asset'])
-        assert asset.media_file_id == guid
+        stored = db.get(SonyCiAsset, sony_ci_ids['asset'])
+        assert stored.media_file_id == guid
         db.delete(db.get(SonyCiEvent, sony_ci_ids['event']))
-        db.delete(asset)
+        db.delete(stored)
         db.commit()
         db.delete(db.get(MediaFile, guid))
         db.commit()

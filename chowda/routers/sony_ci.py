@@ -196,7 +196,7 @@ def sony_ci_event(event: EventRequest) -> EventResponse:
                 sync_asset(db, client, ci_event, asset.id)
                 response.updated.append(asset.id)
             except Exception as error:  # NOQA BLE001
-                log.error(f'Error updating SonyCi asset {asset.id}: {error!s}')
+                log.exception(f'Error updating SonyCi asset {asset.id}: {error!s}')
                 response.errors[asset.id] = str(error)
                 db.rollback()
     return response
