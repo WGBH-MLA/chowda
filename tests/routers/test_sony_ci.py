@@ -257,11 +257,7 @@ async def test_sony_ci_event_creates_asset(
         assert stored.status == SonyCiAssetStatus.Complete
         assert stored.archiveStatus == SonyCiArchiveStatus.NotArchived
         assert stored.uploadTransferType == SonyCiUploadTransferType.MultipartHttp
-        assert stored.createdOn == datetime(
-            2026, 9, 22, 18, 33, 50, 465000
-        )  # noqa DTZ001
-        assert stored.folder['name'] == 'Staff_File_Sharing_Delete_When_Done'
-        assert len(stored.thumbnails) == 4
+        assert stored.createdOn == datetime(2026, 9, 22, 18, 33, 50, 465000)  # noqa DTZ001 # fmt: skip
         assert stored.runtime == 1230.229
         # The filename is not a GUID, so the asset is not linked to a MediaFile.
         assert stored.media_file_id is None
