@@ -106,8 +106,10 @@ def sony_ci_client():
     return client
 
 
-def save_event(db: Session, event: EventRequest) -> SonyCiEvent:
-    """Store a SonyCi event in the database.
+def save_event(
+    db: Session, event: EventRequest, assets: list[SonyCiAsset]
+) -> SonyCiEvent:
+    """Store a SonyCi event in the database, linked to the assets it touched.
 
     SonyCi retries deliveries, so an event that was already received is updated
     rather than duplicated."""
@@ -116,15 +118,17 @@ def save_event(db: Session, event: EventRequest) -> SonyCiEvent:
     ci_event.createdOn = event.createdOn
     ci_event.createdBy = event.createdBy
     ci_event.payload = event.model_dump(mode='json')
+    for asset in assets:
+        if asset not in ci_event.assets:
+            ci_event.assets.append(asset)
     db.add(ci_event)
     db.commit()
     db.refresh(ci_event)
     return ci_event
 
 
-def sync_asset(db: Session, client, ci_event: SonyCiEvent, asset_id: str) -> None:
-    """Fetch an asset from SonyCi, update it in the database, and link it to the
-    event."""
+def sync_asset(db: Session, client, asset_id: str) -> SonyCiAsset:
+    """Fetch an asset from SonyCi and update it in the database."""
     # Table models skip validation, so the non-table base model is used to coerce the
     # JSON strings SonyCi sends into the datetimes and enums the columns expect.
     asset = SonyCiAssetBase.model_validate(client.asset(asset_id))
@@ -139,11 +143,7 @@ def sync_asset(db: Session, client, ci_event: SonyCiEvent, asset_id: str) -> Non
 
     db.exec(upsert(SonyCiAsset, asset, ['id']))
     db.commit()
-    updated_asset = db.get(SonyCiAsset, asset_id)
-    if updated_asset not in ci_event.assets:
-        ci_event.assets.append(updated_asset)
-        db.add(ci_event)
-        db.commit()
+    return db.get(SonyCiAsset, asset_id)
 
 
 def trash_asset(db: Session, asset_id: str, trashed_on: datetime | None) -> bool:
@@ -176,14 +176,14 @@ def delete_asset(db: Session, asset_id: str) -> bool:
 def sony_ci_event(event: EventRequest) -> EventResponse:
     """Receive a webhook event from SonyCi.
 
-    The event is stored in the database, then every SonyCi asset it references is
-    updated. Errors are reported in the response, but always with a 2xx status, so
-    that SonyCi does not retry the event."""
+    Every SonyCi asset the event references is updated, then the event is stored,
+    linked to the assets it touched. Errors are reported in the response, but always
+    with a 2xx status, so that SonyCi does not retry the event."""
     log.info(f'SonyCi event received: {event.type.value} {event.id}')
     response = EventResponse(id=event.id, type=event.type)
     client = None
+    synced: list[SonyCiAsset] = []
     with Session(engine) as db:
-        ci_event = save_event(db, event)
         for asset in event.assets:
             try:
                 if event.type == SonyCiEventType.DeleteAsset:
@@ -196,10 +196,11 @@ def sony_ci_event(event: EventRequest) -> EventResponse:
                     continue
                 if client is None:
                     client = sony_ci_client()
-                sync_asset(db, client, ci_event, asset.id)
+                synced.append(sync_asset(db, client, asset.id))
                 response.updated.append(asset.id)
             except Exception as error:  # NOQA BLE001
                 log.exception(f'Error updating SonyCi asset {asset.id}: {error!s}')
                 response.errors[asset.id] = str(error)
                 db.rollback()
+        save_event(db, event, synced)
     return response
