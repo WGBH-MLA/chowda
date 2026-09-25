@@ -1,9 +1,12 @@
+from secrets import compare_digest
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, Request, status
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pydantic import BaseModel
 
-from chowda.config import AUTH_JWKS_URL
+from chowda.config import AUTH_JWKS_URL, EVENTS_API_PASSWORD, EVENTS_API_USERNAME
+from chowda.log import log
 
 unauthorized_redirect = HTTPException(
     status_code=status.HTTP_303_SEE_OTHER,
@@ -15,6 +18,14 @@ unauthorized = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
     detail='Not Authorized',
 )
+
+unauthorized_basic = HTTPException(
+    status_code=status.HTTP_401_UNAUTHORIZED,
+    detail='Invalid credentials',
+    headers={'WWW-Authenticate': 'Basic'},
+)
+
+basic_auth_scheme = HTTPBasic(description='Events API username and password')
 
 
 class OAuthAccessToken(BaseModel):
@@ -147,3 +158,30 @@ def permissions(permissions: str | list[str] | set[str]) -> None:
             )
 
     return _permissions
+
+
+def basic_auth(
+    credentials: Annotated[HTTPBasicCredentials, Depends(basic_auth_scheme)],
+) -> str:
+    """Dependency function to check HTTP Basic credentials against the events API
+    credentials. Returns the name of the authenticated client, or raises a 401
+    Unauthorized exception.
+
+    Examples:
+        @app.post('/events/', dependencies=[Depends(basic_auth)])
+    """
+    if not EVENTS_API_USERNAME or not EVENTS_API_PASSWORD:
+        log.error('EVENTS_API_USERNAME and EVENTS_API_PASSWORD are not configured')
+        raise unauthorized_basic
+
+    # Compare both values, without short circuiting, so that the time taken to
+    # respond does not reveal which of the two was wrong.
+    valid = compare_digest(
+        credentials.username.encode('utf8'), EVENTS_API_USERNAME.encode('utf8')
+    ) & compare_digest(
+        credentials.password.encode('utf8'), EVENTS_API_PASSWORD.encode('utf8')
+    )
+    if not valid:
+        raise unauthorized_basic
+
+    return credentials.username
