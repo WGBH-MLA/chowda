@@ -42,7 +42,7 @@ async def test_api_invalid_bearer_token(async_client: AsyncClient):
 
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
     error = json.loads(response.text)
-    assert 'Invalid header string' in error['detail']
+    assert 'Invalid header' in error['detail']
 
 
 @pytest.mark.asyncio
