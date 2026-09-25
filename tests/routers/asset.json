@@ -1,0 +1,41 @@
+{
+    "id": "ea32d92ca8ab4430923d926a7e4b403b",
+    "name": "Amex_604_barcode326978.mp4",
+    "createdOn": "2026-09-22T18:33:50.465Z",
+    "size": 107390168,
+    "type": "Video",
+    "format": "mp4",
+    "status": "Complete",
+    "folder": {
+        "id": "abc123",
+        "name": "test-folder"
+    },
+    "modifiedOn": "2026-09-22T18:38:11.435Z",
+    "md5Checksum": "40b8bf52dd242098fd6c789e52602b53",
+    "clipSource": {},
+    "technicalMetadata": {},
+    "technicalMetadataUpdates": {},
+    "archiveStatus": "Not archived",
+    "restoreStatus": "Not restored",
+    "isDeleted": false,
+    "isTrashed": false,
+    "fileRequest": {},
+    "runtime": 1230.229,
+    "lastActivityOn": "2026-09-22T18:38:11.433Z",
+    "uploadCompleteDate": "2026-09-22T18:34:01.499Z",
+    "uploadTransferType": "MultipartHttp",
+    "thumbnails": [],
+    "hasPlayableProxies": true,
+    "generatingPlayableProxies": false,
+    "proxies": [],
+    "acquisitionSource": {
+        "name": "Workspace"
+    },
+    "filmstrips": [],
+    "waveforms": [],
+    "mediaAnalyses": [],
+    "isExternal": false,
+    "batchId": "f05407df58d84d38b566d1f31fb7bbf0",
+    "isFavorite": false,
+    "isAvailable": true
+}

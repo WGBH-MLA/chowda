@@ -1,5 +1,5 @@
+from .argo_events import argo_events
 from .dashboard import dashboard
-from .events import events
-from .sony_ci import sony_ci
+from .sony_ci import sony_ci, sony_ci_events
 
-__all__ = ['dashboard', 'events', 'sony_ci']
+__all__ = ['argo_events', 'dashboard', 'sony_ci', 'sony_ci_events']

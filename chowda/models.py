@@ -333,12 +333,88 @@ class SonyCiAssetBase(SQLModel):
         return self.name
 
 
+class SonyCiEventType(enum.Enum):
+    """SonyCi webhook event type
+
+    The type of notification sent by SonyCi to the webhook API.
+    """
+
+    MoveAsset = 'MoveAsset'
+    CopyAsset = 'CopyAsset'
+    TrashAsset = 'TrashAsset'
+    DeleteAsset = 'DeleteAsset'
+    DeleteElement = 'DeleteElement'
+    JobStatusChange = 'JobStatusChange'
+    AssetProcessingFinished = 'AssetProcessingFinished'
+    ElementProcessingFinished = 'ElementProcessingFinished'
+    AssetArchiveStatusChange = 'AssetArchiveStatusChange'
+    AssetRestoreStatusChange = 'AssetRestoreStatusChange'
+    LockElement = 'LockElement'
+    UnlockElement = 'UnlockElement'
+    CopyAssetsToWorkspace = 'CopyAssetsToWorkspace'
+    CopyAssetsToCatalog = 'CopyAssetsToCatalog'
+    AssetMetadataChange = 'AssetMetadataChange'
+    ElementMetadataChange = 'ElementMetadataChange'
+
+
+class SonyCiEventAssetLink(SQLModel, table=True):
+    __tablename__ = 'sonyci_event_asset_links'
+    event_id: str | None = Field(
+        default=None, foreign_key='sonyci_events.id', primary_key=True, index=True
+    )
+    asset_id: str | None = Field(
+        default=None,
+        foreign_key='sonyci_assets.id',
+        primary_key=True,
+        index=True,
+        ondelete='CASCADE',
+    )
+
+
+class SonyCiEvent(SQLModel, table=True):
+    """SonyCiEvent model
+
+    A webhook notification received from SonyCi.
+
+    Attributes:
+        id: SonyCi event id
+        type: Type of the event
+        createdOn: When SonyCi created the event
+        createdBy: SonyCi user that triggered the event
+        payload: The complete event as received from SonyCi
+        created_at: When Chowda received the event
+        assets: SonyCiAssets referenced by the event
+    """
+
+    __tablename__ = 'sonyci_events'
+
+    id: str | None = Field(primary_key=True, default=None, index=True)
+    type: SonyCiEventType | None = Field(
+        default=None, sa_type=Enum(SonyCiEventType), index=True
+    )
+    createdOn: datetime | None = Field(default=None, index=True)
+    createdBy: dict[str, Any] | None = Field(default=None, sa_type=JSON)
+    payload: dict[str, Any] | None = Field(default=None, sa_type=JSON)
+    created_at: datetime | None = Field(
+        sa_column=Column(DateTime(timezone=True), default=datetime.utcnow, index=True)
+    )
+    assets: list['SonyCiAsset'] = Relationship(
+        back_populates='events', link_model=SonyCiEventAssetLink
+    )
+
+    async def __admin_repr__(self, request: Request):
+        return f'{self.type.value if self.type else "Event"} {self.id}'
+
+
 class SonyCiAsset(SonyCiAssetBase, table=True):
     """SonyCiAsset model"""
 
     __tablename__ = 'sonyci_assets'
 
     media_files: MediaFile | None = Relationship(back_populates='assets')
+    events: list[SonyCiEvent] = Relationship(
+        back_populates='assets', link_model=SonyCiEventAssetLink
+    )
 
 
 class SonyCiTrashbin(SonyCiAssetBase, table=True):

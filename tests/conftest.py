@@ -103,6 +103,16 @@ def fake_access_token() -> type[callable]:
     return _fake_access_token
 
 
+@fixture
+def events_api_credentials(mocker) -> tuple[str, str]:
+    """Configure the events API basic auth credentials, and return them as a
+    (username, password) tuple, ready to pass to an httpx client's `auth` argument."""
+    credentials = ('chowda-events', 'not-a-real-secret')
+    mocker.patch('chowda.auth.utils.EVENTS_API_USERNAME', credentials[0])
+    mocker.patch('chowda.auth.utils.EVENTS_API_PASSWORD', credentials[1])
+    return credentials
+
+
 # Override FastAPI dependency for jwt_signing_key to use the same fake signing key we
 # use for encoding the JWT.
 # NOTE: for testing we us a the synchronous HS256 algorithm which uses the same key for

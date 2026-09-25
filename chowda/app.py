@@ -17,7 +17,7 @@ from chowda._version import __version__
 from chowda.admin import Admin
 from chowda.api import api
 from chowda.auth import OAuthProvider
-from chowda.auth.utils import get_admin_user, verified_access_token
+from chowda.auth.utils import basic_auth, get_admin_user, verified_access_token
 from chowda.config import SECRET, STATIC_DIR, TEMPLATES_DIR
 from chowda.db import engine
 from chowda.models import (
@@ -29,9 +29,11 @@ from chowda.models import (
     MetaflowRun,
     Pipeline,
     SonyCiAsset,
+    SonyCiEvent,
     SonyCiTrashbin,
     User,
 )
+from chowda.routers import sony_ci_events
 from chowda.routers.dashboard import dashboard
 from chowda.views import (
     BatchView,
@@ -43,6 +45,7 @@ from chowda.views import (
     MMIFView,
     PipelineView,
     SonyCiAssetView,
+    SonyCiEventView,
     SonyCiTrashbinView,
     UserView,
 )
@@ -69,6 +72,7 @@ app = FastAPI(
 app.mount('/static', StaticFiles(directory=STATIC_DIR), name='static')
 
 app.include_router(api, prefix='/api', dependencies=[Depends(verified_access_token)])
+app.include_router(sony_ci_events, prefix='/events', dependencies=[Depends(basic_auth)])
 app.include_router(
     dashboard, prefix='/dashboard', dependencies=[Depends(get_admin_user)]
 )
@@ -92,6 +96,7 @@ admin.add_view(SonyCiAssetView(SonyCiAsset, icon='fa fa-file-video'))
 admin.add_view(
     SonyCiTrashbinView(SonyCiTrashbin, icon='fa fa-trash', label='SonyCi Trashbin')
 )
+admin.add_view(SonyCiEventView(SonyCiEvent, icon='fa fa-solid fa-bell-concierge'))
 admin.add_view(CollectionView(Collection, icon='fa fa-folder'))
 admin.add_view(BatchView(Batch, icon='fa fa-folder'))
 admin.add_view(ClamsAppView(ClamsApp, icon='fa fa-box'))

@@ -162,23 +162,26 @@ class IngestFlow(FlowSpec):
         )['items']
 
     def batch_ingest_assets_page(self, n):
-        from re import search, split
+        from re import search
 
-        from sqlmodel import Session, select
+        from sqlmodel import Session
 
         from chowda.db import engine
-        from chowda.models import MediaFile, SonyCiAsset
-        from chowda.utils import upsert
+        from chowda.models import SonyCiAsset, SonyCiAssetBase
+        from chowda.utils import find_media_file, upsert
 
         batch = self.get_page(n)
-        media = [SonyCiAsset(**asset) for asset in batch]
         results: list = []
         errors: list = []
         warnings: list = []
 
         with Session(engine) as db:
-            for asset in media:
+            for item in batch:
                 try:
+                    # Table models skip validation, so the non-table base model is
+                    # used to coerce the JSON strings SonyCi sends into the datetimes
+                    # and enums the columns expect.
+                    asset = SonyCiAssetBase.model_validate(item)
                     results.append(db.exec(upsert(SonyCiAsset, asset, ['id'])))
                     # If the asset type is not Video or Audio, skip it
                     if AssetType(asset.type) not in asset_types:
@@ -200,33 +203,14 @@ class IngestFlow(FlowSpec):
                         )
                         db.commit()
                         continue
-                    # SonyCi filenames sometimes carry a leading BOM (U+FEFF), which
-                    # breaks the anchored guid match and the fixed-index slice below.
-                    filename = asset.name.replace('\ufeff', '').strip()
                     # If the name doesn't match the guid pattern, log a warning and skip it
-                    if not search(r'^cpb[-_/]aacip[-_/].*\.mp[34]$', filename):
+                    media_file = find_media_file(db, asset.name, create=True)
+                    if not media_file:
                         log.warning('Non-guid filename: ', asset.id, asset.name)
                         warnings.append(('non-guid', asset.id, asset.name))
                         db.commit()
                         continue
                     # It's a MediaFile!
-                    # Replace '_' and '/' with '-' in the name, and remove '-dupe' if present
-                    name = filename[10:-4]
-                    # ext = filename[-4:]
-                    # if search(r'[_/]', name[:5]):
-                    #     log.warning('replacing _ or / with - in guid portion of filename: ', asset.id, asset.name)
-                    #     pos = search(r'[_/]', name[:5]).start()
-                    #     name = name[:pos] + '-' + name[pos+1:]
-                    name = split(r"_|\.", name)[0]
-                    # Should be just a the ID now
-                    guid = f'cpb-aacip-{name}'
-                    # Check for existing MediaFile
-                    media_file = db.exec(
-                        select(MediaFile).where(MediaFile.guid == guid)
-                    ).first()
-                    if not media_file:
-                        # Create a new MediaFile with the new guid
-                        media_file = MediaFile(guid=guid)
                     # Get the SonyCiAsset we just saved to the db
                     ci_asset = db.get(SonyCiAsset, asset.id)
                     # Add the asset to the existing MediaFile
@@ -234,8 +218,8 @@ class IngestFlow(FlowSpec):
                     db.add(media_file)
                     db.commit()
                 except Exception as e:  # NOQA BLE001
-                    log.error(f'Error ingesting asset {asset.id}: {e}')
-                    errors.append((asset, e))
+                    log.error(f'Error ingesting asset {item["id"]}: {e}')
+                    errors.append((item['id'], e))
             updated: int = sum([r.rowcount for r in results])
             if errors:
                 log.error(f'{len(errors)} errors ingesting page {n}: {errors}')
