@@ -1,17 +1,16 @@
 from json import JSONDecodeError, loads
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 from metaflow import Run, namespace
 from sqlmodel import Session
 
-from chowda.auth.utils import permissions
 from chowda.db import engine
 from chowda.models import MetaflowRun
 
-events = APIRouter()
+argo_events = APIRouter(tags=['event'])
 
 
-@events.post('/', dependencies=[Depends(permissions('create:event'))])
+@argo_events.post('/')
 async def event(event: dict):
     """Receive an event from Argo Events."""
     print('Chowda event received', event)

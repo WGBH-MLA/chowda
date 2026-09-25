@@ -38,6 +38,7 @@ from chowda.models import (
     Collection,
     MediaFile,
     SonyCiAsset,
+    SonyCiEvent,
     SonyCiTrashbin,
 )
 from chowda.routers.sony_ci import sync_history
@@ -609,6 +610,20 @@ class SonyCiTrashbinView(AdminModelView):
 
     def can_create(self, request: Request) -> bool:
         """Trashbin entries are ingested from Sony Ci API, not created from the UI."""
+        return False
+
+
+class SonyCiEventView(AdminModelView):
+    label: ClassVar[str] = 'SonyCi Events'
+    fields: ClassVar[list[Any]] = ['assets', *SonyCiEvent.model_fields]
+    row_actions: ClassVar[list[Any]] = ['view']
+
+    def can_create(self, request: Request) -> bool:
+        """SonyCi Events are received from the SonyCi API, not created from the UI."""
+        return False
+
+    def can_edit(self, request: Request) -> bool:
+        """SonyCi Events are a log of what SonyCi sent us, so they are not editable."""
         return False
 
 

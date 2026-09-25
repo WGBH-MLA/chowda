@@ -5,7 +5,7 @@ repository = 'https://github.com/WGBH-MLA/chowda'
 
 [project]
 name = 'chowda'
-version = "0.7.0"
+version = "0.8.0"
 description = 'A CLAMS processing application'
 authors = [{ name = 'WGBH-MLA', email = 'ryan_harbert@wgbh.org' }]
 requires-python = '>=3.10,<4.0'
@@ -14,7 +14,6 @@ license = "MIT"
 dependencies = [
     "fastapi>=0.141.1",
     "metaflow>=2.19.39",
-    "sonyci>=0.8.1",
     "sqlmodel~=0.0",
     "starlette-admin~=0.14",
     "pydantic[email]~=2.12",
@@ -27,6 +26,7 @@ dependencies = [
     "itsdangerous~=2.2",
     "pyjwt~=2.9",
     "python-dotenv~=1.0",
+    "sonyci>=0.9.0",
 ]
 [dependency-groups]
 dev = [

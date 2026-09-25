@@ -7,6 +7,14 @@ from sqlalchemy.dialects.postgresql import insert
 from starlette.requests import Request
 from starlette.responses import FileResponse, StreamingResponse
 
+"""Regular expression to match MediaFile GUIDs.
+Must:
+- start with "cpb-aacip-" (or `_` or `/` for archaic seperators)
+- end with ".mp3" or ".mp4"
+- have 1 or more characters between the prefix and the file extension
+"""
+GUID_REGEX = r'^cpb[-_/]aacip[-_/].*\.mp[34]$'
+
 # This should belong inside `download_mmif` function, but the download fails
 # unless the temporary directory is created outside of the function.
 tmp_dir = TemporaryDirectory()
@@ -51,6 +59,43 @@ def chunks_sequential(lst, n):
     for i in range(n):
         si = (d + 1) * (min(r, i)) + d * (0 if i < r else i - r)
         yield lst[si : si + (d + 1 if i < r else d)]
+
+
+def guid_from_filename(filename: str | None) -> str | None:
+    """Return the MediaFile GUID for a SonyCi filename, or None if it isn't one."""
+    from re import search, split
+
+    if not filename:
+        return None
+    # SonyCi filenames sometimes carry a leading BOM (U+FEFF), which breaks the
+    # anchored guid match and the fixed-index slice below.
+    filename = filename.replace('\ufeff', '').strip()
+    if not search(GUID_REGEX, filename):
+        return None
+    # Strip the 'cpb-aacip-' prefix and the extension, then drop any suffix such as
+    # '_dupe' or a second extension.
+    name = split(r'_|\.', filename[10:-4])[0]
+    return f'cpb-aacip-{name}'
+
+
+def find_media_file(
+    db, filename: str | None, create: bool = False
+) -> 'MediaFile | None':  # noqa F821
+    """Return the MediaFile for a SonyCi filename.
+
+    Returns None if the filename is not a GUID filename, or if no MediaFile exists
+    and `create` is False. A created MediaFile is not added to the session."""
+    from sqlmodel import select
+
+    from chowda.models import MediaFile
+
+    guid = guid_from_filename(filename)
+    if not guid:
+        return None
+    media_file = db.exec(select(MediaFile).where(MediaFile.guid == guid)).first()
+    if not media_file and create:
+        media_file = MediaFile(guid=guid)
+    return media_file
 
 
 # def validate_media_files(view: ModelView, request: Request, data: Dict[str, Any]):
