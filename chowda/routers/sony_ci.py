@@ -134,11 +134,15 @@ def sync_asset(db: Session, client, asset_id: str) -> SonyCiAsset:
     asset = SonyCiAssetBase.model_validate(client.asset(asset_id))
     existing = db.get(SonyCiAsset, asset_id)
     # The MediaFile link is not part of the SonyCi response, so keep the one we
-    # already have, and otherwise link the asset by its filename.
+    # already have, and otherwise link the asset by its filename, as the ingest
+    # flow does.
     asset.media_file_id = existing.media_file_id if existing else None
     if not asset.media_file_id:
-        media_file = find_media_file(db, asset.name)
+        media_file = find_media_file(db, asset.name, create=True)
         if media_file:
+            # A created MediaFile has to exist before the asset can reference it.
+            db.add(media_file)
+            db.flush()
             asset.media_file_id = media_file.guid
 
     db.exec(upsert(SonyCiAsset, asset, ['id']))

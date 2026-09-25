@@ -301,6 +301,43 @@ async def test_sony_ci_event_links_media_file(
 
 
 @pytest.mark.asyncio
+async def test_sony_ci_event_creates_media_file(
+    mocker: MockerFixture,
+    async_client: AsyncClient,
+    events_api_credentials: tuple[str, str],
+    sony_ci_ids: dict[str, str],
+):
+    """An asset with a GUID filename gets a new MediaFile when there is none yet,
+    the same way the ingest flow creates one."""
+    guid = 'cpb-aacip-chowda-test-new'
+    asset = {**sony_ci_asset(sony_ci_ids), 'name': f'{guid}.mp4'}
+    client = mocker.patch('chowda.routers.sony_ci.sony_ci_client').return_value
+    client.asset.return_value = asset
+    with Session(engine) as db:
+        leftover = db.get(MediaFile, guid)
+        if leftover:
+            db.delete(leftover)
+            db.commit()
+
+    event = sony_ci_event(sony_ci_ids)
+    event['assets'][0]['name'] = asset['name']
+    response = await post_event(async_client, events_api_credentials, event)
+
+    assert response.status_code == 200
+    assert response.json()['errors'] == {}
+    with Session(engine) as db:
+        stored = db.get(SonyCiAsset, sony_ci_ids['asset'])
+        assert stored.media_file_id == guid
+        media_file = db.get(MediaFile, guid)
+        assert [linked.id for linked in media_file.assets] == [sony_ci_ids['asset']]
+        db.delete(db.get(SonyCiEvent, sony_ci_ids['event']))
+        db.delete(stored)
+        db.commit()
+        db.delete(media_file)
+        db.commit()
+
+
+@pytest.mark.asyncio
 async def test_sony_ci_event_is_not_duplicated(
     mocker: MockerFixture,
     async_client: AsyncClient,
