@@ -96,7 +96,7 @@ admin.add_view(SonyCiAssetView(SonyCiAsset, icon='fa fa-file-video'))
 admin.add_view(
     SonyCiTrashbinView(SonyCiTrashbin, icon='fa fa-trash', label='SonyCi Trashbin')
 )
-admin.add_view(SonyCiEventView(SonyCiEvent, icon='fa fa-c'))
+admin.add_view(SonyCiEventView(SonyCiEvent, icon='fa fa-solid fa-bell-concierge'))
 admin.add_view(CollectionView(Collection, icon='fa fa-folder'))
 admin.add_view(BatchView(Batch, icon='fa fa-folder'))
 admin.add_view(ClamsAppView(ClamsApp, icon='fa fa-box'))

@@ -907,7 +907,7 @@ requires-dist = [
     { name = "pytest-vcr", marker = "extra == 'test'", specifier = "~=1.0" },
     { name = "pytest-xdist", marker = "extra == 'test'", specifier = "~=3.6" },
     { name = "python-dotenv", specifier = "~=1.0" },
-    { name = "sonyci", specifier = ">=0.8.2" },
+    { name = "sonyci", specifier = ">=0.9.0" },
     { name = "sqlmodel", specifier = "~=0.0" },
     { name = "starlette-admin", specifier = "~=0.14" },
     { name = "trio", marker = "extra == 'test'", specifier = "~=0.26" },
@@ -4463,16 +4463,16 @@ wheels = [
 
 [[package]]
 name = "sonyci"
-version = "0.8.2"
+version = "0.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "loguru" },
     { name = "pydantic" },
     { name = "requests-oauth2client" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/57/c5/e79a35c7ed9b0593d83682646e5be6b24850522dc7e8b969e9283232196e/sonyci-0.8.2.tar.gz", hash = "sha256:fdaa2b6e117308edca8cd5f96ceddc02bd878820704624eca6ccf080304df593", size = 8725, upload-time = "2026-09-16T15:52:36.47Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/32/5a/ce2e592f322f9a99de002f72407b10639b7f3a4dadaaa1a4dc5b08a47488/sonyci-0.9.0.tar.gz", hash = "sha256:336dc1cad39181e8c414f21afa83102e0256bc9adf43035163b1830a7b71f3f2", size = 8992, upload-time = "2026-09-21T16:09:00.272Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f0/f6/dd5613c98cc4dd7ecd5b3209e68f34a6a02ab6eefca1d9daad5e95b318df/sonyci-0.8.2-py3-none-any.whl", hash = "sha256:49a27366b8c77719dad2cd5d2d26157f635768e823caa4049b4f4d322cb179b2", size = 10767, upload-time = "2026-09-16T15:52:35.372Z" },
+    { url = "https://files.pythonhosted.org/packages/c6/9c/499749e404c04d1af38d66a64266d35430d59211c7de767e8827faf1f6ba/sonyci-0.9.0-py3-none-any.whl", hash = "sha256:c801a1fc8eff9dca8b4f17f288c306701c998d875d3946ffe52f7f26536d2aa1", size = 11072, upload-time = "2026-09-21T16:08:58.854Z" },
 ]
 
 [[package]]

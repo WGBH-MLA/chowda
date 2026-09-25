@@ -14,7 +14,6 @@ license = "MIT"
 dependencies = [
     "fastapi>=0.141.1",
     "metaflow>=2.19.39",
-    "sonyci>=0.8.2",
     "sqlmodel~=0.0",
     "starlette-admin~=0.14",
     "pydantic[email]~=2.12",
@@ -27,6 +26,7 @@ dependencies = [
     "itsdangerous~=2.2",
     "pyjwt~=2.9",
     "python-dotenv~=1.0",
+    "sonyci>=0.9.0",
 ]
 [dependency-groups]
 dev = [
