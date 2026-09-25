@@ -6,12 +6,11 @@ from sqlmodel import Session
 
 from chowda.db import engine
 from chowda.models import MetaflowRun
-from chowda.routers.sony_ci import sony_ci_events
 
-events = APIRouter(tags=['event'])
+argo_events = APIRouter(tags=['event'])
 
 
-@events.post('/')
+@argo_events.post('/')
 async def event(event: dict):
     """Receive an event from Argo Events."""
     print('Chowda event received', event)
@@ -62,7 +61,3 @@ async def event(event: dict):
             print('Successfully updated MetaflowRun row!', row)
             return None
     return 'Event successfully processed, but did not match known event'
-
-
-# Webhook events sent by the SonyCi notification API.
-events.include_router(sony_ci_events)
