@@ -700,6 +700,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#return-extra-fields-with-the-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Return extra fields with the results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#count-assets-per-folder-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Count assets per folder id
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1981,10 +2003,7 @@ with Session(engine) as session:
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">matching</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">unmatching</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="n">duplicates</span> <span class="o">=</span> <span class="p">(</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">duplicates</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">select</span><span class="p">(</span><span class="n">MediaFile</span><span class="p">)</span>
     <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">SonyCiAsset</span><span class="p">)</span>
     <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">MediaFile</span><span class="o">.</span><span class="n">guid</span><span class="p">)</span>
@@ -2004,10 +2023,7 @@ with Session(engine) as session:
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Matching: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">matching</span><span class="p">)</span><span class="si">}</span><span class="s1">, Unmatching: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">unmatching</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-5">matching = []
-unmatching = []
-
-duplicates = (
+<div class="clipboard-copy-txt" id="cell-5">duplicates = (
     select(MediaFile)
     .join(SonyCiAsset)
     .group_by(MediaFile.guid)
@@ -2026,6 +2042,58 @@ with Session(engine) as session:
     unmatching = session.exec(unmatching_statement).all()
 
 print(f'Matching: {len(matching)}, Unmatching: {len(unmatching)}')</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=f9fb2934">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-6">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">matching_dups_in_workspace</span> <span class="o">=</span> <span class="n">matching_statement</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">SonyCiAsset</span><span class="o">.</span><span class="n">folder</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'a1459cf719eb4a7cb2686663018be161'</span>
+<span class="p">)</span>
+<span class="n">matching_dups_not_in_workspace</span> <span class="o">=</span> <span class="n">matching_statement</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">SonyCiAsset</span><span class="o">.</span><span class="n">folder</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">'a1459cf719eb4a7cb2686663018be161'</span>
+<span class="p">)</span>
+
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">in_workspace_dups</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">matching_dups_in_workspace</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">not_in_workspace_dups</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">matching_dups_not_in_workspace</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'In Workspace Duplicates: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">in_workspace_dups</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Not in Workspace Duplicates: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">not_in_workspace_dups</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-6">matching_dups_in_workspace = matching_statement.where(
+    SonyCiAsset.folder['id'].as_string() == 'a1459cf719eb4a7cb2686663018be161'
+)
+matching_dups_not_in_workspace = matching_statement.where(
+    SonyCiAsset.folder['id'].as_string() != 'a1459cf719eb4a7cb2686663018be161'
+)
+
+with Session(engine) as session:
+    in_workspace_dups = session.exec(matching_dups_in_workspace).all()
+    not_in_workspace_dups = session.exec(matching_dups_not_in_workspace).all()
+
+print(f'In Workspace Duplicates: {len(in_workspace_dups)}')
+print(f'Not in Workspace Duplicates: {len(not_in_workspace_dups)}')
+</div>
 </div>
 </div>
 </div>
@@ -2051,7 +2119,7 @@ print(f'Matching: {len(matching)}, Unmatching: {len(unmatching)}')</div>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-6">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-7">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2073,7 +2141,7 @@ print(f'Matching: {len(matching)}, Unmatching: {len(unmatching)}')</div>
     <span class="n">matching</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">folder_statement</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="nb">len</span><span class="p">(</span><span class="n">matching</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-6">folder_statement = matching_statement.having(
+<div class="clipboard-copy-txt" id="cell-7">folder_statement = matching_statement.having(
     # at least one related asset is in the 'Workspace' folder
     # func.bool_or(SonyCiAsset.folder['name'].as_string() == 'Workspace')
 
@@ -2085,6 +2153,166 @@ with Session(engine) as session:
     matching = session.exec(folder_statement).all()
     len(matching)
 </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b667df9f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="return-extra-fields-with-the-results">Return extra fields with the results<a class="anchor-link" href="#return-extra-fields-with-the-results">¶</a></h2>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=41cec19d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-8">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">asset_count</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">SonyCiAsset</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s1">'asset_count'</span><span class="p">)</span>
+<span class="n">workspace_count</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+    <span class="n">SonyCiAsset</span><span class="o">.</span><span class="n">folder</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'Workspace'</span>
+<span class="p">)</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s1">'workspace_count'</span><span class="p">)</span>
+
+<span class="c1"># add_columns keeps the MediaFile entity and appends the aggregates</span>
+<span class="n">with_counts</span> <span class="o">=</span> <span class="n">folder_statement</span><span class="o">.</span><span class="n">add_columns</span><span class="p">(</span><span class="n">asset_count</span><span class="p">,</span> <span class="n">workspace_count</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">with_counts</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">media_file</span><span class="p">,</span> <span class="n">assets</span><span class="p">,</span> <span class="n">in_workspace</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">media_file</span><span class="o">.</span><span class="n">guid</span><span class="p">,</span> <span class="n">assets</span><span class="p">,</span> <span class="n">in_workspace</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-8">asset_count = func.count(SonyCiAsset.id).label('asset_count')
+workspace_count = func.count().filter(
+    SonyCiAsset.folder['name'].as_string() == 'Workspace'
+).label('workspace_count')
+
+# add_columns keeps the MediaFile entity and appends the aggregates
+with_counts = folder_statement.add_columns(asset_count, workspace_count)
+
+with Session(engine) as session:
+    rows = session.exec(with_counts).all()
+
+for media_file, assets, in_workspace in rows[:5]:
+    print(media_file.guid, assets, in_workspace)
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=67ad2415">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="count-assets-per-folder-id">Count assets per folder id<a class="anchor-link" href="#count-assets-per-folder-id">¶</a></h2>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=465a9987">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-9">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">folder_id</span> <span class="o">=</span> <span class="n">SonyCiAsset</span><span class="o">.</span><span class="n">folder</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s1">'folder_id'</span><span class="p">)</span>
+<span class="n">folder_name</span> <span class="o">=</span> <span class="n">SonyCiAsset</span><span class="o">.</span><span class="n">folder</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s1">'folder_name'</span><span class="p">)</span>
+
+<span class="n">folder_counts</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">select</span><span class="p">(</span><span class="n">folder_id</span><span class="p">,</span> <span class="n">folder_name</span><span class="p">,</span> <span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s1">'asset_count'</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">folder_id</span><span class="p">,</span> <span class="n">folder_name</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span>
+<span class="p">)</span>
+
+<span class="n">folders</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">fid</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">folder_counts</span><span class="p">):</span>
+        <span class="c1"># print(f'{count:&gt;8}  {fid}  {name}')</span>
+        <span class="n">folders</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">fid</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">count</span><span class="p">))</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'folder_counts.csv'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">fid</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">folders</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">fid</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-9">folder_id = SonyCiAsset.folder['id'].as_string().label('folder_id')
+folder_name = SonyCiAsset.folder['name'].as_string().label('folder_name')
+
+folder_counts = (
+    select(folder_id, folder_name, func.count().label('asset_count'))
+    .group_by(folder_id, folder_name)
+    .order_by(func.count().desc())
+)
+
+folders = []
+with Session(engine) as session:
+    for fid, name, count in session.exec(folder_counts):
+        # print(f'{count:&gt;8}  {fid}  {name}')
+        folders.append((fid, name, count))
+with open('folder_counts.csv', 'w') as f:
+    for fid, name, count in folders:
+        f.write(f'{fid},{name},{count}\n')</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a00aef46">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-10">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-10"></div>
 </div>
 </div>
 </div>
