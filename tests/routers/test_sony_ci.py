@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -180,7 +180,7 @@ async def test_sony_ci_event(
     with Session(engine) as db:
         event = db.get(SonyCiEvent, sony_ci_ids['event'])
         assert event.type == SonyCiEventType.AssetProcessingFinished
-        assert event.createdOn == datetime(2026, 1, 2, 0, 0)  # noqa DTZ001
+        assert event.createdOn == datetime(2026, 1, 2, 0, 0, tzinfo=timezone.utc)
         assert event.createdBy['email'] == 'juliachild@wgbh.org'
         assert event.payload['assets'] == [
             {'id': sony_ci_ids['asset'], 'name': 'cpb-aacip-1234.mp4'}
@@ -260,7 +260,9 @@ async def test_sony_ci_event_creates_asset(
         assert stored.status == SonyCiAssetStatus.Complete
         assert stored.archiveStatus == SonyCiArchiveStatus.NotArchived
         assert stored.uploadTransferType == SonyCiUploadTransferType.MultipartHttp
-        assert stored.createdOn == datetime(2026, 9, 22, 18, 33, 50, 465000)  # noqa DTZ001 # fmt: skip
+        assert stored.createdOn == datetime(
+            2026, 9, 22, 18, 33, 50, 465000, tzinfo=timezone.utc
+        )
         assert stored.runtime == 1230.229
         # The filename is not a GUID, so the asset is not linked to a MediaFile.
         assert stored.media_file_id is None
@@ -392,7 +394,7 @@ async def test_sony_ci_event_trash_asset(
         trashed = db.get(SonyCiTrashbin, sony_ci_ids['asset'])
         assert trashed.name == 'cpb-aacip-1234.mp4'
         assert trashed.isTrashed
-        assert trashed.trashedOn == datetime(2026, 1, 2, 0, 0)  # noqa DTZ001
+        assert trashed.trashedOn == datetime(2026, 1, 2, 0, 0, tzinfo=timezone.utc)
 
 
 @pytest.mark.asyncio
