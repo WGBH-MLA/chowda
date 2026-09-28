@@ -122,3 +122,6 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-root = ""
+
+[tool.uv.sources]
+metaflow = { git = "https://github.com/WGBH-MLA/metaflow", branch = "copilot/extend-aws-secrets-manager-client" }
