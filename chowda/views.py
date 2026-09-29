@@ -74,18 +74,6 @@ class ChowdaModelView(ModelView):
         'fixedHeader': True,
     }
 
-    def title(self, request: Request) -> str:
-        if request.state.action == RequestAction.LIST:
-            return self.menu_label
-        if request.state.action == RequestAction.DETAIL:
-            return f'{self.menu_label} - {request.path_params["pk"]}'
-        if request.state.action == RequestAction.EDIT:
-            return f'{self.menu_label} - Edit {request.path_params["pk"]}'
-        if request.state.action == RequestAction.CREATE:
-            return f'{self.menu_label} - Create'
-        return None
-
-
 class ClammerModelView(ChowdaModelView):
     """Base Clammer permissions for all protected views"""
 
