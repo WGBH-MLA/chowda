@@ -12,13 +12,14 @@ from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import HTMLResponse
 from starlette.routing import Route
+from starlette_admin.theme import DefaultTheme, TablerSettings
 
 from chowda._version import __version__
 from chowda.admin import Admin
 from chowda.api import api
-from chowda.auth import OAuthProvider
+from chowda.auth.oauth import AuthentikOAuthProvider
 from chowda.auth.utils import basic_auth, get_admin_user, verified_access_token
-from chowda.config import SECRET, STATIC_DIR, TEMPLATES_DIR
+from chowda.config import ADMIN_SECRET_KEY, SECRET, STATIC_DIR, TEMPLATES_DIR
 from chowda.db import engine
 from chowda.models import (
     MMIF,
@@ -83,18 +84,22 @@ admin = Admin(
     engine,
     title='Chowda',
     templates_dir=TEMPLATES_DIR,
-    statics_dir=STATIC_DIR,
-    auth_provider=OAuthProvider(),
+    static_dir=STATIC_DIR,
+    auth_provider=AuthentikOAuthProvider(),
+    secret_key=ADMIN_SECRET_KEY,
     base_url='/admin',
-    index_view=DashboardView(label='Dashboard', icon='fa fa-gauge', path='/'),
+    index_view=DashboardView(menu_label='Dashboard', icon='fa fa-gauge', path='/'),
     logo_url='/static/logo/chowda-logo-wide.png',
+    theme=DefaultTheme(
+        settings=TablerSettings(base="slate", primary="blue", radius=2, mode="dark")
+    ),
 )
 
 # Add views
 admin.add_view(MediaFileView(MediaFile, icon='fa fa-file-video'))
 admin.add_view(SonyCiAssetView(SonyCiAsset, icon='fa fa-file-video'))
 admin.add_view(
-    SonyCiTrashbinView(SonyCiTrashbin, icon='fa fa-trash', label='SonyCi Trashbin')
+    SonyCiTrashbinView(SonyCiTrashbin, icon='fa fa-trash', menu_label='SonyCi Trashbin')
 )
 admin.add_view(SonyCiEventView(SonyCiEvent, icon='fa fa-solid fa-bell-concierge'))
 admin.add_view(CollectionView(Collection, icon='fa fa-folder'))

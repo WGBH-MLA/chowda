@@ -4,7 +4,7 @@ SQLModels for DB and validation
 """
 
 import enum
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Optional
 
 from metaflow import Run, namespace
@@ -396,7 +396,9 @@ class SonyCiEvent(SQLModel, table=True):
     createdBy: dict[str, Any] | None = Field(default=None, sa_type=JSON)
     payload: dict[str, Any] | None = Field(default=None, sa_type=JSON)
     created_at: datetime | None = Field(
-        sa_column=Column(DateTime(timezone=True), default=datetime.utcnow, index=True)
+        sa_column=Column(
+            DateTime(timezone=True), default=datetime.now(timezone.utc), index=True
+        )
     )
     assets: list['SonyCiAsset'] = Relationship(
         back_populates='events', link_model=SonyCiEventAssetLink
@@ -423,7 +425,11 @@ class SonyCiTrashbin(SonyCiAssetBase, table=True):
     __tablename__ = 'sonyci_trashbin'
 
     statusDescription: dict[str, Any] | None = Field(default=None, sa_type=JSON)
-    trashedOn: datetime | None = Field(default=None, index=True)
+    trashedOn: datetime | None = Field(
+        sa_column=Column(
+            DateTime(timezone=True), default=datetime.now(timezone.utc), index=True
+        )
+    )
 
     media_files: MediaFile | None = Relationship(back_populates='trashbin')
 
@@ -534,7 +540,7 @@ class MetaflowRun(SQLModel, table=True):
     )
     media_file: MediaFile | None = Relationship(back_populates='metaflow_runs')
     created_at: datetime | None = Field(
-        sa_column=Column(DateTime(timezone=True), default=datetime.utcnow)
+        sa_column=Column(DateTime(timezone=True), default=datetime.now(timezone.utc))
     )
     finished: bool = Field(default=False)
     finished_at: datetime | None = Field(
@@ -571,7 +577,7 @@ class MMIF(SQLModel, table=True):
     __tablename__ = 'mmifs'
     id: int | None = Field(primary_key=True, default=None, index=True)
     created_at: datetime | None = Field(
-        sa_column=Column(DateTime(timezone=True), default=datetime.utcnow)
+        sa_column=Column(DateTime(timezone=True), default=datetime.now(timezone.utc))
     )
     media_file_id: str | None = Field(
         default=None, foreign_key='media_files.guid', index=True

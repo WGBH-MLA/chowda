@@ -3,7 +3,6 @@ from typing import Any
 
 from starlette.datastructures import FormData
 from starlette.requests import Request
-from starlette_admin._types import RequestAction
 from starlette_admin.fields import (
     BaseField,
     BooleanField,
@@ -11,6 +10,7 @@ from starlette_admin.fields import (
     StringField,
     TextAreaField,
 )
+from starlette_admin.types import RequestAction
 
 from chowda.models import MediaFile
 

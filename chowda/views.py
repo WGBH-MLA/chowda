@@ -9,10 +9,10 @@ from starlette.requests import Request
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
 from starlette_admin import CustomView, action, row_action
-from starlette_admin._types import RequestAction
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
-from starlette_admin.fields import BaseField, HasMany, HasOne
+from starlette_admin.fields import BaseField
+from starlette_admin.types import RequestAction
 
 from chowda.auth.utils import get_oauth_user
 from chowda.db import engine
@@ -76,13 +76,13 @@ class ChowdaModelView(ModelView):
 
     def title(self, request: Request) -> str:
         if request.state.action == RequestAction.LIST:
-            return self.label
+            return self.menu_label
         if request.state.action == RequestAction.DETAIL:
-            return f'{self.label} - {request.path_params["pk"]}'
+            return f'{self.menu_label} - {request.path_params["pk"]}'
         if request.state.action == RequestAction.EDIT:
-            return f'{self.label} - Edit {request.path_params["pk"]}'
+            return f'{self.menu_label} - Edit {request.path_params["pk"]}'
         if request.state.action == RequestAction.CREATE:
-            return f'{self.label} - Create'
+            return f'{self.menu_label} - Create'
         return None
 
 
@@ -209,7 +209,7 @@ class CollectionView(ClammerModelView):
 
 
 class BatchView(ClammerModelView):
-    label: ClassVar[str] = 'Batches'
+    menu_label: ClassVar[str] = 'Batches'
     exclude_fields_from_create: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
@@ -614,7 +614,7 @@ class SonyCiTrashbinView(AdminModelView):
 
 
 class SonyCiEventView(AdminModelView):
-    label: ClassVar[str] = 'SonyCi Events'
+    menu_label: ClassVar[str] = 'SonyCi Events'
     fields: ClassVar[list[Any]] = ['assets', *SonyCiEvent.model_fields]
     row_actions: ClassVar[list[Any]] = ['view']
 
@@ -645,11 +645,11 @@ class MetaflowRunView(AdminModelView):
 
 
 class MMIFView(ChowdaModelView):
-    label: ClassVar[str] = 'MMIFs'
+    menu_label: ClassVar[str] = 'MMIFs'
     fields: ClassVar[list[Any]] = [
         'media_file',
-        HasMany('batch_inputs', identity='batch', label='Input to Batches'),
-        HasOne('batch_output', identity='batch', label='Generated from Batch'),
+        # HasMany('batch_inputs', id='batch', label='Input to Batches'),
+        # HasOne('batch_output', id='batch', label='Generated from Batch'),
         'metaflow_run',
         'mmif_location',
         'created_at',
