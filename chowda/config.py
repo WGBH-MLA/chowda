@@ -29,4 +29,4 @@ SECRET = env.get('CHOWDA_SECRET')
 
 MMIF_S3_BUCKET_NAME = env.get('MMIF_S3_BUCKET_NAME', 'clams-mmif')
 
-METAFLOW_URL = env.get('METAFLOW_URL', 'https://metaflow.dev.wgbh-mla.org')
+METAFLOW_URL = env.get('METAFLOW_URL')

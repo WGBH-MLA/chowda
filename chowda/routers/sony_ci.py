@@ -31,21 +31,20 @@ sony_ci_events = APIRouter(tags=['sony-ci', 'event'])
 async def sync_history(n: int = 3) -> list[dict[str, Any]]:
     try:
         flow = Flow('IngestFlow')
+        run = list(flow)[0]
 
     except MetaflowException as error:
 
         log.error(f'Error fetching sync history: {error!s}')
         return []
-    return [
-        {
-            'created_at': sync_run.created_at,
-            'finished': sync_run.finished,
-            'finished_at': sync_run.finished_at,
-            'successful': sync_run.successful,
-            'link': f'{METAFLOW_URL}/{sync_run.pathspec}',
+    return {
+            'created_at': run.created_at,
+            'finished': run.finished_at,
+            'finished_at': run.finished_at,
+            # 'successful': run.successful,
+            'link': f'{METAFLOW_URL}/{run.pathspec}',
         }
-        for sync_run in list(flow)[:n]
-    ]
+        
 
 
 class SyncResponse(BaseModel):

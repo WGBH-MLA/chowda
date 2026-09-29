@@ -13,6 +13,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import HTMLResponse
 from starlette.routing import Route
 from starlette_admin.theme import DefaultTheme, TablerSettings
+from starlette_admin import CustomView, StatWidget
 
 from chowda._version import __version__
 from chowda.admin import Admin
@@ -36,11 +37,11 @@ from chowda.models import (
 )
 from chowda.routers import sony_ci_events
 from chowda.routers.dashboard import dashboard
+from chowda.routers.sony_ci import sync_history
 from chowda.views import (
     BatchView,
     ClamsAppView,
     CollectionView,
-    DashboardView,
     MediaFileView,
     MetaflowRunView,
     MMIFView,
@@ -88,7 +89,7 @@ admin = Admin(
     auth_provider=AuthentikOAuthProvider(),
     secret_key=ADMIN_SECRET_KEY,
     base_url='/admin',
-    index_view=DashboardView(menu_label='Dashboard', icon='fa fa-gauge', path='/'),
+    index_view=CustomView(menu_label='Dashboard', icon='fa fa-gauge', path='/', widget=StatWidget(title='SonyCi sync history', value_callback=sync_history)),
     logo_url='/static/logo/chowda-logo-wide.png',
     theme=DefaultTheme(
         settings=TablerSettings(base="slate", primary="blue", radius=2, mode="dark")

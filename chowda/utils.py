@@ -262,3 +262,13 @@ def download_mmif(pks: list[str]) -> StreamingResponse | FileResponse:
         headers={'Content-Disposition': f'attachment; filename="{zip_filename}"'},
         media_type='application/zip',
     )
+
+async def get_ingest_history(self, request: Request, templates: Jinja2Templates) -> list[dict[str, Any]]:
+    from chowda.routers.sony_ci import sync_history
+    from datetime import datetime, timedelta
+    from chowda.log import log
+    try:
+        return await sync_history()
+    except Exception as e:  # NOQA BLE001
+        log.error(f'Error fetching sync history: {e!s}')
+
