@@ -8,11 +8,12 @@ from starlette.datastructures import FormData
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
-from starlette_admin import CustomView, action, row_action
-from starlette_admin._types import RequestAction
+from starlette_admin import CustomView, HasMany, HasOne, action, row_action
 from starlette_admin.contrib.sqlmodel import ModelView
 from starlette_admin.exceptions import ActionFailed
-from starlette_admin.fields import BaseField, HasMany, HasOne
+from starlette_admin.fields import BaseField
+from starlette_admin.types import RequestAction
+from starlette_admin import StatWidget
 
 from chowda.auth.utils import get_oauth_user
 from chowda.db import engine
@@ -41,7 +42,6 @@ from chowda.models import (
     SonyCiEvent,
     SonyCiTrashbin,
 )
-from chowda.routers.sony_ci import sync_history
 from chowda.utils import download_mmif, get_duplicates, validate_media_file_guids, yes
 from templates import filters  # noqa: F401
 
@@ -73,18 +73,6 @@ class ChowdaModelView(ModelView):
         # Enable the FixedHeader extension to keep the table header visible.
         'fixedHeader': True,
     }
-
-    def title(self, request: Request) -> str:
-        if request.state.action == RequestAction.LIST:
-            return self.label
-        if request.state.action == RequestAction.DETAIL:
-            return f'{self.label} - {request.path_params["pk"]}'
-        if request.state.action == RequestAction.EDIT:
-            return f'{self.label} - Edit {request.path_params["pk"]}'
-        if request.state.action == RequestAction.CREATE:
-            return f'{self.label} - Create'
-        return None
-
 
 class ClammerModelView(ChowdaModelView):
     """Base Clammer permissions for all protected views"""
@@ -209,7 +197,7 @@ class CollectionView(ClammerModelView):
 
 
 class BatchView(ClammerModelView):
-    label: ClassVar[str] = 'Batches'
+    menu_label: ClassVar[str] = 'Batches'
     exclude_fields_from_create: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_edit: ClassVar[list[Any]] = [Batch.id]
     exclude_fields_from_list: ClassVar[list[Any]] = [Batch.media_files]
@@ -457,7 +445,7 @@ class BatchView(ClammerModelView):
 
             request.session['error'] = f'{error!s}'
             return RedirectResponse(
-                request.url_for('admin:list', identity=request.path_params['identity']),
+                request.url_for('admin:list', key=request.path_params['identity']),
                 status_code=status.HTTP_303_SEE_OTHER,
             )
 
@@ -554,35 +542,6 @@ class PipelineView(ClammerModelView):
         return True
 
 
-class DashboardView(CustomView):
-
-    async def render(self, request: Request, templates: Jinja2Templates) -> Response:
-        try:
-            history = await sync_history()
-            last_sync = history[0]['created_at']
-            delta = datetime.now(last_sync.tzinfo) - last_sync
-            sync_disabled = delta < timedelta(minutes=15)
-        except Exception as e:  # NOQA BLE001
-            log.error(f'Error fetching sync history: {e!s}')
-            history = []
-            last_sync = None
-            sync_disabled = True
-        user = get_oauth_user(request)
-        title = self.title(request)
-        return templates.TemplateResponse(
-            request,
-            name='dashboard.html',
-            context={
-                'title': title,
-                'user': user,
-                'sync_history': history,
-                'sync_disabled': sync_disabled,
-                'flash': request.session.pop('flash', ''),
-                'error': request.session.pop('error', ''),
-            },
-        )
-
-
 class SonyCiAssetView(AdminModelView):
     fields: ClassVar[list[Any]] = [
         SonyCiAssetThumbnail(),
@@ -614,7 +573,7 @@ class SonyCiTrashbinView(AdminModelView):
 
 
 class SonyCiEventView(AdminModelView):
-    label: ClassVar[str] = 'SonyCi Events'
+    menu_label: ClassVar[str] = 'SonyCi Events'
     fields: ClassVar[list[Any]] = ['assets', *SonyCiEvent.model_fields]
     row_actions: ClassVar[list[Any]] = ['view']
 
@@ -628,7 +587,7 @@ class SonyCiEventView(AdminModelView):
 
 
 class MetaflowRunView(AdminModelView):
-    form_include_pk: ClassVar[bool] = True
+    show_pk_in_forms: ClassVar[bool] = True
 
     fields: ClassVar[list[Any]] = [
         'id',
@@ -645,11 +604,11 @@ class MetaflowRunView(AdminModelView):
 
 
 class MMIFView(ChowdaModelView):
-    label: ClassVar[str] = 'MMIFs'
+    menu_label: ClassVar[str] = 'MMIFs'
     fields: ClassVar[list[Any]] = [
         'media_file',
-        HasMany('batch_inputs', identity='batch', label='Input to Batches'),
-        HasOne('batch_output', identity='batch', label='Generated from Batch'),
+        HasMany('batch_inputs', key='batch', label='Input to Batches'),
+        HasOne('batch_output', key='batch', label='Generated from Batch'),
         'metaflow_run',
         'mmif_location',
         'created_at',

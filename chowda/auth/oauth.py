@@ -1,10 +1,9 @@
 from authlib.integrations.starlette_client import OAuth
-from starlette.middleware import Middleware
+from starlette.datastructures import URL
 from starlette.requests import Request
 from starlette.responses import RedirectResponse, Response
-from starlette.routing import Route
-from starlette_admin import BaseAdmin
-from starlette_admin.auth import AdminUser, AuthMiddleware, AuthProvider
+from starlette.status import HTTP_303_SEE_OTHER
+from starlette_admin.auth import AdminUser, OAuthProvider
 
 from chowda.config import (
     AUTH_CLIENT_ID,
@@ -25,59 +24,35 @@ oauth.register(
 )
 
 
-class OAuthProvider(AuthProvider):
-    async def is_authenticated(self, request: Request) -> bool:
-        if request.session.get('user', None) is not None:
-            request.state.user = request.session.get('user')
-            return True
-        return False
+class AuthentikOAuthProvider(OAuthProvider):
+    async def redirect_to_provider(
+        self, request: Request, callback_url: str
+    ) -> Response:
+        client = oauth.create_client("authentik")
+        return await client.authorize_redirect(request, callback_url)
 
-    def get_admin_user(self, request: Request) -> AdminUser | None:
-        user = request.state.user
-        return AdminUser(
-            username=user['name'],
-            photo_url=user.get('picture'),
-        )
+    async def handle_callback(self, request: Request) -> None:
+        client = oauth.create_client("authentik")
+        token = await client.authorize_access_token(request)
+        request.session["user"] = dict(token["userinfo"])
 
-    async def render_login(self, request: Request, admin: BaseAdmin):
-        """Override the default login behavior to implement custom logic."""
-        auth = oauth.authentik
-        redirect_uri = request.url_for(
-            admin.route_name + ':authorize_auth'
-        ).include_query_params(next=request.query_params.get('next'))
-        return await auth.authorize_redirect(request, str(redirect_uri))
+    async def authenticate(self, request: Request) -> AdminUser | None:
+        user = request.session.get("user")
+        if user:
+            return AdminUser(username=user["name"], photo_url=user.get("picture"))
+        return None
 
-    async def render_logout(self, request: Request, admin: BaseAdmin) -> Response:
-        """Override the default logout to implement custom logic"""
+    async def logout(self, request: Request) -> None:
         request.session.clear()
-        auth = oauth.authentik
-        id_token = request.session.pop('id_token', None)
-        # redirect_uri = request.url_for('index')
-        return await auth.logout_redirect(
-            request,
-            post_logout_redirect_uri='/',
-            id_token_hint=id_token,
-        )
-
-    async def handle_auth_callback(self, request: Request):
-        auth = oauth.authentik
-        token = await auth.authorize_access_token(request)
-        request.session.update({'user': token['userinfo']})
-        return RedirectResponse(request.query_params.get('next'))
-
-    def setup_admin(self, admin: BaseAdmin):
-        super().setup_admin(admin)
-        """add custom authentication callback route"""
-        admin.routes.append(
-            Route(
-                '/auth/authorize',
-                self.handle_auth_callback,
-                methods=['GET'],
-                name='authorize_auth',
+        client = oauth.create_client("authentik")
+        metadata = await client.load_server_metadata()
+        end_session_endpoint = metadata.get("end_session_endpoint")
+        if end_session_endpoint:
+            logout_url = str(
+                URL(end_session_endpoint).include_query_params(
+                    post_logout_redirect_uri="https://www.google.com/",
+                    client_id=AUTH_CLIENT_ID,
+                )
             )
-        )
-
-    def get_middleware(self, admin: BaseAdmin) -> Middleware:
-        return Middleware(
-            AuthMiddleware, provider=self, allow_paths=['/auth/authorize']
-        )
+            return RedirectResponse(logout_url, status_code=HTTP_303_SEE_OTHER)
+        return None

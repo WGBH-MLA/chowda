@@ -3,7 +3,6 @@ from typing import Any
 
 from starlette.datastructures import FormData
 from starlette.requests import Request
-from starlette_admin._types import RequestAction
 from starlette_admin.fields import (
     BaseField,
     BooleanField,
@@ -11,6 +10,7 @@ from starlette_admin.fields import (
     StringField,
     TextAreaField,
 )
+from starlette_admin.types import RequestAction
 
 from chowda.models import MediaFile
 
@@ -36,7 +36,7 @@ class MediaFilesGuidsField(TextAreaField):
         return form_data.get(self.id).split()
 
     async def serialize_value(
-        self, request: Request, value: Any, action: RequestAction
+        self, request: Request, value: Any
     ) -> Any:
         """Maps a Collection's MediaFile objects to a list of GUIDs"""
         if request.state.action in (RequestAction.EDIT, RequestAction.LIST):
@@ -89,21 +89,6 @@ class BatchMetaflowRunDisplayField(BaseField):
     async def parse_obj(self, request: Request, obj: Any) -> Any:
         return [run.dict() for run in obj.metaflow_runs]
 
-    async def serialize_value(
-        self, request: Request, value: Any, action: RequestAction
-    ) -> Any:
-        return [
-            {
-                **run,
-                'finished_at': (
-                    run['finished_at'].isoformat() if run.get('finished_at') else None
-                ),
-                'created_at': (
-                    run['created_at'].isoformat() if run.get('created_at') else None
-                ),
-            }
-            for run in value
-        ]
 
 
 @dataclass
