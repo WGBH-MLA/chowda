@@ -63,7 +63,7 @@ docs = [
 ]
 
 locust = ["locust~=2.25", "pydantic-factories~=1.17"]
-k8s = ["kubernetes>=35,<37"]
+k8s = ["kubernetes>=35,<38"]
 cli = ["typer>=0.26.7"]
 
 
